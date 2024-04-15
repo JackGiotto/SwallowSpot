@@ -1,0 +1,4 @@
+/test/*
+/venv/*
+/test.py
+*pycache*
