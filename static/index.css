@@ -10,12 +10,31 @@ body {
 }
 
 header {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 0 10%;
+    transition: top 0.3s;
+}
+
+header div{
     display: flex;
     flex-wrap: wrap;
-    margin: 0 10% 0 10%;
-    background-color: #00283B;
-    clip-path: polygon(0 0, 100% 0, 99% 100%, 1% 100%);
+    /*margin: 0 10% 0 10%;*/
+    background-color: rgba(0, 40, 59, 0.97);
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
     justify-content: center;
+}
+
+@media screen and (max-width: 767px) {
+    header {
+        padding: 0;
+    }
+    
+    header div {
+        clip-path: none;
+    }
 }
 
 header a {
@@ -37,6 +56,14 @@ header a:hover {
     border: 5px double #00283B;
     border-radius: 1em;
     padding: 1em;
+    max-width: 30em;
+}
+
+@media screen and (max-width: 767px) {
+    #cookies {
+        left: 10px;
+        max-width: 100%;
+    }
 }
 
 #cookieButtons {
@@ -52,7 +79,7 @@ header a:hover {
 }
 
 .btn-success:hover {
-    background-color: #002433;
+    background-color: #00202e;
 }
 
 .btn-primary {
@@ -64,14 +91,29 @@ header a:hover {
     background-color: #004c5e;
 }
 
-.disappear {
-    animation: disappearAnim 1s ease;
-    opacity: 0;
-    display: none;
+/*home*/
+
+.logo picture {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3em;
 }
 
-@keyframes disappearAnim {
-    0% {opacity: 1; display: block;}
-    99% {opacity: 0; display: block;}
-    100% {display: none;}
+.logo picture img {
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    width: 70%;
+}
+
+@media screen and (max-width: 767px) {
+    .logo picture {
+        margin-top: 5em;
+    }
+
+    .logo picture img {
+        aspect-ratio: 1/1;
+        width: 80%;
+    }
 }
