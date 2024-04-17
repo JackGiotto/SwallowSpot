@@ -19,7 +19,7 @@ header {
     padding: 1em 10%;
     transition: top 0.3s;
     display: flex;
-    gap: 1%;
+    gap: 2%;
 }
 
 @media screen and (max-width: 767px) {
@@ -34,10 +34,10 @@ header div{
     background-color: rgba(0, 40, 59, 0.97);
     clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
     background-color: rgba(167, 199, 224, 0.8);
-    /*border: 2px solid #00283B;*/
+    /*border: 2px solid #EDFCFF;*/
     border-radius: 20px;
     padding: 5px;
-    filter: drop-shadow(10px 10px 10px #00283B);
+    filter: drop-shadow(0 5px 0px #00283B);
 }
 
 /*menu + login*/
@@ -139,6 +139,42 @@ footer {
     background-color: #00283B;
     color: white;
     z-index: -1;
+    display: flex;
+    flex-direction: column;
+    padding: 3em 9em 3em 3em;
+    align-items: center;
+    gap: 3em;
+}
+
+.footer-in {
+    display: flex;
+    justify-content: space-between;
+    gap: 3em;
+}
+
+footer img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    width: 15%;
+}
+
+.credits-out {
+    width: 100%;
+}
+
+.credits-in {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.foot-subtitle {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.copyright {
+    opacity: 0.6;
 }
 
 /*home*/
