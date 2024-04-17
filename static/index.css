@@ -7,6 +7,7 @@
 
 body {
     background-color: #EDFCFF;
+    /*background-color: rgb(20, 20, 20);*/
 }
 
 /*navbar*/
@@ -16,7 +17,7 @@ header {
     position: fixed;
     left: 0;
     top: 0;
-    padding: 1em 10%;
+    padding: 1vw 10%;
     transition: top 0.3s;
     display: flex;
     gap: 2%;
@@ -24,7 +25,7 @@ header {
 
 @media screen and (max-width: 767px) {
     header {
-        padding: 1em;
+        padding: 1vw;
     }
 }
 
@@ -33,10 +34,11 @@ header div{
     /*margin: 0 10% 0 10%;
     background-color: rgba(0, 40, 59, 0.97);
     clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
-    background-color: rgba(167, 199, 224, 0.8);
+    /*background-color: rgba(167, 199, 224, 0.8);*/
     /*border: 2px solid #EDFCFF;*/
+    background-color: rgba(89, 164, 188, 0.8);
     border-radius: 20px;
-    padding: 5px;
+    padding: 5px 5px 0 5px;
     filter: drop-shadow(0 5px 0px #00283B);
 }
 
@@ -64,17 +66,17 @@ header div{
 }
 
 header #links a {
-    padding: 1em;
+    padding: 1vw;
     display: block;
     float: left;
     color: #00283B;
     text-decoration: none;
-    border-radius: 1em;
+    border-radius: 1vw;
     /*background-color: rgba(0, 102, 124, 0.3);*/
 }
 
 header #links a:hover {
-    background-color: #00667C;
+    background-color: rgba(0, 102, 124, 0.6);
     color: white;
 }
 
@@ -96,6 +98,7 @@ header #links a:hover {
     border-radius: 1em;
     padding: 1em;
     max-width: 30em;
+    z-index: 2;
 }
 
 @media screen and (max-width: 767px) {
@@ -138,24 +141,23 @@ footer {
     width: 100%;
     background-color: #00283B;
     color: white;
-    z-index: -1;
     display: flex;
     flex-direction: column;
-    padding: 3em 9em 3em 3em;
+    padding: 3vw 9vw 3vw 3vw;
     align-items: center;
-    gap: 3em;
+    gap: 3vw;
 }
 
 .footer-in {
     display: flex;
     justify-content: space-between;
-    gap: 3em;
+    gap: 4vw;
 }
 
 footer img {
     aspect-ratio: 1/1;
     object-fit: contain;
-    width: 15%;
+    width: 20%;
 }
 
 .credits-out {
@@ -177,6 +179,81 @@ footer img {
     opacity: 0.6;
 }
 
+/*social links*/
+
+.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 3vw;
+}
+
+.social-links button {
+    padding: 1vw;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    font-size: 3vw;
+    color: white;
+    border-bottom: 5px solid;
+    z-index: 1;
+}
+
+.social-links button::after {
+    content: "";
+    width: 100%;
+    height: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: .4s ease;
+}
+
+.social-links button:hover::after {
+    height: 100%;
+}
+
+#telegram {
+    border-bottom-color: #1E94D2;
+}
+
+#telegram::after {
+    background-color: #1E94D2;
+}
+
+#facebook {
+    border-bottom-color: #325BFE;
+}
+
+#facebook::after {
+    background-color: #325BFE;
+}
+
+#mail {
+    border-bottom-color: #E35A46;
+}
+
+#mail::after {
+    background-color: #E35A46;
+}
+
+#regioneveneto {
+    border-bottom-color: #EC9A27;
+}
+
+#regioneveneto::after {
+    background-color: #EC9A27;
+}
+
 /*home*/
 
 .logo picture {
@@ -184,7 +261,7 @@ footer img {
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-top: 3em;
+    margin-top: 3vw;
 }
 
 .logo picture img {
@@ -195,7 +272,7 @@ footer img {
 
 @media screen and (max-width: 767px) {
     .logo picture {
-        margin-top: 6em;
+        margin-top: 9vw;
     }
 
     .logo picture img {
@@ -206,6 +283,6 @@ footer img {
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .logo picture {
-        margin-top: 4em;
+        margin-top: 6vw;
     }
 }
