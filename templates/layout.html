@@ -12,50 +12,80 @@
 </head>
 <body>
     <!--<h1>Welcome to my contacts</h1>
-    <div class="m-2">
-        <a href="{{ url_for('home') }}">Home</a>
-        <br>
-        <a href="{{ url_for('contacts') }}">Contacts</a>
-        <br>
-        <a href="{{ url_for('login') }}">Login</a>
-        <br>
-    </div>-->
-    <header id="menu">
-        <div>
-            <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Home</a>
-            <a href=""><i class="fa-solid fa-circle-info"></i> Infos</a>
-        </div>
-    </header>
+        <div class="m-2">
+            <a href="{{ url_for('home') }}">Home</a>
+            <br>
+            <a href="{{ url_for('contacts') }}">Contacts</a>
+            <br>
+            <a href="{{ url_for('login') }}">Login</a>
+            <br>
+        </div>-->
+        <header id="menu">
+            <!--trigger menu-->
+            <div id="menu2" class="nav-sides" title="Menu">
+                <a data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu">
+                    <i class="fa-solid fa-bars"></i>
+                </a>
+            </div>
+            <!--links-->
+            <div id="links">
+                <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Home</a>
+                <a href=""><i class="fa-solid fa-circle-info"></i> Info</a>
+            </div>
+            <!--login-->
+            <div id="login" class="nav-sides" title="Login">
+                <a href="{{ url_for('login') }}"><i class="fa-solid fa-right-to-bracket"></i></a>
+            </div>
+        </header>
 
-    <div id="cookies">
-        <h5><i class="fa-solid fa-cookie"></i> Cookies</h5>
-        <p>here goes the description and the indications for the cookies!!!!!!!!!!!! mmmmmh yummmy</p>
-        <div id="cookieButtons">
-            <button type="button" class="btn btn-secondary" onclick="reject()"><i class="fa-solid fa-xmark"></i> Reject All</button>
-            <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> Accept All</button>
-            <button type="button" class="btn btn-primary"><i class="fa-solid fa-pencil"></i> Customize</button>
+        <!--offcanvas menu-->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+            <div class="offcanvas-header" data-bs-theme="dark">
+                <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div>
+                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                </div>
+            </div>
         </div>
-    </div>
-    {% block content %} {% endblock %}
-</body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    //disappearing navbar function
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("menu").style.top = "0";
-        } else {
-            document.getElementById("menu").style.top = "-100px";
+        
+        <!--cookies label-->
+        <div id="cookies">
+            <h5><i class="fa-solid fa-cookie"></i> Cookies</h5>
+            <p>here goes the description and the indications for the cookies!!!!!!!!!!!! mmmmmh yummmy</p>
+            <div id="cookieButtons">
+                <button type="button" class="btn btn-secondary" onclick="reject()"><i class="fa-solid fa-xmark"></i> Reject All</button>
+                <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> Accept All</button>
+                <button type="button" class="btn btn-primary"><i class="fa-solid fa-pencil"></i> Customize</button>
+            </div>
+        </div>
+
+        {% block content %} {% endblock %}
+
+        <footer>
+            ciao
+        </footer>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        //disappearing navbar function
+        /*var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("menu").style.top = "0";
+            } else {
+                document.getElementById("menu").style.top = "-100px";
+            }
+            prevScrollpos = currentScrollPos;
+        }*/
+        
+        //cookies functions
+        function reject(){
+            document.getElementById("cookies").classList.add("disappear");
         }
-        prevScrollpos = currentScrollPos;
-    }
-
-    //cookies functions
-    function reject(){
-        document.getElementById("cookies").classList.add("disappear");
-    }
-</script>
-</html>
+    </script>
+    </html>

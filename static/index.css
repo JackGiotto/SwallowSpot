@@ -9,51 +9,90 @@ body {
     background-color: #EDFCFF;
 }
 
+/*navbar*/
+
 header {
     width: 100%;
     position: fixed;
     left: 0;
     top: 0;
-    padding: 0 10%;
+    padding: 1em 10%;
     transition: top 0.3s;
-}
-
-header div{
     display: flex;
-    flex-wrap: wrap;
-    /*margin: 0 10% 0 10%;*/
-    background-color: rgba(0, 40, 59, 0.97);
-    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-    justify-content: center;
+    gap: 1%;
 }
 
 @media screen and (max-width: 767px) {
     header {
-        padding: 0;
-    }
-    
-    header div {
-        clip-path: none;
+        padding: 1em;
     }
 }
 
-header a {
-    padding: 20px;
+header div{
+    display: flex;
+    /*margin: 0 10% 0 10%;
+    background-color: rgba(0, 40, 59, 0.97);
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
+    background-color: rgba(167, 199, 224, 0.8);
+    /*border: 2px solid #00283B;*/
+    border-radius: 20px;
+    padding: 5px;
+    filter: drop-shadow(10px 10px 10px #00283B);
+}
+
+/*menu + login*/
+
+.nav-sides {
+    width: fit-content;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.nav-sides a {
+    color: #00283B;
+}
+
+/*central links*/
+
+#links {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+header #links a {
+    padding: 1em;
     display: block;
     float: left;
-    color: white;
+    color: #00283B;
     text-decoration: none;
+    border-radius: 1em;
+    /*background-color: rgba(0, 102, 124, 0.3);*/
 }
 
-header a:hover {
+header #links a:hover {
     background-color: #00667C;
+    color: white;
 }
+
+/*offcanvas menu*/
+
+.offcanvas {
+    background-color: #00283B;
+    color: white;
+}  
+
+/*cookies label*/
 
 #cookies {
     position: fixed;
     bottom: 10px;
     right: 10px;
     border: 5px double #00283B;
+    background-color: #EDFCFF;
     border-radius: 1em;
     padding: 1em;
     max-width: 30em;
@@ -91,6 +130,17 @@ header a:hover {
     background-color: #004c5e;
 }
 
+/*footer*/
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #00283B;
+    color: white;
+    z-index: -1;
+}
+
 /*home*/
 
 .logo picture {
@@ -109,11 +159,17 @@ header a:hover {
 
 @media screen and (max-width: 767px) {
     .logo picture {
-        margin-top: 5em;
+        margin-top: 6em;
     }
 
     .logo picture img {
         aspect-ratio: 1/1;
         width: 80%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .logo picture {
+        margin-top: 4em;
     }
 }
