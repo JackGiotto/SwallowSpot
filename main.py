@@ -81,7 +81,7 @@ def get_person(id):
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("registration/login.html")
     elif request.method == "POST":
         #check if credential are correct
         username = request.form["username"]
@@ -92,7 +92,7 @@ def login():
             session["username"] = username
             return redirect(url_for("user"))
         else:
-            return render_template("login.html")
+            return render_template("registration/login.html")
 
 @app.route('/user/')
 def user():

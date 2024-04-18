@@ -9,6 +9,7 @@
     <script src="https://kit.fontawesome.com/64fd56171c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href={{ url_for('static', filename = 'index.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'animations.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'slider.css') }}>
 </head>
 <body>
     <!--<h1>Welcome to my contacts</h1>
@@ -41,12 +42,20 @@
         <!--offcanvas menu-->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
             <div class="offcanvas-header" data-bs-theme="dark">
-                <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
+                <h4 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div>
-                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                <div id="otherLinks">
+                    <h5>Main Links</h5>
+                    <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
+                    <a href=""><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Reports</a>
+                    <a href=""><i class="fa-solid fa-circle-info"></i>&ThickSpace; Info</a>
+                </div>
+                <div id="access">
+                    <h5>Access</h5>
+                    <a href="{{ url_for('login') }}"><i class="fa-solid fa-right-to-bracket"></i>&ThickSpace; Login</a>
+                    <a href=""><i class="fa-solid fa-pen-nib"></i>&ThickSpace; Register</a>
                 </div>
             </div>
         </div>
@@ -71,11 +80,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        descrizione dei cookies
-                        <input type="checkbox">
+                        here go the cookies informations<br>
+                        <form action="">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
@@ -153,7 +167,10 @@
         
         //cookies functions
         function reject(){
-            document.getElementById("cookies").classList.add("disappear");
+            cookies1 = document.getElementById("cookies");
+            cookies2 = document.getElementById("customizeCookies");
+            cookies1.classList.add("disappear");
+            setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
         }
     </script>
     </html>

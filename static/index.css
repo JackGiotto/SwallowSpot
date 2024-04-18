@@ -23,12 +23,6 @@ header {
     gap: 2%;
 }
 
-@media screen and (max-width: 767px) {
-    header {
-        padding: 1vw;
-    }
-}
-
 header div{
     display: flex;
     /*margin: 0 10% 0 10%;
@@ -40,6 +34,12 @@ header div{
     border-radius: 20px;
     padding: 5px 5px 0 5px;
     filter: drop-shadow(0 5px 0px #00283B);
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    header {
+        padding: 1vw;
+    }
 }
 
 /*menu + login*/
@@ -85,7 +85,36 @@ header #links a:hover {
 .offcanvas {
     background-color: #00283B;
     color: white;
-}  
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    padding: 0;
+}
+
+.offcanvas-body div {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+
+.offcanvas-body div h5 {
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+.offcanvas-body div a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    padding-left: 2rem;
+}
+
+.offcanvas-body div a:hover {
+    background-color: rgba(0, 102, 124, 0.6);
+}
 
 /*cookies label*/
 
@@ -99,13 +128,7 @@ header #links a:hover {
     padding: 1em;
     max-width: 30em;
     z-index: 2;
-}
-
-@media screen and (max-width: 767px) {
-    #cookies {
-        left: 10px;
-        max-width: 100%;
-    }
+    display: none; /*DA TOGLIERE*/
 }
 
 #cookieButtons {
@@ -133,6 +156,13 @@ header #links a:hover {
     background-color: #004c5e;
 }
 
+@media screen and (max-width: 767px) { /*phone*/
+    #cookies {
+        left: 10px;
+        max-width: 100%;
+    }
+}
+
 /*footer*/
 
 footer {
@@ -143,15 +173,19 @@ footer {
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 3vw 9vw 3vw 3vw;
+    padding: 3vw;
+    /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
-    gap: 3vw;
+    gap: 4vw;
 }
 
 .footer-in {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 3vw;
     gap: 4vw;
+    flex-direction: column;
 }
 
 footer img {
@@ -162,12 +196,23 @@ footer img {
 
 .credits-out {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .credits-in {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
+    flex-direction: column;
+    gap: 2vw;
+    width: 100%;
+}
+
+.credits-in .column {
+    width: 15em;
 }
 
 .foot-subtitle {
@@ -201,9 +246,9 @@ footer img {
     align-items: center;
     background-color: transparent;
     border: none;
-    font-size: 3vw;
+    font-size: 4vw;
     color: white;
-    border-bottom: 5px solid;
+    border-bottom: 0.1em solid;
     z-index: 1;
 }
 
@@ -254,6 +299,28 @@ footer img {
     background-color: #EC9A27;
 }
 
+@media screen and (max-width: 1023px) { /*phone / tablet*/
+    .social-links button {
+        padding: 2vw;
+        font-size: 10vw;
+    }
+}
+
+@media screen and (min-width: 768px) { /*tablet / pc*/
+    .footer-in {
+        flex-direction: row;
+    }
+
+    .credits-out {
+        align-items: start;
+    }
+
+    .credits-in {
+        flex-direction: row;
+        align-items: start;
+    }
+}
+
 /*home*/
 
 .logo picture {
@@ -270,9 +337,9 @@ footer img {
     width: 70%;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) { /*phone*/
     .logo picture {
-        margin-top: 9vw;
+        margin-top: 20vw;
     }
 
     .logo picture img {
@@ -281,8 +348,8 @@ footer img {
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*/
     .logo picture {
-        margin-top: 6vw;
+        margin-top: 8vw;
     }
 }
