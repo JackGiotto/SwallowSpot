@@ -14,8 +14,12 @@ CHAT_ID: Final = "741878550"
 
 async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     chat_id = update.message.chat_id
-    await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}")
-    await control()
+    keyboard = [
+        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
+        ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
+   
     
 async def help_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     await update.message.reply_text(" ciao sono il tuo bot per vedere se il mondo sta finendo in cosa ti devo aiutare")
@@ -29,7 +33,8 @@ async def invia_notifica(messaggio):
     try:
         keyboard = [
         [InlineKeyboardButton("Accetta", callback_data='opzione1')],
-        [InlineKeyboardButton("Rifiuta", callback_data='opzione2')]
+        [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
+        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await bot.send_message(chat_id=CHAT_ID, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
@@ -38,13 +43,27 @@ async def invia_notifica(messaggio):
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
 
-async def control():
+async def control(update: Update, context):
     url = 'https://www.ambienteveneto.it/Dati/0283.xml'
     response = urllib.request.urlopen(url).read()
     data_dict = xmltodict.parse(response)
-    json_data = json.dumps(data_dict)
-    await invia_notifica(json_data)
-
+    json_data = json.dumps(data_dict,indent=4)
+    data=json.loads(json_data)
+    liv_idro=data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
+    # Estrai l'ultimo valore di "VM" (livello idrometrico)
+    print(liv_idro[-1]["VM"])
+    #ultimo_valore_VM = livelli_idrometrici[-1]["VM"]
+    val=liv_idro[-1]["VM"]
+    liv=float(val)
+    if(liv>=2.3):
+       await invia_notifica("AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val)
+    elif(liv>=2.8):
+       await invia_notifica("AO ZI ER BRENTA STA AL SECONDO LIVELLO STA AD ALTEZZA",val)
+    elif(liv>=3.2):
+        await invia_notifica("AO ZI ER BRENTA STAMO A GIOCA A CARTE CON I PESCI TIE BECCATE STA ALTEZZA",val)
+    else:
+       await invia_notifica("STIAMO NER BING CHILLING")   
+        
 async def button(update: Update, context):
     query = update.callback_query
     await query.answer()
@@ -53,6 +72,8 @@ async def button(update: Update, context):
         await send(update, context)
     elif data == 'opzione2':
         await delete(update, context)
+    elif data == 'opzione3':
+        await control(update, context)
 
 # Funzione per gestire l'opzione 1
 async def send(update: Update, context):
@@ -73,7 +94,7 @@ def handle_response(text: str)-> str:
     if'ciao' in processed:
         return 'ciao'
     if 'mostramelo' in processed:
-        chat_id = update.message.chat_id
+        chat_id = Update.message.chat_id
         return f'ok ti mostro il vostro chatid {chat_id}'
     return 'errore'
 
