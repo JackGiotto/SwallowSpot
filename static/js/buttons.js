@@ -1,9 +1,29 @@
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function uniqid() {
+  var id = getRandomInt(0, Date.now());
+  return id;
+}
+
+function getElement(){
+    alert(localStorage.getItem("element") +" \ncookies:"+ document.cookie)
+    //alert(DOCUMENT.cookie)
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('#output').innerHTML = uniqid();
+});
+
 //cookies functions
 function reject(){
     document.getElementById("cookies").classList.add("disappear");
 }
 function accept(){
-
+    document.cookie = "ID = "+uniqid();
 }
 function customize(){
     
