@@ -8,6 +8,10 @@
 body {
     background-color: #EDFCFF;
     /*background-color: rgb(20, 20, 20);*/
+    background-image: url("../static/images/login_background_2.png");
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: cover;
 }
 
 .external {
@@ -16,4 +20,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.card {
+    padding: 1rem;
+    background-color: rgba(89, 164, 188, 0.03);
+    border-color: #00667C;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px #59A4BC;
+    margin: 1rem;
+}
+
+.card a {
+    text-decoration: none;
+    color: #00667C;
+}
+
+.card a:hover {
+    text-decoration: underline;
 }
