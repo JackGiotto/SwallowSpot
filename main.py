@@ -10,10 +10,12 @@ import urllib.request
 
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
-CHAT_ID: Final = "741878550"
+CHAT_ID: Final = None
 
 async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
+    global CHAT_ID  # Indica che si sta facendo riferimento alla variabile globale CHAT_ID
     chat_id = update.message.chat_id
+    CHAT_ID = chat_id
     keyboard = [
         [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
@@ -44,6 +46,7 @@ async def invia_notifica(messaggio):
 
 
 async def control(update: Update, context):
+    
     url = 'https://www.ambienteveneto.it/Dati/0283.xml'
     response = urllib.request.urlopen(url).read()
     data_dict = xmltodict.parse(response)
@@ -56,16 +59,25 @@ async def control(update: Update, context):
     val=liv_idro[-1]["VM"]
     liv=float(val)
     if(liv>=2.3):
-       await invia_notifica("AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val)
+        response="AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val
+        response = ' '.join(response)
+        await invia_notifica(response)
     elif(liv>=2.8):
-       await invia_notifica("AO ZI ER BRENTA STA AL SECONDO LIVELLO STA AD ALTEZZA",val)
+        response="AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val
+        response = ' '.join(response)
+        await invia_notifica(response)
     elif(liv>=3.2):
-        await invia_notifica("AO ZI ER BRENTA STAMO A GIOCA A CARTE CON I PESCI TIE BECCATE STA ALTEZZA",val)
+        response="AO ZI ER BRENTA STAMO A GIOCA A CARTE CON I PESCI TIE BECCATE STA ALTEZZA",val
+        response = ' '.join(response)
+        await invia_notifica(response)
     else:
-       await invia_notifica("STIAMO NER BING CHILLING")   
+        response="STIAMO NER BING CHILLING STIAMO AD ALTEZZA",val
+        response = ' '.join(response)
+        await invia_notifica(response)   
         
 async def button(update: Update, context):
     query = update.callback_query
+    chat_id = update.message.chat_id
     await query.answer()
     data = query.data
     if data == 'opzione1':
@@ -73,7 +85,7 @@ async def button(update: Update, context):
     elif data == 'opzione2':
         await delete(update, context)
     elif data == 'opzione3':
-        await control(update, context)
+        await control(update, context,chat_id)
 
 # Funzione per gestire l'opzione 1
 async def send(update: Update, context):
