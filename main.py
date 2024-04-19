@@ -94,6 +94,22 @@ def login():
         else:
             return render_template("registration/login.html")
 
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    if request.method == "GET":
+        return render_template("registration/register.html")
+    elif request.method == "POST":
+        #check if credential are correct
+        username = request.form["username"]
+        password = request.form["password"]
+        if username == "pallante" and password == "sasso":
+            #sessione
+            session.permanent = True
+            session["username"] = username
+            return redirect(url_for("user"))
+        else:
+            return render_template("registration/register.html")
+
 @app.route('/user/')
 def user():
     #controllo sessione

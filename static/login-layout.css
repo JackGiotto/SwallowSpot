@@ -12,6 +12,16 @@ body {
     background-repeat: repeat-x;
     background-position: center;
     background-size: cover;
+    /*animation: wind 10s linear infinite;*/
+}
+
+@keyframes wind {
+    from {
+        background-position: 0;
+    }
+    to {
+        background-position: 1920px;
+    }
 }
 
 .external {
@@ -39,4 +49,29 @@ body {
 
 .card a:hover {
     text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .card {
+        width: 30rem;
+    }
+}
+
+.btn-outline-secondary {
+    border-color: #006b83;
+    color: #006b83;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #006b83;
+    border-color: #006b83;
+}
+
+.btn-success {
+    background-color: #00283B;
+    border-color: #00283B;
+}
+
+.btn-success:hover {
+    background-color: #00202e;
 }

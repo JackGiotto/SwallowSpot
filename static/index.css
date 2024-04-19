@@ -30,7 +30,7 @@ header div{
     clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
     /*background-color: rgba(167, 199, 224, 0.8);*/
     /*border: 2px solid #EDFCFF;*/
-    background-color: rgba(89, 164, 188, 0.8);
+    background-color: #59a4bccc;
     border-radius: 20px;
     padding: 5px 5px 0 5px;
     filter: drop-shadow(0 5px 0px #00283B);
@@ -76,8 +76,9 @@ header #links a {
 }
 
 header #links a:hover {
-    background-color: rgba(0, 102, 124, 0.6);
+    background-color: #59a4bccc;
     color: white;
+    transition-duration: 250ms;
 }
 
 /*offcanvas menu*/
@@ -113,7 +114,8 @@ header #links a:hover {
 }
 
 .offcanvas-body div a:hover {
-    background-color: rgba(0, 102, 124, 0.6);
+    background-color: #00667c99;
+    transition-duration: 150ms;
 }
 
 /*cookies label*/
