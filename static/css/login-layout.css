@@ -8,7 +8,7 @@
 body {
     background-color: #EDFCFF;
     /*background-color: rgb(20, 20, 20);*/
-    background-image: url("../static/images/login_background_2.png");
+    background-image: url("../images/login_background_2.png");
     background-repeat: repeat-x;
     background-position: center;
     background-size: cover;

@@ -2,6 +2,27 @@
 
 {% block content %}
 
-content here
+<h2>Registrati</h2>
+
+<form action="{{ url_for('register') }}" method="post">
+    <div class="input-group mb-3">
+        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+    </div>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <button class="btn btn-outline-secondary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Nome utente" aria-label="Nome utente">
+    </div>
+    <select name="region" id="region" class="form-select mb-3" aria-label="Select you region">
+        <option selected>Seleziona la tua regione di residenza</option>
+        <heregotheregions />
+    </select>
+
+    <button type="submit" class="btn btn-success mb-2">Registrati</button>
+    <br>
+    <a href="{{ url_for('login') }}">Ho gi&agrave; un account</a>
+</form>
 
 {% endblock %}
