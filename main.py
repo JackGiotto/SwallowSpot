@@ -70,19 +70,19 @@ async def control(update: Update, context):
     
     #controllo del valore dell'altezza del Brenta
     if(liv>=2.3):
-        response="AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val
+        response="ALTEZZA ",val
         response = ' '.join(response)
         await invia_notifica(response)
     elif(liv>=2.8):
-        response="AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val
+        response="ALTEZZA ",val
         response = ' '.join(response)
         await invia_notifica(response)
     elif(liv>=3.2):
-        response="AO ZI ER BRENTA STAMO A GIOCA A CARTE CON I PESCI TIE BECCATE STA ALTEZZA",val
+        response="ALTEZZA ",val
         response = ' '.join(response)
         await invia_notifica(response)
     else:
-        response="STIAMO NER BING CHILLING STIAMO AD ALTEZZA",val
+        response="ALTEZZA ",val
         response = ' '.join(response)
         await invia_notifica(response)   
         
