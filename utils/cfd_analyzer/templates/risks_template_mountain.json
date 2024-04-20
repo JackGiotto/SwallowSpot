@@ -1,0 +1,41 @@
+{
+    "risk_column": 3,
+    "risks_template": {
+        "dolomiti": {
+            "MONT-1A": {
+                "row": 4,
+                "risk_value": ""
+            },
+            "MONT-1B": {
+                "row": 5,
+                "risk_value": ""	
+            },
+            "MONT-1C": {
+                "row": 7,
+                "risk_value": ""	
+            },
+            "MONT-1D": {
+                "row": 8,
+                "risk_value": ""	
+            }
+        },
+        "prealpi": {
+            "MONT-2A": {
+                "row": 9,
+                "risk_value": ""
+            },
+            "MONT-2B": {
+                "row": 10,
+                "risk_value": ""	
+            },
+            "MONT-2C": {
+                "row": 12,
+                "risk_value": ""	
+            },
+            "MONT-2D": {
+                "row": 13,
+                "risk_value": ""	
+            }
+        }
+    }
+}
