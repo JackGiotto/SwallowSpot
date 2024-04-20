@@ -159,26 +159,6 @@ header #links a:hover {
     }
 }
 
-/*pulsanti custom*/
-
-.btn-success {
-    background-color: #00283B;
-    border-color: #00283B;
-}
-
-.btn-success:hover {
-    background-color: #00202e;
-}
-
-.btn-primary {
-    background-color: #00667C;
-    border-color: #006b83;
-}
-
-.btn-primary:hover {
-    background-color: #004c5e;
-}
-
 /*container for different pages' layouts*/
 
 .content {
@@ -354,4 +334,24 @@ footer img {
         flex-direction: row;
         align-items: start;
     }
+}
+
+/*custom buttons*/
+
+.btn-success {
+    background-color: #00283B;
+    border-color: #00283B;
+}
+
+.btn-success:hover {
+    background-color: #00202e;
+}
+
+.btn-primary {
+    background-color: #00667C;
+    border-color: #006b83;
+}
+
+.btn-primary:hover {
+    background-color: #004c5e;
 }
