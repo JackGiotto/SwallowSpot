@@ -10,7 +10,7 @@ function uniqid() {
 }
 
 function getElement(){
-    alert(localStorage.getItem("element") +" \ncookies:"+ document.cookie)
+    alert("cookies:"+ document.cookie)
     //alert(DOCUMENT.cookie)
 }
 
@@ -23,10 +23,13 @@ function reject(){
     document.getElementById("cookies").classList.add("disappear");
 }
 function accept(){
-    document.cookie = "ID = "+uniqid();
+    document.cookie = "IDSESSION = "+uniqid();//cookie di sessione (expires)
+    document.cookie = "IDSPOTLIGHT= "+uniqid();//cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
+    document.cookie = "IDSWOT="+uniqid();//cookie personali(SWOT: Swallowspot Work Organizational Tool)
+
 }
 function customize(){
-    
+    //ricevere scelete dell'utente e creare i rispettivi cookie
 }
 //disappearing navbar function
 var prevScrollpos = window.pageYOffset;
