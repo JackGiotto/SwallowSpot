@@ -8,10 +8,13 @@ import xmltodict
 import xml.etree.ElementTree as ET
 import urllib.request
 
+#Credenziali per associare il Bot Telegram e il programma in python
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 CHAT_ID: Final = None
 
+
+# le funzioni che partano in base al comando inviato al bot Telegram
 async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     global CHAT_ID  # Indica che si sta facendo riferimento alla variabile globale CHAT_ID
     chat_id = update.message.chat_id
@@ -30,6 +33,7 @@ async def help_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 async def custom_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     await update.message.reply_text("Personalizzami")
 
+#invio in modo automoatico del bot ad un utente preciso
 async def invia_notifica(messaggio):
     bot = Bot(token=TOKEN)
     try:
@@ -45,19 +49,26 @@ async def invia_notifica(messaggio):
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
 
+#controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
 async def control(update: Update, context):
     
     url = 'https://www.ambienteveneto.it/Dati/0283.xml'
+    
+    # "prendo" l'XML dal Sito del Comune
     response = urllib.request.urlopen(url).read()
+    
+    # da XML a JSON
     data_dict = xmltodict.parse(response)
     json_data = json.dumps(data_dict,indent=4)
     data=json.loads(json_data)
     liv_idro=data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
+    
     # Estrai l'ultimo valore di "VM" (livello idrometrico)
     print(liv_idro[-1]["VM"])
-    #ultimo_valore_VM = livelli_idrometrici[-1]["VM"]
     val=liv_idro[-1]["VM"]
     liv=float(val)
+    
+    #controllo del valore dell'altezza del Brenta
     if(liv>=2.3):
         response="AO ZI ER BRENTA STA AL PRIMO LIVELLO STA AD ALTEZZA",val
         response = ' '.join(response)
@@ -75,6 +86,7 @@ async def control(update: Update, context):
         response = ' '.join(response)
         await invia_notifica(response)   
         
+#funzione per associare i bottoni e le funzioni del bot        
 async def button(update: Update, context):
     query = update.callback_query
     chat_id = update.message.chat_id
@@ -87,20 +99,20 @@ async def button(update: Update, context):
     elif data == 'opzione3':
         await control(update, context,chat_id)
 
-# Funzione per gestire l'opzione 1
+# Funzione per gestire l'opzione 1 del bottone
 async def send(update: Update, context):
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(text="cx")
 
-# Funzione per gestire l'opzione 2
+# Funzione per gestire l'opzione 2 del bottone
 async def delete(update: Update, context):
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(text="Hai selezionato l'opzione 2")
     
-#Risposte
 
+#funzione per l'invio del messaggio in base al msg dell'utente
 def handle_response(text: str)-> str:
     processed: str=text.lower()
     if'ciao' in processed:
@@ -110,6 +122,7 @@ def handle_response(text: str)-> str:
         return f'ok ti mostro il vostro chatid {chat_id}'
     return 'errore'
 
+#funzione per interagiore con il bot da un gruppo Telegram
 async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     message_type : str = update.message.chat.type
     text : str = update.message.text
@@ -136,11 +149,15 @@ async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 if __name__=='__main__':
     app = Application.builder().token(TOKEN).build()
 
+    
+    #associazione ai comandi del bot alle funzione
     app.add_handler(CommandHandler('start', start_command))
     app.add_handler(CommandHandler('help', help_command))
     app.add_handler(CommandHandler('custom', custom_command))
+    
     app.add_handler(CallbackQueryHandler(button))
     app.add_handler(MessageHandler(filters.TEXT,handle_message))
+    
     
     app.add_error_handler(error)
     print("Polling....")
