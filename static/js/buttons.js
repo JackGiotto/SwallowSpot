@@ -23,9 +23,13 @@ function reject(){
     document.getElementById("cookies").classList.add("disappear");
 }
 function accept(){
-    document.cookie = "IDSESSION = "+uniqid();//cookie di sessione (expires)
-    document.cookie = "IDSPOTLIGHT= "+uniqid();//cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
-    document.cookie = "IDSWOT="+uniqid();//cookie personali(SWOT: Swallowspot Work Organizational Tool)
+    //genera data scadenza cookies persistents (30 giorni)
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 30);
+
+    document.cookie = "IDSESSION = "+uniqid()//cookie di sessione (expires)
+    document.cookie = "IDSPOTLIGHT= "+uniqid()+"expires=" + expireDate.toUTCString();//cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
+    document.cookie = "IDSWOT="+uniqid()+"expires=" + expireDate.toUTCString();//cookie personali(SWOT: Swallowspot Work Organizational Tool)
 
 }
 function customize(){
