@@ -14,27 +14,64 @@ BOT_USERNAME: Final="@SwallowSpotBot"
 CHAT_ID: Final = None
 
 
+async def alert_control(tipo,colore):
+    bot = Bot(token=TOKEN)
+    try:
+        keyboard = [
+            [InlineKeyboardButton("Accetta", callback_data='opzione1')],
+            [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
+            [InlineKeyboardButton("Controlla", callback_data='opzione3')]
+        ]
+
+        messaggio = ""
+        if tipo =="hydraulic":
+            if colore == "GIALLO":
+                messaggio += "\nPericolo Giallo di idraulico"
+            elif colore == "ROSSO":
+                messaggio += "\nPericolo Rosso di idraulico"
+        elif tipo =="hydrogeological":        
+            if colore  == "GIALLO":
+                messaggio += "\nPericolo Giallo di idrogeologico"
+            elif colore == "ROSSO":
+                messaggio += "\nPericolo Rosso di idrogeologico"
+        elif tipo =="storm":     
+            if colore == "GIALLO":
+                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali"
+            elif colore == "ROSSO":
+                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali"
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
+        print("Notifica inviata con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
+        
 # le funzioni che partano in base al comando inviato al bot Telegram
 async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     global CHAT_ID  # Indica che si sta facendo riferimento alla variabile globale CHAT_ID
     chat_id = update.message.chat_id
     CHAT_ID = chat_id
+    
+    
+    data={
+        "hydraulic": "VERDE",
+        "hydrogeological": "GIALLO",
+        "storm": "GIALLO"
+    }
+    for tipo, colore in data.items():
+        if(colore!="VERDE"):
+            await alert_control(tipo,colore)
+        
     keyboard = [
         [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
    
-    
-async def help_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
-    await update.message.reply_text(" ciao sono il tuo bot per vedere se il mondo sta finendo in cosa ti devo aiutare")
-    
-
-async def custom_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
-    await update.message.reply_text("Personalizzami")
 
 #invio in modo automoatico del bot ad un utente preciso
-async def invia_notifica(messaggio):
+async def invia_notifica(messaggio,cid):
     bot = Bot(token=TOKEN)
     try:
         keyboard = [
@@ -43,53 +80,20 @@ async def invia_notifica(messaggio):
         [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=CHAT_ID, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
+        await bot.send_message(chat_id=cid, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
         print("Notifica inviata con successo!")
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
 
-#controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
-async def control(update: Update, context):
-    
-    url = 'https://www.ambienteveneto.it/Dati/0283.xml'
-    
-    # "prendo" l'XML dal Sito del Comune
-    response = urllib.request.urlopen(url).read()
-    
-    # da XML a JSON
-    data_dict = xmltodict.parse(response)
-    json_data = json.dumps(data_dict,indent=4)
-    data=json.loads(json_data)
-    liv_idro=data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
-    
-    # Estrai l'ultimo valore di "VM" (livello idrometrico)
-    print(liv_idro[-1]["VM"])
-    val=liv_idro[-1]["VM"]
-    liv=float(val)
-    
-    #controllo del valore dell'altezza del Brenta
-    if(liv>=2.3):
-        response="ALTEZZA ",val
-        response = ' '.join(response)
-        await invia_notifica(response)
-    elif(liv>=2.8):
-        response="ALTEZZA ",val
-        response = ' '.join(response)
-        await invia_notifica(response)
-    elif(liv>=3.2):
-        response="ALTEZZA ",val
-        response = ' '.join(response)
-        await invia_notifica(response)
-    else:
-        response="ALTEZZA ",val
-        response = ' '.join(response)
-        await invia_notifica(response)   
+
+        
+        
         
 #funzione per associare i bottoni e le funzioni del bot        
 async def button(update: Update, context):
     query = update.callback_query
-    chat_id = update.message.chat_id
+    chat_id = query.message.chat_id
     await query.answer()
     data = query.data
     if data == 'opzione1':
@@ -98,6 +102,41 @@ async def button(update: Update, context):
         await delete(update, context)
     elif data == 'opzione3':
         await control(update, context,chat_id)
+        
+        
+#controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
+async def control(update: Update, context: ContextTypes.DEFAULT_TYPE, chat_id):
+    url = 'https://www.ambienteveneto.it/Dati/0283.xml'
+
+    # "prendo" l'XML dal Sito del Comune
+    response = urllib.request.urlopen(url).read()
+
+    # da XML a JSON
+    data_dict = xmltodict.parse(response)
+    json_data = json.dumps(data_dict, indent=4)
+    data = json.loads(json_data)
+    liv_idro = data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
+
+    # Estrai l'ultimo valore di "VM" (livello idrometrico)
+    print(liv_idro[-1]["VM"])
+    val = liv_idro[-1]["VM"]
+    liv = float(val)
+
+    # controllo del valore dell'altezza del Brenta
+    if liv >= 2.3:
+        response = "ALTEZZA " + val
+        await invia_notifica(response, chat_id)
+    elif liv >= 2.8:
+        response = "ALTEZZA " + val
+        await invia_notifica(response, chat_id)
+    elif liv >= 3.2:
+        response = "ALTEZZA " + val
+        await invia_notifica(response, chat_id)
+    else:
+        response = "ALTEZZA " + val
+        await invia_notifica(response, chat_id)
+                
+        
 
 # Funzione per gestire l'opzione 1 del bottone
 async def send(update: Update, context):
@@ -152,8 +191,8 @@ if __name__=='__main__':
     
     #associazione ai comandi del bot alle funzione
     app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('help', help_command))
-    app.add_handler(CommandHandler('custom', custom_command))
+ #   app.add_handler(CommandHandler('help', help_command))
+  #  app.add_handler(CommandHandler('custom', custom_command))
     
     app.add_handler(CallbackQueryHandler(button))
     app.add_handler(MessageHandler(filters.TEXT,handle_message))
