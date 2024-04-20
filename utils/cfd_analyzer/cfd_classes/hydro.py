@@ -17,7 +17,7 @@ class Hydro:
 
 	def __init__(self, pdf_path):
 		self.path = pdf_path
-		self.get_bulletin_data()
+		#self.get_bulletin_data()
 
 	def get_bulletin_data(self):
 		self.data["date"] = self.get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"]))

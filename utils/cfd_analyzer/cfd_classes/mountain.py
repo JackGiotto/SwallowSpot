@@ -16,12 +16,12 @@ class Mountain:
 
 	def __init__(self, pdf_path):
 		self.path = pdf_path
-		self.get_bulletin_data()
+		#self.get_bulletin_data()
 
 	def get_bulletin_data(self):
 		self.data["date"] = self.get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"]))
 		self.data["risks"] = self.get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])) 
-   
+
 	def get_date(self, table):
 		string = table[0].df[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]
 		splitted = string.split(' ')
@@ -50,21 +50,8 @@ class Mountain:
 			json.dump(template, f, indent="\t")
 
 	def parse_date(self, date_string):	
-		MONTH_NUMBERS = {
-			"gennaio": "01",
-			"febbraio": "02",
-			"marzo": "03",
-			"aprile": "04",
-			"maggio": "05",
-			"giugno": "06",
-			"luglio": "07",
-			"agosto": "08",
-			"settembre": "09",
-			"ottobre": "10",
-			"novembre": "11",
-			"dicembre": "12",
-
-		}	
+		with open("./utils/cfd_analyzer/templates/month_numbers.json", "r") as f:
+			MONTH_NUMBERS = json.load(f)
 		day = date_string[2]
 		month = date_string[3]
 		year=date_string[4]
