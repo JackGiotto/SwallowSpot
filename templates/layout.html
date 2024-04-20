@@ -10,6 +10,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/index.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
 </head>
 <body>
     <header id="menu">
@@ -22,8 +23,8 @@
         <!--links-->
         <div id="links">
             <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Home</a>
-            <a href=""><i class="fa-solid fa-triangle-exclamation"></i> Bollettini</a>
-            <a href=""><i class="fa-solid fa-circle-info"></i> Info</a>
+            <a href="" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
+            <a href="" class="shrink2"><i class="fa-solid fa-magnifying-glass"></i> Cerca Bollettini</a>
         </div>
         <!--login-->
         <div id="login" class="nav-sides" title="Login">
@@ -41,7 +42,8 @@
             <div id="otherLinks">
                 <h5>Links principali</h5>
                 <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
-                <a href=""><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Bollettini</a>
+                <a href=""><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi Bollettini</a>
+                <a href=""><i class="fa-solid fa-magnifying-glass"></i>&ThickSpace; Cerca Bollettini</a>
                 <a href=""><i class="fa-solid fa-circle-info"></i>&ThickSpace; Info</a>
             </div>
             <div id="access">
@@ -88,8 +90,10 @@
         </div>
     </div>
     
-    {% block content %} {% endblock %}
-        
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+    
     <footer>
         <div class="footer-in">
             <img src="{{ url_for('static', filename='images/swallowspot_footer_icon.png') }}" alt="SwallowSpot">

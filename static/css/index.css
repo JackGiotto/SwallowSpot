@@ -81,6 +81,18 @@ header #links a:hover {
     transition-duration: 250ms;
 }
 
+@media screen and (max-width: 600px) { /*phone*/
+    header #links .shrink1, header #links .shrink2 {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1023px) { /*tablet*/
+    header #links .shrink2 {
+        display: none;
+    }
+}
+
 /*offcanvas menu*/
 
 .offcanvas {
@@ -130,7 +142,7 @@ header #links a:hover {
     padding: 1em;
     max-width: 30em;
     z-index: 2;
-    /*display: none; /*DA TOGLIERE*/
+    display: none; /*DA TOGLIERE*/
 }
 
 #cookieButtons {
@@ -139,6 +151,15 @@ header #links a:hover {
     flex-direction: row;
     gap: 5px;
 }
+
+@media screen and (max-width: 767px) { /*phone*/
+    #cookies {
+        left: 10px;
+        max-width: 100%;
+    }
+}
+
+/*pulsanti custom*/
 
 .btn-success {
     background-color: #00283B;
@@ -158,10 +179,22 @@ header #links a:hover {
     background-color: #004c5e;
 }
 
+/*container for different pages' layouts*/
+
+.content {
+    margin-top: 3vw;
+    margin-bottom: 7vw;
+}
+
 @media screen and (max-width: 767px) { /*phone*/
-    #cookies {
-        left: 10px;
-        max-width: 100%;
+    .content {
+        margin-top: 20vw;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*/
+    .content {
+        margin-top: 8vw;
     }
 }
 
@@ -320,38 +353,5 @@ footer img {
     .credits-in {
         flex-direction: row;
         align-items: start;
-    }
-}
-
-/*home*/
-
-.logo picture {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 3vw;
-}
-
-.logo picture img {
-    aspect-ratio: 16/9;
-    object-fit: contain;
-    width: 70%;
-}
-
-@media screen and (max-width: 767px) { /*phone*/
-    .logo picture {
-        margin-top: 20vw;
-    }
-
-    .logo picture img {
-        aspect-ratio: 1/1;
-        width: 80%;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*/
-    .logo picture {
-        margin-top: 8vw;
     }
 }
