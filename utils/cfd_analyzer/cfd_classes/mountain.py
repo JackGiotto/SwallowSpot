@@ -41,7 +41,7 @@ class Mountain:
 		for mountain, mountain_data in template.items():
 			for region, region_data in mountain_data.items():
 				template[mountain][region]["risk_value"] = table[RISKS["risk_column"]][region_data["row"]]
-			del region_data["row"]
+				del region_data["row"]
 		
 		# debug
 		#print(template)
