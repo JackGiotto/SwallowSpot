@@ -1,0 +1,29 @@
+/*home title image*/
+
+.logo picture {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo picture img {
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    width: 70%;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    .logo picture img {
+        aspect-ratio: 1/1;
+        width: 80%;
+    }
+}
+
+/*overview section*/
+
+.overview {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
