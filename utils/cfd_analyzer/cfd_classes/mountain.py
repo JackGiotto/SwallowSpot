@@ -12,15 +12,17 @@ class Mountain:
 		"row": 0
 	}
 
-	data = {}
+	data = {"type": "mountain"}
 
 	def __init__(self, pdf_path):
 		self.path = pdf_path
 		#self.get_bulletin_data()
 
 	def get_bulletin_data(self):
+		print("Analyzing Mountain bulletin, path:", self.path)
 		self.data["date"] = self.get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"]))
 		self.data["risks"] = self.get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])) 
+		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def get_date(self, table):
 		string = table[0].df[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]
@@ -55,7 +57,8 @@ class Mountain:
 		day = date_string[2]
 		month = date_string[3]
 		year=date_string[4]
+		hour=date_string[6]
 
-		return day + "/" + MONTH_NUMBERS[month] + "/" + year
+		return day + "-" + MONTH_NUMBERS[month] + "-" + year + " " + hour + ":00"
 # debug
 #mountain = Mountain("./test/data/test_mountain.pdf")
