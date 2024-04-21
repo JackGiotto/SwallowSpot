@@ -162,21 +162,21 @@ header #links a:hover {
 /*container for different pages' layouts*/
 
 .content {
-    margin-top: 3vw;
-    margin-bottom: 7vw;
+    margin-top: 10rem;
+    margin-bottom: 7rem;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
     .content {
-        margin-top: 20vw;
+        margin-top: 6rem;
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*/
+/*@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*//*
     .content {
-        margin-top: 8vw;
+        margin-top: 10vw;
     }
-}
+}*/
 
 /*footer*/
 

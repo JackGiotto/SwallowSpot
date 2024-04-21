@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="reports mb-3">
+    <h1>Ultimi bollettini</h1>
+    <div class="categories">
+        <a href="{{ url_for('hydro') }}" class="btn btn-primary m-2 btn-lg">Rischi idrologici</a>
+        <a href="{{ url_for('ava') }}" class="btn btn-primary m-2 btn-lg">Rischi valanghe</a>
+    </div>
+</div>
+
+{% endblock %}

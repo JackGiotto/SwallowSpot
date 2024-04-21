@@ -11,6 +11,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/hydro.css') }}>
 </head>
 <body>
     <header id="menu">
@@ -23,7 +24,7 @@
         <!--links-->
         <div id="links">
             <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
+            <a href="{{ url_for('hydro') }}" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
             <a href="" class="shrink2"><i class="fa-solid fa-magnifying-glass"></i> Cerca Bollettini</a>
         </div>
         <!--login-->
@@ -42,7 +43,7 @@
             <div id="otherLinks">
                 <h5>Links principali</h5>
                 <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
-                <a href=""><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi Bollettini</a>
+                <a href="{{ url_for('hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi Bollettini</a>
                 <a href=""><i class="fa-solid fa-magnifying-glass"></i>&ThickSpace; Cerca Bollettini</a>
                 <a href=""><i class="fa-solid fa-circle-info"></i>&ThickSpace; Info</a>
             </div>

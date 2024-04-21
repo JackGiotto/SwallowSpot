@@ -8,7 +8,7 @@ app.config["DEBUG"] = True
 app.permanent_session_lifetime = timedelta(minutes=5)
 app.secret_key = "klosterpatia"
 
-people = [
+'''people = [
     {
         "id": 1,
         "name": "Aldo",
@@ -27,7 +27,7 @@ people = [
         "surname": "Stone",
         "phone": "123 4567890"
     }
-]
+]'''
 
 def executeQuery(query):
     connection = pymysql.connect(host = "localhost",
@@ -50,7 +50,15 @@ applicationName = "Conzazz"
 def home():
     return render_template("home.html", app=applicationName)
 
-@app.route('/contacts/', methods = ["GET", "POST"])
+@app.route('/reports/hydro/')
+def hydro():
+    return render_template("reports/hydro.html")
+
+@app.route('/reports/ava/')
+def ava():
+    return render_template("reports/ava.html")
+
+'''@app.route('/contacts/', methods = ["GET", "POST"])
 def contacts():
     if request.method == "GET":
         sql = "select * from Contacts"
@@ -77,6 +85,7 @@ def get_person(id):
         sql = "DELETE FROM Contacts WHERE id =" + str(id)
         executeQuery(sql)
         return "Successfully removed a person"
+'''
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
