@@ -22,13 +22,16 @@ async def alert_control(tipo,colore):
             [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
             [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
-
-        messaggio = ""
+        messaggio=" "
         if tipo =="hydraulic":
+            colore= await control()
             if colore == "GIALLO":
                 messaggio += "\nPericolo Giallo di idraulico"
             elif colore == "ROSSO":
                 messaggio += "\nPericolo Rosso di idraulico"
+            elif colore == "VIOLA":
+                messaggio += "\nPericolo Rosso di idraulico"
+            else: return
         elif tipo =="hydrogeological":        
             if colore  == "GIALLO":
                 messaggio += "\nPericolo Giallo di idrogeologico"
@@ -55,7 +58,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     
     
     data={
-        "hydraulic": "VERDE",
+        "hydraulic": "ROSSO",
         "hydrogeological": "GIALLO",
         "storm": "GIALLO"
     }
@@ -100,12 +103,11 @@ async def button(update: Update, context):
         await send(update, context)
     elif data == 'opzione2':
         await delete(update, context)
-    elif data == 'opzione3':
-        await control(update, context,chat_id)
-        
+    #elif data == 'opzione3':
+       # da cambiare per capire come fa re        
         
 #controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
-async def control(update: Update, context: ContextTypes.DEFAULT_TYPE, chat_id):
+async def control():
     url = 'https://www.ambienteveneto.it/Dati/0283.xml'
 
     # "prendo" l'XML dal Sito del Comune
@@ -118,24 +120,18 @@ async def control(update: Update, context: ContextTypes.DEFAULT_TYPE, chat_id):
     liv_idro = data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
 
     # Estrai l'ultimo valore di "VM" (livello idrometrico)
-    print(liv_idro[-1]["VM"])
     val = liv_idro[-1]["VM"]
     liv = float(val)
-
+    
     # controllo del valore dell'altezza del Brenta
-    if liv >= 2.3:
-        response = "ALTEZZA " + val
-        await invia_notifica(response, chat_id)
-    elif liv >= 2.8:
-        response = "ALTEZZA " + val
-        await invia_notifica(response, chat_id)
+    if liv >= 2.3 and liv < 2.8:
+        return "GIALLO"
+    elif liv >= 2.8 and liv < 3.2:
+        return "ROSSO"
     elif liv >= 3.2:
-        response = "ALTEZZA " + val
-        await invia_notifica(response, chat_id)
+        return "VIOLA"
     else:
-        response = "ALTEZZA " + val
-        await invia_notifica(response, chat_id)
-                
+        return "VERDE"            
         
 
 # Funzione per gestire l'opzione 1 del bottone
