@@ -5,7 +5,7 @@
     width: 100%;
 }
 
-.reports .vene {
+.vene {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,11 @@
     padding: 3rem;
 }
 
-.reports .vene:nth-child(odd) {
+.vene p {
+    margin-top: 1rem;
+}
+
+.vene:nth-child(odd) {
     background-color: rgba(89, 164, 188, 0.3);
 }
 
