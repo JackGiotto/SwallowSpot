@@ -66,7 +66,7 @@
         <div id="cookieButtons">
             <button type="button" class="btn btn-secondary" id="btn-reject" onclick="reject()"><i class="fa-solid fa-xmark"></i> Rifiuta tutti</button>
             <button type="button" class="btn btn-success" id="btn-accept" onclick="accept()"><i class="fa-solid fa-check"></i> Accetta tutti</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies" id="btn-customize" onclick="customize()"><i class="fa-solid fa-pencil"></i> Personalizza</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies" id="btn-customize"><i class="fa-solid fa-pencil"></i> Personalizza</button>
         </div>
     </div>
     
@@ -80,12 +80,18 @@
                 </div>
                 <div class="modal-body">
                     here go the cookies informations<br>
-                    <form action=""> <!--save the choices for cookies-->
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </form>
+                    <label class="switch">
+                        <input type="checkbox" onclick="custom_session()">
+                        <span class="slider"></span>
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" onclick="custom_tehnical()">
+                        <span class="slider"></span>
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" onclick="custom_personal()">
+                        <span class="slider"></span>
+                    </label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
