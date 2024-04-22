@@ -82,26 +82,26 @@
                     <p>here go the cookies informations</p>
                     <br>
                     <label class="switch">
-                        <input name="checkbox0" type="checkbox" onclick="activate_session_cookie()">
+                        <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies di sessione</strong>
                     <br><br>
                     <label class="switch">
-                        <input name="checkbox1" type="checkbox" onclick="activate_tehnical_cookie()">
+                        <input id="checkbox1" type="checkbox" onclick="activate_technical_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies tecnici</strong>
                     <br><br>
                     <label class="switch">
-                        <input name="checkbox2" type="checkbox" onclick="activate_personal_cookie()">
+                        <input id="checkbox2" type="checkbox" onclick="activate_personal_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies personali</strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-primary" onclick="customize()">Salva le mie scelte</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="customize()">Salva le mie scelte</button>
                 </div>
             </div>
         </div>
@@ -178,12 +178,6 @@
         prevScrollpos = currentScrollPos;
     }*/
     
-    //cookies functions
-    function reject(){
-        cookies1 = document.getElementById("cookies");
-        cookies2 = document.getElementById("customizeCookies");
-        cookies1.classList.add("disappear");
-        setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
-    }
+    
 </script>
 </html>

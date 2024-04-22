@@ -1,79 +1,78 @@
 //variables
 const cookies=["no","no","no"];
-
+//function for unified id 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//document.addEventListener('DOMContentLoaded', function() {
+//    document.querySelector('#output').innerHTML = uniqid();
+//  });
+  
 function uniqid() {
   var id = getRandomInt(0, Date.now());
   return id;
 }
-
-function getElement(){
-    alert("cookies:"+ document.cookie)
-    //alert(DOCUMENT.cookie)
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('#output').innerHTML = uniqid();
-});
+    
+//genera data scadenza cookies persistents (30 giorni)
+var expireDate = new Date();
+expireDate.setDate(expireDate.getDate() + 30);
 
 //cookies functions's choices
 function reject(){
-    //document.getElementById("cookies").classList.add("disappear");
+    disappear();
 }
 function accept(){
-    //genera data scadenza cookies persistents (30 giorni)
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() + 30);
 
     create_session_cookie();
     create_technical_cookie();
     create_personal_cookie();
-    document.getElementById("cookies").classList.add("disappear");
+    disappear();
 }
 function customize(){
-    if(cookies[0] == "yes")
+    if(cookies[0] == "yes"){
         create_session_cookie();
-    else if(cookies[1] == "yes")
+    }
+    if(cookies[1] == "yes"){
         create_technical_cookie();
-    else if(cookies[2] == "yes")
+    }
+    if(cookies[2] == "yes"){
         create_personal_cookie();
-    document.getElementById("cookies").classList.add("disappear");
+    }   
+    disappear(); 
 }
 
 //activate cookie for custom choices
 function activate_session_cookie(){
-    var checkbox = document.getElementsByName("checkbox0")
+    var checkbox = document.getElementById("checkbox0");
     if(checkbox.checked){
-        cookies[0]="yes"
-        console.log("IDSESSION agreed")
+        cookies[0]="yes";
+        console.log("IDSESSION agreed");
     }else{
-        cookies[0]="no"
-        console.log("IDSESSION denied")
+        cookies[0]="no";
+        console.log("IDSESSION denied");
     }
 }
 function activate_technical_cookie(){
-    var checkbox = document.getElementsByName("checkbox1")
+    var checkbox = document.getElementById("checkbox1");
     if(checkbox.checked){
-        cookies[1]="yes"
-        console.log("IDSPOTLIGHT agreed")
+        cookies[1]="yes";
+        console.log("IDSPOTLIGHT agreed");
     }else{
-        cookies[1]="no"
-        console.log("IDSPOTLIGHT denied")
+        cookies[1]="no";
+        console.log("IDSPOTLIGHT denied");
     }
 }
 function activate_personal_cookie(){
-    var checkbox = document.getElementsByName("checkbox2")
+    var checkbox = document.getElementById("checkbox2");
     if(checkbox.checked){
-        cookies[2]="yes"
-        console.log("SWOT agreed")
+        cookies[2]="yes";
+        console.log("SWOT agreed");
     }else{
-        cookies[2]="no"
-        console.log("SWOT denied")
+        cookies[2]="no";
+        console.log("SWOT denied");
     }
 }
 
@@ -88,14 +87,10 @@ function create_personal_cookie(){
     document.cookie = "IDSWOT="+uniqid()+";expires=" + expireDate.toUTCString();//cookie personali(SWOT: Swallowspot Work Organizational Tool)
 }
 
-//disappearing navbar function
-var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-    var currentScrollPos = window.pageYOffset;
-    if (prevScrollpos > currentScrollPos) {
-        document.getElementById("menu").style.top = "0";
-    } else {
-        document.getElementById("menu").style.top = "-100px";
-    }
-    prevScrollpos = currentScrollPos;
+//cookies functions
+function disappear(){
+    cookies1 = document.getElementById("cookies");
+    cookies2 = document.getElementById("customizeCookies");
+    cookies1.classList.add("disappear");
+    setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
 }
