@@ -82,26 +82,26 @@
                     <p>here go the cookies informations</p>
                     <br>
                     <label class="switch">
-                        <input type="checkbox" onclick="custom_session()">
+                        <input name="checkbox0" type="checkbox" onclick="activate_session_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies di sessione</strong>
                     <br><br>
                     <label class="switch">
-                        <input type="checkbox" onclick="custom_tehnical()">
+                        <input name="checkbox1" type="checkbox" onclick="activate_tehnical_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies tecnici</strong>
                     <br><br>
                     <label class="switch">
-                        <input type="checkbox" onclick="custom_personal()">
+                        <input name="checkbox2" type="checkbox" onclick="activate_personal_cookie()">
                         <span class="slider"></span>
                     </label>
                     &ThickSpace; <strong>Cookies personali</strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-primary">Salva le mie scelte</button>
+                    <button type="button" class="btn btn-primary" onclick="customize()">Salva le mie scelte</button>
                 </div>
             </div>
         </div>
