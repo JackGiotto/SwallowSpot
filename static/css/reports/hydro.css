@@ -19,6 +19,14 @@
     margin-top: 1rem;
 }
 
+.vene .basin {
+    text-align: center;
+}
+
+.vene .last-update {
+    margin-top: 0;
+}
+
 .vene:nth-child(odd) {
     background-color: rgba(89, 164, 188, 0.3);
 }
@@ -69,6 +77,8 @@
     height: 40px;
     border-radius: 50%;
 }
+
+/*classes for different colors when active*/
 
 .unactive {
     background-color: lightslategray;

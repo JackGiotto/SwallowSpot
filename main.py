@@ -58,6 +58,10 @@ def hydro():
 def ava():
     return render_template("reports/ava.html")
 
+@app.route('/reports/')
+def reports():
+    return redirect(url_for("hydro"))
+
 '''@app.route('/contacts/', methods = ["GET", "POST"])
 def contacts():
     if request.method == "GET":
