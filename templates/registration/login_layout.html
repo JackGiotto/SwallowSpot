@@ -32,5 +32,21 @@
                 $(this).find('i').toggleClass('fa-eye fa-eye-slash');
             });
         });
+
+        //light/dark mode
+        var body = document.querySelector("body");
+
+        if(localStorage.getItem("mode") == "dark") {
+            //dark mode
+            body.style.backgroundColor = "#222222";
+            body.style.color = "white";
+            body.classList.add("dark");
+        }
+        else {
+            //light mode
+            body.style.backgroundColor = "#EDFCFF";
+            body.style.color = "#212529";
+            body.classList.remove("dark");
+        }
     </script>
 </html>

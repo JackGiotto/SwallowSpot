@@ -15,6 +15,10 @@ body {
     /*animation: wind 10s linear infinite;*/
 }
 
+.dark {
+    background-image: url("../images/login_background_darkmode.png");
+}
+
 @keyframes wind {
     from {
         background-position: 0;
@@ -42,9 +46,17 @@ body {
     margin: 1rem;
 }
 
+.dark .card {
+    color: white;
+}
+
 .card a {
     text-decoration: none;
     color: #00667C;
+}
+
+.dark .card a {
+    color: #59A4BC;
 }
 
 .card a:hover {
