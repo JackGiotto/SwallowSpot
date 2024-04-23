@@ -7,21 +7,58 @@ import json
 import xmltodict
 import xml.etree.ElementTree as ET
 import urllib.request
+import mysql.connector
 
 #Credenziali per associare il Bot Telegram e il programma in python
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 CHAT_ID: Final = None
+INFO: Final= None
 
 
-async def alert_control(tipo,colore):
+async def invia_notifica(messaggio,cid):
     bot = Bot(token=TOKEN)
     try:
         keyboard = [
-            [InlineKeyboardButton("Accetta", callback_data='opzione1')],
-            [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
-            [InlineKeyboardButton("Controlla", callback_data='opzione3')]
+        [InlineKeyboardButton("Accetta", callback_data='opzione1')],
+        [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
+        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
         ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await bot.send_message(chat_id=cid, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
+        print("Notifica inviata con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
+       
+async def find_id(INFO):
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="yourusername",
+        password="yourpassword",
+        database="mydatabase"
+    )
+    bot = Bot(token=TOKEN)
+    try:
+        keyboard = [
+            [InlineKeyboardButton("Inoltra", callback_data='Send')],
+            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+        ]
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT ID_telegram FROM Admin")
+
+        myresult = mycursor.fetchall()
+
+        for x in myresult:
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
+            print("Notifica inviata a "+x+" con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
+async def alert_control(tipo,colore):
+    try:
         messaggio=" "
         if tipo =="hydraulic":
             colore= await control()
@@ -43,9 +80,9 @@ async def alert_control(tipo,colore):
             elif colore == "ROSSO":
                 messaggio += "\nPericolo Rosso di Idrogeologica per Temporali"
 
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
-        print("Notifica inviata con successo!")
+        global INFO 
+        INFO =  messaggio
+        find_id(messaggio)
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
@@ -74,24 +111,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
    
 
 #invio in modo automoatico del bot ad un utente preciso
-async def invia_notifica(messaggio,cid):
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-        [InlineKeyboardButton("Accetta", callback_data='opzione1')],
-        [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
-        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=cid, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
-        print("Notifica inviata con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
-
-
-        
-        
         
 #funzione per associare i bottoni e le funzioni del bot        
 async def button(update: Update, context):
@@ -101,8 +121,11 @@ async def button(update: Update, context):
     data = query.data
     if data == 'opzione1':
         await send(update, context)
-    elif data == 'opzione2':
-        await delete(update, context)
+    elif data == 'Send':
+        await send(update, context, INFO)
+    elif data == 'Drop':
+        await drop()
+
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
         
@@ -135,13 +158,22 @@ async def control():
         
 
 # Funzione per gestire l'opzione 1 del bottone
-async def send(update: Update, context):
-    query = update.callback_query
-    await query.answer()
-    await query.edit_message_text(text="cx")
+async def send(update: Update, context,info):
+    bot = Bot(token=TOKEN)
+    doc=open("./data.json","r")
+    json_data = json.dumps(doc, indent=4)
+    data = json.loads(json_data)
+    print(data)
+    id=data["GROUP_ID"]
+    try:
+        await bot.send_message(chat_id=id, text=info)  # Attendere il completamento della coroutine
+        print("Notifica inviata con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
 
 # Funzione per gestire l'opzione 2 del bottone
-async def delete(update: Update, context):
+async def drop(update: Update, context):
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(text="Hai selezionato l'opzione 2")
@@ -157,6 +189,7 @@ def handle_response(text: str)-> str:
         return f'ok ti mostro il vostro chatid {chat_id}'
     return 'errore'
 
+'''
 #funzione per interagiore con il bot da un gruppo Telegram
 async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     message_type : str = update.message.chat.type
@@ -176,8 +209,8 @@ async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print('Bot:',response)
     
     await update.message.reply_text(response)
-    
-    
+'''
+
 async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print(f'Update {update} causato da {context.error}')
     
@@ -191,7 +224,7 @@ if __name__=='__main__':
   #  app.add_handler(CommandHandler('custom', custom_command))
     
     app.add_handler(CallbackQueryHandler(button))
-    app.add_handler(MessageHandler(filters.TEXT,handle_message))
+  #  app.add_handler(MessageHandler(filters.TEXT,handle_message))
     
     
     app.add_error_handler(error)
