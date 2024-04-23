@@ -58,7 +58,13 @@ async def find_id(INFO):
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
 async def alert_control(tipo,colore):
+    bot = Bot(token=TOKEN)
     try:
+        keyboard = [
+            [InlineKeyboardButton("Inoltra", callback_data='Send')],
+            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+        ]
+       
         messaggio=" "
         if tipo =="hydraulic":
             colore= await control()
@@ -82,7 +88,10 @@ async def alert_control(tipo,colore):
 
         global INFO 
         INFO =  messaggio
-        find_id(messaggio)
+        #find_id(messaggio)
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
+        print("Notifica inviata a "+messaggio+" con successo!")
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
@@ -124,7 +133,7 @@ async def button(update: Update, context):
     elif data == 'Send':
         await send(update, context, INFO)
     elif data == 'Drop':
-        await drop()
+        await drop(update, context)
 
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
@@ -158,38 +167,45 @@ async def control():
         
 
 # Funzione per gestire l'opzione 1 del bottone
-async def send(update: Update, context,info):
+async def send(update:Update, context,info):
     bot = Bot(token=TOKEN)
-    doc=open("./data.json","r")
-    json_data = json.dumps(doc, indent=4)
-    data = json.loads(json_data)
-    print(data)
-    id=data["GROUP_ID"]
+    query = update.callback_query
+    await query.answer()
     try:
-        await bot.send_message(chat_id=id, text=info)  # Attendere il completamento della coroutine
-        print("Notifica inviata con successo!")
+        with open("./data.json", "r") as doc:
+            data = json.load(doc)
+            id = data["GROUP_ID"]
+            await bot.send_message(chat_id=id, text=info)
+        await query.edit_message_text(text="Notifica inviata con successo!")
+    except FileNotFoundError:
+        print("File JSON non trovato.")
+        await query.edit_message_text(text="File JSON non trovato.")
+    except KeyError:
+        print("Chiave GROUP_ID non presente nel file JSON.")
+        await query.edit_message_text(text="Chiave GROUP_ID non presente nel file JSON.")        
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
-
+        await query.edit_message_text(text=f"Si è verificato un errore nell'invio della notifica: {e}")
+    
 
 # Funzione per gestire l'opzione 2 del bottone
 async def drop(update: Update, context):
     query = update.callback_query
     await query.answer()
-    await query.edit_message_text(text="Hai selezionato l'opzione 2")
+    await query.edit_message_text(text="Hai rifiutato l'inoltro di questa allerta")
     
 
 #funzione per l'invio del messaggio in base al msg dell'utente
-def handle_response(text: str)-> str:
+def handle_response(update:Update,text: str)-> str:
     processed: str=text.lower()
     if'ciao' in processed:
         return 'ciao'
-    if 'mostramelo' in processed:
-        chat_id = Update.message.chat_id
+    if 'gg' in processed:
+        chat_id = update.message.chat_id
         return f'ok ti mostro il vostro chatid {chat_id}'
     return 'errore'
 
-'''
+
 #funzione per interagiore con il bot da un gruppo Telegram
 async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     message_type : str = update.message.chat.type
@@ -200,7 +216,7 @@ async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     if message_type == 'supergroup':
         if BOT_USERNAME in text:
             new_text: str = text.replace(BOT_USERNAME,'').strip()
-            response: str=handle_response(new_text)
+            response: str=handle_response(update,new_text)
         else:
             return
     else:
@@ -209,7 +225,7 @@ async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print('Bot:',response)
     
     await update.message.reply_text(response)
-'''
+
 
 async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print(f'Update {update} causato da {context.error}')
@@ -224,7 +240,7 @@ if __name__=='__main__':
   #  app.add_handler(CommandHandler('custom', custom_command))
     
     app.add_handler(CallbackQueryHandler(button))
-  #  app.add_handler(MessageHandler(filters.TEXT,handle_message))
+    app.add_handler(MessageHandler(filters.TEXT,handle_message))
     
     
     app.add_error_handler(error)
