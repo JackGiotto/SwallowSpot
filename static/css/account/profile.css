@@ -1,0 +1,33 @@
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem;
+    margin-top: 0;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+/*visual mode change section*/
+
+.visual-mode {
+    margin: 1.5rem;
+    padding: 1.5rem;
+    border-top: 2px solid gainsboro;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.visual-out {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.visual-out p {
+    margin: 0;
+    font-size: x-large;
+    font-weight: bold;
+}

@@ -9,9 +9,11 @@
     <script src="https://kit.fontawesome.com/64fd56171c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/index.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
-    <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_visual_mode.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/risk.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/profile.css') }}>
 </head>
 <body>
     <!--navbar-->
@@ -178,6 +180,20 @@
         cookies2 = document.getElementById("customizeCookies");
         cookies1.classList.add("disappear");
         setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
+    }
+
+    //light/dark mode
+    var body = document.querySelector("body");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        body.style.backgroundColor = "#222222";
+        body.style.color = "white";
+    }
+    else {
+        //light mode
+        body.style.backgroundColor = "#EDFCFF";
+        body.style.color = "#212529";
     }
 </script>
 </html>

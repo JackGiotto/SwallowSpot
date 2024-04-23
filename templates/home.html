@@ -4,8 +4,8 @@
 
 <div class="logo">
     <picture>
-        <source media="(max-width: 767px)" srcset="{{ url_for('static', filename='images/swallowspot_title_mini.png') }}">
-        <img src="{{ url_for('static', filename='images/swallowspot_title_main.png') }}" alt="SwallowSpot Alert System">
+        <source media="(max-width: 767px)" srcset="{{ url_for('static', filename='images/swallowspot_title_mini.png') }}" id="logoMini">
+        <img src="{{ url_for('static', filename='images/swallowspot_title_main.png') }}" alt="SwallowSpot Alert System" id="logoMaxi">
     </picture>
 </div>
 
@@ -24,5 +24,22 @@
     <h1>Come funziona SwallowSpot</h1>
     here goes the description of the service and general infos
 </div>
+
+<script>
+    //light/dark mode
+    var logoMini = document.getElementById("logoMini");
+    var logoMaxi = document.getElementById("logoMaxi");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini_darkmode.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main_darkmode.png') }}";
+    }
+    else {
+        //light mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main.png') }}";
+    }
+</script>
 
 {% endblock %}
