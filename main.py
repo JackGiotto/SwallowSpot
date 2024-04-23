@@ -123,13 +123,18 @@ def register():
         else:
             return render_template("registration/register.html")
 
-@app.route('/user/')
+'''@app.route('/user/')
 def user():
     #controllo sessione
     if "username" in session:
         return render_template("user.html", username = session["username"])
     else:
         return redirect(url_for("login"))
+'''
+
+@app.route('/user/')
+def user():
+    return render_template("profile.html")
 
 
 

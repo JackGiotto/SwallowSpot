@@ -11,7 +11,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
-    <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/hydro.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/risk.css') }}>
 </head>
 <body>
     <!--navbar-->
@@ -31,7 +31,7 @@
         </div>
         <!--login-->
         <div id="login" class="nav-sides" title="Profilo e impostazioni">
-            <a href="{{ url_for('login') }}"><i class="fa-solid fa-user"></i></a>
+            <a href="{{ url_for('user') }}"><i class="fa-solid fa-user"></i></a>
         </div>
     </header>
     
@@ -51,7 +51,7 @@
             </div>
             <div id="account">
                 <h5>Account</h5>
-                <a href=""><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
+                <a href="{{ url_for('user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
             </div>
             <div id="access">
                 <h5>Accesso</h5>

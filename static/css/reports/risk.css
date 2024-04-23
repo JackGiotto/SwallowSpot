@@ -5,7 +5,7 @@
     width: 100%;
 }
 
-.vene {
+.risk-out {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -15,27 +15,23 @@
     padding: 3rem;
 }
 
-.vene p {
+.risk-out p {
     margin-top: 1rem;
 }
 
-.vene .basin {
+.risk-out .basin {
     text-align: center;
 }
 
-.vene .last-update {
+.risk-out .last-update {
     margin-top: 0;
 }
 
-.vene:nth-child(odd) {
+.risk-out:nth-child(odd) {
     background-color: rgba(89, 164, 188, 0.3);
 }
 
-/*.reports .vene:nth-child(odd) {
-    background-color: rgba(158, 231, 255, 0.4);
-}*/
-
-.risk-out {
+.risk-in {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,7 +47,7 @@
 }
 
 @media screen and (max-width: 450px) {
-    .risk-out {
+    .risk-in {
         align-items: center;
         gap: 1.5rem;
     }
