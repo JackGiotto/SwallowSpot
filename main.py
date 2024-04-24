@@ -164,7 +164,29 @@ async def control():
         return "VIOLA"
     else:
         return "VERDE"            
-        
+    
+# function to verify snow alert value        
+async def snow_control(update:Update, context,val,info):
+    bot = Bot(token=TOKEN)
+    if(val==0):
+        return
+    else:
+        try:
+            keyboard = [
+                [InlineKeyboardButton("Inoltra", callback_data='Send')],
+                [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+            ]
+            #find_id(messaggio)
+            global INFO
+            INFO="ALLERTA NEVE: "+info+" indice: "+val
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await bot.send_message(chat_id=CHAT_ID, text=INFO, reply_markup=reply_markup)
+            print("Notifica inviata a "+INFO+" con successo!")
+        except TelegramError as e:
+            print(f"Si è verificato un errore nell'invio della notifica: {e}")
+    
+        return
+    
 
 # Funzione per gestire l'opzione 1 del bottone
 async def send(update:Update, context,info):
