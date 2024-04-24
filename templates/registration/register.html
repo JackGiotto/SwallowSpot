@@ -4,6 +4,8 @@
 
 <h2>Registrati</h2>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <form action="{{ url_for('register') }}" method="post">
     <div class="input-group mb-3">
         <input type="email" class="form-control" placeholder="Email" aria-label="Email">
@@ -24,5 +26,6 @@
     <br>
     <a href="{{ url_for('login') }}">Ho gi&agrave; un account</a>
 </form>
+
 
 {% endblock %}
