@@ -138,7 +138,7 @@ def user():
 
 @app.route('/user/')
 def user():
-    return render_template("profile.html")
+    return render_template("profile.html", username = "test")
 
 
 

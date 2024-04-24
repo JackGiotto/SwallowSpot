@@ -1,4 +1,4 @@
-.profile-info {
+.profile-out {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,14 +6,34 @@
     margin-top: 0;
 }
 
-.profile-info h1 {
+.profile-out h1 {
     text-align: center;
 }
+
+/*section that appear when non logged in*/
 
 #notAccessed {
     display: flex;
     flex-direction: column;
     align-items: center;
+    display: none; /*DA TOGLIERE*/
+}
+
+/*profile section*/
+
+#profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#profile strong {
+    color: #00667C;
+}
+
+.dismissDefult {
+    display: none;
 }
 
 /*visual mode change section*/
