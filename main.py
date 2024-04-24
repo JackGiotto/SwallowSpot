@@ -75,12 +75,11 @@ def login():
     if request.method == "GET":
         return render_template("registration/login.html")
     elif request.method == "POST":
-        email = request.form["email"]
         username = request.form["username"]
         password = request.form["password"]
-        query = "SELECT username FROM User WHERE emial =="+username
+        query = "SELECT username FROM User WHERE username = '"+username+"'"
         result=executeQuery(query);  
-        return "questo è il risultyato"+result;  
+        return "questo è il risultato"+result;  
     else:
         return render_template("registration/login.html")
 
