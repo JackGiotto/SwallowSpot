@@ -54,6 +54,10 @@ def home():
 def hydro():
     return render_template("reports/hydro.html")
 
+@app.route('/reports/snow/')
+def snow():
+    return render_template("reports/snow.html")
+
 @app.route('/reports/ava/')
 def ava():
     return render_template("reports/ava.html")
