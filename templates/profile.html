@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="profile-info">
+    <span id="notAccessed">
+        <h1>Non hai ancora eseguito l'accesso!</h1>
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Accedi</a>
+    </span>
+</div>
+
+<div class="visual-mode">
+    <h2>Modifica il tema di visualizzazione</h2>
+    <div class="visual-out">
+        <label class="switch2">
+            <input type="checkbox" id="toggle" checked />
+            <span class="slider2"></span>
+        </label>
+        <p><span id="modeStatus">Light</span> Mode</p>
+    </div>
+</div>
+
+<script>
+    //dark / light mode
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
+        document.getElementById("toggle").checked = false;
+        changeMode();
+    }
+    else {
+        document.getElementById("toggle").checked = true;
+    }
+
+    document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
+
+    function changeMode() {
+        var body = document.querySelector("body");
+        var cookiesLabel = document.getElementById("cookies");
+        var cookiesModal = document.getElementById("customizeCookies");
+
+        if(document.getElementById("toggle").checked) {
+            localStorage.setItem("mode", "light");
+            //light mode
+            body.style.backgroundColor = "#EDFCFF";
+            body.style.color = "#212529";
+            cookiesLabel.style.backgroundColor = "#EDFCFF";
+            cookiesModal.setAttribute('data-bs-theme', "light");
+        }
+        else {
+            localStorage.setItem("mode", "dark");
+            //dark mode
+            body.style.backgroundColor = "#222222";
+            body.style.color = "white";
+            cookiesLabel.style.backgroundColor = "#222222";
+            cookiesModal.setAttribute('data-bs-theme', "dark");
+        }
+    }
+</script>
+
+{% endblock %}

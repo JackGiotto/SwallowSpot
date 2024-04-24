@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: "Outfit", sans-serif;
+}
+
+body {
+    background-color: #EDFCFF;
+    /*background-color: rgb(20, 20, 20);*/
+}
+
+/*navbar*/
+
+header {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 1vw 10%;
+    transition: top 0.3s;
+    display: flex;
+    gap: 2%;
+}
+
+header div{
+    display: flex;
+    /*margin: 0 10% 0 10%;
+    background-color: rgba(0, 40, 59, 0.97);
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
+    /*background-color: rgba(167, 199, 224, 0.8);*/
+    /*border: 2px solid #EDFCFF;*/
+    background-color: #59a4bccc;
+    border-radius: 20px;
+    padding: 5px 5px 0 5px;
+    filter: drop-shadow(0 5px 0px #00283B);
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    header {
+        padding: 1vw;
+    }
+}
+
+/*menu + login*/
+
+.nav-sides {
+    width: fit-content;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.nav-sides a {
+    color: #00283B;
+}
+
+/*central links*/
+
+#links {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+header #links a {
+    padding: 1vw;
+    display: block;
+    float: left;
+    color: #00283B;
+    text-decoration: none;
+    border-radius: 1vw;
+    /*background-color: rgba(0, 102, 124, 0.3);*/
+}
+
+header #links a:hover {
+    background-color: #59a4bccc;
+    color: white;
+    transition-duration: 250ms;
+}
+
+@media screen and (max-width: 600px) { /*phone*/
+    header #links .shrink1, header #links .shrink2 {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1023px) { /*tablet*/
+    header #links .shrink2 {
+        display: none;
+    }
+}
+
+/*offcanvas menu*/
+
+.offcanvas {
+    background-color: #00283B;
+    color: white;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    padding: 0;
+}
+
+.offcanvas-body div {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+
+.offcanvas-body div h5 {
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+.offcanvas-body div a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+    padding-left: 2rem;
+}
+
+.offcanvas-body div a:hover {
+    background-color: #00667c99;
+    transition-duration: 150ms;
+}
+
+/*cookies label*/
+
+#cookies {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border: 5px double #00667C;
+    background-color: #EDFCFF;
+    border-radius: 1em;
+    padding: 1em;
+    max-width: 30em;
+    z-index: 2;
+    display: none; /*DA TOGLIERE*/
+}
+
+#cookieButtons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    #cookies {
+        left: 10px;
+        max-width: 100%;
+    }
+}
+
+/*container for different pages' layouts*/
+
+.content {
+    margin-top: 10rem;
+    margin-bottom: 7rem;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    .content {
+        margin-top: 6rem;
+    }
+}
+
+/*@media screen and (min-width: 768px) and (max-width: 1023px) { /*tablet*//*
+    .content {
+        margin-top: 10vw;
+    }
+}*/
+
+/*footer*/
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #00283B;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 3vw;
+    /*padding: 3vw 9vw 3vw 3vw;*/
+    align-items: center;
+    gap: 4vw;
+}
+
+.footer-in {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3vw;
+    gap: 4vw;
+    flex-direction: column;
+}
+
+footer img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    width: 20%;
+}
+
+.credits-out {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.credits-in {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.credits-in .column {
+    width: 15em;
+}
+
+.foot-subtitle {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.copyright {
+    opacity: 0.6;
+}
+
+/*social links*/
+
+.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 3vw;
+}
+
+.social-links button {
+    padding: 1vw;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    font-size: 4vw;
+    color: white;
+    border-bottom: 0.1em solid;
+    z-index: 1;
+}
+
+.social-links button::after {
+    content: "";
+    width: 100%;
+    height: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: .4s ease;
+}
+
+.social-links button:hover::after {
+    height: 100%;
+}
+
+#telegram {
+    border-bottom-color: #1E94D2;
+}
+
+#telegram::after {
+    background-color: #1E94D2;
+}
+
+#facebook {
+    border-bottom-color: #325BFE;
+}
+
+#facebook::after {
+    background-color: #325BFE;
+}
+
+#mail {
+    border-bottom-color: #E35A46;
+}
+
+#mail::after {
+    background-color: #E35A46;
+}
+
+#regioneveneto {
+    border-bottom-color: #EC9A27;
+}
+
+#regioneveneto::after {
+    background-color: #EC9A27;
+}
+
+@media screen and (max-width: 1023px) { /*phone / tablet*/
+    .social-links button {
+        padding: 2vw;
+        font-size: 10vw;
+    }
+}
+
+@media screen and (min-width: 768px) { /*tablet / pc*/
+    .footer-in {
+        flex-direction: row;
+    }
+
+    .credits-out {
+        align-items: start;
+    }
+
+    .credits-in {
+        flex-direction: row;
+        align-items: start;
+    }
+}
+
+/*custom buttons*/
+
+.btn-success {
+    background-color: #00283B;
+    border-color: #00283B;
+}
+
+.btn-success:hover {
+    background-color: #00202e;
+    border-color: #00202e;
+}
+
+.btn-primary {
+    background-color: #00667C;
+    border-color: #006b83;
+}
+
+.btn-primary:hover {
+    background-color: #004c5e;
+    border-color: #004c5e;
+}

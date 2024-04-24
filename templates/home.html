@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="logo">
+    <picture>
+        <source media="(max-width: 767px)" srcset="{{ url_for('static', filename='images/swallowspot_title_mini.png') }}" id="logoMini">
+        <img src="{{ url_for('static', filename='images/swallowspot_title_main.png') }}" alt="SwallowSpot Alert System" id="logoMaxi">
+    </picture>
+</div>
+
+<div class="overview">
+    <button class="btn btn-warning m-2 btn-lg"><i class="fa-solid fa-circle-exclamation"></i>&ThickSpace; La mia situazione</button>
+    <button class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-circle-question"></i>&ThickSpace; Come funziona SwalloSpot</button>
+    <a href="{{ url_for('hydro') }}" class="btn btn-danger m-2 btn-lg"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Consulta gli ultimi bollettini</a>
+    <a href="" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
+</div>
+
+<div class="your-situation mt-5">
+    <h1>Situazione attuale nella tua zona</h1>
+</div>
+
+<div class="service-desc mt-5">
+    <h1>Come funziona SwallowSpot</h1>
+    here goes the description of the service and general infos
+</div>
+
+<script>
+    //light/dark mode
+    var logoMini = document.getElementById("logoMini");
+    var logoMaxi = document.getElementById("logoMaxi");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini_darkmode.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main_darkmode.png') }}";
+    }
+    else {
+        //light mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main.png') }}";
+    }
+</script>
+
+{% endblock %}

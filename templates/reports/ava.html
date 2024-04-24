@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="reports">
+    <h1>Ultimo bollettino</h1>
+    <div class="categories">
+        <a href="{{ url_for('hydro') }}" class="btn btn-primary m-2 btn-lg">Rischi idrologici</a>
+        <a href="{{ url_for('snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
+        <a href="{{ url_for('ava') }}" class="btn btn-success m-2 btn-lg">Rischi valanghe</a>
+    </div>
+    <div class="risk-out" id="mont-1">
+        <h1>Dolomiti</h1>
+        <div class="risk-in">
+            <div class="risk">
+                <span class="circle red"></span>
+                <p>Mont-1A</p>
+            </div>
+            <div class="risk">
+                <span class="circle orange"></span>
+                <p>Mont-1B</p>
+            </div>
+            <div class="risk">
+                <span class="circle yellow"></span>
+                <p>Mont-1C</p>
+            </div>
+            <div class="risk">
+                <span class="circle green"></span>
+                <p>Mont-1D</p>
+            </div>
+        </div>
+    </div>
+    <div class="risk-out" id="mont-2">
+        <h1>Prealpi</h1>
+        <div class="risk-in">
+            <div class="risk">
+                <span class="circle unactive"></span>
+                <p>Mont-2A</p>
+            </div>
+            <div class="risk">
+                <span class="circle unactive"></span>
+                <p>Mont-2B</p>
+            </div>
+            <div class="risk">
+                <span class="circle unactive"></span>
+                <p>Mont-2C</p>
+            </div>
+            <div class="risk">
+                <span class="circle unactive"></span>
+                <p>Mont-2D</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
