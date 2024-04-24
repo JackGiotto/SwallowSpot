@@ -8,27 +8,6 @@ app.config["DEBUG"] = True
 app.permanent_session_lifetime = timedelta(minutes=5)
 app.secret_key = "klosterpatia"
 
-'''people = [
-    {
-        "id": 1,
-        "name": "Aldo",
-        "surname": "Bordignon",
-        "phone": "347 1957028"
-    },
-    {
-        "id": 2,
-        "name": "Sara",
-        "surname": "Rodriguez",
-        "phone": "328 0281954"
-    },
-    {
-        "id": 3,
-        "name": "Manny",
-        "surname": "Stone",
-        "phone": "123 4567890"
-    }
-]'''
-
 def executeQuery(query):
     connection = pymysql.connect(host = "localhost",
                                 user = "s02551",
@@ -96,16 +75,14 @@ def login():
     if request.method == "GET":
         return render_template("registration/login.html")
     elif request.method == "POST":
-        #check if credential are correct
+        email = request.form["email"]
         username = request.form["username"]
         password = request.form["password"]
-        if username == "pallante" and password == "sasso":
-            #sessione
-            session.permanent = True
-            session["username"] = username
-            return redirect(url_for("user"))
-        else:
-            return render_template("registration/login.html")
+        query = "SELECT username FROM User WHERE emial =="+username
+        result=executeQuery(query);  
+        return "questo è il risultyato"+result;  
+    else:
+        return render_template("registration/login.html")
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -139,4 +116,4 @@ def user():
 
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=11551)
+    app.run(debug = True, host="0.0.0.0", port=11675)
