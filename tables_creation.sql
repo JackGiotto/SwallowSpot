@@ -25,9 +25,8 @@ create table Role       -- ruolo di ogni utente
 create table User       -- utente e i suoi dati
 (
     ID_user int auto_increment,         -- ID univoco per ogni utente
-    -- email varchar(319),
     username varchar(35),               -- username usato dall'utente per registrarsi al sito
-    password varchar(128),              -- hash della password usata dall'utente per registrarsi al sito
+    password varchar(48),               -- hash della password usata dall'utente per registrarsi al sito
     ID_area int,                        -- area in cui vive
     ID_role int,                        -- ruolo dell'utente nel sito
     primary key(ID_user),                           

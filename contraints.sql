@@ -12,4 +12,6 @@ modify column role_name not null,
 add unique (role_nome);
 
 alter table User
+modify column username not null,
+modify column password not null,
 add unique (username);
