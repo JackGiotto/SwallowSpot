@@ -1,37 +1,17 @@
-from flask import Blueprint, render_template
-import requests
+from flask import Blueprint, render_template, request, session, redirect, url_for
 
-auth_page = Blueprint('auth', __name__, template_folder = 'templates')
+auth_bp = Blueprint('auth', __name__, template_folder='templates')
 
-
-@auth_page.route('/login/', methods=['GET', 'POST'])
+@auth_bp.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
-        return render_template("registration/login.html")
+        return render_template("auth/login.html")
     elif request.method == "POST":
-        #check if credential are correct
-        username = request.form["username"]
-        password = request.form["password"]
-        if username == "pallante" and password == "sasso":
-            #sessione
-            session.permanent = True
-            session["username"] = username
-            return redirect(url_for("user"))
-        else:
-            return render_template("registration/login.html")
+        pass
 
-@auth_page.route('/signup/', methods=['GET', 'POST'])
+@auth_bp.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if request.method == "GET":
-        return render_template("registration/signup.html")
+        return render_template("auth/signup.html")
     elif request.method == "POST":
-        #check if credential are correct
-        username = request.form["username"]
-        password = request.form["password"]
-        if username == "pallante" and password == "sasso":
-            #sessione
-            session.permanent = True
-            session["username"] = username
-            return redirect(url_for("user"))
-        else:
-            return render_template("registration/signup.html")
+        pass

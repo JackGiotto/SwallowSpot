@@ -26,14 +26,14 @@
         </div>
         <!--links-->
         <div id="links">
-            <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="{{ url_for('hydro') }}" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
+            <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="{{ url_for('reports.hydro') }}" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
             <a href="" class="shrink2"><i class="fa-solid fa-circle-down"></i> Scarica Bollettini</a>
             <!--<a href="" class="shrink2"><i class="fa-solid fa-bookmark"></i> Info e Legende</a>-->
         </div>
         <!--login-->
         <div id="login" class="nav-sides" title="Profilo e impostazioni">
-            <a href="{{ url_for('user') }}"><i class="fa-solid fa-user"></i></a>
+            <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i></a>
         </div>
     </header>
     
@@ -46,19 +46,19 @@
         <div class="offcanvas-body">
             <div id="otherLinks">
                 <h5>Links principali</h5>
-                <a href="{{ url_for('home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
-                <a href="{{ url_for('hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
+                <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
+                <a href="{{ url_for('reports.hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
                 <a href=""><i class="fa-solid fa-circle-down"></i>&ThickSpace; Scarica bollettini</a>
                 <a href=""><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
             <div id="account">
                 <h5>Account</h5>
-                <a href="{{ url_for('user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
+                <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
             </div>
             <div id="access">
                 <h5>Accesso</h5>
-                <a href="{{ url_for('login') }}"><i class="fa-solid fa-right-to-bracket"></i>&ThickSpace; Accedi</a>
-                <a href="{{ url_for('register') }}"><i class="fa-solid fa-pen-nib"></i>&ThickSpace; Registrati</a>
+                <a href="{{ url_for('auth.login') }}"><i class="fa-solid fa-right-to-bracket"></i>&ThickSpace; Accedi</a>
+                <a href="{{ url_for('auth.signup') }}"><i class="fa-solid fa-pen-nib"></i>&ThickSpace; Registrati</a>
             </div>
         </div>
     </div>

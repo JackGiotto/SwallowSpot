@@ -1,10 +1,10 @@
-{% extends "registration/login_layout.html" %}
+{% extends "auth/login_layout.html" %}
 
 {% block content %}
 
 <h2>Registrati</h2>
 
-<form action="{{ url_for('register') }}" method="post">
+<form action="{{ url_for('auth.signup') }}" method="post">
     <div class="input-group mb-3">
         <input type="email" class="form-control" placeholder="Email" aria-label="Email">
     </div>
@@ -22,7 +22,7 @@
 
     <button type="submit" class="btn btn-success mb-2">Registrati</button>
     <br>
-    <a href="{{ url_for('login') }}">Ho gi&agrave; un account</a>
+    <a href="{{ url_for('auth.login') }}">Ho gi&agrave; un account</a>
 </form>
 
 {% endblock %}
