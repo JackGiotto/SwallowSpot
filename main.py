@@ -4,10 +4,9 @@ from telegram.ext import Application, CommandHandler, MessageHandler,filters , C
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import TelegramError
 import json
-import xmltodict
 import xml.etree.ElementTree as ET
-import urllib.request
-import mysql.connector
+from read_pdf import *
+from request_data import *
 
 #Credenziali per associare il Bot Telegram e il programma in python
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
@@ -16,84 +15,6 @@ CHAT_ID: Final = None
 INFO: Final= None
 
 
-async def invia_notifica(messaggio,cid):
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-        [InlineKeyboardButton("Accetta", callback_data='opzione1')],
-        [InlineKeyboardButton("Rifiuta", callback_data='opzione2')],
-        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=cid, text=messaggio,reply_markup=reply_markup)  # Attendere il completamento della coroutine
-        print("Notifica inviata con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
-
-       
-async def find_id(INFO):
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="yourusername",
-        password="yourpassword",
-        database="mydatabase"
-    )
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-            [InlineKeyboardButton("Inoltra", callback_data='Send')],
-            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-        ]
-        mycursor = mydb.cursor()
-
-        mycursor.execute("SELECT ID_telegram FROM Admin")
-
-        myresult = mycursor.fetchall()
-
-        for x in myresult:
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
-            print("Notifica inviata a "+x+" con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
-
-async def alert_control(tipo,colore):
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-            [InlineKeyboardButton("Inoltra", callback_data='Send')],
-            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-        ]
-       
-        messaggio=" "
-        if tipo =="hydraulic":
-            colore= await control()
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idraulico"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idraulico"
-            elif colore == "VIOLA":
-                messaggio += "\nPericolo Rosso di idraulico"
-            else: return
-        elif tipo =="hydrogeological":        
-            if colore  == "GIALLO":
-                messaggio += "\nPericolo Giallo di idrogeologico"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idrogeologico"
-        elif tipo =="storm":     
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali"
-
-        global INFO 
-        INFO =  messaggio
-        #find_id(messaggio)
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
-        print("Notifica inviata a "+messaggio+" con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
         
 # le funzioni che partano in base al comando inviato al bot Telegram
@@ -113,23 +34,23 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             await alert_control(tipo,colore)
         
     keyboard = [
-        [InlineKeyboardButton("Controlla", callback_data='opzione3')]
+        [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')]
+        [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
         ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
    
-
-#invio in modo automoatico del bot ad un utente preciso
-
-        
+  
 #funzione per associare i bottoni e le funzioni del bot        
 async def button(update: Update, context):
     query = update.callback_query
     chat_id = query.message.chat_id
     await query.answer()
     data = query.data
-    if data == 'opzione1':
-        await send(update, context)
+    if data == 'Neve':
+        await snow_report()
+    elif data == 'Idro':
+        await report()
     elif data == 'Send':
         await send(update, context, INFO)
     elif data == 'Drop':
@@ -137,56 +58,7 @@ async def button(update: Update, context):
 
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
-        
-#controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
-async def control():
-    url = 'https://www.ambienteveneto.it/Dati/0283.xml'
-
-    # "prendo" l'XML dal Sito del Comune
-    response = urllib.request.urlopen(url).read()
-
-    # da XML a JSON
-    data_dict = xmltodict.parse(response)
-    json_data = json.dumps(data_dict, indent=4)
-    data = json.loads(json_data)
-    liv_idro = data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
-
-    # Estrai l'ultimo valore di "VM" (livello idrometrico)
-    val = liv_idro[-1]["VM"]
-    liv = float(val)
-    
-    # controllo del valore dell'altezza del Brenta
-    if liv >= 2.3 and liv < 2.8:
-        return "GIALLO"
-    elif liv >= 2.8 and liv < 3.2:
-        return "ROSSO"
-    elif liv >= 3.2:
-        return "VIOLA"
-    else:
-        return "VERDE"            
-    
-# function to verify snow alert value        
-async def snow_control(update:Update, context,val,info):
-    bot = Bot(token=TOKEN)
-    if(val==0):
-        return
-    else:
-        try:
-            keyboard = [
-                [InlineKeyboardButton("Inoltra", callback_data='Send')],
-                [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-            ]
-            #find_id(messaggio)
-            global INFO
-            INFO="ALLERTA NEVE: "+info+" indice: "+val
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await bot.send_message(chat_id=CHAT_ID, text=INFO, reply_markup=reply_markup)
-            print("Notifica inviata a "+INFO+" con successo!")
-        except TelegramError as e:
-            print(f"Si è verificato un errore nell'invio della notifica: {e}")
-    
-        return
-    
+ 
 
 # Funzione per gestire l'opzione 1 del bottone
 async def send(update:Update, context,info):
