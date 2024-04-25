@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css"></link>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="text-center">Snake Game</h1>
+                <div id="game-container">
+                    <canvas id="gameCanvas" width="400" height="400"></canvas>
+                </div>
+                <button id="start-btn" onclick="startGame()">Start Game</button>
+                <div id="game-controls">
+                    <!-- Utilizza icone o pulsanti per i controlli touch -->
+                    <button class="btn btn-primary control-btn mobile-control-btn" id="up-touch">↑</button>
+                    <br>
+                    <button class="btn btn-primary control-btn mobile-control-btn" id="left-touch">←</button>
+                    <button class="btn btn-primary control-btn mobile-control-btn" id="right-touch">→</button>
+                    <br>
+                    <button class="btn btn-primary control-btn mobile-control-btn" id="down-touch">↓</button>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <h2>Best Scores</h2>
+                <div id="scoreboard">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Player</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Score data will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Score: <span id="score">0</span></p>
+                <p id="gameOverText"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery (needed for Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Snake Game Script -->
+    <script src="snake.js"></script>
+</body>
+</html>

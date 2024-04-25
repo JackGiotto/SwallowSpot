@@ -1,0 +1,74 @@
+body {
+    background-color: #f8f9fa;
+    padding-top: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+#game-container {
+    width: 400px;
+    height: 400px;
+    border: 1px solid #000;
+    margin: 0 auto;
+    position: relative;
+    background-color: #f5f5f5;
+}
+#gameCanvas {
+    display: block;
+    margin: 0 auto;
+}
+.control-btn {
+    margin-top: 10px;
+}
+#game-controls {
+    text-align: center;
+}
+#score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+}
+#gameOverText {
+    font-size: 20px;
+    font-weight: bold;
+    color: #dc3545;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.control-btn {
+    font-size: 24px; /* Dimensione del testo */
+    width: 100px; /* Larghezza del pulsante */
+    height: 100px; /* Altezza del pulsante */
+    margin: 10px; /* Spaziatura tra i pulsanti */
+}
+
+#start-btn {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#start-btn:hover {
+    background-color: #218838;
+}
+
+/* Stili specifici per dispositivi con larghezza massima di 768px (dispositivi mobili) */
+@media (max-width: 768px) {
+    .desktop-control-btn {
+        display: none; /* Nascondi i pulsanti desktop su dispositivi mobili */
+    }
+}
+
+/* Stili specifici per dispositivi con larghezza minima di 769px (desktop) */
+@media (min-width: 769px) {
+    .mobile-control-btn {
+        display: none; /* Nascondi i pulsanti mobili su desktop */
+    }
+}
