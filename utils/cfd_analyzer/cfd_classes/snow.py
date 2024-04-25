@@ -67,6 +67,10 @@ class Snow:
 		template = self._get_column_data_value(column_third_value, template, 2)
 
 		return template
+	
+		# debug
+		with open("test_snow.json", "w") as f:
+			json.dump(template, f, indent="\t")
 				
 	def _get_column_data(self, column, template, searching, position) -> dict[str, any]:
 		"""get the data of a single bulletin's column (date or %)
@@ -87,7 +91,7 @@ class Snow:
 					i = 0
 					j = j+1
 		return template
-	
+
 	def _get_column_data_value(self, column, template, value_number) -> dict[str, any]:
 		"""get the data of a single bulletin's column (values)
 		"""
@@ -116,4 +120,4 @@ class Snow:
 		date = date.replace("/", "-") + " 00:00:00"
 		return date
 # debug
-#snow = Snow("./test/data/test_snow.pdf")
+snow = Snow("./test/data/test_snow.pdf")
