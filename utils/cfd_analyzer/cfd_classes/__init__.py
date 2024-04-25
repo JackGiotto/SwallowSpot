@@ -1,2 +1,2 @@
 from .hydro import Hydro
-from .mountain import Mountain
+from .avalanches import Avalanches

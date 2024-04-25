@@ -1,4 +1,5 @@
 import cfd_classes
+import json
 
 PAGES_NUMBERS_HYDRO = {
 	"date": "1",
@@ -6,10 +7,10 @@ PAGES_NUMBERS_HYDRO = {
 }
 
 def get_cfd_data(path):
-	mountain = cfd_classes.Mountain(path)
-	
+	avalanches = cfd_classes.Avalanches(path)
+	print(avalanches.get_data())
 	# debug
 	#print(data)
 
 
-get_cfd_data("./test/data/test_mountain.pdf")
+get_cfd_data("./test/data/test_avalanches.pdf")
