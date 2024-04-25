@@ -6,15 +6,23 @@
 
 <form action="{{ url_for('auth.signup') }}" method="post">
     <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Nome utente" aria-label="Nome utente">
+    </div>
+    <div class="input-group mb-3">
         <input type="email" class="form-control" placeholder="Email" aria-label="Email">
     </div>
     <div class="input-group mb-3">
         <input type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
-        <button class="btn btn-outline-secondary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Nome utente" aria-label="Nome utente">
+        <input type="password" class="form-control" id="textPassword2" placeholder="Conferma password" aria-label="Password" aria-describedby="showPasswordToggle2">
+        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+        <span class="input-group-text" id="confirmPsw2">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
     </div>
+    
     <select name="region" id="region" class="form-select mb-3" aria-label="Select you region">
         <option selected>Seleziona la tua regione di residenza</option>
         <heregotheregions />
@@ -24,5 +32,18 @@
     <br>
     <a href="{{ url_for('auth.login') }}">Ho gi&agrave; un account</a>
 </form>
+
+<script>
+    var psw2 = document.getElementById("confirmPsw2");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        psw2.setAttribute('data-bs-theme', "dark");
+    }
+    else {
+        //light mode
+        psw2.setAttribute('data-bs-theme', "light");
+    }
+</script>
 
 {% endblock %}

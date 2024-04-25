@@ -32,7 +32,7 @@
     color: #00667C;
 }
 
-.dismissDefult {
+.dismissDefault {
     display: none;
 }
 
@@ -56,4 +56,24 @@
     margin: 0;
     font-size: x-large;
     font-weight: bold;
+}
+
+/*other*/
+
+.input-group-text .fa-check {
+    color: green;
+}
+
+.input-group-text .fa-xmark {
+    color: red;
+}
+
+.btn-outline-primary {
+    border-color: #006b83;
+    color: #006b83;
+}
+
+.btn-outline-primary:hover {
+    background-color: #006b83;
+    border-color: #006b83;
 }

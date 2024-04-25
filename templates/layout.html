@@ -11,6 +11,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_visual_mode.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_notification.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/risk.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/profile.css') }}>
@@ -201,5 +202,24 @@
         cookiesLabel.style.backgroundColor = "#EDFCFF";
         cookiesModal.setAttribute('data-bs-theme', "light");
     }
+
+    //show password for profile (it has to stay here)
+    $(document).ready(function () {
+        $('#showPasswordToggle1').on('click', function () {
+            var passwordInput = $('#psw1');
+            var type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+            passwordInput.attr('type', type);
+            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+        });
+    });
+
+    $(document).ready(function () {
+        $('#showPasswordToggle2').on('click', function () {
+            var passwordInput = $('#psw2');
+            var type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+            passwordInput.attr('type', type);
+            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+        });
+    });
 </script>
 </html>

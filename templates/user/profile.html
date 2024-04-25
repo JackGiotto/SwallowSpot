@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
+
+<div class="profile-out">
+    <span id="notAccessed">
+        <h1>Non hai ancora eseguito l'accesso!</h1>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Accedi</a>
+    </span>
+    <div id="profile">
+        <h1>Profilo di <strong>{{ username }}</strong>!</h1>
+        <!--change username-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')">Modifica nome utente</button>
+        <div class="dismissDefault" id="changeName">
+            <div class="input-group mb-2 mt-2">
+                <input type="text" class="form-control" placeholder="Nuovo nome utente">
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeName')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+        <!--change mail-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeMail')">Modifica email</button>
+        <div class="dismissDefault" id="changeMail">
+            <div class="input-group mb-2 mt-2">
+                <input type="email" class="form-control" placeholder="Nuova email" aria-describedby="confirmMail1">
+                <span class="input-group-text" id="confirmMail1">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+            </div>
+            <div class="input-group mb-2">
+                <input type="email" class="form-control" placeholder="Conferma nuova email" aria-describedby="confirmMail2">
+                <span class="input-group-text" id="confirmMail2">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeMail')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+        <!--change password-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changePsw')">Modifica password</button>
+        <div class="dismissDefault" id="changePsw">
+            <div class="input-group mb-2 mt-2">
+                <input type="password" class="form-control" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1">
+                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>
+                <span class="input-group-text" id="confirmPsw1">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+            </div>
+            <div class="input-group mb-2">
+                <input type="password" class="form-control" id="psw2" placeholder="Conferma nuova password" aria-describedby="confirmPsw2">
+                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+                <span class="input-group-text" id="confirmPsw2">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+        <div class="visual-out mt-5">
+            <label class="switch3">
+                <input type="checkbox" id="toggleNotif" checked />
+                <span class="slider3"></span>
+            </label>
+            <p>Notifiche: <span id="notificationStatus">SI</span></p>
+        </div>
+    </div>
+</div>
+
+<div class="visual-mode">
+    <h2>Modifica il tema di visualizzazione</h2>
+    <div class="visual-out">
+        <label class="switch2">
+            <input type="checkbox" id="toggle" checked />
+            <span class="slider2"></span>
+        </label>
+        <p><span id="modeStatus">Light</span> Mode</p>
+    </div>
+</div>
+
+<script>
+    //dark / light mode
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
+        document.getElementById("toggle").checked = false;
+        changeMode();
+    }
+    else {
+        document.getElementById("toggle").checked = true;
+    }
+
+    document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
+
+    function changeMode() {
+        var status = document.getElementById("modeStatus");
+        var body = document.querySelector("body");
+        var cookiesLabel = document.getElementById("cookies");
+        var cookiesModal = document.getElementById("customizeCookies");
+        var confirms = document.querySelectorAll(".input-group-text");
+
+        if(document.getElementById("toggle").checked) {
+            localStorage.setItem("mode", "light");
+            //light mode
+            status.innerHTML = "Light";
+            body.style.backgroundColor = "#EDFCFF";
+            body.style.color = "#212529";
+            cookiesLabel.style.backgroundColor = "#EDFCFF";
+            cookiesModal.setAttribute('data-bs-theme', "light");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "light");
+            });
+        }
+        else {
+            localStorage.setItem("mode", "dark");
+            //dark mode
+            status.innerHTML = "Dark";
+            body.style.backgroundColor = "#222222";
+            body.style.color = "white";
+            cookiesLabel.style.backgroundColor = "#222222";
+            cookiesModal.setAttribute('data-bs-theme', "dark");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "dark");
+            });
+        }
+    }
+
+    //notifications
+    if(localStorage.getItem("notifications") == "off") {        //check the notifications state from the local storage variable
+        document.getElementById("toggleNotif").checked = false;
+        changeNotif();
+    }
+    else {
+        document.getElementById("toggleNotif").checked = true;
+    }
+
+    document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status
+
+    function changeNotif() {
+        var notif = document.getElementById("notificationStatus");
+
+        if(document.getElementById("toggleNotif").checked) {
+            localStorage.setItem("notifications", "on");
+            //notification yes
+            notif.innerHTML = "SI";
+        }
+        else {
+            localStorage.setItem("notifications", "off");
+            //notification no
+            notif.innerHTML = "NO";
+        }
+    }
+</script>
+
+{% endblock %}
