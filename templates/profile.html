@@ -2,11 +2,39 @@
 
 {% block content %}
 
-<div class="profile-info">
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
+
+<div class="profile-out">
     <span id="notAccessed">
         <h1>Non hai ancora eseguito l'accesso!</h1>
         <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Accedi</a>
     </span>
+    <div id="profile">
+        <h1>Profilo di <strong>{{ username }}</strong>!</h1>
+        <!--change username-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')">Modifica nome utente</button>
+        <div class="dismissDefault" id="changeName">
+            <div class="input-group mb-2 mt-3">
+                <input type="text" class="form-control" placeholder="Nuovo nome utente">
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeName')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+        <!--change mail-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeMail')">Modifica email</button>
+        <div class="dismissDefault" id="changeMail">
+            <div class="input-group mb-2 mt-3">
+                <input type="email" class="form-control" placeholder="Nuova email" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="confirmMail1"><i class="fa-solid fa-check"></i></span>
+            </div>
+            <div class="input-group mb-2">
+                <input type="email" class="form-control" placeholder="Conferma nuova email" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="confirmMail1"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeMail')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+    </div>
 </div>
 
 <div class="visual-mode">
