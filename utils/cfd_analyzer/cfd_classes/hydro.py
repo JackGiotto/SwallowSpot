@@ -29,7 +29,7 @@ class Hydro:
 		return self.data
 
 	def _get_bulletin_data(self):		
-		print("Analyzing Mountain bulletin, path:", self.path)
+		print("Analyzing Htdro bulletin, path:", self.path)
 		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)
 		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[0].df) 
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
