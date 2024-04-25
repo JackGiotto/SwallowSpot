@@ -6,11 +6,10 @@
 
 <form action="{{ url_for('login') }}" method="post">
     <div class="input-group mb-3">
-        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
-
     <div class="input-group mb-3">
-        <input type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
         <button class="btn btn-outline-secondary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
 
@@ -21,8 +20,7 @@
             <span class="slider"></span>
         </label>
     </p>
-
-    <button type="submit" class="btn btn-success mb-2" href="{{ url_for('home')}}">Accedi</button>
+        <button type="submit" class="btn btn-success mb-2">Accedi</button>
     <br>
     <a href="{{ url_for('register') }}">Non ho ancora un account</a>
 </form>

@@ -10,9 +10,9 @@ app.secret_key = "klosterpatia"
 
 def executeQuery(query):
     connection = pymysql.connect(host = "localhost",
-                                user = "s02551",
-                                password = "Aiw9ph",
-                                database = "s02551",
+                                user = "s02675",
+                                password = "Ohmah6",
+                                database = "s02675",
                                 cursorclass = pymysql.cursors.DictCursor
                                 )
     
@@ -78,8 +78,11 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         query = "SELECT username FROM User WHERE username = '"+username+"'"
-        result=executeQuery(query);  
-        return "questo è il risultato"+result;  
+        result=executeQuery(query)
+        query = "SELECT password FROM User WHERE password = '"+password+"'"
+        result2=executeQuery(query)
+        print(result)
+        print(result2)
     else:
         return render_template("registration/login.html")
 
