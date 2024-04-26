@@ -13,6 +13,9 @@
         <div class="row">
             <div class="col-md-6">
                 <h1 class="text-center">Snake Game</h1>
+                <h2 class="text-center" id="NamePlayer">Name Player</h2>
+                <p>Score: <span id="score">0</span></p>
+                <p>BEST Score: <span id="bscore">0</span></p>
                 <div id="game-container">
                     <canvas id="gameCanvas" width="400" height="400"></canvas>
                 </div>
@@ -31,16 +34,26 @@
             <div class="col-md-6">
                 <h2>Best Scores</h2>
                 <div id="scoreboard">
-                    <table class="table">
+                    <table id="table" class="table">
                         <thead>
-                            <tr>
-                                <th>#</th>
+                            <tr> 
                                 <th>Player</th>
                                 <th>Score</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Score data will be dynamically added here -->
+                            <tr>                               
+                                <td>John Doe</td>
+                                <td>350</td>
+                            </tr>
+                            <tr>                              
+                                <td>Jane Smith</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>Mike Johnson</td>
+                                <td>250</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -48,7 +61,6 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <p>Score: <span id="score">0</span></p>
                 <p id="gameOverText"></p>
             </div>
         </div>

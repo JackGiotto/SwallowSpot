@@ -46,6 +46,85 @@ function generateFood() {
   });
 }
 
+
+function loadAndDisplayScore() {
+  var savedScore = localStorage.getItem('savedScore');
+  if (!savedScore || score > parseInt(savedScore)) {
+    // Aggiorniamo lo score salvato
+    localStorage.setItem('savedScore', score);
+  }
+  // Recuperiamo lo score salvato dal localStorage
+  var savedScore = localStorage.getItem('savedScore');
+  // Verifichiamo se lo score è stato salvato precedentemente
+  if (savedScore) {
+    // Aggiorniamo l'elemento h1 sulla pagina di gioco con lo score salvato
+    document.getElementById("bscore").innerText =savedScore;
+  }
+}
+
+
+function loadAndDisplayBestScores() {
+  // Recuperiamo i migliori punteggi salvati dal localStorage (supponiamo che sia una lista di oggetti {player: "Nome", score: valore})
+  var bestScores = JSON.parse(localStorage.getItem('table')) || [];
+  console.log(bestScores);
+  var table = document.getElementById("table");
+
+  // Array per contenere i valori della seconda colonna
+  var values = [];
+
+  // Iteriamo sulle righe della tabella (escludendo l'intestazione)
+  for (var i = 1; i < table.rows.length; i++) {
+    // Accediamo alle celle nella prima e nella seconda colonna di ciascuna riga
+    var playerNameCell = table.rows[i].cells[0];
+    var scoreCell = table.rows[i].cells[1];
+    
+    // Aggiungiamo il nome del giocatore e il punteggio all'array
+    var playerName = playerNameCell.textContent || playerNameCell.innerText;
+    var score = parseInt(scoreCell.textContent || scoreCell.innerText);
+    values.push({ player: playerName, score: score });
+  }
+
+  var newPlayerName = document.getElementById("NamePlayer").value;
+  var newScore = parseInt(document.getElementById("bscore").value);
+
+  var playerFound = false;
+
+  for (var i = 0; i < bestScores.length; i++) {
+    if (bestScores[i].player === newPlayerName) {
+      // Se il giocatore è già presente, aggiorna il punteggio solo se il nuovo punteggio è maggiore
+      if (newScore > bestScores[i].score) {
+        bestScores[i].score = newScore;
+      }
+      playerFound = true;
+      break;
+    }
+  }
+
+  if (!playerFound) {
+    // Se il giocatore non è stato trovato nella classifica, aggiungilo
+    bestScores.push({ player: newPlayerName, score: newScore });
+  }
+
+  // Riordina la classifica in base ai punteggi (dal più alto al più basso)
+  bestScores.sort((a, b) => b.score - a.score);
+
+  // Aggiorna il localStorage con la classifica aggiornata
+  localStorage.setItem('table', JSON.stringify(bestScores));
+
+  // Ora bestScores contiene la classifica aggiornata
+  console.log(bestScores);
+}
+
+function saveScoreAndPlayerToBestScores(player, score) {
+  // Recuperiamo i migliori punteggi salvati dal localStorage
+  var bestScores = JSON.parse(localStorage.getItem('bestScores')) || [];
+  // Aggiungiamo il nuovo punteggio e il giocatore alla lista dei migliori punteggi
+  bestScores.push({ player: player, score: score });
+  // Salviamo la lista aggiornata dei migliori punteggi nel localStorage
+  localStorage.setItem('bestScores', JSON.stringify(bestScores));
+}
+
+
 function checkCollision() {
   const head = snake[0];
   if (head.x < 0 || head.x >= canvas.width / blockSize || head.y < 0 || head.y >= canvas.height / blockSize) {
@@ -63,6 +142,10 @@ function gameOver() {
   clearInterval(gameLoop);
   document.getElementById("gameOverText").innerText = "Game Over! Your score: " + score;
   document.getElementById("score").innerText = "0";
+
+  loadAndDisplayScore();
+  loadAndDisplayBestScores();
+
 }
 
 function clearCanvas() {
