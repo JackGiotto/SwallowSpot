@@ -86,23 +86,24 @@ create table Topology       -- topologia
     foreign key (ID_area) references Area(ID_area)
 );
 
-create table Report_criticalness        -- tabella ponte tra bollettini e criticità
+CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e criticità
 (
-    ID_report int ,                             -- ID del bollettino
-    ID_issue int,                               -- ID della criticità specifica
-    primary key(ID_report, ID_issue),
-    foreign key (ID_report) references Report(ID_report),
-    foreign key (ID_issue) references Criticalness(ID_issue)
+    ID_report INT,                  -- ID del bollettino
+    ID_issue INT,                   -- ID della criticità specifica
+    PRIMARY KEY (ID_report, ID_issue),
+    CONSTRAINT fk1 FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON DELETE CASCADE,
+    CONSTRAINT fk2 FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON DELETE CASCADE
 );
 
-create table Snow_report_criticalness       -- tabella ponte tra bollettini per valanghe e criticità
+CREATE TABLE Snow_report_criticalness        -- tabella ponte tra bollettini per valanghe e criticità
 (
-    ID_snow_report int,                         -- ID del bollettino per neve
-    ID_issue int,                               -- ID della criticità specifica
-    primary key (ID_snow_report, ID_issue),
-    foreign key (ID_snow_report) references Snow_report(ID_snow_report),
-    foreign key (ID_issue) references Criticalness(ID_issue)
+    ID_snow_report INT,                     -- ID del bollettino per neve
+    ID_issue INT,                           -- ID della criticità specifica
+    PRIMARY KEY (ID_snow_report, ID_issue),
+    CONSTRAINT fk1 FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON DELETE CASCADE,
+    CONSTRAINT fk2 FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON DELETE CASCADE
 );
+
 
 
 
