@@ -120,4 +120,4 @@ class Snow:
 		date = date.replace("/", "-") + " 00:00:00"
 		return date
 # debug
-snow = Snow("./test/data/test_snow.pdf")
+#snow = Snow("./test/data/test_snow.pdf")
