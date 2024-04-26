@@ -63,10 +63,10 @@ function loadAndDisplayScore() {
 }
 
 
+
 function loadAndDisplayBestScores() {
   // Recuperiamo i migliori punteggi salvati dal localStorage (supponiamo che sia una lista di oggetti {player: "Nome", score: valore})
-  var bestScores = JSON.parse(localStorage.getItem('table')) || [];
-  console.log(bestScores);
+
   var table = document.getElementById("table");
 
   // Array per contenere i valori della seconda colonna
@@ -84,36 +84,83 @@ function loadAndDisplayBestScores() {
     values.push({ player: playerName, score: score });
   }
 
-  var newPlayerName = document.getElementById("NamePlayer").value;
-  var newScore = parseInt(document.getElementById("bscore").value);
-
-  var playerFound = false;
-
-  for (var i = 0; i < bestScores.length; i++) {
-    if (bestScores[i].player === newPlayerName) {
-      // Se il giocatore è già presente, aggiorna il punteggio solo se il nuovo punteggio è maggiore
-      if (newScore > bestScores[i].score) {
-        bestScores[i].score = newScore;
-      }
-      playerFound = true;
-      break;
+  var newPlayerName = document.getElementById("NamePlayer").textContent;
+  var newScore = parseInt(document.getElementById("bscore").textContent);
+  new_table={ player: newPlayerName, score: newScore };
+  tmp=containsValueInArrayOfObjects(values, 'player', newPlayerName)
+  if(tmp==false){
+    values.push(new_table)
+    console.log("fds".values);
+  }else{
+    if(values[tmp][score]<newScore){
+      values[tmp][score]=newScore
+      sortByKey(values, 'score');
+      console.log("das".values);
+    }else{
+      console.log("ok".values);
+      return;
+      
     }
-  }
-
-  if (!playerFound) {
-    // Se il giocatore non è stato trovato nella classifica, aggiungilo
-    bestScores.push({ player: newPlayerName, score: newScore });
-  }
-
-  // Riordina la classifica in base ai punteggi (dal più alto al più basso)
-  bestScores.sort((a, b) => b.score - a.score);
-
-  // Aggiorna il localStorage con la classifica aggiornata
-  localStorage.setItem('table', JSON.stringify(bestScores));
-
-  // Ora bestScores contiene la classifica aggiornata
-  console.log(bestScores);
+  } 
+   
+  console.log(values);
+  updateLeaderboardHTML(values);
 }
+
+function updateLeaderboardHTML(values) {
+  var tbody = document.querySelector('#table tbody');
+  tbody.innerHTML = ''; // Pulisce il contenuto attuale della tabella
+
+  // Itera attraverso l'array di punteggi e crea una nuova riga per ogni elemento
+  values.forEach(function(entry) {
+      var row = document.createElement('tr');
+      var playerNameCell = document.createElement('td');
+      playerNameCell.textContent = entry.player;
+      var scoreCell = document.createElement('td');
+      scoreCell.textContent = entry.score;
+
+      row.appendChild(playerNameCell);
+      row.appendChild(scoreCell);
+      tbody.appendChild(row);
+  });
+}
+
+
+function sortByKey(arr, key) {
+  arr.sort(function(a, b) {
+      var valueA = a[key];
+      var valueB = b[key];
+      if (valueA < valueB) {
+          return -1;
+      }
+      if (valueA > valueB) {
+          return 1;
+      }
+      return 0;
+  });
+}
+
+function containsValueInArrayOfObjects(arr, key, value) {
+  for (var i = 0; i < arr.length; i++) {
+      if (arr[i][key] === value) {
+          return i;
+      }
+  }
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function saveScoreAndPlayerToBestScores(player, score) {
   // Recuperiamo i migliori punteggi salvati dal localStorage
