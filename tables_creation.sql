@@ -3,35 +3,35 @@
 
 CREATE TABLE Area       -- zona di allerta per ogni rischio
 (
-    ID_area INT auto_increment,     -- ID univoco per ogni singola zona
-    area_name VARCHAR(7),           -- nome della zona
-    PRIMARY KEY (ID_area)
+    ID_area INT auto_increment,                 -- ID univoco per ogni singola zona
+    area_name VARCHAR(7) NOT NULL UNIQUE,       -- nome della zona
+    CONSTRAINT pk_area PRIMARY KEY (ID_area)    -- vincolo di chiave primaria di Area
 );
 
 CREATE TABLE Risk       -- rischio specifico
 (
-    ID_risk INT auto_increment,     -- ID univoco per ogni rischio
-    risk_name VARCHAR(35),          -- nome del tipo di rischio
-    PRIMARY KEY (ID_risk)
+    ID_risk INT auto_increment,                 -- ID univoco per ogni rischio
+    risk_name VARCHAR(35) NOT NULL UNIQUE,      -- nome del tipo di rischio
+    CONSTRAINT pk_risk PRIMARY KEY (ID_risk)    -- vincolo di chiave primaria di Risk
 );
 
 CREATE TABLE Role       -- ruolo di ogni utente
 (
-    ID_role INT auto_increment,     -- ID univoco per ogni ruolo         
-    role_name VARCHAR(35),          -- nome di ogni ruolo
-    PRIMARY KEY (ID_role)
+    ID_role INT auto_increment,                     -- ID univoco per ogni ruolo         
+    role_name VARCHAR(35) NOT NULL UNIQUE,          -- nome di ogni ruolo
+    CONSTRAINT pk_role PRIMARY KEY (ID_role)        -- vincolo di chiave primaria di Role
 );
 
 CREATE TABLE User       -- utente e i suoi dati
 (
-    ID_user INT auto_increment,         -- ID univoco per ogni utente
-    username VARCHAR(35),               -- username usato dall'utente per registrarsi al sito
-    password VARCHAR(48),               -- hash della password usata dall'utente per registrarsi al sito
+    ID_user INT auto_increment,                         -- ID univoco per ogni utente
+    username VARCHAR(35) NOT NULL UNIQUE,               -- username usato dall'utente per registrarsi al sito
+    password VARCHAR(48) NOT NULL,               -- hash della password usata dall'utente per registrarsi al sito
     ID_area INT,                        -- area in cui vive
     ID_role INT,                        -- ruolo dell'utente nel sito
-    PRIMARY KEY (ID_user),                           
-    FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
-    FOREIGN KEY (ID_role) REFERENCES Role(ID_role)
+    CONSTRAINT pk_user PRIMARY KEY (ID_user),                           
+    CONSTRAINT fk_user_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
+    CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role)
 );
 
 CREATE TABLE Admin      -- admin del sito
@@ -104,6 +104,23 @@ CREATE TABLE Snow_report_criticalness        -- tabella ponte tra bollettini per
     CONSTRAINT fk2 FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON DELETE CASCADE
 );
 
+/*
+-- debug
+
+DROP TABLE Snow_report_criticalness;
+DROP TABLE Report_criticalness;
+DROP TABLE Topology;
+DROP TABLE Criticalness;
+DROP TABLE Color;
+DROP TABLE Snow_report;
+DROP TABLE Report;
+DROP TABLE Admin;
+DROP TABLE User;
+DROP TABLE Role;
+DROP TABLE Risk;
+DROP TABLE Area;
+
+*/
 
 
 
