@@ -53,6 +53,7 @@ class Hydro:
 		"""get the value associated with every risk
 		"""
 		
+		print(table)
 		# risks template for hydro
 		with open("utils/cfd_analyzer/templates/risks_template_hydro.json", "r") as f:
 			RISKS = json.load(f)
@@ -71,8 +72,8 @@ class Hydro:
 
 		return template
 		# debug
-		with open("prova_hydro.json", "w") as f:
+		with open("prova_hydro2.json", "w") as f:
 			json.dump(template, f, indent="\t")
 
 # debug
-#hydro = Hydro("./test/data/test.pdf")
+#hydro = Hydro("./test/data/test2.pdf")
