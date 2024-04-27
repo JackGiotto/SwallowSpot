@@ -1,89 +1,89 @@
 
 -- Query di creazione del DataBase SwallowSpot
 
-create table Area       -- zona di allerta per ogni rischio
+CREATE TABLE Area       -- zona di allerta per ogni rischio
 (
-    ID_area int auto_increment,     -- ID univoco per ogni singola zona
-    area_name varchar(7),           -- nome della zona
-    primary key(ID_area)
+    ID_area INT auto_increment,     -- ID univoco per ogni singola zona
+    area_name VARCHAR(7),           -- nome della zona
+    PRIMARY KEY (ID_area)
 );
 
-create table Risk       -- rischio specifico
+CREATE TABLE Risk       -- rischio specifico
 (
-    ID_risk int auto_increment,     -- ID univoco per ogni rischio
-    risk_name varchar(35),          -- nome del tipo di rischio
-    primary key(ID_risk)
+    ID_risk INT auto_increment,     -- ID univoco per ogni rischio
+    risk_name VARCHAR(35),          -- nome del tipo di rischio
+    PRIMARY KEY (ID_risk)
 );
 
-create table Role       -- ruolo di ogni utente
+CREATE TABLE Role       -- ruolo di ogni utente
 (
-    ID_role int auto_increment,     -- ID univoco per ogni ruolo         
-    role_name varchar(35),          -- nome di ogni ruolo
-    primary key(ID_role)
+    ID_role INT auto_increment,     -- ID univoco per ogni ruolo         
+    role_name VARCHAR(35),          -- nome di ogni ruolo
+    PRIMARY KEY (ID_role)
 );
 
-create table User       -- utente e i suoi dati
+CREATE TABLE User       -- utente e i suoi dati
 (
-    ID_user int auto_increment,         -- ID univoco per ogni utente
-    username varchar(35),               -- username usato dall'utente per registrarsi al sito
-    password varchar(48),               -- hash della password usata dall'utente per registrarsi al sito
-    ID_area int,                        -- area in cui vive
-    ID_role int,                        -- ruolo dell'utente nel sito
-    primary key(ID_user),                           
-    foreign key (ID_area) references Area(ID_area),
-    foreign key (ID_role) references Role(ID_role)
+    ID_user INT auto_increment,         -- ID univoco per ogni utente
+    username VARCHAR(35),               -- username usato dall'utente per registrarsi al sito
+    password VARCHAR(48),               -- hash della password usata dall'utente per registrarsi al sito
+    ID_area INT,                        -- area in cui vive
+    ID_role INT,                        -- ruolo dell'utente nel sito
+    PRIMARY KEY (ID_user),                           
+    FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
+    FOREIGN KEY (ID_role) REFERENCES Role(ID_role)
 );
 
-create table Admin      -- admin del sito
+CREATE TABLE Admin      -- admin del sito
 (
-    ID_telegram int auto_increment,                 -- ID univoco per ogni 
-    ID_user int,                                    -- ID user dell'admin
-    primary key(ID_telegram),
-    foreign key (ID_user) references User(ID_user)
+    ID_telegram INT auto_increment,                 -- ID univoco per ogni 
+    ID_user INT,                                    -- ID user dell'admin
+    PRIMARY KEY (ID_telegram),
+    FOREIGN KEY (ID_user) REFERENCES User(ID_user)
 );
 
-create table Report     -- bollettino
+CREATE TABLE Report     -- bollettino
 (
-    ID_report int auto_increment,       -- ID univoco per ogni bollettino
-    starting_date datetime,             -- data di inizio validità / controllare se si può cambiare il formato YYYY-MM-DD HH:MI:SS
-    ending_date datetime,               -- data di fine validità
-    path varchar(35),                   -- percorso del file nel server
-    primary key(ID_report)
+    ID_report INT auto_increment,       -- ID univoco per ogni bollettino
+    starting_date DATETIME,             -- data di inizio validità
+    ending_date DATETIME,               -- data di fine validità
+    path VARCHAR(35),                   -- percorso del file nel server
+    PRIMARY KEY (ID_report)
 );
 
-create table Snow_report        -- bollettino per gelate e valanghe
+CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
 (
-    ID_snow_report int auto_increment,      -- ID univoco per ogni bollettino valanghe
-    date datetime,                          -- data di inizio validità
-    path varchar(35),                       -- percorso del file nel server
-    primary key(ID_snow_report)
+    ID_snow_report INT auto_increment,      -- ID univoco per ogni bollettino valanghe
+    date DATETIME,                          -- data di inizio validità
+    path VARCHAR(35),                       -- percorso del file nel server
+    PRIMARY KEY (ID_snow_report)
 );
 
-create table Color      -- colori dei vari rischi
+CREATE TABLE Color      -- colori dei vari rischi
 (
-    ID_color int auto_increment,        -- ID univoco per ogni colore
-    color_name varchar(35),             -- nome del colore di ogni tipo di rischio
-    primary key(ID_color)
+    ID_color INT auto_increment,        -- ID univoco per ogni colore
+    color_name VARCHAR(35),             -- nome del colore di ogni tipo di rischio
+    PRIMARY KEY (ID_color)
 );
 
-create table Criticalness       -- criticità
+CREATE TABLE Criticalness       -- criticità
 (
-    ID_issue int auto_increment,            -- ID univoco per ogni criticità
-    ID_area int,                            -- ID dell'area colpita dalla criticità
-    ID_risk int,                            -- ID del rischio associato
-    ID_color int,                           -- ID del colore
-    primary key(ID_issue),
-    foreign key (ID_area) references Area(ID_area),
-    foreign key (ID_risk) references Risk(ID_risk),
-    foreign key (ID_color) references Color(ID_color)
+    ID_issue INT auto_increment,            -- ID univoco per ogni criticità
+    ID_area INT,                            -- ID dell'area colpita dalla criticità
+    ID_risk INT,                            -- ID del rischio associato
+    ID_color INT,                           -- ID del colore
+    PRIMARY KEY (ID_issue),
+    FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
+    FOREIGN KEY (ID_risk) REFERENCES Risk(ID_risk),
+    FOREIGN KEY (ID_color) REFERENCES Color(ID_color)
 );
 
-create table Topology       -- topologia
+CREATE TABLE Topology       -- topologia
 (
-    city varchar(35),               -- città univoca
-    ID_area int,                    -- ID dell'area a cui appartiene la città
-    primary key(city),
-    foreign key (ID_area) references Area(ID_area)
+    city VARCHAR(35),               -- città univoca
+    ID_area INT,                    -- ID dell'area a cui appartiene la città
+    PRIMARY KEY(city),
+    FOREIGN KEY (ID_area) REFERENCES Area(ID_area)
 );
 
 CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e criticità
