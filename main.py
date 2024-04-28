@@ -76,16 +76,16 @@ def login():
     elif request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        print("ghe semo")
+        
         sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
-        result = executeQuery("SELECT user_exists FROM UserView;")
+        result = executeQuery("SELECT user_exists FROM UserView;")#restituisce dizionario
         executeQuery("DROP VIEW UserView;")
-        if(result == "true"):
+
+        if(result[0]["user_exists"] == "true"):
             return render_template("home.html")
         else:
             return render_template("profile.html")
-        
     else:
         return render_template("registration/login.html")
 
