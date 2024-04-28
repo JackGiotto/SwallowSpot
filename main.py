@@ -79,13 +79,13 @@ def login():
         
         sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
-        result = executeQuery("SELECT user_exists FROM UserView;")#restituisce dizionario
+        result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
         executeQuery("DROP VIEW UserView;")
 
         if(result[0]["user_exists"] == "true"):
             return render_template("home.html")
         else:
-            return render_template("profile.html")
+            return render_template("registration/login_layout.html", msg="credenziali non corrette")
     else:
         return render_template("registration/login.html")
 

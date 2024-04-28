@@ -16,7 +16,7 @@
             <div class="card">
                 <a href="{{ url_for('home') }}"><h4><i class="fa-solid fa-arrow-left"></i> Torna alla Home</h4></a>
                 <div id="content">
-                    {% block content %} {% endblock %}
+                    {% block content %}{{msg}}{% endblock %}
                 </div>
             </div>
         </div>
