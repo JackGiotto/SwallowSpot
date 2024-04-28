@@ -15,7 +15,6 @@ def executeQuery(query):
                                 database = "s02675",
                                 cursorclass = pymysql.cursors.DictCursor
                                 )
-    
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(query)
@@ -77,12 +76,16 @@ def login():
     elif request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        query = "SELECT username FROM User WHERE username = '"+username+"'"
-        result=executeQuery(query)
-        query = "SELECT password FROM User WHERE password = '"+password+"'"
-        result2=executeQuery(query)
-        print(result)
-        print(result2)
+        print("ghe semo")
+        sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
+        executeQuery(sql)
+        result = executeQuery("SELECT user_exists FROM UserView;")
+        executeQuery("DROP VIEW UserView;")
+        if(result == "true"):
+            return render_template("home.html")
+        else:
+            return render_template("profile.html")
+        
     else:
         return render_template("registration/login.html")
 
