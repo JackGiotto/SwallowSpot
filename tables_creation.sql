@@ -26,82 +26,83 @@ CREATE TABLE User       -- utente e i suoi dati
 (
     ID_user INT auto_increment,                         -- ID univoco per ogni utente
     username VARCHAR(35) NOT NULL UNIQUE,               -- username usato dall'utente per registrarsi al sito
-    password VARCHAR(48) NOT NULL,               -- hash della password usata dall'utente per registrarsi al sito
-    ID_area INT,                        -- area in cui vive
-    ID_role INT,                        -- ruolo dell'utente nel sito
-    CONSTRAINT pk_user PRIMARY KEY (ID_user),                           
-    CONSTRAINT fk_user_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
-    CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role)
+    password VARCHAR(48) NOT NULL,                      -- hash della password usata dall'utente per registrarsi al sito
+    ID_area INT NOT NULL,                               -- zona in cui vive
+    ID_role INT NOT NULL,                               -- ruolo dell'utente nel sito
+    CONSTRAINT pk_user PRIMARY KEY (ID_user),           -- vincolo di chiave primaria di User                                
+    CONSTRAINT fk_user_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa alla zona
+    CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa al ruolo
 );
 
-CREATE TABLE Admin      -- admin del sito
+CREATE TABLE Admin      -- amministratori del sito
 (
-    ID_telegram INT auto_increment,                 -- ID univoco per ogni 
-    ID_user INT,                                    -- ID user dell'admin
-    PRIMARY KEY (ID_telegram),
-    FOREIGN KEY (ID_user) REFERENCES User(ID_user)
+    ID_telegram VARCHAR(15),                            -- ID assegnato da telegram per ogni amministratore
+    ID_user INT NOT NULL,                               -- ID user dell'admin
+    CONSTRAINT pk_admin PRIMARY KEY (ID_telegram),      -- vincolo di chiave primaria di Admin
+    CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativo all'utente
 );
 
 CREATE TABLE Report     -- bollettino
 (
-    ID_report INT auto_increment,       -- ID univoco per ogni bollettino
-    starting_date DATETIME,             -- data di inizio validità
-    ending_date DATETIME,               -- data di fine validità
-    path VARCHAR(35),                   -- percorso del file nel server
-    PRIMARY KEY (ID_report)
+    ID_report INT auto_increment,           -- ID univoco per ogni bollettino
+    starting_date DATETIME NOT NULL,        -- data di inizio validità
+    ending_date DATETIME NOT NULL,          -- data di fine validità
+    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
+    CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
 );
 
 CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
 (
     ID_snow_report INT auto_increment,      -- ID univoco per ogni bollettino valanghe
-    date DATETIME,                          -- data di inizio validità
-    path VARCHAR(35),                       -- percorso del file nel server
-    PRIMARY KEY (ID_snow_report)
+    date DATETIME NOT NULL,                 -- data di inizio validità
+    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
+    CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
 );
 
 CREATE TABLE Color      -- colori dei vari rischi
 (
-    ID_color INT auto_increment,        -- ID univoco per ogni colore
-    color_name VARCHAR(35),             -- nome del colore di ogni tipo di rischio
-    PRIMARY KEY (ID_color)
+    ID_color INT auto_increment,                -- ID univoco per ogni colore
+    color_name VARCHAR(35) NOT NULL UNIQUE,     -- nome del colore di ogni tipo di rischio
+    CONSTRAINT pk_color PRIMARY KEY (ID_color)      -- vincolo di chiave primaria di Color
 );
 
-CREATE TABLE Criticalness       -- criticità
+CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
 (
-    ID_issue INT auto_increment,            -- ID univoco per ogni criticità
-    ID_area INT,                            -- ID dell'area colpita dalla criticità
-    ID_risk INT,                            -- ID del rischio associato
-    ID_color INT,                           -- ID del colore
-    PRIMARY KEY (ID_issue),
-    FOREIGN KEY (ID_area) REFERENCES Area(ID_area),
-    FOREIGN KEY (ID_risk) REFERENCES Risk(ID_risk),
-    FOREIGN KEY (ID_color) REFERENCES Color(ID_color)
+    ID_issue INT auto_increment,        -- ID univoco per ogni criticità
+    ID_area INT NOT NULL,               -- ID dell'area colpita dalla criticità
+    ID_risk INT NOT NULL,               -- ID del rischio associato
+    ID_color INT NOT NULL,              -- ID del colore
+    CONSTRAINT pk_criticalness PRIMARY KEY (ID_issue),      -- vincolo di chiave primaria di Criticalness
+    CONSTRAINT fk_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa alla zona
+    CONSTRAINT fk_criticalness_risk FOREIGN KEY (ID_risk) REFERENCES Risk(ID_risk) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa al rischio
+    CONSTRAINT fk_criticalness_color FOREIGN KEY (ID_color) REFERENCES Color(ID_color) ON UPDATE CASCADE ON DELETE CASCADE  -- vincolo di chiave esterna relativa al colore
 );
 
-CREATE TABLE Topology       -- topologia
+CREATE TABLE Topology       -- topologia delle città e delle zone di rischio
 (
-    city VARCHAR(35),               -- città univoca
-    ID_area INT,                    -- ID dell'area a cui appartiene la città
-    PRIMARY KEY(city),
-    FOREIGN KEY (ID_area) REFERENCES Area(ID_area)
+    ID_city INT auto_increment,                 -- ID univoco
+    city_name VARCHAR(35) NOT NULL UNIQUE,      -- nome della città 
+    ID_area INT NOT NULL,                       -- ID dell'area a cui appartiene la città
+    CONSTRAINT pk_topology PRIMARY KEY (ID_city),       -- vincolo di chiave primaria di Topology
+    CONSTRAINT fk_topology_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
 );
 
 CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e criticità
 (
-    ID_report INT,                  -- ID del bollettino
-    ID_issue INT,                   -- ID della criticità specifica
-    PRIMARY KEY (ID_report, ID_issue),
-    CONSTRAINT fk1 FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON DELETE CASCADE,
-    CONSTRAINT fk2 FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON DELETE CASCADE
+    ID_report INT NOT NULL,     -- ID del bollettino
+    ID_issue INT NOT NULL,      -- ID della criticità specifica
+    CONSTRAINT pk_report_criticalness PRIMARY KEY (ID_report, ID_issue),        -- vincolo di chiave primaria di Report_criticalness
+    CONSTRAINT fk_report FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON UPDATE CASCADE ON DELETE CASCADE,              -- vincolo di chiave esterna relativa al bollettino
+    CONSTRAINT fk_criticalness FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativa alla criticità
 );
 
 CREATE TABLE Snow_report_criticalness        -- tabella ponte tra bollettini per valanghe e criticità
 (
-    ID_snow_report INT,                     -- ID del bollettino per neve
-    ID_issue INT,                           -- ID della criticità specifica
-    PRIMARY KEY (ID_snow_report, ID_issue),
-    CONSTRAINT fk1 FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON DELETE CASCADE,
-    CONSTRAINT fk2 FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON DELETE CASCADE
+    ID_snow_report INT NOT NULL,        -- ID del bollettino per neve
+    ID_snow_issue INT NOT NULL,              -- ID della criticità specifica
+    CONSTRAINT pk_snow_report_criticalness PRIMARY KEY (ID_snow_report, ID_snow_issue),      -- vincolo di chiave primaria composta di Snow_report_criticalness
+    CONSTRAINT fk_snow_report FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON UPDATE CASCADE ON DELETE CASCADE,      -- vincolo di chiave esterna relativa al bollettino per neve
+    CONSTRAINT fk_snow_criticalness FOREIGN KEY (ID_snow_issue) REFERENCES Criticalness(ID_issue) ON UPDATE CASCADE ON DELETE CASCADE                 -- vincolo di chiave esterna relativa alla criticità
 );
 
 /*
