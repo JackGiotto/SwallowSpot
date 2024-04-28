@@ -85,7 +85,7 @@ def login():
         if(result[0]["user_exists"] == "true"):
             return render_template("home.html")
         else:
-            return render_template("registration/login_layout.html", msg="credenziali non corrette")
+            return render_template("registration/login.html", msg="credenziali non corrette")
     else:
         return render_template("registration/login.html")
 
