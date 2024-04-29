@@ -14,7 +14,7 @@ class Snow:
 		"column": 1,
 	}
 
-	data = {"type": "avalanches"}
+	data = {"type": "snow"}
 
 	def __init__(self, pdf_path) -> None:
 		self.path = pdf_path
