@@ -2,18 +2,18 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
-@reports_bp.route('/reports/hydro/')
+@reports_bp.route('/hydro/')
 def hydro():
     return render_template("reports/hydro.html")
 
-@reports_bp.route('/reports/snow/')
+@reports_bp.route('/snow/')
 def snow():
     return render_template("reports/snow.html")
 
-@reports_bp.route('/reports/ava/')
+@reports_bp.route('/ava/')
 def ava():
     return render_template("reports/ava.html")
 
-@reports_bp.route('/reports/')
+@reports_bp.route('/')
 def reports():
-    return redirect(url_for("hydro"))
+    return redirect(url_for("reports.hydro"))
