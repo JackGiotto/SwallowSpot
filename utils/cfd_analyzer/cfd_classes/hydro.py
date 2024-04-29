@@ -71,8 +71,9 @@ class Hydro:
 		#print(template)
 
 		return template
+
 		# debug
-		with open("prova_hydro2.json", "w") as f:
+		with open("test_hydro.json", "w") as f:
 			json.dump(template, f, indent="\t")
 
 # debug
