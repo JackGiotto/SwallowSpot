@@ -12,6 +12,7 @@ from request_data import *
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 CHAT_ID: Final = None
+INDEX: Final=0
 INFO: Final= {
     "snow":["","",""],
     "idro":"",
@@ -70,6 +71,7 @@ async def alert_control(tipo, colore, chat_id):
 
 async def snow_control(val,chat_id):
     bot = Bot(token=TOKEN)
+    global INDEX
     for giorno in val:
         if giorno['1000 m'] != "0":
             
@@ -80,11 +82,16 @@ async def snow_control(val,chat_id):
                 ]
                 #find_id(messaggio)
                 global INFO
-                INFO["snow"]="ALLERTA NEVE giorno:"+giorno['1000 m']+"data:"+giorno['date']
-                
+                messaggio="ALLERTA NEVE giorno:"+giorno['1000 m']+"data:"+giorno['date']
+                  # Aggiungi il messaggio allerta neve alla lista
+                if(INDEX<=3):
+                    INDEX += 1
+                else:
+                    INDEX=0
+                INFO["snow"][INDEX]=(messaggio)    
+                print("mess:"+INFO["snow"][INDEX])
                 reply_markup = InlineKeyboardMarkup(keyboard)
-               
-                await bot.send_message(chat_id=chat_id, text=INFO["snow"], reply_markup=reply_markup)
+                await bot.send_message(chat_id=chat_id, text=INFO["snow"][INDEX], reply_markup=reply_markup)
                 print("Notifica inviata a "+str(chat_id)+" con successo!")
                 
             except TelegramError as e:
