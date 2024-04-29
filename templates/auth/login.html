@@ -6,14 +6,15 @@
 
 <form action="{{ url_for('auth.login') }}" method="post">
     <div class="input-group mb-3">
-        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
 
     <div class="input-group mb-1">
-        <input type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
     {{msg}}
+    <br>
     <a href="">Ho dimenticato la password</a>
 
     <div class="mt-2 mb-3">

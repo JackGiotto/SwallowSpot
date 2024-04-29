@@ -6,17 +6,14 @@
 
 <form action="{{ url_for('auth.signup') }}" method="post">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Nome utente" aria-label="Nome utente">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
     <div class="input-group mb-3">
-        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-    </div>
-    <div class="input-group mb-3">
-        <input type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <input name="password2" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
     <div class="input-group mb-3">
-        <input type="password" class="form-control" id="textPassword2" placeholder="Conferma password" aria-label="Password" aria-describedby="showPasswordToggle2">
+        <input name="password2" type="password" class="form-control" id="textPassword2" placeholder="Conferma password" aria-label="Password" aria-describedby="showPasswordToggle2">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
         <span class="input-group-text" id="confirmPsw2">
             <i class="fa-solid fa-xmark"></i>
