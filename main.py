@@ -71,18 +71,21 @@ def get_person(id):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if request.method == "GET":
+    if request.method == "GET":#accesso risorsa
         return render_template("registration/login.html")
-    elif request.method == "POST":
+    elif request.method == "POST":#login
         username = request.form["username"]
         password = request.form["password"]
-        
+        #confronto credenziali con DB
         sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
         result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
         executeQuery("DROP VIEW UserView;")
-
+        #confronto e reindirizzamento
         if(result[0]["user_exists"] == "true"):
+            #stabilimento sessione
+            session.permanent = True
+            session["username"] = username
             return render_template("home.html")
         else:
             return render_template("registration/login.html", msg="credenziali non corrette")
@@ -97,11 +100,28 @@ def register():
         #check if credential are correct
         username = request.form["username"]
         password = request.form["password"]
-        if username == "pallante" and password == "sasso":
-            #sessione
-            session.permanent = True
-            session["username"] = username
-            return redirect(url_for("user"))
+        password2 =request.form["password2"]
+        if(password != password2):
+            return render_template("registration/register.html", msg= "credeziali non corrette")
+        elif(password == password2):
+            #confronto credenziali con DB
+            sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
+            executeQuery(sql)
+            result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
+            executeQuery("DROP VIEW UserView;")
+            #confronto e reindirizzamento
+            if(result[0]["user_exists"] == "true"):#true -> utente gia presente nel db 
+                return render_template("registration/register.html", msg="username non disponibile")
+            elif(result[0]["user_exists"] == "false"):#false -> utente non presente nel db
+                #registrazione credenziali utente nel db 
+
+                #MANCA ZONA DI RESIDENZA !!!!!
+                executeQuery("INSERT INTO `User` (`username`, `password`, `ID_area`, `ID_role`)VALUES ('"+username+"', '"+password+"','5', '1');")
+                
+                #stabilimento sessione
+                session.permanent = True
+                session["username"] = username
+                return redirect(url_for("user"))
         else:
             return render_template("registration/register.html")
 
