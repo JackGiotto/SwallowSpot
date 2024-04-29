@@ -46,44 +46,6 @@ async def find_id(INFO,chat_id):
 
 
 
-#invio in modo automoatico del bot ad un utente preciso
-async def alert_control(tipo,colore,chat_id):
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-            [InlineKeyboardButton("Inoltra", callback_data='Send')],
-            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-        ]
-       
-        messaggio=" "
-        if tipo =="hydraulic":
-            colore= await control()
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idraulico"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idraulico"
-            elif colore == "VIOLA":
-                messaggio += "\nPericolo Rosso di idraulico"
-            else: return
-        elif tipo =="hydrogeological":        
-            if colore  == "GIALLO":
-                messaggio += "\nPericolo Giallo di idrogeologico"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idrogeologico"
-        elif tipo =="storm":     
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali"
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali"
-
-        global INFO 
-        INFO =  messaggio
-        #find_id(messaggio)
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=chat_id, text=messaggio, reply_markup=reply_markup)
-        print("Notifica inviata a "+messaggio+" con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
        
 #controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
@@ -117,24 +79,3 @@ async def control():
     
 #--------------------------------------------------------------------------------------------------
 # function to verify snow alert value        
-async def snow_control(update:Update, context,val,info,chat_id):
-    bot = Bot(token=TOKEN)
-    if(val==0):
-        return
-    else:
-        try:
-            keyboard = [
-                [InlineKeyboardButton("Inoltra", callback_data='Send')],
-                [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-            ]
-            #find_id(messaggio)
-            global INFO
-            INFO="ALLERTA NEVE: "+info+" indice: "+val
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await bot.send_message(chat_id=chat_id, text=INFO, reply_markup=reply_markup)
-            print("Notifica inviata a "+INFO+" con successo!")
-        except TelegramError as e:
-            print(f"Si è verificato un errore nell'invio della notifica: {e}")
-    
-        return
-    
