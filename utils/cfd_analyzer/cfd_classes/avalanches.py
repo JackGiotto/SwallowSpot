@@ -5,8 +5,8 @@ class Avalanches:
 
 	# Number of the pages where date and risks can be collected
 	PAGES_NUMBERS = {
-		"date": "1",
-		"risk": "1"
+		"date": "2",
+		"risk": "2"
 	}
 
 	# the position in the table of the date

@@ -2,10 +2,6 @@ import cfd_classes
 import camelot
 
 class Pdf_reader:
-	PAGES_NUMBERS_HYDRO = {
-		"date": "1",
-		"risk": "2",
-	}
 
 	analyzer = None
 
