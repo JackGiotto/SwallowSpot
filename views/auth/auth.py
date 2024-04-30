@@ -54,6 +54,9 @@ def signup():
         result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
         executeQuery("DROP VIEW UserView;")
         #confronto e reindirizzamento
+
+        #SELECT city_name FROM Topology;
+
         if(result[0]["user_exists"] == "true"):#true -> utente gia presente nel db 
             return render_template("auth/signup.html", msg="username non disponibile")
         elif(result[0]["user_exists"] == "false"):#false -> utente non presente nel db
