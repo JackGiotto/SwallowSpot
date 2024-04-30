@@ -10,6 +10,18 @@ TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 INFO: Final= None
 
+async def verify_user(chat_id):
+    mydb = create_connection()
+    mycursor = mydb.cursor()
+
+    mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram=={chat_id}")
+
+    myresult = mycursor.fetchall()
+    if(myresult==None):
+        return False
+    else:
+        return True
+
 
 #request database to find chat-id admin
 async def snow_report():

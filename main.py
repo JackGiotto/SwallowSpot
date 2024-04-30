@@ -107,49 +107,59 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     global CHAT_ID  # Indica che si sta facendo riferimento alla variabile globale CHAT_ID
     chat_id = update.message.chat_id
     CHAT_ID = chat_id
-    dati = [
-        {
-            "date": "18-01-2024 00:00:00",
-            "%": "0",
-            "1000 m": "2",
-            "1500 m": "0",
-            ">1500 m": "0"
-        },
-        {
-            "date": "19-01-2024 00:00:00",
-            "%": "100",
-            "1000 m": "2-10",
-            "1500 m": "5-15",
-            ">1500 m": "10-20"
-        },
-        {
-            "date": "20-01-2024 00:00:00",
-            "%": "0",
-            "1000 m": "0",
-            "1500 m": "0",
-            ">1500 m": "0"
-        }
-    ]
-    print("ciao")
-    await snow_control(dati,chat_id)
-    print("ciao")
-    data={
-        "hydraulic": "ROSSO",
-        "hydrogeological": "GIALLO",
-        "storm": "GIALLO"
-    }
-    for tipo, colore in data.items():
-        if(colore!="VERDE"):
-            print("ciao")
-            await alert_control(tipo,colore,chat_id)
-     
-    keyboard = [
-        [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')]
-        [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
+    #funzione per verificare se l'utente che sta usando il bot è admin
+    control=await verify_user(chat_id)
+    if(control==False):
+        
+        keyboard = [
+            [InlineKeyboardButton("Dimmi il mio Chat ID ", callback_data='chat_id')]
+            ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(f"Il tuo account Telegram non ha i privilegi per usare questo Bot",reply_markup=reply_markup)
+        
+        dati = [
+            {
+                "date": "18-01-2024 00:00:00",
+                "%": "0",
+                "1000 m": "2",
+                "1500 m": "0",
+                ">1500 m": "0"
+            },
+            {
+                "date": "19-01-2024 00:00:00",
+                "%": "100",
+                "1000 m": "2-10",
+                "1500 m": "5-15",
+                ">1500 m": "10-20"
+            },
+            {
+                "date": "20-01-2024 00:00:00",
+                "%": "0",
+                "1000 m": "0",
+                "1500 m": "0",
+                ">1500 m": "0"
+            }
         ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
-   
+        print("ciao")
+        await snow_control(dati,chat_id)
+        print("ciao")
+        data={
+            "hydraulic": "ROSSO",
+            "hydrogeological": "GIALLO",
+            "storm": "GIALLO"
+        }
+        for tipo, colore in data.items():
+            if(colore!="VERDE"):
+                print("ciao")
+                await alert_control(tipo,colore,chat_id)
+        
+        keyboard = [
+            [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')]
+            [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
+            ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
+    
 
 
 
@@ -177,10 +187,15 @@ async def button(update: Update, context):
         await send(update, context,"snow")
     elif data == 'Drop':
         await drop(update, context)
+    elif data == 'chat_id':
+        await chat_id(update, context,chat_id)
 
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
  
+async def button(update: Update, context,chat_id):
+    bot = Bot(token=TOKEN)
+    await bot.send_message(chat_id=chat_id, text=f"il tuo chat ID corrisponde a"+{chat_id})
 
 # Funzione per gestire l'opzione 1 del bottone
 async def send(update:Update, context,arg):
