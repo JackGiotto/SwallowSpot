@@ -1,0 +1,73 @@
+{
+    "risks_columns": {
+        "hydraulic": 3,
+        "hydrogeological": 4,
+        "storm": 5
+    },
+    "risks_template": {
+        "VENE-A": {
+            "row": 5,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-H": {
+            "row": 6,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-B": {
+            "row": 7,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-C": {
+            "row": 8,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-D": {
+            "row": 9,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-E": {
+            "row": 10,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-F": {
+            "row": 11,
+            "risks_value": {
+                "hydraulic" : "",
+                "hydrogeological": "",
+                "storm": ""
+            }
+        },
+        "VENE-G": {
+            "row": 12,
+            "risks_value": {
+                "hydraulic": "",
+                "hydrogeological": "",
+                "storm": ""
+            }	
+        }
+    }
+}

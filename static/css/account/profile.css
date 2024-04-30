@@ -1,4 +1,4 @@
-.profile-info {
+.profile-out {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,8 +6,34 @@
     margin-top: 0;
 }
 
-.profile-info {
+.profile-out h1 {
     text-align: center;
+}
+
+/*section that appear when non logged in*/
+
+#notAccessed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none; /*DA TOGLIERE*/
+}
+
+/*profile section*/
+
+#profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#profile strong {
+    color: #00667C;
+}
+
+.dismissDefault {
+    display: none;
 }
 
 /*visual mode change section*/
@@ -30,4 +56,24 @@
     margin: 0;
     font-size: x-large;
     font-weight: bold;
+}
+
+/*other*/
+
+.input-group-text .fa-check {
+    color: green;
+}
+
+.input-group-text .fa-xmark {
+    color: red;
+}
+
+.btn-outline-primary {
+    border-color: #006b83;
+    color: #006b83;
+}
+
+.btn-outline-primary:hover {
+    background-color: #006b83;
+    border-color: #006b83;
 }

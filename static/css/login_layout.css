@@ -37,6 +37,7 @@ body {
 }
 
 .card {
+    width: 100%;
     padding: 1rem;
     background-color: rgba(89, 164, 188, 0.03);
     border-color: #00667C;
@@ -69,12 +70,14 @@ body {
     }
 }
 
-.btn-outline-secondary {
+/*other*/
+
+.btn-outline-primary {
     border-color: #006b83;
     color: #006b83;
 }
 
-.btn-outline-secondary:hover {
+.btn-outline-primary:hover {
     background-color: #006b83;
     border-color: #006b83;
 }
@@ -86,4 +89,12 @@ body {
 
 .btn-success:hover {
     background-color: #00202e;
+}
+
+.fa-check {
+    color: green;
+}
+
+.fa-xmark {
+    color: red;
 }
