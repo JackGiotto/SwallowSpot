@@ -15,10 +15,10 @@ BOT_USERNAME: Final="@SwallowSpotBot"
 
 async def create_connection():
     mydb = mysql.connector.connect(
-        host="localhost",
-        user="yourusername",
-        password="yourpassword",
-        database="mydatabase"
+        host="",
+        user="route",
+        password="route",
+        database=""
     )
     return mydb    
 

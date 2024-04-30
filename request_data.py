@@ -11,7 +11,7 @@ BOT_USERNAME: Final="@SwallowSpotBot"
 INFO: Final= None
 
 async def verify_user(chat_id):
-    mydb = create_connection()
+    mydb = await create_connection()
     mycursor = mydb.cursor()
 
     mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram=={chat_id}")

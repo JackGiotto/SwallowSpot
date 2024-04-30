@@ -72,14 +72,27 @@ async def alert_control(tipo, colore, chat_id):
 async def snow_control(val,chat_id):
     bot = Bot(token=TOKEN)
     global INDEX
+    index=0
     for giorno in val:
+        index=index+1
         if giorno['1000 m'] != "0":
             
             try:
-                keyboard = [
-                    [InlineKeyboardButton("Inoltra", callback_data='sendsnow')],
-                    [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                ]
+                if index==1:
+                    keyboard = [
+                        [InlineKeyboardButton("Inoltra", callback_data='sendsnow1')],
+                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                    ]
+                elif  index==2: 
+                     keyboard = [
+                        [InlineKeyboardButton("Inoltra", callback_data='sendsnow2')],
+                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                    ] 
+                elif  index==3: 
+                     keyboard = [
+                        [InlineKeyboardButton("Inoltra", callback_data='sendsnow3')],
+                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                    ]      
                 #find_id(messaggio)
                 global INFO
                 messaggio="ALLERTA NEVE giorno:"+giorno['1000 m']+"data:"+giorno['date']
@@ -108,7 +121,8 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     chat_id = update.message.chat_id
     CHAT_ID = chat_id
     #funzione per verificare se l'utente che sta usando il bot è admin
-    control=await verify_user(chat_id)
+    #control=await verify_user(chat_id)
+    control=False
     if(control==False):
         
         keyboard = [
@@ -116,7 +130,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(f"Il tuo account Telegram non ha i privilegi per usare questo Bot",reply_markup=reply_markup)
-        
+    else:    
         dati = [
             {
                 "date": "18-01-2024 00:00:00",
@@ -127,10 +141,10 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             },
             {
                 "date": "19-01-2024 00:00:00",
-                "%": "100",
-                "1000 m": "2-10",
-                "1500 m": "5-15",
-                ">1500 m": "10-20"
+                "%": "0",
+                "1000 m": "0",
+                "1500 m": "0",
+                ">1500 m": "0"
             },
             {
                 "date": "20-01-2024 00:00:00",
@@ -140,9 +154,10 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
                 ">1500 m": "0"
             }
         ]
-        print("ciao")
+
+        
         await snow_control(dati,chat_id)
-        print("ciao")
+    
         data={
             "hydraulic": "ROSSO",
             "hydrogeological": "GIALLO",
@@ -158,7 +173,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta finendo figlio di troia questo è il tuo id {chat_id}",reply_markup=reply_markup)
+        await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta fito è il tuo id {chat_id}",reply_markup=reply_markup)
     
 
 
@@ -180,25 +195,30 @@ async def button(update: Update, context):
     elif data == 'sendidro':
         await send(update, context,"idro")
     elif data == 'sendidrogeo':
-        await send(update, context,"idrogeo")
+        await send(update, context,"idrogeo",None)
     elif data == 'sendtem':
-        await send(update, context,"temp")
-    elif data == 'sendsnow':
-        await send(update, context,"snow")
+        await send(update, context,"temp",None)
+    elif data == 'sendsnow1':
+        await send(update, context,"snow",1)
+    elif data == 'sendsnow2':
+        await send(update, context,"snow",2)
+    elif data == 'sendsnow3':
+        await send(update, context,"snow",3)        
     elif data == 'Drop':
         await drop(update, context)
     elif data == 'chat_id':
-        await chat_id(update, context,chat_id)
+        print(chat_id)
+        await chat_id(update,chat_id)
 
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
  
-async def button(update: Update, context,chat_id):
+async def chat_id(update: Update,chat_id):
     bot = Bot(token=TOKEN)
-    await bot.send_message(chat_id=chat_id, text=f"il tuo chat ID corrisponde a"+{chat_id})
+    await bot.send_message(chat_id=chat_id, text="ciao")
 
 # Funzione per gestire l'opzione 1 del bottone
-async def send(update:Update, context,arg):
+async def send(update:Update, context,arg,index):
     global INFO
     bot = Bot(token=TOKEN)
     query = update.callback_query
@@ -209,7 +229,11 @@ async def send(update:Update, context,arg):
             data = json.load(doc)
             id = data["GROUP_ID"]
             print(INFO[arg])
-            await bot.send_message(chat_id=id, text=INFO[arg])
+            if(index==None):
+                await bot.send_message(chat_id=id, text=INFO[arg])
+            else: 
+                await bot.send_message(chat_id=id, text=INFO[arg][index])    
+                
         await query.edit_message_text(text="Notifica inviata con successo!")
     except FileNotFoundError:
         print("File JSON non trovato.")
