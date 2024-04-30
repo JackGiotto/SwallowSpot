@@ -15,7 +15,12 @@ INSERT INTO Area (area_name) VALUES     -- zone di rischio che dividono il venet
     ('Mont-2A'),
     ('Mont-2B'),
     ('Mont-2C'),
-    ('Mont-2D');
+    ('Mont-2D'),
+    ('Alto Agordino'),          -- new areas from #56
+    ('Medio-Basso Agordino'),
+    ('Cadore'),
+    ('Feltrino-Val Belluna'),
+    ('Altopiano dei sette comuni');
 
 INSERT INTO Risk (risk_name) VALUES
     ('idraulico'),
