@@ -48,29 +48,28 @@ def signup():
         #check if credential are correct
         username = request.form["username"]
         password = request.form["password"]
-        zone = request.form["zone"]
+        #zone = request.form["zone"]
         #confronto credenziali con DB
         sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
         result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
         executeQuery("DROP VIEW UserView;")
         #inserimento zone dsponibili
-        listcity= executeQuery("SELECT city_name FROM Topology;")
-        html_code = '<select name="city">'
-        for city in listcity:
-            html_code += f'<option value="{city}">{listcity[city]}</option>'
-        html_code += '</select>'
+        listcity= executeQuery("SELECT city_name, ID_city FROM Toclearpology;")
         
+        for i in listcity:
+            html_code += f'<option name="zone">'+listcity[i]["ID_city"]+'</option>'
+
         #confronto e reindirizzamento
         if(result[0]["user_exists"] == "true"):#true -> utente gia presente nel db 
             return render_template("auth/signup.html", msg="username non disponibile")
         elif(result[0]["user_exists"] == "false"):#false -> utente non presente nel db
             #registrazione credenziali utente nel db -- MANCA ZONA DI RESIDENZA !!!!!
-            executeQuery("INSERT INTO `User` (`username`, `password`, `ID_area`, `ID_role`)VALUES ('"+username+"', '"+password+"','"++"', '1');")
+            executeQuery("INSERT INTO `User` (`username`, `password`, `ID_area`, `ID_role`)VALUES ('"+username+"', '"+password+"','5', '1');")
             #stabilimento sessione
             session.permanent = True
             session["username"] = username
-            return redirect(url_for("user"))
+            return redirect(url_for("profile.user"))
     else:
         return render_template("auth/signup.html")
 

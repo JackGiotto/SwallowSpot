@@ -19,11 +19,9 @@
             <i class="fa-solid fa-xmark"></i>
         </span>
     </div>
-    
-    <select name="region" id="region" class="form-select mb-3" aria-label="Select you region">
-        <option selected>Seleziona la tua regione di residenza</option>
-        <option selected name="zone">valstagna</option>
-    </select>
+        <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
+            {{}}
+        </select>
     {{msg}}
     <br>
     <button type="submit" class="btn btn-success mb-2">Registrati</button>
@@ -36,7 +34,7 @@
     var psw2 = document.getElementsByName("password2");
     if(psw1 == psw2)
         document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-check"></i>'
-    else
+    /*else
         document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-xmark"></i>'
 
     if(localStorage.getItem("mode") == "dark") {
@@ -46,7 +44,7 @@
     else {
         //light mode
         psw2.setAttribute('data-bs-theme', "light");
-    }
+    }*/
 </script>
 
 {% endblock %}
