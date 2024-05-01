@@ -40,7 +40,6 @@ def login():
 def signup():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
-    print(cities)
     
     if request.method == "GET":
         if "username" not in session:
@@ -70,13 +69,11 @@ def signup():
                                 WHERE ID_city = {city}
                             '''
             ID_area = db.executeQuery(ID_area_query)
-            print(ID_area)
             # save credentials into database
             db.executeQuery("INSERT INTO User (username, password, ID_area, ID_role) VALUES ('" + username + "', '" + password + "', " + str(ID_area[0]["ID_area"]) +", 1);")
             # start session
             session.permanent = True
             session["username"] = username
-            print(session["username"])
             return redirect(url_for("home.home"))
     else:
         return render_template("auth/signup.html")
