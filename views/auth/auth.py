@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from models import db
 import hashlib
+import re
 
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates')
@@ -52,6 +53,14 @@ def signup():
         # check if credential are correct
         username = request.form["username"]
         password = request.form["password"]
+
+        if (username == ''):
+            return render_template("auth/signup.html", msg="il nome utente non può essere vuoto", cities = cities)
+        if (len(password) < 8 or not _has_number(password) or not _has_uppercase(password) or not _has_special_character(password)):
+            print("Length condition or case condition or special character condition or number condition is met")
+            return render_template("auth/signup.html", msg="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", cities=cities)
+
+        
         password = _hash_password(password)
         city = request.form["city"]
         # zone = request.form["zone"]
@@ -75,8 +84,6 @@ def signup():
             session.permanent = True
             session["username"] = username
             return redirect(url_for("home.home"))
-    else:
-        return render_template("auth/signup.html")
     
 def _hash_password(password):
     # Converte la password in una stringa di byte
@@ -92,3 +99,20 @@ def _hash_password(password):
     hashed_password = sha256_hash.hexdigest()
 
     return hashed_password
+
+
+def _has_uppercase(s):
+    """Check if a string contains at least one uppercase letter.
+    """
+    return any(char.isupper() for char in s)
+
+def _has_number(s):
+    """Check if a string contains at least one number.
+    """
+    return any(char.isdigit() for char in s)
+
+def _has_special_character(s):
+    """Check if a string contains at least one special character.
+    """
+    special_characters = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+    return special_characters.search(s) is not None
