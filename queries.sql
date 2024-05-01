@@ -29,11 +29,21 @@ WHERE User.username = 'name of the user';
 
 -- #58 Create queries to add the risks collected by the bulletin to the database. Hydro and snow risks are more important than avalanche risks, so it's better to focus on these first.
 
-    SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');        -- Dichiarazione e assegnazione della variabile ID_area
+SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');        -- Dichiarazione e assegnazione della variabile ID_area (assegna alla variabile l'ID specifico del nome dell'area)
 
-    SET @ID_risk := (SELECT ID_risk FROM Risk WHERE risk_name = 'name of the risk');        -- Dichiarazione e assegnazione della variabile ID_area
+SET @ID_risk := (SELECT ID_risk FROM Risk WHERE risk_name = 'name of the risk');        -- Dichiarazione e assegnazione della variabile ID_risk
 
-    SET @ID_color := (SELECT ID_color FROM Color WHERE color_name = 'name of the color');        -- Dichiarazione e assegnazione della variabile ID_area
+SET @ID_color := (SELECT ID_color FROM Color WHERE color_name = 'name of the color');        -- Dichiarazione e assegnazione della variabile ID_color
 
 INSERT INTO Criticalness(ID_area, ID_risk, ID_color) VALUES 
 (@ID_area, @ID_risk, @ID_color);
+
+-- #63 Create a query to get the last bulletin data of a specific Area. The data we need is: 3 risks level date
+SELECT *
+FROM Report
+JOIN Report_criticalness ON Report.ID_report = Report_criticalness.ID_report
+JOIN Criticalness ON Report_criticalness.ID_issue = Criticalness.ID_issue
+JOIN Area ON Criticalness.ID_area = Area.ID_area
+WHERE Area.area_name = 'name of the area'
+ORDER BY Report.ID_report DESC 
+LIMIT 1;
