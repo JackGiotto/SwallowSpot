@@ -29,27 +29,27 @@ async def alert_control(tipo, colore, chat_id):
         if tipo == "hydraulic":
             colore = await control()
             if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idraulico"
+                messaggio += "\nPericolo Giallo di idraulico 🟡"
             elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idraulico"
+                messaggio += "\nPericolo Rosso di idraulico 🔴"
             elif colore == "VIOLA":
-                messaggio += "\nPericolo Rosso di idraulico"    
+                messaggio += "\nPericolo Viola di idraulico 🟣"    
             else: 
                 return;    
             INFO["idro"] = messaggio
             tmp = 'sendidro'
         elif tipo == "hydrogeological":
             if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idrogeologico"
+                messaggio += "\nPericolo Giallo di idrogeologico 🟡"
             elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idrogeologico"
+                messaggio += "\nPericolo Rosso di idrogeologico 🔴"
             INFO["idrogeo"] = messaggio
             tmp = 'sendidrogeo'
         elif tipo == "storm":
             if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali"
+                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali 🟡"
             elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali"
+                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali 🔴"
             INFO["temp"] = messaggio
             tmp = 'sendtem'
         else: return    
@@ -128,7 +128,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             [InlineKeyboardButton("Dimmi il mio Chat ID ", callback_data='chat_id')]
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(f"Il tuo account Telegram non ha i privilegi per usare questo Bot",reply_markup=reply_markup)
+        await update.message.reply_text(f"⛔ Il tuo account Telegram non ha i privilegi per usare questo Bot ⛔",reply_markup=reply_markup)
     else:    
         dati = [
             {
@@ -168,8 +168,8 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
                 await alert_control(tipo,colore,chat_id)
         
         keyboard = [
-            [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')],
-            [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
+            [InlineKeyboardButton("⛄ Bol. PREVISIONE LOCALE NEVICATE ⛄ ", callback_data='Neve')],
+            [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')]
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(f"☀️ ciao sono il tuo bot per vedere le allerte meteo della Zona di Bassano Del Grappa ☀️",reply_markup=reply_markup)
@@ -204,15 +204,15 @@ async def report():
         for x in myresult:
             print(x)
             if x[0]==1:
-                messaggio="nessun pericolo";
+                messaggio="nessun pericolo 🟢";
                 await bot.send_message(chat_id=CHAT_ID, text=messaggio)
             else:
                 if(x[1]==1):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idraulico"
+                    messaggio=f"Allerta grado: {x[2]} tipo: idraulico 🌧️"
                 elif(x[1]==2):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico"
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico 🌧️"
                 elif(x[1]==3):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali"        
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"        
                     print(x[1])
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
@@ -291,38 +291,6 @@ async def drop(update: Update, context):
     await query.edit_message_text(text="Hai rifiutato l'inoltro di questa allerta")
     
 
-#funzione per l'invio del messaggio in base al msg dell'utente
-def handle_response(update:Update,text: str)-> str:
-    processed: str=text.lower()
-    if'ciao' in processed:
-        return 'ciao'
-    if 'gg' in processed:
-        chat_id = update.message.chat_id
-        return f'ok ti mostro il vostro chatid {chat_id}'
-    return 'errore'
-
-
-#funzione per interagiore con il bot da un gruppo Telegram
-async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
-    message_type : str = update.message.chat.type
-    text : str = update.message.text
-    
-    print(f'User ({update.message.chat.id}) in {message_type}:"{text}"')
-
-    if message_type == 'supergroup':
-        if BOT_USERNAME in text:
-            new_text: str = text.replace(BOT_USERNAME,'').strip()
-            response: str=handle_response(update,new_text)
-        else:
-            return
-    else:
-        response: str=handle_message(text)
-    
-    print('Bot:',response)
-    
-    await update.message.reply_text(response)
-
-
 async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print(f'Update {update} causato da {context.error}')
     
@@ -352,10 +320,10 @@ async def snow_report():
         print (myresult)
         for x in myresult:
             if x[0]==1:
-                await bot.send_message(chat_id=CHAT_ID, text="nessun pericolo")
+                await bot.send_message(chat_id=CHAT_ID, text="nessun pericolo 🟢")
             else:
                 if(x[1]==4):
-                    messaggio=f"Allerta neve"
+                    messaggio=f"Allerta neve 🌨️"
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)    
                     
@@ -372,11 +340,10 @@ if __name__=='__main__':
     
     #associazione ai comandi del bot alle funzione
     app.add_handler(CommandHandler('start', start_command))
- #   app.add_handler(CommandHandler('help', help_command))
-  #  app.add_handler(CommandHandler('custom', custom_command))
+    #  app.add_handler(CommandHandler('help', help_command))
+    #  app.add_handler(CommandHandler('custom', custom_command))
     
     app.add_handler(CallbackQueryHandler(button))
-    app.add_handler(MessageHandler(filters.TEXT,handle_message))
     
     
     app.add_error_handler(error)
