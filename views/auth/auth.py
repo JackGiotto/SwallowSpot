@@ -24,14 +24,20 @@ def login():
     elif request.method == "POST":#login
         username = request.form["username"]
         password = request.form["password"]
-        #confronto credenziali con DB
-        sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
+        # confronto credenziali con DB
+        """
+        sql = "CREATE VIEW UserView AS SELECT username, password,CASE WHEN username = '"+username+"' AND password = '"+password+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
         result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
         executeQuery("DROP VIEW UserView;")
+        """
+        sql = "SELECT username, password FROM User where username = '" + username + "' and password = '" + password +"';"
+        result = executeQuery(sql)
+        
         #confronto e reindirizzamento
-        if(result[0]["user_exists"] == "true"):
-            #stabilimento sessione
+        # if(result[0]["user_exists"] == "true"):
+        if result != None:
+            # stabilimento sessione
             session.permanent = True
             session["username"] = username
             return render_template("home.html")
@@ -45,27 +51,35 @@ def signup():
     if request.method == "GET":
         return render_template("auth/signup.html")
     elif request.method == "POST":
-        #check if credential are correct
+        # check if credential are correct
         username = request.form["username"]
         password = request.form["password"]
-        #zone = request.form["zone"]
-        #confronto credenziali con DB
+        # zone = request.form["zone"]
+        # confronto credenziali con DB
+        """     
         sql = "CREATE VIEW UserView AS SELECT username,password,CASE WHEN username = '"+username+"' THEN 'true' ELSE 'false' END AS user_exists FROM User;"
         executeQuery(sql)
         result = executeQuery("SELECT user_exists FROM UserView;")#restituisce lista-dizionario
-        executeQuery("DROP VIEW UserView;")
-        #inserimento zone dsponibili
-        listcity= executeQuery("SELECT city_name, ID_city FROM Toclearpology;")
+        executeQuery("DROP VIEW UserView;") 
+        """
+        
+        sql = "SELECT username FROM User where username = '" + username + "';"
+        result = executeQuery(sql)
+        
+        # inserimento zone dsponibili
+        listcity = executeQuery("SELECT city_name, ID_city FROM Topology;")
         
         for i in listcity:
             html_code += f'<option name="zone">'+listcity[i]["ID_city"]+'</option>'
 
         #confronto e reindirizzamento
-        if(result[0]["user_exists"] == "true"):#true -> utente gia presente nel db 
+        #if(result[0]["user_exists"] == "true"): #true -> utente gia presente nel db 
+        if result != None:
             return render_template("auth/signup.html", msg="username non disponibile")
-        elif(result[0]["user_exists"] == "false"):#false -> utente non presente nel db
+        # elif(result[0]["user_exists"] == "false"):#false -> utente non presente nel db
+        elif result == None:
             #registrazione credenziali utente nel db -- MANCA ZONA DI RESIDENZA !!!!!
-            executeQuery("INSERT INTO `User` (`username`, `password`, `ID_area`, `ID_role`)VALUES ('"+username+"', '"+password+"','5', '1');")
+            executeQuery("INSERT INTO User (username, password, ID_area, ID_role) VALUES ('" + username + "', '" + password + "', 5, 1);")
             #stabilimento sessione
             session.permanent = True
             session["username"] = username
