@@ -9,11 +9,11 @@
         <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
     <div class="input-group mb-3">
-        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" onkeyup="check_password()" aria-describedby="showPasswordToggle">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
     <div class="input-group mb-3">
-        <input name="password2" type="password" class="form-control" id="textPassword2" placeholder="Conferma password" aria-label="Password" aria-describedby="showPasswordToggle2">
+        <input name="password2" type="password" class="form-control" id="textPassword2" placeholder="Conferma password" onkeyup="check_password()" aria-label="Password" aria-describedby="showPasswordToggle2">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
         <span class="input-group-text" id="confirmPsw2">
             <i class="fa-solid fa-xmark"></i>
@@ -26,16 +26,27 @@
         </select>
     {{msg}}
     <br>
-    <button type="submit" class="btn btn-success mb-2">Registrati</button>
+    <button type="button" id="signup-submit" class="btn btn-success mb-2" >Registrati</button>
     <br>
     <a href="{{ url_for('auth.login') }}">Ho gi&agrave; un account</a>
 </form>
 
 <script>
-    var psw1 = document.getElementsByName("password");
-    var psw2 = document.getElementsByName("password2");
-    if(psw1 == psw2)
-        document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-check"></i>'
+    function check_password() {
+        psw1 = $("#textPassword").val();
+        psw2 = $("#textPassword2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        console.log(psw1);
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#signup-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#signup-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }    
     /*else
         document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-xmark"></i>'
 
