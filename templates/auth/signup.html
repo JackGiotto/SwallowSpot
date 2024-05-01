@@ -20,7 +20,9 @@
         </span>
     </div>
         <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
-            {{}}
+            {% for element in cities %}
+                <option value="{{ element['ID_city']}} ">{{ element['city_name'] }}</option>
+            {% endfor %}
         </select>
     {{msg}}
     <br>
