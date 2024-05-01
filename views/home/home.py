@@ -4,6 +4,7 @@ home_bp = Blueprint('home', __name__, template_folder='templates')
 
 @home_bp.route('/')
 def home():
+    print (session)
     if "username" not in session:
         bulletin_data = '''
                             Per rimanere aggiornato sulla tua zona esegui l'accesso
@@ -19,6 +20,7 @@ def home():
         # query to get user data
         # query to get the last bullettin of the user area
 
+        print ("ciao ciao")
         bulletin_data = f'''<div class="risk-out" id="vene-a">
                                 <h2>{region_name}</h2>
                                 <div class="risk-in">

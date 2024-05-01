@@ -9,7 +9,7 @@
         <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
     <div class="input-group mb-3">
-        <input name="password2" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
     </div>
     <div class="input-group mb-3">
@@ -19,11 +19,11 @@
             <i class="fa-solid fa-xmark"></i>
         </span>
     </div>
-    
-    <select name="region" id="region" class="form-select mb-3" aria-label="Select you region">
-        <option selected>Seleziona la tua regione di residenza</option>
-        <heregotheregions />
-    </select>
+        <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
+            {% for element in cities %}
+                <option value="{{ element['ID_city']}} ">{{ element['city_name'] }}</option>
+            {% endfor %}
+        </select>
     {{msg}}
     <br>
     <button type="submit" class="btn btn-success mb-2">Registrati</button>
@@ -32,7 +32,12 @@
 </form>
 
 <script>
-    var psw2 = document.getElementById("confirmPsw2");
+    var psw1 = document.getElementsByName("password");
+    var psw2 = document.getElementsByName("password2");
+    if(psw1 == psw2)
+        document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-check"></i>'
+    /*else
+        document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-xmark"></i>'
 
     if(localStorage.getItem("mode") == "dark") {
         //dark mode
@@ -41,7 +46,7 @@
     else {
         //light mode
         psw2.setAttribute('data-bs-theme', "light");
-    }
+    }*/
 </script>
 
 {% endblock %}
