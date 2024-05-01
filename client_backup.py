@@ -1,3 +1,5 @@
+
+# process running in the server for Swallow Spot DB
 """ 
 import paramiko
 
@@ -68,7 +70,7 @@ ssh_client.connect(hostname=ssh_host, port=ssh_port, username=ssh_user, password
 ssh_client.close() 
 """
 
-import paramiko
+""" import paramiko
 import mysql.connector
 import os
 
@@ -127,6 +129,27 @@ except paramiko.SSHException as e:
     print(f'Errore durante la connessione SSH: {e}')
 
 except Exception as e:
-    print(f'Errore generico: {e}')
+    print(f'Errore generico: {e}') """
+
 
 # mysqldump -u martini -p "Swallow Spot" > backup.sql
+
+import socket
+import ssl
+
+host = '127.0.0.1'
+port = 12345
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)        # Crea un socket TCP
+
+sock.connect((host, port))  # Avvia la connessione TCP
+
+ssl_sock = ssl.wrap_socket(sock)    # Abilita la crittografia SSL/TLS
+
+ssl_sock.send(b'Hello, server!')        # Invia dati attraverso il socket crittografato
+
+data = ssl_sock.recv(1024)
+
+print('Received:', data.decode())
+
+ssl_sock.close()    # Chiude il socket crittografato
