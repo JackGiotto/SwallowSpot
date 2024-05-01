@@ -26,7 +26,7 @@ CREATE TABLE User       -- utente e i suoi dati
 (
     ID_user INT auto_increment,                         -- ID univoco per ogni utente
     username VARCHAR(35) NOT NULL UNIQUE,               -- username usato dall'utente per registrarsi al sito
-    password VARCHAR(48) NOT NULL,                      -- hash della password usata dall'utente per registrarsi al sito
+    password VARCHAR(64) NOT NULL,                      -- hash della password usata dall'utente per registrarsi al sito
     ID_area INT NOT NULL,                               -- zona in cui vive
     ID_role INT NOT NULL,                               -- ruolo dell'utente nel sito
     CONSTRAINT pk_user PRIMARY KEY (ID_user),           -- vincolo di chiave primaria di User                                
