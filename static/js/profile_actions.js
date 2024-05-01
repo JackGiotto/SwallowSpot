@@ -5,3 +5,15 @@ function showSection(id) {
 function dismissSection(id) {
     document.getElementById(id).style.display = "none";
 }
+
+function logout() { 
+    $.post("/profile/logout/", 
+    {
+    },
+    function(data, status) {
+        if (status == "success") {
+            window.location = "/";
+        }
+    }
+    )
+}

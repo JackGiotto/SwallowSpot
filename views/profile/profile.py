@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, redirect, session, request
+from flask import Blueprint, render_template, redirect, session, request, url_for
 from models import db
+import hashlib
+import json
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
@@ -75,3 +77,8 @@ def _has_special_character(s):
     special_characters = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
     return special_characters.search(s) is not None
             
+
+@profile_bp.route('/profile/logout/', methods=['POST'])
+def logout():
+    session.clear()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
