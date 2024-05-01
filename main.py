@@ -5,7 +5,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import TelegramError
 import json
 import xml.etree.ElementTree as ET
-from read_pdf import *
 from request_data import *
 
 #Credenziali per associare il Bot Telegram e il programma in python
@@ -121,8 +120,8 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     chat_id = update.message.chat_id
     CHAT_ID = chat_id
     #funzione per verificare se l'utente che sta usando il bot è admin
-    #control=await verify_user(chat_id)
-    control=False
+    control=await verify_user(chat_id)
+    #control=True
     if(control==False):
         
         keyboard = [
@@ -169,7 +168,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
                 await alert_control(tipo,colore,chat_id)
         
         keyboard = [
-            [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')]
+            [InlineKeyboardButton("Bol. PREVISIONE LOCALE NEVICATE ", callback_data='Neve')],
             [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -179,7 +178,26 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 
 
 
+async def report():
+    mydb = create_connection()
+    bot = Bot(token=TOKEN)
+    try:
+        keyboard = [
+            [InlineKeyboardButton("Inoltra", callback_data='Send')],
+            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+        ]
+        mycursor = mydb.cursor()
 
+        mycursor.execute("SELECT path,MAX(date) FROM report")
+
+        myresult = mycursor.fetchall()
+        
+        for x in myresult:
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
+            print("Notifica inviata a "+x+" con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
 
 #funzione per associare i bottoni e le funzioni del bot        
@@ -207,15 +225,14 @@ async def button(update: Update, context):
     elif data == 'Drop':
         await drop(update, context)
     elif data == 'chat_id':
-        print(chat_id)
-        await chat_id(update,chat_id)
+        await give_id(update,chat_id)
 
     #elif data == 'opzione3':
        # da cambiare per capire come fa re        
  
-async def chat_id(update: Update,chat_id):
-    bot = Bot(token=TOKEN)
-    await bot.send_message(chat_id=chat_id, text="ciao")
+async def give_id(update: Update,chat_id_value):
+    query = update.callback_query
+    await query.edit_message_text(text=f"il tuo chat id è {chat_id_value}")
 
 # Funzione per gestire l'opzione 1 del bottone
 async def send(update:Update, context,arg,index):
@@ -288,6 +305,32 @@ async def handle_message(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print(f'Update {update} causato da {context.error}')
     
+    #request database to find chat-id admin
+async def snow_report():
+    mydb = create_connection()
+    bot = Bot(token=TOKEN)
+    try:
+        keyboard = [
+            [InlineKeyboardButton("Inoltra", callback_data='Send')],
+            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+        ]
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT path,MAX(date) FROM Snow_report")
+
+        myresult = mycursor.fetchall()
+
+        for x in myresult:
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
+            print("Notifica inviata a "+x+" con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
+    
+   
+
+
 if __name__=='__main__':
     app = Application.builder().token(TOKEN).build()
 
