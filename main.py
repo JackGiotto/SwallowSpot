@@ -179,7 +179,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 
 
 async def report():
-    mydb = create_connection()
+    mydb = await create_connection()
     bot = Bot(token=TOKEN)
     try:
         keyboard = [
@@ -188,14 +188,35 @@ async def report():
         ]
         mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT path,MAX(date) FROM report")
-
+        query = (
+            "SELECT criticalness.ID_color, criticalness.ID_risk, color.color_name "
+            "FROM Area "
+            "JOIN Criticalness ON Area.ID_area = Criticalness.ID_area "
+            "JOIN Color ON Criticalness.ID_color = Color.ID_color "
+            "JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk "
+            "WHERE Area.area_name = 'Vene-B' and Risk.ID_risk!='4'"
+            "ORDER BY Criticalness.ID_issue DESC "
+            "LIMIT 3"
+        )
+        mycursor.execute(query)
         myresult = mycursor.fetchall()
-        
+        print (myresult)
         for x in myresult:
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
-            print("Notifica inviata a "+x+" con successo!")
+            print(x)
+            if x[0]==1:
+                messaggio="nessun pericolo";
+                await bot.send_message(chat_id=CHAT_ID, text=messaggio)
+            else:
+                if(x[1]==1):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idraulico"
+                elif(x[1]==2):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico"
+                elif(x[1]==3):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali"        
+                    print(x[1])
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
+            print("Notifica inviata a "+str(CHAT_ID)+" con successo!")
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
 
@@ -307,7 +328,7 @@ async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     
     #request database to find chat-id admin
 async def snow_report():
-    mydb = create_connection()
+    mydb = await create_connection()
     bot = Bot(token=TOKEN)
     try:
         keyboard = [
@@ -316,17 +337,31 @@ async def snow_report():
         ]
         mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT path,MAX(date) FROM Snow_report")
-
+        query = (
+            "SELECT criticalness.ID_color, criticalness.ID_risk, color.color_name "
+            "FROM Area "
+            "JOIN Criticalness ON Area.ID_area = Criticalness.ID_area "
+            "JOIN Color ON Criticalness.ID_color = Color.ID_color "
+            "JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk "
+            "WHERE Area.area_name = 'Altopiano dei sette comuni'and Risk.ID_risk='4' "
+            "ORDER BY Criticalness.ID_issue DESC "
+            "LIMIT 1"
+        )
+        mycursor.execute(query)
         myresult = mycursor.fetchall()
-
+        print (myresult)
         for x in myresult:
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await bot.send_message(chat_id=CHAT_ID, text=x, reply_markup=reply_markup)
-            print("Notifica inviata a "+x+" con successo!")
+            if x[0]==1:
+                await bot.send_message(chat_id=CHAT_ID, text="nessun pericolo")
+            else:
+                if(x[1]==4):
+                    messaggio=f"Allerta neve"
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)    
+                    
+            print("Notifica inviata a "+str(CHAT_ID)+" con successo!")
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
-
     
    
 

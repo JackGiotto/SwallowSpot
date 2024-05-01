@@ -21,11 +21,11 @@ async def verify_user(chat_id):
     mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
 
     myresult = mycursor.fetchall()
-    
-    if(myresult==f"[('{chat_id}',)]"):
-        return False
-    else:
+       
+    if myresult:
         return True
+    else:
+        return False
 
 
 
