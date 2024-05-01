@@ -5,3 +5,5 @@ function showSection(id) {
 function dismissSection(id) {
     document.getElementById(id).style.display = "none";
 }
+function uploadZone( idsel ){
+}

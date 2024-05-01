@@ -24,13 +24,10 @@
         <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeZone')">Modifica residenza</button>
         <div class="dismissDefault" id="changeZone">
             <div class="input-group mb-2 mt-2">
-                <input type="email" class="form-control" placeholder="Nuova residenza" aria-describedby="confirmZone1">
-                <span class="input-group-text" id="confirmZone1">
-                    <i class="fa-solid fa-check"></i>
-                </span>
+                <input type="text" class="form-control" placeholder="Nuova residenza" aria-describedby="confirmZone1">
             </div>
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changeZone')">Annulla</button>
-            <button type="button" class="btn btn-success">Conferma</button>
+            <button type="button" class="btn btn-success" onclick="uploadZone()">Conferma</button>
         </div>
         <!--change password-->
         <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changePsw')">Modifica password</button>
