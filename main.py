@@ -172,7 +172,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
             [InlineKeyboardButton("Bol. IDROGEOLOGICA ED IDRAULICA", callback_data='Idro')]
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(f" ciao sono il tuo bot per vedere se il mondo sta fito è il tuo id {chat_id}",reply_markup=reply_markup)
+        await update.message.reply_text(f"☀️ ciao sono il tuo bot per vedere le allerte meteo della Zona di Bassano Del Grappa ☀️",reply_markup=reply_markup)
     
 
 
