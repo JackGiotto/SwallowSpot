@@ -1,28 +1,39 @@
 -- visualizzare nomi delle città e relativa zona
-select Topology.city_name, Area.area_name
-from Topology
-join Area on Topology.ID_area = Area.ID_area 
+SELECT Topology.city_name, Area.area_name
+FROM Topology
+JOIN Area ON Topology.ID_area = Area.ID_area 
 
 -- selezionare utente e password per login
-select username, password
-from User
-where username = 'name of the user' and password = 'hash of the password';
+SELECT username, password
+FROM User
+WHERE username = 'name of the user' AND password = 'hash of the password';
 
 -- #20 Dovresti farmi una query che possa ottenere il livello di criticità di VENE B per ogni tipologia di pericolo, una per il primo bollettino e la stessa query per le nevicate 
 -- dell'ultimo bollettino
-select *
-from Area
-join Criticalness on Area.ID_area = Criticalness.ID_area
-join Color on Criticalness.ID_color = Color.ID_color
-join Risk on Criticalness.ID_risk = Risk.ID_risk
-where Area.area_name = 'name of the area';
+SELECT *
+FROM Area
+JOIN Criticalness ON Area.ID_area = Criticalness.ID_area
+JOIN Color ON Criticalness.ID_color = Color.ID_color
+JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
+WHERE Area.area_name = 'name of the area';
 
--- #60 You have to returning the list (by default dict json) by querys on our db so s02675 (stefani) can properly create the menu for the users during their sign-up
-select city_name
-from Topology;
+-- #60 You have to returning the list (by default dict JSON) by querys on our db so s02675 (stefani) can properly create the menu for the users during their sign-up
+SELECT city_name
+FROM Topology;
 
 -- #62 Make a query to get the Area of a specific user
-select User.username, Area.area_name
-from User
-join Area on User.ID_area = Area.ID_area
-where User.username = 'name of the user';
+SELECT User.username, Area.area_name
+FROM User
+JOIN Area ON User.ID_area = Area.ID_area
+WHERE User.username = 'name of the user';
+
+-- #58 Create queries to add the risks collected by the bulletin to the database. Hydro and snow risks are more important than avalanche risks, so it's better to focus on these first.
+
+    SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');        -- Dichiarazione e assegnazione della variabile ID_area
+
+    SET @ID_risk := (SELECT ID_risk FROM Risk WHERE risk_name = 'name of the risk');        -- Dichiarazione e assegnazione della variabile ID_area
+
+    SET @ID_color := (SELECT ID_color FROM Color WHERE color_name = 'name of the color');        -- Dichiarazione e assegnazione della variabile ID_area
+
+INSERT INTO Criticalness(ID_area, ID_risk, ID_color) VALUES 
+(@ID_area, @ID_risk, @ID_color);

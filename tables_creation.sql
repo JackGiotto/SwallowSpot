@@ -4,7 +4,7 @@
 CREATE TABLE Area       -- zona di allerta per ogni rischio
 (
     ID_area INT auto_increment,                 -- ID univoco per ogni singola zona
-    area_name VARCHAR(7) NOT NULL UNIQUE,       -- nome della zona
+    area_name VARCHAR(35) NOT NULL UNIQUE,       -- nome della zona
     CONSTRAINT pk_area PRIMARY KEY (ID_area)    -- vincolo di chiave primaria di Area
 );
 
