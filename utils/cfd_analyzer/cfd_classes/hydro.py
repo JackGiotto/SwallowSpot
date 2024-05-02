@@ -28,6 +28,28 @@ class Hydro:
 
 		return self.data
 
+	def get_queries(self) -> dict:
+		#print(self.data["risks"])
+		queries = {"bulletin_query": "", "risks_queries": []}
+		print(self.data)
+		queries["bulletin_query"] = f'''
+					INSERT INTO Report(starting_date, ending_date, path) VALUES
+					("{self.data["date"]["starting_date"]}", "{self.data["date"]["ending_date"]}", "{self.path}");
+				'''
+		for key, values in self.data["risks"].items():
+			area_name = key
+			risk_name = ""
+			color_name = ""
+			for key2, value in values["risks_value"].items():
+				risk_name = key2.lower()
+				color_name = value
+				query = [f'''SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');''',
+						f'''SET @ID_risk := (SELECT ID_risk FROM Risk WHERE risk_name = '{risk_name}');''',
+						f'''SET @ID_color := (SELECT ID_color FROM Color WHERE color_name = '{color_name}');''',
+						f'''INSERT INTO Criticalness(ID_area, ID_risk, ID_color) VALUES (@ID_area, @ID_risk, @ID_color);''']
+				queries["risks_queries"].append(query)
+		return queries
+
 	def _get_bulletin_data(self):		
 		print("Analyzing Hydro bulletin, path:", self.path)
 		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)
@@ -41,10 +63,10 @@ class Hydro:
 		string = table[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]
 		splitted = string.split(' ')
 
-		starting_date = splitted[2]
+		starting_date = self._convert_date(splitted[2])
 		starting_date += " " + splitted[4] + ":00" # add seconds to starting date
 		
-		ending_date = splitted[7]
+		ending_date = self._convert_date(splitted[7])
 		ending_date += " " + splitted[9]+ ":00"  # add seconds to ending date
 		return {"starting_date": starting_date, "ending_date":ending_date}
 		
@@ -76,5 +98,12 @@ class Hydro:
 		with open("test_hydro.json", "w") as f:
 			json.dump(template, f, indent="\t")
 
+	def _convert_date(self, date):
+		splitted= date.split("-")
+		day = splitted[0]
+		month = splitted[1]
+		year = splitted[2]
+		return year + "-" + month + "-" + day
+
 # debug
-#hydro = Hydro("./test/data/test2.pdf")
+#hydro = Hydro("./bulletins/test.pdf")
