@@ -24,11 +24,13 @@
         <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeZone')">Modifica residenza</button>
         <div class="dismissDefault" id="changeZone">
             <div class="input-group mb-2 mt-2">
-                <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
-                    {% for element in cities %}
-                        <option value="{{ element['ID_city']}} ">{{ element['city_name'] }}</option>
-                    {% endfor %}
-                </select>
+                <form action="{{url_for('profile.user')}}" method="post">
+                    <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
+                        {% for element in cities %}
+                            <option value="{{ element['ID_city']}} ">{{ element['city_name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
             </div>
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changeZone')">Annulla</button>
             <button type="button" class="btn btn-success">Conferma</button>
