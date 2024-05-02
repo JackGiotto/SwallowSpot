@@ -7,10 +7,10 @@ profile_bp = Blueprint('profile', __name__, template_folder='templates')
 def user():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
-       
+           
     if "username" in session:
         if request.method == "GET":
-            return render_template("user/profile.html", cities=cities)
+            return render_template("user/profile.html", cities=cities, username=session["username"])
 
         elif request.method == "POST":
             city = request.form["city"]
@@ -20,6 +20,8 @@ def user():
                                 '''
             ID_area = db.executeQuery(ID_area_query)
             #uploads into database
+            nusername= request.form[""]
+
             return render_template("user/profile.html")
     else:
         return redirect("/auth/login")
