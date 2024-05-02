@@ -137,19 +137,24 @@ except Exception as e:
 import socket
 import ssl
 
-host = '127.0.0.1'
-port = 12345
+# Create an SSL context
+context = ssl.create_default_context()
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)        # Crea un socket TCP
+# Create a socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+context.load_verify_locations("certificate/server.crt")
 
-sock.connect((host, port))  # Avvia la connessione TCP
+# Connect to the server
+ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")
+ssl_client_socket.connect(('192.168.0.113', 8080))
 
-ssl_sock = ssl.wrap_socket(sock)    # Abilita la crittografia SSL/TLS
+# Send data
+ssl_client_socket.send("Hello from client!".encode())
 
-ssl_sock.send(b'Hello, server!')        # Invia dati attraverso il socket crittografato
+# Receive response
+response = ssl_client_socket.recv(1024)
+print("Response from server:", response.decode())
 
-data = ssl_sock.recv(1024)
+# Close the connection
+ssl_client_socket.close()
 
-print('Received:', data.decode())
-
-ssl_sock.close()    # Chiude il socket crittografato
