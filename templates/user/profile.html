@@ -55,12 +55,25 @@
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
+        <!--allow notifications-->
         <div class="visual-out mt-5">
             <label class="switch3">
                 <input type="checkbox" id="toggleNotif" checked />
                 <span class="slider3"></span>
             </label>
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
+        </div>
+        <br>
+        <br>
+        <!--delete my account-->
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('deleteAccount')">Elimina profilo</button>
+        <div class="dismissDefault" id="deleteAccount">
+            <div class="input-group mb-2 mt-2">
+                <input type="text" class="form-control" placeholder="Nome utente">
+            </div>
+            <div class="input-group mb-2">
+                <input type="password" class="form-control" id="psw3" placeholder="Inserisci password">
+            </div>
         </div>
     </div>
 </div>

@@ -3,16 +3,16 @@ from models import db
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
-@profile_bp.route('/profile/', methods=['GET','POST'])
+@profile_bp.route('/profile/', methods=['GET','POST', 'DELETE'])
 def user():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
        
     if "username" in session:
-        if request.method == "get":
+        if request.method == "GET":
             return render_template("user/profile.html", cities=cities)
 
-        elif request.method == "post":
+        elif request.method == "POST":
             city = request.form["city"]
             ID_area_query = f''' SELECT Topology.ID_area 
                                     FROM Topology
@@ -20,6 +20,6 @@ def user():
                                 '''
             ID_area = db.executeQuery(ID_area_query)
             #uploads into database
-        return render_template("user/profile.html")
+            return render_template("user/profile.html")
     else:
         return redirect("/auth/login")
