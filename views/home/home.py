@@ -23,29 +23,65 @@ def home():
                     FROM User
                     JOIN Area ON User.ID_area = Area.ID_area
                     WHERE User.username = '{session["username"]}';"""
-        
-        # query to get the last bullettin of the user area
-
-
         area_name = db.executeQuery(query)[0]["area_name"]
+
+        hydraulic = db.executeQuery(_get_query(area_name, "idraulico"))[0]["color_name"]
+        hydro_geo = db.executeQuery(_get_query(area_name, "idrogeologico"))[0]["color_name"]
+        storms = db.executeQuery(_get_query(area_name, "idrogeologico con temporali"))[0]
+        update = storms["starting_date"]
+        storms = storms["color_name"]
+
         bulletin_data = f'''<div class="risk-out" id="vene-a">
                                 <h2>{area_name}</h2>
                                 <div class="risk-in">
                                     <div class="risk">
-                                        <span class="circle {hydraulic}"></span>
+                                        <span class="circle {_convert_risk_color(hydraulic)}"></span>
                                         <p>Rischio idraulico</p>
                                     </div>
                                     <div class="risk">
-                                        <span class="circle {hydro_geo}"></span>
+                                        <span class="circle {_convert_risk_color(hydro_geo)}"></span>
                                         <p>Rischio idro-geologico</p>
                                     </div>
                                     <div class="risk">
-                                        <span class="circle {storms}"></span>
+                                        <span class="circle {_convert_risk_color(storms)}"></span>
                                         <p>Rischio idro-geologico per temporale</p>
                                     </div>
                                 </div>
                                 <p class="basin">Bacino correlato: Alto Piave</p>
-                                <p class="last-update" id="update-vene-a">Ultimo aggiornamento: {update}<heregoesthedate /></p>
+                                <p class="last-update" id="update-vene-a">Ultimo aggiornamento: {_parse_date(str(update))}</p>
                              </div>'''
 
     return render_template("home.html", bulletin_data = bulletin_data)
+
+def _get_query(area_name, risk_name) -> str:
+    query = f"""SELECT Report.starting_date, Report.ending_date, Color.color_name
+            FROM Report
+            JOIN Report_criticalness ON Report.ID_report = Report_criticalness.ID_report
+            JOIN Criticalness ON Report_criticalness.ID_issue = Criticalness.ID_issue
+            JOIN Area ON Criticalness.ID_area = Area.ID_area
+            JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
+            JOIN Color ON Criticalness.ID_color = Color.ID_color
+            WHERE Area.area_name = '{area_name}' and Risk.risk_name = '{risk_name}'
+            ORDER BY Report.ID_report DESC
+            LIMIT 1;
+        """
+    return query
+
+def _convert_risk_color(color) -> str:
+    colors = {
+        "verde": "green",
+        "gialla": "yellow",
+        "arancio": "orange",
+        "rossa": "red"
+    }
+    return colors[color]
+
+def _parse_date(date) -> str:
+    date = date.split(" ")
+    time = date[1]
+    date = date[0]
+    date = date.split("-")
+    year = date[0]
+    month = date[1]
+    day = date[2]
+    return day + "/" + month + "/" + year + " " + time[:-3]
