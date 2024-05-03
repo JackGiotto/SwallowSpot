@@ -18,6 +18,32 @@ INFO: Final= {
     "idrogeo":"",
     "temp":""
 }
+        
+#function start when admin use the command "/start"
+async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
+    global CHAT_ID
+    chat_id = update.message.chat_id
+    CHAT_ID = chat_id
+    #function to check if the user who is using the bot is admin
+    control=await verify_user(chat_id)
+    if(control==False):
+        #button to send chat_id to admin to link the account telegram with site account
+        keyboard = [
+            [InlineKeyboardButton("Dimmi il mio Chat ID ", callback_data='chat_id')]
+            ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(f"⛔ Il tuo account Telegram non ha i privilegi per usare questo Bot ⛔",reply_markup=reply_markup)
+    
+    else:    
+        #button to do a manual control of last bulletin uploaded in database 
+        ins(chat_id)
+        keyboard = [
+            [InlineKeyboardButton("⛄ Bol. PREVISIONE LOCALE NEVICATE ⛄ ", callback_data='Neve')],
+            [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')]
+            ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(f"☀️ ciao sono il tuo bot per vedere le allerte meteo della Zona di Bassano Del Grappa ☀️",reply_markup=reply_markup)
+    
 
 #invio in modo automoatico del bot ad un utente preciso
 async def alert_control(tipo, colore, chat_id):
@@ -113,115 +139,45 @@ async def snow_control(val,chat_id):
         
     return "Dati non disponibili per il primo giorno"
 
-        
-# le funzioni che partano in base al comando inviato al bot Telegram
-async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
-    global CHAT_ID  # Indica che si sta facendo riferimento alla variabile globale CHAT_ID
-    chat_id = update.message.chat_id
-    CHAT_ID = chat_id
-    #funzione per verificare se l'utente che sta usando il bot è admin
-    control=await verify_user(chat_id)
-    #control=True
-    if(control==False):
-        
-        keyboard = [
-            [InlineKeyboardButton("Dimmi il mio Chat ID ", callback_data='chat_id')]
-            ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(f"⛔ Il tuo account Telegram non ha i privilegi per usare questo Bot ⛔",reply_markup=reply_markup)
-    else:    
-        dati = [
-            {
-                "date": "18-01-2024 00:00:00",
-                "%": "0",
-                "1000 m": "2",
-                "1500 m": "0",
-                ">1500 m": "0"
-            },
-            {
-                "date": "19-01-2024 00:00:00",
-                "%": "0",
-                "1000 m": "0",
-                "1500 m": "0",
-                ">1500 m": "0"
-            },
-            {
-                "date": "20-01-2024 00:00:00",
-                "%": "0",
-                "1000 m": "0",
-                "1500 m": "0",
-                ">1500 m": "0"
-            }
-        ]
-
-        
-        await snow_control(dati,chat_id)
-    
-        data={
-            "hydraulic": "ROSSO",
-            "hydrogeological": "GIALLO",
-            "storm": "GIALLO"
+async def ins(chat_id):
+    dati = [
+        {
+            "date": "18-01-2024 00:00:00",
+            "%": "0",
+            "1000 m": "2",
+            "1500 m": "0",
+            ">1500 m": "0"
+        },
+        {
+            "date": "19-01-2024 00:00:00",
+            "%": "0",
+            "1000 m": "0",
+            "1500 m": "0",
+            ">1500 m": "0"
+        },
+        {
+            "date": "20-01-2024 00:00:00",
+            "%": "0",
+            "1000 m": "0",
+            "1500 m": "0",
+            ">1500 m": "0"
         }
-        for tipo, colore in data.items():
-            if(colore!="VERDE"):
-                print("ciao")
-                await alert_control(tipo,colore,chat_id)
-        
-        keyboard = [
-            [InlineKeyboardButton("⛄ Bol. PREVISIONE LOCALE NEVICATE ⛄ ", callback_data='Neve')],
-            [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')]
-            ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(f"☀️ ciao sono il tuo bot per vedere le allerte meteo della Zona di Bassano Del Grappa ☀️",reply_markup=reply_markup)
+    ]
+
     
+    await snow_control(dati,chat_id)
+
+    data={
+        "hydraulic": "ROSSO",
+        "hydrogeological": "GIALLO",
+        "storm": "GIALLO"
+    }
+    for tipo, colore in data.items():
+        if(colore!="VERDE"):
+            await alert_control(tipo,colore,chat_id)
 
 
-
-
-async def report():
-    mydb = await create_connection()
-    bot = Bot(token=TOKEN)
-    try:
-        keyboard = [
-            [InlineKeyboardButton("Inoltra", callback_data='Send')],
-            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-        ]
-        mycursor = mydb.cursor()
-
-        query = (
-            "SELECT criticalness.ID_color, criticalness.ID_risk, color.color_name "
-            "FROM Area "
-            "JOIN Criticalness ON Area.ID_area = Criticalness.ID_area "
-            "JOIN Color ON Criticalness.ID_color = Color.ID_color "
-            "JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk "
-            "WHERE Area.area_name = 'Vene-B' and Risk.ID_risk!='4'"
-            "ORDER BY Criticalness.ID_issue DESC "
-            "LIMIT 3"
-        )
-        mycursor.execute(query)
-        myresult = mycursor.fetchall()
-        print (myresult)
-        for x in myresult:
-            print(x)
-            if x[0]==1:
-                messaggio="nessun pericolo 🟢";
-                await bot.send_message(chat_id=CHAT_ID, text=messaggio)
-            else:
-                if(x[1]==1):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idraulico 🌧️"
-                elif(x[1]==2):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico 🌧️"
-                elif(x[1]==3):
-                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"        
-                    print(x[1])
-                reply_markup = InlineKeyboardMarkup(keyboard)
-                await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
-            print("Notifica inviata a "+str(CHAT_ID)+" con successo!")
-    except TelegramError as e:
-        print(f"Si è verificato un errore nell'invio della notifica: {e}")
-
-
-#funzione per associare i bottoni e le funzioni del bot        
+#function to associate the buttons and functions of the bot  
 async def button(update: Update, context):
     query = update.callback_query
     chat_id = query.message.chat_id
@@ -247,15 +203,13 @@ async def button(update: Update, context):
         await drop(update, context)
     elif data == 'chat_id':
         await give_id(update,chat_id)
-
-    #elif data == 'opzione3':
-       # da cambiare per capire come fa re        
- 
+  
+#request database to find chat-id admin 
 async def give_id(update: Update,chat_id_value):
     query = update.callback_query
     await query.edit_message_text(text=f"il tuo chat id è {chat_id_value}")
 
-# Funzione per gestire l'opzione 1 del bottone
+#function to forward the alert of the message sent to the admin to the Telegram group
 async def send(update:Update, context,arg,index):
     global INFO
     bot = Bot(token=TOKEN)
@@ -284,17 +238,63 @@ async def send(update:Update, context,arg,index):
         await query.edit_message_text(text=f"Si è verificato un errore nell'invio della notifica: {e}")
     
 
-# Funzione per gestire l'opzione 2 del bottone
+# function to not forward the alert of the message sent to the admin to the Telegram group
 async def drop(update: Update, context):
     query = update.callback_query
     await query.answer()
     await query.edit_message_text(text="Hai rifiutato l'inoltro di questa allerta")
     
-
+#function for printing the type of error in the event of an error on the terminal
 async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     print(f'Update {update} causato da {context.error}')
-    
-    #request database to find chat-id admin
+
+#function to download the last bulletin uploaded in database to do a manual control
+async def report():
+    mydb = await create_connection()
+    bot = Bot(token=TOKEN)
+    try:
+        keyboard = [
+            [InlineKeyboardButton("Inoltra", callback_data='Send')],
+            [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+        ]
+        mycursor = mydb.cursor()
+        
+        #query to select last info of VENE-B
+        query = (
+            "SELECT criticalness.ID_color, criticalness.ID_risk, color.color_name "
+            "FROM Area "
+            "JOIN Criticalness ON Area.ID_area = Criticalness.ID_area "
+            "JOIN Color ON Criticalness.ID_color = Color.ID_color "
+            "JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk "
+            "WHERE Area.area_name = 'Vene-B' and Risk.ID_risk!='4'"
+            "ORDER BY Criticalness.ID_issue DESC "
+            "LIMIT 3"
+        )
+        mycursor.execute(query)
+        myresult = mycursor.fetchall()
+        print (myresult)
+
+        #control the type and alertness of the data taken from the query
+        for x in myresult:
+            print(x)
+            if x[0]==1:
+                messaggio="nessun pericolo 🟢";
+                await bot.send_message(chat_id=CHAT_ID, text=messaggio)
+            else:
+                if(x[1]==1):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idraulico 🌧️"
+                elif(x[1]==2):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico 🌧️"
+                elif(x[1]==3):
+                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"        
+                    print(x[1])
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
+            print("Notifica inviata a "+str(CHAT_ID)+" con successo!")
+    except TelegramError as e:
+        print(f"Si è verificato un errore nell'invio della notifica: {e}")
+
+#function to download the last bulletin uploaded in database to do a manual control
 async def snow_report():
     mydb = await create_connection()
     bot = Bot(token=TOKEN)

@@ -13,11 +13,12 @@ TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 INFO: Final= None
 
+
 async def verify_user(chat_id):
     mydb = await create_connection()
-    print("ciao")
+    
     mycursor = mydb.cursor()
-    print("ciao")
+    
     mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
 
     myresult = mycursor.fetchall()
@@ -46,13 +47,14 @@ async def create_connection():
     )
     return mydb    
 
+
 #request database to find chat-id admin
 async def find_id(INFO,chat_id):
     
     mydb = create_connection()
-    print("ciao")
+    
     bot = Bot(token=TOKEN)
-    print("ciao")
+    
     try:
         keyboard = [
             [InlineKeyboardButton("Inoltra", callback_data='Send')],
@@ -65,7 +67,6 @@ async def find_id(INFO,chat_id):
 
 
         myresult = mycursor.fetchall()
-        print("ciao")
         for x in myresult:
             reply_markup = InlineKeyboardMarkup(keyboard)
             await bot.send_message(chat_id=chat_id, text=x, reply_markup=reply_markup)
@@ -77,26 +78,25 @@ async def find_id(INFO,chat_id):
 
 
        
-#controllo del XML di Barzizza da Parte del bot Telegram quando l'allerta è di tipo IDRO
+#check of the Barzizza XML by the Telegram bot when the alert is of the IDRO type
 async def control():
     url = 'https://www.ambienteveneto.it/Dati/0283.xml'
 
-    # "prendo" l'XML dal Sito del Comune
     response = urllib.request.urlopen(url).read()
 
-    # da XML a JSON
+    # from XML to JSON
     data_dict = xmltodict.parse(response)
     json_data = json.dumps(data_dict, indent=4)
     data = json.loads(json_data)
     liv_idro = data["CONTENITORE"]["STAZIONE"]["SENSORE"][0]["DATI"]
 
-    # Estrai l'ultimo valore di "VM" (livello idrometrico)
+    # Extract the latest value of "VM" (water level)
     val = liv_idro[-1]["VM"]
     
     print(val)
 
     liv = float(val)
-    # controllo del valore dell'altezza del Brenta
+    # control of the Brenta height value
     if liv >= 2.3 and liv < 2.8:
         return "GIALLO"
     elif liv >= 2.8 and liv < 3.2:
@@ -106,5 +106,3 @@ async def control():
     else:
         return "VERDE"            
     
-#--------------------------------------------------------------------------------------------------
-# function to verify snow alert value        
