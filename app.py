@@ -1,6 +1,7 @@
 from flask import Flask
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp
+import os
 
 app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
@@ -16,4 +17,4 @@ app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=5002)
+    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"))
