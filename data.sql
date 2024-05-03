@@ -39,6 +39,13 @@ INSERT INTO Color (color_name) VALUES
     ('arancio'),
     ('rossa');
 
+INSERT INTO Altitude (height) VALUES
+    ('1000'),
+    ('1500'),
+    ('>1500'),
+    ('2000'),
+    ('>2000');
+
 
 
 
