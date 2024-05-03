@@ -28,11 +28,13 @@ def home():
         hydraulic = db.executeQuery(_get_query(area_name, "idraulico"))[0]["color_name"]
         hydro_geo = db.executeQuery(_get_query(area_name, "idrogeologico"))[0]["color_name"]
         storms = db.executeQuery(_get_query(area_name, "idrogeologico con temporali"))[0]
-        update = storms["starting_date"]
+        starting_date = storms["starting_date"]
+        ending_date = storms["ending_date"]
         storms = storms["color_name"]
 
         bulletin_data = f'''<div class="risk-out" id="vene-a">
                                 <h2>{area_name}</h2>
+                                <p class="last-update" id="update-vene-a">Ultimo aggiornamento:<br>Data inizio: {_parse_date(str(starting_date))}<br>Data fine: {_parse_date(str(ending_date))}</p>
                                 <div class="risk-in">
                                     <div class="risk">
                                         <span class="circle {_convert_risk_color(hydraulic)}"></span>
@@ -47,8 +49,6 @@ def home():
                                         <p>Rischio idro-geologico per temporale</p>
                                     </div>
                                 </div>
-                                <p class="basin">Bacino correlato: Alto Piave</p>
-                                <p class="last-update" id="update-vene-a">Ultimo aggiornamento: {_parse_date(str(update))}</p>
                              </div>'''
 
     return render_template("home.html", bulletin_data = bulletin_data)

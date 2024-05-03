@@ -6,7 +6,7 @@ app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
 
 
-app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = "klosterpatia"
 app.register_blueprint(auth_bp, url_prefix='/{}'.format(auth_bp.name))
 app.register_blueprint(home_bp)
