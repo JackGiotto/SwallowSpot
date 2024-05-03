@@ -138,16 +138,19 @@ except Exception as e:
 import socket
 import ssl
 
+ip_addr = '192.168.0.100'
+
 # Create an SSL context
-context = ssl.create_default_context()
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 
 # Create a socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 context.load_verify_locations("certificate/server.crt")
 
 # Connect to the server
 ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")
-ssl_client_socket.connect(('127.0.0.1', 8080))
+ssl_client_socket.connect((ip_addr, 8080))
 
 # Send data
 ssl_client_socket.send("Hello from client!".encode())
@@ -158,6 +161,7 @@ print("Response from server:", response.decode())
 
 # Close the connection
 ssl_client_socket.close()
+
 
 
 """

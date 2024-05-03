@@ -68,4 +68,5 @@ while True:
     ssl_client_socket.close()
 
 
+
 # per creare certificato: openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.pem
