@@ -22,6 +22,9 @@ def reports():
     return redirect(url_for("reports.hydro"))
 
 def _get_all_bulletins(date = "last"):
+    """get the risks of every area for a bulletin
+    """
+
     areas = ["Vene-A", "Vene-H", "Vene-B", "Vene-C", "Vene-D", "Vene-E", "Vene-F", "Vene-G"]
     risks = ["idraulico", "idrogeologico", "idrogeologico con temporali"]
     result = {
@@ -61,23 +64,32 @@ def _get_all_bulletins(date = "last"):
     bulletin = None
     for area in areas:
         for risk in risks:
-            print("hello")
-            bulletin = _get_hydro_bulletin(area, risk)
+            bulletin = _get_hydro_bulletin(area, risk, date)
             result[area]["risks"][risk] = _convert_risk_color(bulletin["color_name"])
         result[area]["date"]["starting_date"] = _parse_date(str(bulletin["starting_date"]))
         result[area]["date"]["ending_date"] = _parse_date(str(bulletin["ending_date"]))
-    with open("prova.json", "w") as f:
-        json.dump(result, f, indent="\t")
-    print(result)
+
+
     return result
 
-def _get_hydro_bulletin(area, risk, date="last"):
+    # debug
+    with open("prova.json", "w") as f:
+        json.dump(result, f, indent="\t")
+
+
+def _get_hydro_bulletin(area, risk, date):
+    """get the risks of an area from a bulletin
+    """
+    
     if (date == 'last'):
         query = _get_query_last(area, risk)
-    print("area:", area)
-    return db.executeQuery(_get_query_last(area, risk))[0]
+    return db.executeQuery(query)[0]
+
 
 def _get_query_last(area_name, risk_name) -> str:
+    """get query for the last bulletin
+    """
+
     query = f"""SELECT Report.starting_date, Report.ending_date, Color.color_name
             FROM Report
             JOIN Report_criticalness ON Report.ID_report = Report_criticalness.ID_report
