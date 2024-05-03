@@ -5,21 +5,21 @@ import os
 
 load_dotenv()
 class Database:
-    def __init__(self):
-        self.connection = pymysql.connect (
+    def connect(self):
+        connection = pymysql.connect (
             host= os.getenv("SERVERNAME"),
             user= os.getenv("DBUSER"),
             password= os.getenv("PASSWORD"),
             database= os.getenv("DBNAME"),
             cursorclass=pymysql.cursors.DictCursor
         )
+        return connection
 
     def executeQuery(self, query):
-        with self.connection.cursor() as cursor:
+        connection = self.connect()
+        with connection.cursor() as cursor:
             cursor.execute(query)
             res = cursor.fetchall()
-            self.connection.commit()
+            connection.commit()
+            connection.close()
             return res
-
-    def closeConnection(self):
-        self.connection.close()
