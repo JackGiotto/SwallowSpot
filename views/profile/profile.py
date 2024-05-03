@@ -26,8 +26,9 @@ def user():
                 update= "UPDATE User SET ID_area = '"+str(new_zone)+"' WHERE ID_user = "+str(id_user)+";"
                 db.executeQuery(update)
 
-            elif "psw_change" in request.form:#questo lo faccio domani chill
+            elif "psw_change" in request.form:
                 new_password = request.form["new_password"]
+                
 
             return render_template("user/profile.html")
         elif request.method== "DELETE":
