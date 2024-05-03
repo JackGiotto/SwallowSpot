@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from models import db
+import json
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
@@ -23,7 +24,40 @@ def reports():
 def _get_all_bulletins(date = "last"):
     areas = ["Vene-A", "Vene-H", "Vene-B", "Vene-C", "Vene-D", "Vene-E", "Vene-F", "Vene-G"]
     risks = ["idraulico", "idrogeologico", "idrogeologico con temporali"]
-    result = {"Vene-A": {"date": {}, "risks": {}}, "Vene-H": {"date": {}, "risks": {}}, "Vene-B": {"date": {}, "risks": {}}, "Vene-C": {"date": {}, "risks": {}}, "Vene-D": {"date": {}, "risks": {}}, "Vene-E": {"date": {}, "risks": {}}, "Vene-F": {"date": {}, "risks": {}}, "Vene-G": {"date": {}, "risks": {}}}
+    result = {
+                "Vene-A": {
+                    "date": {}, 
+                    "risks": {}
+                },
+                "Vene-H": {
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-B": {
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-C": {
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-D":{
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-E": {
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-F": {
+                    "date": {},
+                    "risks": {}
+                },
+                "Vene-G": {
+                    "date": {},
+                    "risks": {}
+                }
+            }
     bulletin = None
     for area in areas:
         for risk in risks:
@@ -32,6 +66,8 @@ def _get_all_bulletins(date = "last"):
             result[area]["risks"][risk] = _convert_risk_color(bulletin["color_name"])
         result[area]["date"]["starting_date"] = _parse_date(str(bulletin["starting_date"]))
         result[area]["date"]["ending_date"] = _parse_date(str(bulletin["ending_date"]))
+    with open("prova.json", "w") as f:
+        json.dump(result, f, indent="\t")
     print(result)
     return result
 
