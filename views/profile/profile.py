@@ -28,7 +28,13 @@ def user():
 
             elif "psw_change" in request.form:
                 new_password = request.form["new_password"]
-                
+                #checks password
+                if (len(new_password) < 8 or not _has_number(new_password) or not _has_uppercase(new_password) or not _has_special_character(new_password)):
+                    print("Length condition or case condition or special character condition or number condition is met")
+                    return render_template("user/profile.html", msg="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
+                #hasing password
+                _hash_password(new_password)
+                db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
 
             return render_template("user/profile.html")
         elif request.method== "DELETE":
@@ -37,13 +43,35 @@ def user():
         return redirect("/auth/login")
 
 
+def _hash_password(password):
+    # Converte la password in una stringa di byte
+    password_bytes = password.encode('utf-8')
+
+    # Crea un oggetto hash SHA-256
+    sha256_hash = hashlib.sha256()
+
+    # Aggiunge la password alla funzione hash
+    sha256_hash.update(password_bytes)
+
+    # Ottieni l'hash crittografico in esadecimale
+    hashed_password = sha256_hash.hexdigest()
+
+    return hashed_password
 
 
-        #city = request.form["city"]
-            #ID_area_query = f''' SELECT Topology.ID_area 
-            #                        FROM Topology
-             #                       WHERE ID_city = {city}
-            #                    '''
-            #ID_area = db.executeQuery(ID_area_query)
-            #uploads into database
+def _has_uppercase(s):
+    """Check if a string contains at least one uppercase letter.
+    """
+    return any(char.isupper() for char in s)
+
+def _has_number(s):
+    """Check if a string contains at least one number.
+    """
+    return any(char.isdigit() for char in s)
+
+def _has_special_character(s):
+    """Check if a string contains at least one special character.
+    """
+    special_characters = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+    return special_characters.search(s) is not None
             
