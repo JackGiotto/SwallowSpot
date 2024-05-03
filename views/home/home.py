@@ -9,7 +9,7 @@ def home():
     if "username" not in session:
         bulletin_data = '''
                     Per rimanere aggiornato sulla tua zona esegui l'accesso
-                    <a href="/auth/login/" class="btn btn-success m-2 btn-lg"> Accedi</a>'''
+                    <a href="/auth/login/" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>'''
     else:
         # debug
         #area_name = "Vene-A"

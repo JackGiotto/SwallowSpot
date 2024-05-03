@@ -8,7 +8,7 @@ def user():
     if "username" in session:
         return render_template("user/profile.html")
     else:
-        return redirect("/auth/login")
+        return render_template("user/settings.html")
 
 @profile_bp.route('/profile/logout/', methods=['POST'])
 def logout():

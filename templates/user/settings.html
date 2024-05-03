@@ -2,9 +2,14 @@
 
 {% block content %}
 
-<div class="profile-info">
-    <h1>Non hai ancora eseguito l'accesso!</h1>
-    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Accedi</a>
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<div class="profile-out">
+    <span id="notAccessed">
+        <h1>Non hai ancora eseguito l'accesso!</h1>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+    </span>
 </div>
 
 <div class="visual-mode">
@@ -31,19 +36,35 @@
     document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
 
     function changeMode() {
+        var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
+        var cookiesLabel = document.getElementById("cookies");
+        var cookiesModal = document.getElementById("customizeCookies");
+        var confirms = document.querySelectorAll(".input-group-text");
 
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
             //light mode
+            status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
             body.style.color = "#212529";
+            cookiesLabel.style.backgroundColor = "#EDFCFF";
+            cookiesModal.setAttribute('data-bs-theme', "light");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "light");
+            });
         }
         else {
             localStorage.setItem("mode", "dark");
             //dark mode
+            status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";
             body.style.color = "white";
+            cookiesLabel.style.backgroundColor = "#222222";
+            cookiesModal.setAttribute('data-bs-theme', "dark");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "dark");
+            });
         }
     }
 </script>

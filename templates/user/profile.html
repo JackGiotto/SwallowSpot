@@ -6,10 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <div class="profile-out">
-    <span id="notAccessed">
-        <h1>Non hai ancora eseguito l'accesso!</h1>
-        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Accedi</a>
-    </span>
+
     <div id="profile">
         <h1>Profilo di <strong>{{ username }}</strong>!</h1>
         <!--change username-->
@@ -19,24 +16,6 @@
                 <input type="text" class="form-control" placeholder="Nuovo nome utente">
             </div>
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changeName')">Annulla</button>
-            <button type="button" class="btn btn-success">Conferma</button>
-        </div>
-        <!--change mail-->
-        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeMail')">Modifica email</button>
-        <div class="dismissDefault" id="changeMail">
-            <div class="input-group mb-2 mt-2">
-                <input type="email" class="form-control" placeholder="Nuova email" aria-describedby="confirmMail1">
-                <span class="input-group-text" id="confirmMail1">
-                    <i class="fa-solid fa-check"></i>
-                </span>
-            </div>
-            <div class="input-group mb-2">
-                <input type="email" class="form-control" placeholder="Conferma nuova email" aria-describedby="confirmMail2">
-                <span class="input-group-text" id="confirmMail2">
-                    <i class="fa-solid fa-xmark"></i>
-                </span>
-            </div>
-            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeMail')">Annulla</button>
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
         <!--change password-->
@@ -60,7 +39,6 @@
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
         <!--logout-->
-        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()">Logout</button>
         <div class="visual-out mt-5">
             <label class="switch3">
                 <input type="checkbox" id="toggleNotif" checked />
@@ -68,6 +46,8 @@
             </label>
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
+        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+
     </div>
 </div>
 
