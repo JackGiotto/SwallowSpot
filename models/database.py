@@ -5,21 +5,44 @@ import os
 
 load_dotenv()
 class Database:
-    def __init__(self):
-        self.connection = pymysql.connect (
+    def connect(self):
+        connection = pymysql.connect (
             host= os.getenv("SERVERNAME"),
             user= os.getenv("DBUSER"),
             password= os.getenv("PASSWORD"),
             database= os.getenv("DBNAME"),
             cursorclass=pymysql.cursors.DictCursor
         )
+        return connection
+
+
 
     def executeQuery(self, query):
-        with self.connection.cursor() as cursor:
+        connection = self.connect()
+        with connection.cursor() as cursor:
             cursor.execute(query)
             res = cursor.fetchall()
-            self.connection.commit()
+            connection.commit()
+            connection.close()
             return res
 
-    def closeConnection(self):
-        self.connection.close()
+    def executeTransaction(self, queries):
+        connection = self.connect()
+        with connection.cursor() as cursor:
+            # start the transaction
+            
+            cursor.execute("START TRANSACTION")
+            
+            result = None
+            # execute all queries except the last one
+            for query in queries[:-1]:
+                cursor.execute(query)
+
+            # execute the last query
+            cursor.execute(queries[-1])
+            result = cursor.fetchone()  # get the result of the last query
+
+            # commit the transaction
+            #self.connection.commit()
+            connection.close()
+            return result

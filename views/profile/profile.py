@@ -14,3 +14,7 @@ def user():
 def logout():
     session.clear()
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@profile_bp.route('/profile/admin/', methods=['GET'])
+def admin():
+    return render_template("user/admin_profile.html")

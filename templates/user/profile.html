@@ -6,7 +6,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <div class="profile-out">
-
     <div id="profile">
         <h1>Profilo di <strong>{{ username }}</strong>!</h1>
         <!--change username-->
@@ -38,7 +37,7 @@
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
-        <!--logout-->
+        <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
                 <input type="checkbox" id="toggleNotif" checked />
@@ -46,11 +45,14 @@
             </label>
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
+        <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
 
+        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-5">Sezione Utente Amministratore</a>
     </div>
 </div>
 
+<!--visual mode switch-->
 <div class="visual-mode">
     <h2>Modifica il tema di visualizzazione</h2>
     <div class="visual-out">
