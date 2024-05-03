@@ -1,3 +1,4 @@
+import platform from 'platform';
 const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
@@ -10,6 +11,49 @@ let speedX = 0, speedY = 0;
 let snakeBody = [];
 let setIntervalId;
 let score = 0;
+let touchSupport = 0;
+
+
+
+// Section of controls (3 in total) to see if the device is touchscreen or not, this is useful to know if the movements should be taken by touch or keyboard arrows
+
+// Function that control if the device support multiple touch, if it support it, it could be a touchscreen device
+function hasTouchSupport(){
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+// Second check based on the width of the device
+function isMobile(){
+    const minWidth = 768;           // Minimum width for desktop devices
+    return window.innerWidth < minWidth || screen.width < minWidth;
+}
+
+
+function touchSupportCheck(){
+
+    if(platform.isMobile){
+        touchSupport+=1
+    }
+    if(hasTouchSupport()){
+        touchSupport+=1
+    }
+    if(isMobile()){         // Third check using a library that provides information about the browser, operating system, and device type by parsing the user agent string
+        touchSupport+=1
+    }
+
+    // If touchSupport is 2 or 3 means that probably is a touchscreen device
+    if(touchSupport >= 2){
+        // The device is touchscreen                        ****** TO BE IMPLEMENTED ******
+    }
+    else{
+        // The devise is NOT touchscreen                    ****** TO BE IMPLEMENTED ******
+    }
+}
+
+
+
+
+
 
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
@@ -86,6 +130,7 @@ const initGame = () =>{
     playBoard.innerHTML = html;
 }
 
+touchSupportCheck();
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 100);
 document.addEventListener("keyup", changeDirection);
