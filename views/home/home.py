@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session
 from models import db
 from utils.risks import convert_risk_color, get_query_last, parse_date
+from utils.get_data import get_cities
 import json
 
 home_bp = Blueprint('home', __name__, template_folder='templates')
@@ -57,7 +58,6 @@ def home():
 
 
 @home_bp.route('/cities', methods=['GET'])
-def get_cities():
-    cities_query = '''SELECT city_name, ID_city FROM Topology;'''
-    cities = db.executeQuery(cities_query)
+def cities():
+    cities = get_cities()
     return json.dumps({'success':True, 'cities': cities}), 200, {'ContentType':'application/json'}

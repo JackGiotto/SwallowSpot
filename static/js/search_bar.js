@@ -1,17 +1,5 @@
 let AUTOCOMPLETEDATA = [];
 
-const input = document.getElementById("bar");
-
-// Execute a function when the user releases a key on the keyboard
-input.addEventListener("keyup", function(event) {
-    
-    // Get the value entered by the user
-    let searchString = event.target.value;
-    
-    // Call a function to fetch autocomplete data based on the entered value
-    getAutoCompleteData(searchString);
-});
-
 window.onload = function() {
     getAutoCompleteData()
 }
@@ -20,18 +8,18 @@ function getAutoCompleteData() {
     $.get("/cities", function(data, status) {
         if (status === "success") {
             AUTOCOMPLETEDATA = JSON.parse(data)['cities'];
-            // Call any function that depends on AUTOCOMPLETEDATA here
-            autocomplete(input);
         } else {
             console.error("Failed to fetch autocomplete data");
         }
     });
 }
 
-function autocomplete(input) {
-    const inputValue = input.value.toLowerCase();
+function autocompleteBar() {
+    //console.log("ciao");
+    const input_value = $('#bar').val().toLowerCase();
 
-    const filteredData = AUTOCOMPLETEDATA.filter(item => item.city_name.toLowerCase().startsWith(inputValue));
+    //console.log(input_value);
+    const filteredData = AUTOCOMPLETEDATA.filter(item => item['city_name'].toLowerCase().startsWith(input_value));
 
     updateAutocompleteList(filteredData);
 }

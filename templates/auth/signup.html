@@ -19,16 +19,11 @@
             <i class="fa-solid fa-xmark"></i>
         </span>
     </div>
-    <div id="searchbar" class="input-group mb-3">        <!--barra di ricerca-->
+    <div id="searchbar" class="mb-3">        <!--barra di ricerca-->
         <input autocomplete="false" name="hidden" type="text" style="display: none;">
-        <input type="text"placeholder="Search..." name="city" id="bar" class="form-control">
+        <input type="text"placeholder="Search..." name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
         <div class="autocomplete-items" id="autocomplete-list"></div>
     </div>
-    <select id="city" name="city" class="form-select mb-3" aria-label="Select you region">
-        {% for element in cities %}
-            <option value="{{ element['ID_city']}} ">{{ element['city_name'] }}</option>
-        {% endfor %}
-    </select>
     {{msg}}
     <br>
     <button type="button" id="signup-submit" class="btn btn-success mb-2" >Registrati</button>
@@ -40,17 +35,12 @@
 
 <script>
 
-    input.addEventListener('input', function() {
-        console.log('ciao')
-        autocomplete(this);
-    });
 
     function check_password() {
         psw1 = $("#textPassword").val();
         psw2 = $("#textPassword2").val();
         $("#confirmPsw2").empty();
         html_block = "";
-        console.log(psw1);
         if (psw1 === psw2 && psw1 != '') {
             html_block = '<i class="fa-solid fa-check"></i>';
             $("#signup-submit").prop("type", "submit");
