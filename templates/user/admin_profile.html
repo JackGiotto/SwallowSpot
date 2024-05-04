@@ -2,13 +2,15 @@
 
 {% block content %}
 
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <div class="profile-out">
     <div id="profile">
-        <h1>Sezione Utente <span style="color: #00667C">Amministratore</span></h1>
+        <h1>Sezione Utente <strong style="color: #00667C">Amministratore</strong></h1>
         <!--insert report manually-->
-        <div class="uploadContainer mt-4">
+        <h2 class="mt-3">Carica un bollettino <span style="color: #00667C;">manualmente</span></h2>
+        <div class="uploadContainer mt-4" id="uploadArea">
             <label for="uploadReport" class="labelFile">
                 <span>
                     <svg
@@ -50,34 +52,36 @@
                         </g>
                     </svg>
                 </span>
-                <p>drag and drop your file here or click to select a file!</p>
+                <p>Clicca qui per selezionare un file!</p>
             </label>
-            <input name="uploadReport" id="uploadReport" type="file" accept=".pdf"/>
+            <input name="uploadReport" id="uploadReport" type="file" accept=".pdf" required="required">
             <p>File selezionato: <span id="fileName">nessuno</span></p>
         </div>
-        <!--logout-->
-        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+
+        <!--link your profile with tg bot-->
+        <h2 class="mt-3">Collega il tuo account al <span style="color: #00667C;">Bot Telegram</span></h2>
+
+        <!--create new admin user-->
+        <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
+
+        <!--add admin user from existing account-->
+        <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
 
         <a href="{{ url_for('profile.user') }}" class="btn btn-success btn-lg mt-5">Impostazioni del profilo</a>
     </div>
 </div>
 
 <script>
+    //show file name under the upload button
     var input = document.getElementById( 'uploadReport' );
     var infoArea = document.getElementById( 'fileName' );
 
     input.addEventListener( 'change', showFileName );
 
     function showFileName( event ) {
-    
-    // the change event gives us the input it occurred in 
-    var input = event.srcElement;
-    
-    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-    var fileName = input.files[0].name;
-    
-    // use fileName however fits your app best, i.e. add it into a div
-    infoArea.textContent = fileName;
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        infoArea.textContent = fileName;
     }
 </script>
 
