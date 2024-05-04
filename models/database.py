@@ -43,6 +43,6 @@ class Database:
             result = cursor.fetchone()  # get the result of the last query
 
             # commit the transaction
-            #self.connection.commit()
+            connection.commit()
             connection.close()
             return result

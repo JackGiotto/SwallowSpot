@@ -28,10 +28,11 @@ class Pdf_reader:
 		# Execute the first query to insert the report
 		report_query = queries["bulletin_query"]
 		first_query = [report_query, last_index]
+		print(first_query)
 		report_id = db.executeTransaction(first_query)["new_id"]
 		
 		# debug
-		#print("Report ID:", report_id)
+		print("Report ID:", report_id)
 
 		# Loop through the risk queries
 		for risk_query in queries["risks_queries"]:
@@ -43,7 +44,7 @@ class Pdf_reader:
 
 			# debug
 			#print("RISK QUERY:", risk_query)
-			#print("Risk ID:", risk_id)
+			print("Risk ID:", risk_id)
 
 			# Insert into Report_criticalness table
 			new_query = f'''
