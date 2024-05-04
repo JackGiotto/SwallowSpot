@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, session, request, url_for
 from models import db
+import re
 import hashlib
 import json
 
@@ -24,23 +25,25 @@ def user():
                 return render_template("user/profile.html", cities=cities, username=session["username"])
 
             elif "city" in request.form:
-                new_zone = request.form["city"]#a quanto pare viene restituito l'id ma non ho voglia di capire perché... buonanotte... oh no buongiorno tini
+                new_zone = request.form["city"]
                 update= "UPDATE User SET ID_area = '"+str(new_zone)+"' WHERE ID_user = "+str(id_user)+";"
                 db.executeQuery(update)
 
-            elif "psw_change" in request.form:
+            elif "new_password" in request.form:
+                print("semo chi leze")
                 new_password = request.form["new_password"]
                 #checks password
                 if (len(new_password) < 8 or not _has_number(new_password) or not _has_uppercase(new_password) or not _has_special_character(new_password)):
                     print("Length condition or case condition or special character condition or number condition is met")
                     return render_template("user/profile.html", msg="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
                 #hasing password
-                _hash_password(new_password)
+                new_password=_hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
 
             return render_template("user/profile.html")
-        elif request.method== "DELETE":
-            pass
+        elif request.method == "DELETE":
+            if "" in request.form:
+                db.executeQuery("DELETE FROM `User` WHERE ((`ID_user` = '"+id_user+"'))")
     else:
         return redirect("/auth/login")
 
