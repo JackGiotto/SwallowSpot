@@ -26,11 +26,11 @@ def user():
 
             elif "city" in request.form:
                 new_zone = request.form["city"]
-                
-                new_zone = db.executeQuery("SELECT ID_area, ID_city FROM Area WHERE ID_city = "+str(new_zone)+";")
-                print("fin qui tutto bene")
-                update= "UPDATE User SET ID_area = '"+str(new_zone)+"' WHERE ID_user = "+str(id_user)+";"
-                db.executeQuery(update)
+                new_zone = db.executeQuery("SELECT ID_area, ID_city FROM Topology WHERE ID_city = "+str(new_zone)+";")
+                new_zone= new_zone[0]["ID_area"]
+                print(new_zone)
+                db.executeQuery("UPDATE User SET ID_area = "+str(new_zone)+" WHERE ID_user = "+str(id_user)+";")
+                print('area è stata modificata')
 
             elif "new_password" in request.form:
                 new_password = request.form["new_password"]
