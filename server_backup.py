@@ -60,7 +60,7 @@ while listen == True:
         # Receive the file data
         backup_data = b''
         while True:
-            chunk = client_socket.recv(1024)
+            chunk = ssl_client_socket.recv(1024)
             if not chunk:
                 break
             backup_data += chunk

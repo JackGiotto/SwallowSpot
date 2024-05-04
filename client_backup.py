@@ -131,18 +131,16 @@ except paramiko.SSHException as e:
 except Exception as e:
     print(f'Errore generico: {e}') """
 
-
 # mysqldump -u martini -p "Swallow Spot" > backup.sql
-
 
 import socket
 import ssl
 
-ipAddr = '127.0.0.1'
-port = 8085
+ipAddr = '192.168.0.113'
+port = 8080
 
 # Read the file content
-with open('backup.sql', 'rb') as f:
+with open('cities/cities.txt', 'rb') as f:
     backup_data = f.read()
 
 # Create an SSL context
@@ -158,7 +156,7 @@ ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhos
 ssl_client_socket.connect((ipAddr, port))
 
 # Send data
-ssl_client_socket.sendall(backup_data)
+ssl_client_socket.send(backup_data)
 
 # Receive response
 response = ssl_client_socket.recv(1024)
