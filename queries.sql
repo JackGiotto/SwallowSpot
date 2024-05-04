@@ -39,12 +39,13 @@ INSERT INTO Criticalness(ID_area, ID_risk, ID_color) VALUES
 (@ID_area, @ID_risk, @ID_color);
 
 -- #63 Create a query to get the last bulletin data of a specific Area. The data we need is: 3 risks level, date
-SELECT Report.starting_date, Report.ending_date
+SELECT Report.starting_date, Report.ending_date, Color.color_name
 FROM Report
 JOIN Report_criticalness ON Report.ID_report = Report_criticalness.ID_report
 JOIN Criticalness ON Report_criticalness.ID_issue = Criticalness.ID_issue
 JOIN Area ON Criticalness.ID_area = Area.ID_area
 JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
+JOIN Color ON Criticalness.ID_color = Color.ID_color
 WHERE Area.area_name = 'name of the area' and Risk.risk_name = 'name of the risk'
 ORDER BY Report.ID_report DESC 
 LIMIT 1;
