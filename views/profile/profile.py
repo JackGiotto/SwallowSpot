@@ -26,11 +26,13 @@ def user():
 
             elif "city" in request.form:
                 new_zone = request.form["city"]
+                
+                new_zone = db.executeQuery("SELECT ID_area, ID_city FROM Area WHERE ID_city = "+str(new_zone)+";")
+                print("fin qui tutto bene")
                 update= "UPDATE User SET ID_area = '"+str(new_zone)+"' WHERE ID_user = "+str(id_user)+";"
                 db.executeQuery(update)
 
             elif "new_password" in request.form:
-                print("semo chi leze")
                 new_password = request.form["new_password"]
                 #checks password
                 if (len(new_password) < 8 or not _has_number(new_password) or not _has_uppercase(new_password) or not _has_special_character(new_password)):
@@ -39,11 +41,11 @@ def user():
                 #hasing password
                 new_password=_hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
+            elif "user_delete" in request.form:
+                db.executeQuery("DELETE FROM `User` WHERE ((`ID_user` = '"+str(id_user)+"'))")
 
-            return render_template("user/profile.html")
-        elif request.method == "DELETE":
-            if "" in request.form:
-                db.executeQuery("DELETE FROM `User` WHERE ((`ID_user` = '"+id_user+"'))")
+        return render_template("user/profile.html")
+        
     else:
         return redirect("/auth/login")
 

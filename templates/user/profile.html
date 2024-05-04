@@ -60,8 +60,6 @@
         </form>
         </div>
         <!--allow notifications-->
-        <!--logout-->
-        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()">Logout</button>
         <div class="visual-out mt-5">
             <label class="switch3">
                 <input type="checkbox" id="toggleNotif" checked />
@@ -71,16 +69,15 @@
         </div>
         <br>
         <br>
+        <!--logout-->
+        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()">Logout</button>
         <!--delete my account-->
         <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" onclick="showSection('deleteAccount')">Elimina profilo</button>
-        <form name="delete_account" action="{{url_for('profile.user')}}" method="DELETE">
+        <form name="delete_account" action="{{url_for('profile.user')}}" method="POST">
             <div class="dismissDefault" id="deleteAccount">
-                <div class="input-group mb-2 mt-2">
-                    <input name="user_del" type="text" class="form-control" placeholder="Nome utente">
-                </div>
-                <div class="input-group mb-2">
-                    <input name="" type="password" class="form-control" id="psw3" placeholder="Inserisci password">
-                </div>
+                <br>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('deleteAccount')">Annulla</button>
+                <button name="user_delete" type="submit" class="btn btn-success" onclick="logout()">Conferma</button>
             </div>
         </form>
     </div>
