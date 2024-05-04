@@ -138,7 +138,12 @@ except Exception as e:
 import socket
 import ssl
 
-ip_addr = '192.168.0.100'
+ipAddr = '127.0.0.1'
+port = 8085
+
+# Read the file content
+with open('backup.sql', 'rb') as f:
+    backup_data = f.read()
 
 # Create an SSL context
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -150,10 +155,10 @@ context.load_verify_locations("certificate/server.crt")
 
 # Connect to the server
 ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")
-ssl_client_socket.connect((ip_addr, 8080))
+ssl_client_socket.connect((ipAddr, port))
 
 # Send data
-ssl_client_socket.send("Hello from client!".encode())
+ssl_client_socket.sendall(backup_data)
 
 # Receive response
 response = ssl_client_socket.recv(1024)

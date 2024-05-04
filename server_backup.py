@@ -32,41 +32,50 @@ if __name__ == "__main__":
     
 # process running in the backup server for Swallow Spot DB
 
-
 import socket
 import ssl
 
-# Create an SSL context
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain(certfile="certificate/server.crt", keyfile="certificate/server.key")
+listen = True
+ipAddr = '0.0.0.0'
+port = 8085
 
-# Create a socket
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)                                               # contesto SSL
+context.load_cert_chain(certfile="certificate/server.crt", keyfile="certificate/server.key")    # caricamento dei certificati
 
-# Bind the socket to a host and port
-server_socket.bind(('0.0.0.0', 8080))
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       # create an Internet Socket for TCP Connection
 
-# Listen for incoming connections
-server_socket.listen(5)
+server_socket.bind((ipAddr, port))      # Bind the socket to a host and port
+
+server_socket.listen(5)     # socket in ascolto
 
 print("Server is listening...")
 
-while True:
-    # Accept incoming connection
-    client_socket, addr = server_socket.accept()
-    
-    # Wrap the socket with SSL
-    ssl_client_socket = context.wrap_socket(client_socket, server_side=True)
-    
-    # Handle incoming data
-    data = ssl_client_socket.recv(1024)
-    if data:
-        print("Received:", data.decode())
-        ssl_client_socket.send("Hello from server!".encode())
-    
-    # Close the connection
-    ssl_client_socket.close()
+while listen == True:
 
+    try:
+        client_socket, addr = server_socket.accept()                    # accetta le connessioni in arrivo
+        
+        ssl_client_socket = context.wrap_socket(client_socket, server_side=True)    # aggiunge protocollo SSL al socket
+        
+        # Receive the file data
+        backup_data = b''
+        while True:
+            chunk = client_socket.recv(1024)
+            if not chunk:
+                break
+            backup_data += chunk
+            
+        if backup_data:
+            filename = "new_backup.sql"
 
-
-# per creare certificato: openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.pem
+            # Write the file data to a new file
+            with open(filename, 'wb') as f:
+                f.write(backup_data)
+                                       # stampa il messaggio
+            ssl_client_socket.send("Thanks for the file!".encode())       # invia un messaggio crittato al client
+        
+        ssl_client_socket.close()                                       # chiude la connessione
+        
+    except KeyboardInterrupt:
+        print('Server chiuso')
+        listen = False
