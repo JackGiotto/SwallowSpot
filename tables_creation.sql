@@ -1,5 +1,5 @@
 
--- Query di creazione del DataBase SwallowSpot
+-- Queries for SwallowSpot's Database creation
 
 CREATE TABLE Area       -- zona di allerta per ogni rischio
 (
@@ -29,6 +29,51 @@ CREATE TABLE Color      -- colori dei vari rischi
     CONSTRAINT pk_color PRIMARY KEY (ID_color)      -- vincolo di chiave primaria di Color
 );
 
+CREATE TABLE Altitude
+(
+    ID_altitude INT AUTO_INCREMENT,
+    height VARCHAR(10) NOT NULL UNIQUE,
+    CONSTRAINT pk_altitude PRIMARY KEY (ID_altitude)
+);
+
+CREATE TABLE Report     -- bollettino
+(
+    ID_report INT AUTO_INCREMENT,           -- ID univoco per ogni bollettino
+    starting_date DATETIME NOT NULL,        -- data di inizio validità
+    ending_date DATETIME NOT NULL,          -- data di fine validità
+    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
+    CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
+);
+
+CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
+(
+    ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
+    date DATETIME NOT NULL,                 -- data di inizio validità
+    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
+    CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
+);
+
+CREATE TABLE Snow_criticalness
+(
+    ID_snow_issue INT AUTO_INCREMENT,
+    date DATETIME NOT NULL,
+    percentage INT NOT NULL,
+    ID_area INT NOT NULL,
+    ID_snow_report INT NOT NULL,
+    CONSTRAINT pk_snow_issue PRIMARY KEY (ID_snow_issue),
+    CONSTRAINT fk_snow_criticalness_report FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON UPDATE CASCADE ON DELETE CASCADE,      -- vincolo di chiave esterna relativa al bollettino per neve
+    CONSTRAINT fk_snow_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
+);
+
+CREATE TABLE Topology       -- topologia delle città e delle zone di rischio
+(
+    ID_city INT AUTO_INCREMENT,                 -- ID univoco
+    city_name VARCHAR(35) NOT NULL UNIQUE,      -- nome della città 
+    ID_area INT NOT NULL,                       -- ID dell'area a cui appartiene la città
+    CONSTRAINT pk_topology PRIMARY KEY (ID_city),       -- vincolo di chiave primaria di Topology
+    CONSTRAINT fk_topology_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
+);
+
 CREATE TABLE User       -- utente e i suoi dati
 (
     ID_user INT AUTO_INCREMENT,                         -- ID univoco per ogni utente
@@ -49,23 +94,6 @@ CREATE TABLE Admin      -- amministratori del sito
     CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativo all'utente
 );
 
-CREATE TABLE Report     -- bollettino
-(
-    ID_report INT AUTO_INCREMENT,           -- ID univoco per ogni bollettino
-    starting_date DATETIME NOT NULL,        -- data di inizio validità
-    ending_date DATETIME NOT NULL,          -- data di fine validità
-    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
-    CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
-);
-
-CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
-(
-    ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
-    date DATETIME NOT NULL,                 -- data di inizio validità
-    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
-    CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
-);
-
 CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
 (
     ID_issue INT AUTO_INCREMENT,        -- ID univoco per ogni criticità
@@ -78,16 +106,6 @@ CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettin
     CONSTRAINT fk_criticalness_color FOREIGN KEY (ID_color) REFERENCES Color(ID_color) ON UPDATE CASCADE ON DELETE CASCADE  -- vincolo di chiave esterna relativa al colore
 );
 
-CREATE TABLE Topology       -- topologia delle città e delle zone di rischio
-(
-    ID_city INT AUTO_INCREMENT,                 -- ID univoco
-    city_name VARCHAR(35) NOT NULL UNIQUE,      -- nome della città 
-    ID_area INT NOT NULL,                       -- ID dell'area a cui appartiene la città
-    CONSTRAINT pk_topology PRIMARY KEY (ID_city),       -- vincolo di chiave primaria di Topology
-    CONSTRAINT fk_topology_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
-);
-
-
 CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e criticità
 (
     ID_report INT NOT NULL,     -- ID del bollettino
@@ -95,36 +113,6 @@ CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e critic
     CONSTRAINT pk_report_criticalness PRIMARY KEY (ID_report, ID_issue),        -- vincolo di chiave primaria di Report_criticalness
     CONSTRAINT fk_report FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON UPDATE CASCADE ON DELETE CASCADE,              -- vincolo di chiave esterna relativa al bollettino
     CONSTRAINT fk_criticalness FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativa alla criticità
-);
-
-/*
-CREATE TABLE Snow_report_criticalness        -- tabella ponte tra bollettini per valanghe e criticità
-(
-    ID_snow_report INT NOT NULL,        -- ID del bollettino per neve
-    ID_snow_issue INT NOT NULL,              -- ID della criticità specifica
-    CONSTRAINT pk_snow_report_criticalness PRIMARY KEY (ID_snow_report, ID_snow_issue),      -- vincolo di chiave primaria composta di Snow_report_criticalness
-    CONSTRAINT fk_snow_report FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON UPDATE CASCADE ON DELETE CASCADE,      -- vincolo di chiave esterna relativa al bollettino per neve
-    CONSTRAINT fk_snow_criticalness FOREIGN KEY (ID_snow_issue) REFERENCES Criticalness(ID_issue) ON UPDATE CASCADE ON DELETE CASCADE                 -- vincolo di chiave esterna relativa alla criticità
-);
-*/
-
-CREATE TABLE Altitude
-(
-    ID_altitude INT AUTO_INCREMENT,
-    height VARCHAR(15) NOT NULL UNIQUE,
-    CONSTRAINT pk_altitude PRIMARY KEY (ID_altitude)
-);
-
-CREATE TABLE Snow_criticalness
-(
-    ID_snow_issue INT AUTO_INCREMENT,
-    date DATETIME NOT NULL,
-    percentage INT NOT NULL,
-    ID_area INT NOT NULL,
-    ID_snow_report INT NOT NULL,
-    CONSTRAINT pk_snow_issue PRIMARY KEY (ID_snow_issue),
-    CONSTRAINT fk_snow_criticalness_report FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON UPDATE CASCADE ON DELETE CASCADE,      -- vincolo di chiave esterna relativa al bollettino per neve
-    CONSTRAINT fk_snow_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
 );
 
 CREATE TABLE Snow_criticalness_altitude
@@ -138,21 +126,21 @@ CREATE TABLE Snow_criticalness_altitude
 );
 
 /*
--- debug
-
-DROP TABLE Snow_report_criticalness;
+-- for debug
+DROP TABLE Snow_criticalness_altitude;
 DROP TABLE Report_criticalness;
-DROP TABLE Topology;
 DROP TABLE Criticalness;
-DROP TABLE Color;
-DROP TABLE Snow_report;
-DROP TABLE Report;
 DROP TABLE Admin;
 DROP TABLE User;
+DROP TABLE Topology;
+DROP TABLE Snow_criticalness;
+DROP TABLE Snow_report;
+DROP TABLE Report;
+DROP TABLE Altitude;
+DROP TABLE Color;
 DROP TABLE Role;
 DROP TABLE Risk;
 DROP TABLE Area;
-
 */
 
 
