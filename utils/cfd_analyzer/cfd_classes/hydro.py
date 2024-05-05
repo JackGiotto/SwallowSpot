@@ -31,7 +31,6 @@ class Hydro:
 	def get_queries(self) -> dict:
 		#print(self.data["risks"])
 		queries = {"bulletin_query": "", "risks_queries": []}
-		print(self.data)
 		queries["bulletin_query"] = f'''
 					INSERT INTO Report(starting_date, ending_date, path) VALUES
 					("{self.data["date"]["starting_date"]}", "{self.data["date"]["ending_date"]}", "{self.path}");
@@ -75,7 +74,6 @@ class Hydro:
 		"""get the value associated with every risk
 		"""
 		
-		print(table)
 		# risks template for hydro
 		with open("utils/cfd_analyzer/templates/risks_template_hydro.json", "r") as f:
 			RISKS = json.load(f)

@@ -20,6 +20,7 @@ class Snow:
 	def __init__(self, pdf_path) -> None:
 		self.path = pdf_path
 		self._get_bulletin_data()
+		self.get_queries()
 
 	def get_data(self) -> dict:
 		"""get date and risks of the bulletin
@@ -28,16 +29,28 @@ class Snow:
 		return self.data
 
 	def get_queries(self) -> dict:
+		queries = {"bulletin_query": "", "risks_queries": []}
 
 		queries["bulletin_query"] = f'''
-			INSERT INTO Snow_report(date, ending_date, path) VALUES
-			("{self.data["date"]}", "{self.data["date"]["ending_date"]}", "{self.path}");
+			INSERT INTO Snow_report(date, path) VALUES
+			("{self.data["date"]}", "{self.path}");
 		'''
-		queries = [
-			"SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');",
-			"SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);",
-			"INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES ('date of the criticalness', 'value of the percentage', @ID_area,  @ID_snow_report);"
-		]
+		for key, values_list in self.data["risks"].items():
+			area_name = key
+			for values in values_list:
+				print(values)
+				date_criticalness = values["date"]
+				percentage = values["%"]
+
+				query = [
+							f"SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');",
+							f"SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);",
+							f"""INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES
+							({date_criticalness}, '{percentage}', @ID_area,  @ID_snow_report);"""
+						]
+				queries["risks_queries"].append(query)
+		print(queries)
+		return queries
 
 	def _get_bulletin_data(self) -> None:
 		print("Analyzing Snow bulletin, path:", self.path)
