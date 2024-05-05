@@ -1,5 +1,6 @@
 import camelot
 import json
+from utils.get_data import convert_date
 
 class Snow:
 
@@ -25,6 +26,18 @@ class Snow:
 		"""
 
 		return self.data
+
+	def get_queries(self) -> dict:
+
+		queries["bulletin_query"] = f'''
+			INSERT INTO Snow_report(date, ending_date, path) VALUES
+			("{self.data["date"]}", "{self.data["date"]["ending_date"]}", "{self.path}");
+		'''
+		queries = [
+			"SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');",
+			"SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);",
+			"INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES ('date of the criticalness', 'value of the percentage', @ID_area,  @ID_snow_report);"
+		]
 
 	def _get_bulletin_data(self) -> None:
 		print("Analyzing Snow bulletin, path:", self.path)
@@ -117,7 +130,8 @@ class Snow:
 		return template
 	
 	def _parse_date(self, date:str) -> str:
-		date = date.replace("/", "-") + " 00:00:00"
+		date = date.replace("/", "-")
+		date = convert_date(date) + " 00:00:00"
 		return date
 # debug
 #snow = Snow("./test/data/test_snow.pdf")

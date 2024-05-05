@@ -1,6 +1,6 @@
 import camelot
 import json
-
+from utils.get_data import convert_date
 
 class Hydro:
 	
@@ -63,10 +63,10 @@ class Hydro:
 		string = table[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]
 		splitted = string.split(' ')
 
-		starting_date = self._convert_date(splitted[2])
+		starting_date = convert_date(splitted[2])
 		starting_date += " " + splitted[4] + ":00" # add seconds to starting date
 		
-		ending_date = self._convert_date(splitted[7])
+		ending_date = convert_date(splitted[7])
 		ending_date += " " + splitted[9]+ ":00"  # add seconds to ending date
 		return {"starting_date": starting_date, "ending_date":ending_date}
 		
@@ -97,13 +97,6 @@ class Hydro:
 		# debug
 		with open("test_hydro.json", "w") as f:
 			json.dump(template, f, indent="\t")
-
-	def _convert_date(self, date):
-		splitted= date.split("-")
-		day = splitted[0]
-		month = splitted[1]
-		year = splitted[2]
-		return year + "-" + month + "-" + day
 
 # debug
 #hydro = Hydro("./bulletins/test.pdf")
