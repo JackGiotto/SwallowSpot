@@ -10,9 +10,9 @@ WHERE username = 'name of the user' AND password = 'hash of the password';
 
 -- controlla se un utente è admin
 SELECT CASE
-           WHEN Admin.ID_user IS NOT NULL THEN 'True'
-           ELSE 'False'
-       END AS Is_Admin
+WHEN Admin.ID_user IS NOT NULL THEN 'True'
+ELSE 'False'
+END AS Is_Admin
 FROM User
 LEFT JOIN Admin ON User.ID_user = Admin.ID_user
 WHERE User.username = 'username';
@@ -66,3 +66,11 @@ JOIN Snow_criticalness ON Snow_report.ID_snow_report = Snow_criticalness.ID_snow
 JOIN Area ON Snow_criticalness.ID_area = Area.ID_area
 JOIN Snow_criticalness_altitude ON Snow_criticalness.ID_snow_issue = Snow_criticalness_altitude.ID_snow_issue
 WHERE Area.area_name = 'name of the area';
+
+-- #69 Query to add last snow report to the database
+SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = 'name of the area');        -- Dichiarazione e assegnazione della variabile ID_area (assegna alla variabile l'ID specifico del nome dell'area)
+
+SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report); 
+
+INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES 
+('date of the criticalness', 'value of the percentage', @ID_area,  @ID_snow_report);
