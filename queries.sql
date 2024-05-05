@@ -8,6 +8,15 @@ SELECT username, password
 FROM User
 WHERE username = 'name of the user' AND password = 'hash of the password';
 
+-- controlla se un utente è admin
+SELECT CASE
+           WHEN Admin.ID_user IS NOT NULL THEN 'True'
+           ELSE 'False'
+       END AS Is_Admin
+FROM User
+LEFT JOIN Admin ON User.ID_user = Admin.ID_user
+WHERE User.username = 'username';
+
 -- #20 Dovresti farmi una query che possa ottenere il livello di criticità di VENE B per ogni tipologia di pericolo, una per il primo bollettino e la stessa query per le nevicate 
 -- dell'ultimo bollettino
 SELECT *
