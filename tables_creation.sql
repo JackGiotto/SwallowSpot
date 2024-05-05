@@ -58,7 +58,6 @@ CREATE TABLE Report     -- bollettino
     CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
 );
 
-/*
 CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
 (
     ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
@@ -66,7 +65,6 @@ CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
     path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
     CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
 );
-*/
 
 CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
 (
@@ -123,7 +121,9 @@ CREATE TABLE Snow_criticalness
     date DATETIME NOT NULL,
     percentage INT NOT NULL,
     ID_area INT NOT NULL,
+    ID_snow_report INT NOT NULL,
     CONSTRAINT pk_snow_issue PRIMARY KEY (ID_snow_issue),
+    CONSTRAINT fk_snow_criticalness_report FOREIGN KEY (ID_snow_report) REFERENCES Snow_report(ID_snow_report) ON UPDATE CASCADE ON DELETE CASCADE,      -- vincolo di chiave esterna relativa al bollettino per neve
     CONSTRAINT fk_snow_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
 );
 
