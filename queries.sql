@@ -55,6 +55,14 @@ JOIN Criticalness ON Report_criticalness.ID_issue = Criticalness.ID_issue
 JOIN Area ON Criticalness.ID_area = Area.ID_area
 JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
 JOIN Color ON Criticalness.ID_color = Color.ID_color
-WHERE Area.area_name = 'name of the area' and Risk.risk_name = 'name of the risk'
+WHERE Area.area_name = 'name of the area' AND Risk.risk_name = 'name of the risk'
 ORDER BY Report.ID_report DESC 
 LIMIT 1;
+
+-- #68 Query to get last snow report for a specific area. The data that we should collect is: Starting date, three height of the area, three risk colors of the area
+SELECT Snow_report.date, Snow_criticalness_altitude.value
+FROM Snow_report
+JOIN Snow_criticalness ON Snow_report.ID_snow_report = Snow_criticalness.ID_snow_report
+JOIN Area ON Snow_criticalness.ID_area = Area.ID_area
+JOIN Snow_criticalness_altitude ON Snow_criticalness.ID_snow_issue = Snow_criticalness_altitude.ID_snow_issue
+WHERE Area.area_name = 'name of the area';
