@@ -30,6 +30,7 @@ def convert_risk_color(color) -> str:
         "verde": "green",
         "gialla": "yellow",
         "arancio": "orange",
-        "rossa": "red"
+        "rossa": "red",
+        "viola": "purple"
     }
     return colors[color]
