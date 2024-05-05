@@ -1,6 +1,7 @@
 import camelot
 import json
 from utils.get_data import convert_date
+from models import db
 
 class Hydro:
 	
@@ -28,7 +29,39 @@ class Hydro:
 
 		return self.data
 
-	def get_queries(self) -> dict:
+	def add_to_db(self) -> None:
+		last_index = "SELECT LAST_INSERT_ID() AS new_id;"
+		queries = self._get_queries()
+
+		# Execute the first query to insert the report
+		report_query = queries["bulletin_query"]
+		first_query = [report_query, last_index]
+		print(first_query)
+		report_id = db.executeTransaction(first_query)["new_id"]
+		
+		# debug
+		print("Report ID:", report_id)
+
+		# Loop through the risk queries
+		for risk_query in queries["risks_queries"]:
+			# Execute the risk query
+			risk_query.append(last_index)
+			
+			
+			risk_id = db.executeTransaction(risk_query)["new_id"]
+
+			# debug
+			#print("RISK QUERY:", risk_query)
+			print("Risk ID:", risk_id)
+
+			# Insert into Report_criticalness table
+			new_query = f'''
+					INSERT INTO Report_criticalness(ID_issue, ID_report)
+					VALUES ({risk_id}, {report_id})
+			'''
+			db.executeQuery(new_query)
+
+	def _get_queries(self) -> dict:
 		#print(self.data["risks"])
 		queries = {"bulletin_query": "", "risks_queries": []}
 		queries["bulletin_query"] = f'''
