@@ -7,8 +7,13 @@
     <div class="categories mb-3">
         <a href="{{ url_for('reports.hydro') }}" class="btn btn-success m-2 btn-lg">Rischi idrologici</a>
         <a href="{{ url_for('reports.snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
-        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg">Rischi valanghe</a>
+        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
     </div>
+    <p id="lastUpdate">
+        Ultimo aggiornamento:<br>
+        Data inizio: {{data['Vene-A']["date"]["starting_date"]}}<br>
+        Data fine: {{data['Vene-A']["date"]["ending_date"]}}
+    </p>
     <div class="risk-out" id="vene-a">
         <h2>Vene-A</h2>
         <div class="risk-in">
@@ -26,7 +31,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Alto Piave</p>
-        <p class="last-update" id="update-vene-a">Ultimo aggiornamento: </p>
     </div>
     <div class="risk-out" id="vene-h">
         <h2>Vene-H</h2>
@@ -45,7 +49,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Piave Pedemontano</p>
-        <p class="last-update" id="update-vene-h">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-b">
         <h2>Vene-B</h2>
@@ -64,7 +67,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Alto Brenta-Bacchiglione-Alpone</p>
-        <p class="last-update" id="update-vene-b">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-c">
         <h2>Vene-C</h2>
@@ -83,7 +85,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Adige-Garda e Monti Lessini</p>
-        <p class="last-update" id="update-vene-c">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-d">
         <h2>Vene-D</h2>
@@ -102,7 +103,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Po, Fissero-Tartaro-CanalBianco e Basso Adige</p>
-        <p class="last-update" id="update-vene-d">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-e">
         <h2>Vene-E</h2>
@@ -121,7 +121,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Basso Brenta-Bacchiglione</p>
-        <p class="last-update" id="update-vene-e">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-f">
         <h2>Vene-F</h2>
@@ -140,7 +139,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Basso Piave, Sile e Bacino scolante in laguna</p>
-        <p class="last-update" id="update-vene-f">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
     <div class="risk-out" id="vene-g">
         <h2>Vene-G</h2>
@@ -159,7 +157,6 @@
             </div>
         </div>
         <p class="basin">Bacino correlato: Livenza, Lemene e Tagliamento</p>
-        <p class="last-update" id="update-vene-g">Ultimo aggiornamento: <heregoesthedate /></p>
     </div>
 </div>
 

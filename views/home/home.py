@@ -35,9 +35,9 @@ def home():
         ending_date = storms["ending_date"]
         storms = storms["color_name"]
 
-        bulletin_data = f'''<div class="risk-out" id="vene-a">
+        bulletin_data = f'''<div class="risk-out-home">
                                 <h2>{area_name}</h2>
-                                <p class="last-update" id="update-vene-a">Ultimo aggiornamento:<br>Data inizio: {parse_date(str(starting_date))}<br>Data fine: {parse_date(str(ending_date))}</p>
+                                <p id="lastUpdate">Ultimo aggiornamento:<br>Data inizio: {parse_date(str(starting_date))}<br>Data fine: {parse_date(str(ending_date))}</p>
                                 <div class="risk-in">
                                     <div class="risk">
                                         <span class="circle {convert_risk_color(hydraulic)}"></span>

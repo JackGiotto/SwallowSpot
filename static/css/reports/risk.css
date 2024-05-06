@@ -1,3 +1,7 @@
+#lastUpdate {
+    text-align: center;
+}
+
 .reports {
     display: flex;
     flex-direction: column;
@@ -23,11 +27,7 @@
     text-align: center;
 }
 
-.risk-out .last-update {
-    margin-top: 0;
-}
-
-.risk-out:nth-child(odd) {
+.risk-out:nth-child(even) {
     background-color: rgba(89, 164, 188, 0.3);
 }
 

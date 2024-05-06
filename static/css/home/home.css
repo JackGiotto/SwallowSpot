@@ -43,6 +43,24 @@
     text-align: center;
 }
 
+.risk-out-home {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+}
+
+.risk-out-home p {
+    margin-top: 1rem;
+}
+
+.risk-out-home .basin {
+    text-align: center;
+}
+
 /*service description section*/
 
 .service-desc {
