@@ -31,7 +31,7 @@ def login():
             return redirect(url_for("home.home"))
         else:
             # username does not exist or password is not correct =
-            return render_template("auth/login.html", msg="credenziali non corrette")
+            return render_template("auth/login.html", msg="Errore: Credenziali non corrette")
     else:
         return render_template("auth/login.html")
 
@@ -50,15 +50,15 @@ def signup():
         password = request.form["password"]
 
         if (username == ''):
-            return render_template("auth/signup.html", msg="il nome utente non può essere vuoto")
+            return render_template("auth/signup.html", msg="Errore: Il nome utente non può essere vuoto")
         if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
             print("Length condition or case condition or special character condition or number condition is met")
-            return render_template("auth/signup.html", msg="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
+            return render_template("auth/signup.html", msg="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
         
         password = hash_password(password)
         city = request.form["city"]
         if city not in get_cities(want_list=True):
-            return render_template("auth/signup.html", msg="il comune inserito non è valido")
+            return render_template("auth/signup.html", msg="Errore: Il comune inserito non è valido")
         # zone = request.form["zone"]
         # confronto credenziali con DB
 
@@ -67,7 +67,7 @@ def signup():
 
         # check if username is already taken
         if bool(result):
-            return render_template("auth/signup.html", msg="username non disponibile")
+            return render_template("auth/signup.html", msg="Errore: Username non disponibile")
         else:
             ID_area_query = f''' SELECT Topology.ID_area 
                                 FROM Topology

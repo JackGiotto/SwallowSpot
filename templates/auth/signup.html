@@ -21,10 +21,12 @@
     </div>
     <div id="searchbar" class="mb-3">        <!--barra di ricerca-->
         <input autocomplete="false" name="hidden" type="text" style="display: none;">
-        <input type="text"placeholder="Search..." name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+        <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
         <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
     </div>
-    {{msg}}
+    <div class="error-msg">
+        {{msg}}
+    </div>
     <br>
     <button type="button" id="signup-submit" class="btn btn-success mb-2" >Registrati</button>
     <br>
