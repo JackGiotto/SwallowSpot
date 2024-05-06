@@ -45,4 +45,21 @@
     font-size: large;
     text-align: center;
 }
+
+.password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.password input {
+    width: 30px;
+    height: 40px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 2px rgb(20, 181, 230);
+    font-size: 20px;
+    outline: none;
+}
   
