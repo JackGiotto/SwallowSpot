@@ -70,6 +70,28 @@ body {
     }
 }
 
+.autocomplete-items {
+    position: absolute;
+    z-index: 2;
+    width: calc(100% - 2rem);
+    max-height: 7rem;
+    overflow: auto;
+    padding: 0.5rem 0;
+    border: 1px solid #00667C;
+    border-top: none;
+    background-color: white;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 0 0.5rem;
+}
+
+.autocomplete-item:hover {
+    cursor: pointer;
+    background-color: #59A4BC88;
+}
+
 /*other*/
 
 .btn-outline-primary {
@@ -98,31 +120,3 @@ body {
 .fa-xmark {
     color: red;
 }
-
-
-/*
-#searchbar {
-    width: fit-content;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-@media (max-width: 850px) {
-    #searchbar {
-        position: static;
-        margin-bottom: 10px;
-        margin: auto;
-        transform: translateX(0%);
-    }
-}
-
-#searchbar input[type=text] {
-    padding: 6px;
-    margin-top: 8px;
-    font-size: 17px;
-    border: solid 2px rgb(0, 102, 255);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-right: none;
-}
-*/

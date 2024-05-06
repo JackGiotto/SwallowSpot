@@ -30,6 +30,7 @@ function updateAutocompleteList(data) {
     autocompleteList.innerHTML = '';
 
     data.forEach(item => {
+        autocompleteList.style.display = "block";
         const listItem = document.createElement('div');
         listItem.classList.add('autocomplete-item');
         listItem.textContent = item.city_name;
@@ -39,7 +40,13 @@ function updateAutocompleteList(data) {
             document.getElementById('bar').value = item.city_name;
             // After clicking an item, remove the list
             autocompleteList.innerHTML = '';
+            autocompleteList.style.display = "none";
         });
+
+        //if the search bar is empty, the autocomplete list is not shown
+        if (document.getElementById('bar').value == '') {
+            autocompleteList.style.display = "none";
+        }
 
         autocompleteList.appendChild(listItem);
     });
