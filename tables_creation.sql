@@ -45,6 +45,21 @@ CREATE TABLE Report     -- bollettino
     CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
 );
 
+
+CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
+(
+    ID_issue INT AUTO_INCREMENT,        -- ID univoco per ogni criticità
+    ID_area INT NOT NULL,               -- ID dell'area colpita dalla criticità
+    ID_risk INT NOT NULL,               -- ID del rischio associato
+    ID_color INT NOT NULL,              -- ID del colore
+    ID_report INT NOT NULL,
+    CONSTRAINT pk_criticalness PRIMARY KEY (ID_issue),      -- vincolo di chiave primaria di Criticalness
+    CONSTRAINT fk_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa alla zona
+    CONSTRAINT fk_criticalness_risk FOREIGN KEY (ID_risk) REFERENCES Risk(ID_risk) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa al rischio
+    CONSTRAINT fk_criticalness_color FOREIGN KEY (ID_color) REFERENCES Color(ID_color) ON UPDATE CASCADE ON DELETE CASCADE,  -- vincolo di chiave esterna relativa al colore
+    CONSTRAINT fk_criticalness_report FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON UPDATE CASCADE ON DELETE CASCADE              -- vincolo di chiave esterna relativa al bollettino
+);
+
 CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
 (
     ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
@@ -94,28 +109,7 @@ CREATE TABLE Admin      -- amministratori del sito
     CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativo all'utente
 );
 
-CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
-(
-    ID_issue INT AUTO_INCREMENT,        -- ID univoco per ogni criticità
-    ID_area INT NOT NULL,               -- ID dell'area colpita dalla criticità
-    ID_risk INT NOT NULL,               -- ID del rischio associato
-    ID_color INT NOT NULL,              -- ID del colore
-    CONSTRAINT pk_criticalness PRIMARY KEY (ID_issue),      -- vincolo di chiave primaria di Criticalness
-    CONSTRAINT fk_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa alla zona
-    CONSTRAINT fk_criticalness_risk FOREIGN KEY (ID_risk) REFERENCES Risk(ID_risk) ON UPDATE CASCADE ON DELETE CASCADE,     -- vincolo di chiave esterna relativa al rischio
-    CONSTRAINT fk_criticalness_color FOREIGN KEY (ID_color) REFERENCES Color(ID_color) ON UPDATE CASCADE ON DELETE CASCADE  -- vincolo di chiave esterna relativa al colore
-);
-
-CREATE TABLE Report_criticalness        -- tabella ponte tra bollettini e criticità
-(
-    ID_report INT NOT NULL,     -- ID del bollettino
-    ID_issue INT NOT NULL,      -- ID della criticità specifica
-    CONSTRAINT pk_report_criticalness PRIMARY KEY (ID_report, ID_issue),        -- vincolo di chiave primaria di Report_criticalness
-    CONSTRAINT fk_report FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON UPDATE CASCADE ON DELETE CASCADE,              -- vincolo di chiave esterna relativa al bollettino
-    CONSTRAINT fk_criticalness FOREIGN KEY (ID_issue) REFERENCES Criticalness(ID_issue) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativa alla criticità
-);
-
-CREATE TABLE Snow_criticalness_altitude
+CREATE TABLE Snow_criticalness_altitude         -- tabella ponte tra criticità e altitudine
 (
     ID_snow_issue INT NOT NULL,      -- ID della criticità per neve
     ID_altitude INT NOT NULL,      -- ID della criticità per neve
@@ -128,13 +122,12 @@ CREATE TABLE Snow_criticalness_altitude
 /*
 -- for debug
 DROP TABLE Snow_criticalness_altitude;
-DROP TABLE Report_criticalness;
-DROP TABLE Criticalness;
 DROP TABLE Admin;
 DROP TABLE User;
 DROP TABLE Topology;
 DROP TABLE Snow_criticalness;
 DROP TABLE Snow_report;
+DROP TABLE Criticalness;
 DROP TABLE Report;
 DROP TABLE Altitude;
 DROP TABLE Color;
@@ -142,7 +135,6 @@ DROP TABLE Role;
 DROP TABLE Risk;
 DROP TABLE Area;
 */
-
 
 
 

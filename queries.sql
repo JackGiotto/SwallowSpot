@@ -74,3 +74,21 @@ SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);
 
 INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES 
 ('date of the criticalness', 'value of the percentage', @ID_area,  @ID_snow_report);
+
+SET @ID_snow_issue := (SELECT LAST_INSERT_ID() FROM Snow_criticalness); 
+
+SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = 'value of the altitude(1000, 2000)'); 
+
+INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+(@ID_snow_issue, @ID_altitude, 'value (5-10)');
+
+-- i don't know if this variabile is overrided so it's better to create a new one
+SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = 'value of the altitude(1000, 2000)'); 
+
+INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+(@ID_snow_issue, @ID_altitude, 'value (5-10)');
+
+SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = 'value of the altitude(1000, 2000)'); 
+
+INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+(@ID_snow_issue, @ID_altitude, 'value (5-10)');
