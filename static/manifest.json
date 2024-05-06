@@ -1,0 +1,20 @@
+{
+    "name": "Swallow Spot",
+    "short_name": "SwSpot",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "icons": [
+      {
+        "src": "/static/images/swallowspot_title_mini.png",
+        "sizes": "1080x1080",
+        "type": "image/png"
+      }
+    ],
+    "description": "An awesome Progressive Web App",
+    "orientation": "portrait",
+    "scope": "/",
+    "lang": "it-IT"
+  }
+  
