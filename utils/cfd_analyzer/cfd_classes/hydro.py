@@ -36,8 +36,7 @@ class Hydro:
 		# Execute the first query to insert the report
 		report_query = queries["bulletin_query"]
 		first_query = [report_query, last_index]
-		print(first_query)
-		report_id = db.executeTransaction(first_query)["new_id"]
+		report_id = db.executeTransaction(first_query, select=True)["new_id"]
 		
 		# debug
 		print("Report ID:", report_id)
@@ -46,20 +45,11 @@ class Hydro:
 		for risk_query in queries["risks_queries"]:
 			# Execute the risk query
 			risk_query.append(last_index)
-			
-			
-			risk_id = db.executeTransaction(risk_query)["new_id"]
+			risk_query[3] = risk_query[3].replace("@ID_report", str(report_id))
+			db.executeTransaction(risk_query, select=False)
 
 			# debug
 			#print("RISK QUERY:", risk_query)
-			print("Risk ID:", risk_id)
-
-			# Insert into Report_criticalness table
-			new_query = f'''
-					INSERT INTO Report_criticalness(ID_issue, ID_report)
-					VALUES ({risk_id}, {report_id})
-			'''
-			db.executeQuery(new_query)
 
 	def _get_queries(self) -> dict:
 		#print(self.data["risks"])
@@ -78,7 +68,7 @@ class Hydro:
 				query = [f'''SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');''',
 						f'''SET @ID_risk := (SELECT ID_risk FROM Risk WHERE risk_name = '{risk_name}');''',
 						f'''SET @ID_color := (SELECT ID_color FROM Color WHERE color_name = '{color_name}');''',
-						f'''INSERT INTO Criticalness(ID_area, ID_risk, ID_color) VALUES (@ID_area, @ID_risk, @ID_color);''']
+						f'''INSERT INTO Criticalness(ID_area, ID_risk, ID_color, ID_report) VALUES (@ID_area, @ID_risk, @ID_color, @ID_report);''']
 				queries["risks_queries"].append(query)
 		return queries
 

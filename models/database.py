@@ -26,7 +26,7 @@ class Database:
             connection.close()
             return res
 
-    def executeTransaction(self, queries):
+    def executeTransaction(self, queries, select = False):
         connection = self.connect()
         with connection.cursor() as cursor:
             # start the transaction
@@ -40,8 +40,10 @@ class Database:
 
             # execute the last query
             cursor.execute(queries[-1])
-            result = cursor.fetchone()  # get the result of the last query
-
+            if (select):
+                result = cursor.fetchone()  # get the result of the last query
+            else:
+                result = False
             # commit the transaction
             connection.commit()
             connection.close()
