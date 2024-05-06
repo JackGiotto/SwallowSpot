@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from models import db
 import json
-from utils.risks import convert_risk_color, get_query_last, parse_date
+from utils.risks import convert_risk_color, get_query_last_hydro, parse_date
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
@@ -83,5 +83,5 @@ def _get_hydro_bulletin(area, risk, date):
     """
     
     if (date == 'last'):
-        query = get_query_last(area, risk)
+        query = get_query_last_hydro(area, risk)
     return db.executeQuery(query)[0]

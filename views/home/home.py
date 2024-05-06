@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session
 from models import db
-from utils.risks import convert_risk_color, get_query_last, parse_date
+from utils.risks import convert_risk_color, get_query_last_hydro, parse_date
 from utils.get_data import get_cities
 import json
 
@@ -28,9 +28,9 @@ def home():
                     WHERE User.username = '{session["username"]}';"""
         area_name = db.executeQuery(query)[0]["area_name"]
 
-        hydraulic = db.executeQuery(get_query_last(area_name, "idraulico"))[0]["color_name"]
-        hydro_geo = db.executeQuery(get_query_last(area_name, "idrogeologico"))[0]["color_name"]
-        storms = db.executeQuery(get_query_last(area_name, "idrogeologico con temporali"))[0]
+        hydraulic = db.executeQuery(get_query_last_hydro(area_name, "idraulico"))[0]["color_name"]
+        hydro_geo = db.executeQuery(get_query_last_hydro(area_name, "idrogeologico"))[0]["color_name"]
+        storms = db.executeQuery(get_query_last_hydro(area_name, "idrogeologico con temporali"))[0]
         starting_date = storms["starting_date"]
         ending_date = storms["ending_date"]
         storms = storms["color_name"]
