@@ -348,6 +348,11 @@ footer img {
     border-color: #00202e;
 }
 
+.btn-success:disabled {
+    background-color: #00283Bff;
+    border-color: #00283Bff;
+}
+
 .btn-primary {
     background-color: #00667C;
     border-color: #006b83;

@@ -60,17 +60,11 @@
 
         <!--link your profile with tg bot-->
         <h2 class="mt-3">Collega il tuo account al <span style="color: #00667C;">Bot Telegram</span></h2>
-        <div class="password">
-            <input maxlength="1" value="5" class="input" name="num" type="number" />
-            <input maxlength="1" value="7" class="input" name="num" type="number" />
-            <input maxlength="1" value="1" class="input" name="num" type="number" />
-            <input maxlength="1" value="6" class="input" name="num" type="number" />
-            <input maxlength="1" value="3" class="input" name="num" type="number" />
-            <input maxlength="1" value="2" class="input" name="num" type="number" />
-            <input maxlength="1" value="6" class="input" name="num" type="number" />
-            <input maxlength="1" value="3" class="input" name="num" type="number" />
-            <input maxlength="1" value="2" class="input" name="num" type="number" />
-          </div>          
+        <div class="input-group mb-2 mt-2">
+            <input type="text" class="form-control" id="telegramID" placeholder="ID Telegram" oninput="checkInput(this)">
+        </div>
+        <p id="error"></p>
+        <button type="button" class="btn btn-success" id="confirmTgID" disabled>Conferma</button>
 
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
@@ -79,6 +73,7 @@
         <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
 
         <a href="{{ url_for('profile.user') }}" class="btn btn-success btn-lg mt-5">Impostazioni del profilo</a>
+        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-3">Azioni Super Admin</a>
     </div>
 </div>
 
@@ -93,6 +88,22 @@
         var input = event.srcElement;
         var fileName = input.files[0].name;
         infoArea.textContent = fileName;
+    }
+
+    function checkInput(input) {
+        var tgid = input.value.trim();
+        var errorMsg = document.getElementById("error");
+        var confirm = document.getElementById("confirmTgID");
+        // Verifica se l'input contiene solo numeri e ha una lunghezza compresa tra 1 e 9
+        if (/^\d{9}$/.test(tgid)) {
+            errorMsg.innerHTML = "ID valido";
+            errorMsg.style.color = "green";
+            confirm.disabled = false;
+        } else {
+            errorMsg.innerHTML = "ID non valido: deve contenere 9 numeri";
+            errorMsg.style.color = "darkred";
+            confirm.disabled = true;
+        }
     }
 </script>
 
