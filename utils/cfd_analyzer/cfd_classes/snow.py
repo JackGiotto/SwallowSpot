@@ -36,28 +36,21 @@ class Snow:
 		report_query = queries["bulletin_query"]
 		first_query = [report_query, last_index]
 		report_id = db.executeTransaction(first_query, select=True)["new_id"]
-		
 		# debug
 		print("Report ID:", report_id)
 
 		# Loop through the risk queries
 		for risk_query in queries["risks_queries"]:
 			# Execute the risk query
-			#print("RISK QUERY", risk_query[1])
 
 			risk_query[1] = risk_query[1].replace("@ID_snow_report", str(report_id))
-			#print("RISK QUERY Cambiata", risk_query[1])
 			
-			print("SLICE", risk_query[0:3])
 			id_crit = db.executeTransaction(risk_query[0:3], select=True)["new_id"]
 
-			risk_query[4] = risk_query[4].replace("@ID_snow_issue", str(id_crit))
-			risk_query[6] = risk_query[6].replace("@ID_snow_issue", str(id_crit))
-			risk_query[8] = risk_query[8].replace("@ID_snow_issue", str(id_crit))
+			for i in range(4, 9, 2):
+				risk_query[i] = risk_query[i].replace("@ID_snow_issue", str(id_crit))
 			db.executeTransaction(risk_query[3:], select=False)
 
-			# debug
-			#print("RISK QUERY:", risk_query)
 
 	def _get_queries(self) -> dict:
 		queries = {"bulletin_query": "", "risks_queries": []}
@@ -69,7 +62,6 @@ class Snow:
 		for key, values_list in self.data["risks"].items():
 			area_name = key
 			for values in values_list:
-				print(values)
 				date_criticalness = values["date"]
 				percentage = values["%"]
 				first = list(values.items())[2]

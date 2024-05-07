@@ -32,12 +32,10 @@ class Database:
             # start the transaction
             
             cursor.execute("START TRANSACTION")
-            print("QUERIESDASDADASD", queries)
             
             result = None
             # execute all queries except the last one
             for query in queries[:-1]:
-                print(query)
                 cursor.execute(query)
 
             # execute the last query
@@ -49,5 +47,4 @@ class Database:
             # commit the transaction
             connection.commit()
             connection.close()
-            print("RISULTATO", result)
             return result
