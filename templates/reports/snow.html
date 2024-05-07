@@ -9,99 +9,310 @@
         <a href="{{ url_for('reports.snow') }}" class="btn btn-success m-2 btn-lg">Previsioni nevicate</a>
         <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
     </div>
-    <p id="lastUpdate">
-        Ultimo aggiornamento: 
-    </p>
-    <div class="risk-out" id="snow-a">
-        <h2>Alto Agordino</h2>
-        <div class="risk-in">
-            <div class="risk">
-                <span class="circle red"></span>
-                <p><todaydate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle yellow"></span>
-                <p><tomorrowdate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle green"></span>
-                <p><aftertomorrowdate /></p>
-            </div>
-        </div>
-        <p class="basin">Zone correlate: Colle S. Lucia, Livinallongo del Col di Lana, Rocca Pierone</p>
+    <div class="dates mb-3">
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'first')" id="defaultOpen">primo giorno</button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">secondo giorno</button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">terzo giorno</button>
     </div>
-    <div class="risk-out" id="snow-b">
-        <h2>Medio-basso Agordino</h2>
-        <div class="risk-in">
-            <div class="risk">
-                <span class="circle orange"></span>
-                <p><todaydate /></p>
+    <div id="first" class="risk-out-out tabcontent">
+        <p>prima</p>
+        <div class="risk-out" id="snow-a">
+            <h2>Alto Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle red"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle yellow"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle green"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
             </div>
-            <div class="risk">
-                <span class="circle purple"></span>
-                <p><tomorrowdate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><aftertomorrowdate /></p>
-            </div>
+            <p class="basin">Zone correlate: Colle S. Lucia, Livinallongo del Col di Lana, Rocca Pierone</p>
         </div>
-        <p class="basin">Zone correlate: Alleghe, Canale d'Agordo, Cenecenighe, Gosaldo, Rivamonte, San Tommaso, Taibon</p>
+        <div class="risk-out" id="snow-b">
+            <h2>Medio-basso Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle orange"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle purple"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Alleghe, Canale d'Agordo, Cenecenighe, Gosaldo, Rivamonte, San Tommaso, Taibon</p>
+        </div>
+        <div class="risk-out" id="snow-c">
+            <h2>Cadore</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
+        </div>
+        <div class="risk-out" id="snow-d">
+            <h2>Feltrino - Val Belluna</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Feltre, Sovramonte</p>
+        </div>
+        <div class="risk-out" id="snow-e">
+            <h2>Altopiano dei Sette Comuni</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
+        </div>
     </div>
-    <div class="risk-out" id="snow-c">
-        <h2>Cadore</h2>
-        <div class="risk-in">
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><todaydate /></p>
+
+    <div id="second" class="risk-out-out tabcontent">
+        <p>seconda</p>
+        <div class="risk-out" id="snow-a">
+            <h2>Alto Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle red"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle yellow"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle green"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
             </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><tomorrowdate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><aftertomorrowdate /></p>
-            </div>
+            <p class="basin">Zone correlate: Colle S. Lucia, Livinallongo del Col di Lana, Rocca Pierone</p>
         </div>
-        <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
+        <div class="risk-out" id="snow-b">
+            <h2>Medio-basso Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle orange"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle purple"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Alleghe, Canale d'Agordo, Cenecenighe, Gosaldo, Rivamonte, San Tommaso, Taibon</p>
+        </div>
+        <div class="risk-out" id="snow-c">
+            <h2>Cadore</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
+        </div>
+        <div class="risk-out" id="snow-d">
+            <h2>Feltrino - Val Belluna</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Feltre, Sovramonte</p>
+        </div>
+        <div class="risk-out" id="snow-e">
+            <h2>Altopiano dei Sette Comuni</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
+        </div>
     </div>
-    <div class="risk-out" id="snow-d">
-        <h2>Feltrino - Val Belluna</h2>
-        <div class="risk-in">
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><todaydate /></p>
+
+    <div id="third" class="risk-out-out tabcontent">
+        <p>terza</p>
+        <div class="risk-out" id="snow-a">
+            <h2>Alto Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle red"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle yellow"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle green"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
             </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><tomorrowdate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><aftertomorrowdate /></p>
-            </div>
+            <p class="basin">Zone correlate: Colle S. Lucia, Livinallongo del Col di Lana, Rocca Pierone</p>
         </div>
-        <p class="basin">Zone correlate: Feltre, Sovramonte</p>
-    </div>
-    <div class="risk-out" id="snow-e">
-        <h2>Altopiano dei Sette Comuni</h2>
-        <div class="risk-in">
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><todaydate /></p>
+        <div class="risk-out" id="snow-b">
+            <h2>Medio-basso Agordino</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle orange"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle purple"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
             </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><tomorrowdate /></p>
-            </div>
-            <div class="risk">
-                <span class="circle unactive"></span>
-                <p><aftertomorrowdate /></p>
-            </div>
+            <p class="basin">Zone correlate: Alleghe, Canale d'Agordo, Cenecenighe, Gosaldo, Rivamonte, San Tommaso, Taibon</p>
         </div>
-        <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
+        <div class="risk-out" id="snow-c">
+            <h2>Cadore</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
+        </div>
+        <div class="risk-out" id="snow-d">
+            <h2>Feltrino - Val Belluna</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Feltre, Sovramonte</p>
+        </div>
+        <div class="risk-out" id="snow-e">
+            <h2>Altopiano dei Sette Comuni</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><todaydate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><tomorrowdate /></p>
+                </div>
+                <div class="risk">
+                    <span class="circle unactive"></span>
+                    <p><aftertomorrowdate /></p>
+                </div>
+            </div>
+            <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
+        </div>
     </div>
 </div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" on", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " on";
+    }
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
 
 {% endblock %}
