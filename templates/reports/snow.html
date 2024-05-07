@@ -7,8 +7,11 @@
     <div class="categories mb-3">
         <a href="{{ url_for('reports.hydro') }}" class="btn btn-primary m-2 btn-lg">Rischi idrologici</a>
         <a href="{{ url_for('reports.snow') }}" class="btn btn-success m-2 btn-lg">Previsioni nevicate</a>
-        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg">Rischi valanghe</a>
+        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
     </div>
+    <p id="lastUpdate">
+        Ultimo aggiornamento: 
+    </p>
     <div class="risk-out" id="snow-a">
         <h2>Alto Agordino</h2>
         <div class="risk-in">

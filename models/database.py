@@ -15,8 +15,6 @@ class Database:
         )
         return connection
 
-
-
     def executeQuery(self, query):
         connection = self.connect()
         with connection.cursor() as cursor:
@@ -25,24 +23,3 @@ class Database:
             connection.commit()
             connection.close()
             return res
-
-    def executeTransaction(self, queries):
-        connection = self.connect()
-        with connection.cursor() as cursor:
-            # start the transaction
-            
-            cursor.execute("START TRANSACTION")
-            
-            result = None
-            # execute all queries except the last one
-            for query in queries[:-1]:
-                cursor.execute(query)
-
-            # execute the last query
-            cursor.execute(queries[-1])
-            result = cursor.fetchone()  # get the result of the last query
-
-            # commit the transaction
-            #self.connection.commit()
-            connection.close()
-            return result
