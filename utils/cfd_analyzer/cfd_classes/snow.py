@@ -1,6 +1,7 @@
 import camelot
 import json
 from utils.get_data import convert_date
+from models import db
 
 class Snow:
 
@@ -20,7 +21,6 @@ class Snow:
 	def __init__(self, pdf_path) -> None:
 		self.path = pdf_path
 		self._get_bulletin_data()
-		self.get_queries()
 
 	def get_data(self) -> dict:
 		"""get date and risks of the bulletin
@@ -43,14 +43,23 @@ class Snow:
 		# Loop through the risk queries
 		for risk_query in queries["risks_queries"]:
 			# Execute the risk query
-			risk_query.append(last_index)
-			risk_query[3] = risk_query[3].replace("@ID_report", str(report_id))
-			db.executeTransaction(risk_query, select=False)
+			#print("RISK QUERY", risk_query[1])
+
+			risk_query[1] = risk_query[1].replace("@ID_snow_report", str(report_id))
+			#print("RISK QUERY Cambiata", risk_query[1])
+			
+			print("SLICE", risk_query[0:3])
+			id_crit = db.executeTransaction(risk_query[0:3], select=True)["new_id"]
+
+			risk_query[4] = risk_query[4].replace("@ID_snow_issue", str(id_crit))
+			risk_query[6] = risk_query[6].replace("@ID_snow_issue", str(id_crit))
+			risk_query[8] = risk_query[8].replace("@ID_snow_issue", str(id_crit))
+			db.executeTransaction(risk_query[3:], select=False)
 
 			# debug
 			#print("RISK QUERY:", risk_query)
 
-	def get_queries(self) -> dict:
+	def _get_queries(self) -> dict:
 		queries = {"bulletin_query": "", "risks_queries": []}
 
 		queries["bulletin_query"] = f'''
@@ -64,18 +73,17 @@ class Snow:
 				date_criticalness = values["date"]
 				percentage = values["%"]
 				first = list(values.items())[2]
-				print(first)
 				second = list(values.items())[3]
 				third = list(values.items())[4]
-				print("CIAO", third[0])
 				query = [
-							f"SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');",
-							f"SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);",
+							f"""SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');""",
 							f"""INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES
-							({date_criticalness}, '{percentage}', @ID_area,  @ID_snow_report);""",
+							('{date_criticalness}', '{percentage}', @ID_area,  @ID_snow_report);""",
+							f"""SELECT LAST_INSERT_ID() AS new_id FROM Snow_criticalness ;""",
+							
 							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{first[0]}');",
 							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
-							(@ID_snow_issue, @ID_altitude, '{first[1]}');""",
+							(@ID_snow_issue, @ID_altitude, '{first[1]}');""",	
 							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{second[0]}');",
 							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
 							(@ID_snow_issue, @ID_altitude, '{second[1]}');""",
@@ -84,7 +92,6 @@ class Snow:
 							(@ID_snow_issue, @ID_altitude, '{third[1]}');"""
 						]
 				queries["risks_queries"].append(query)
-		print(queries["risks_queries"][3])
 		return queries
 
 	def _get_bulletin_data(self) -> None:
