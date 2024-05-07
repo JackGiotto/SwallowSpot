@@ -28,6 +28,28 @@ class Snow:
 
 		return self.data
 
+	def add_to_db(self) -> None:
+		last_index = "SELECT LAST_INSERT_ID() AS new_id;"
+		queries = self._get_queries()
+
+		# Execute the first query to insert the report
+		report_query = queries["bulletin_query"]
+		first_query = [report_query, last_index]
+		report_id = db.executeTransaction(first_query, select=True)["new_id"]
+		
+		# debug
+		print("Report ID:", report_id)
+
+		# Loop through the risk queries
+		for risk_query in queries["risks_queries"]:
+			# Execute the risk query
+			risk_query.append(last_index)
+			risk_query[3] = risk_query[3].replace("@ID_report", str(report_id))
+			db.executeTransaction(risk_query, select=False)
+
+			# debug
+			#print("RISK QUERY:", risk_query)
+
 	def get_queries(self) -> dict:
 		queries = {"bulletin_query": "", "risks_queries": []}
 
@@ -41,15 +63,28 @@ class Snow:
 				print(values)
 				date_criticalness = values["date"]
 				percentage = values["%"]
-
+				first = list(values.items())[2]
+				print(first)
+				second = list(values.items())[3]
+				third = list(values.items())[4]
+				print("CIAO", third[0])
 				query = [
 							f"SET @ID_area := (SELECT ID_area FROM Area WHERE area_name = '{area_name}');",
 							f"SET @ID_snow_report := (SELECT LAST_INSERT_ID() FROM Snow_report);",
 							f"""INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES
-							({date_criticalness}, '{percentage}', @ID_area,  @ID_snow_report);"""
+							({date_criticalness}, '{percentage}', @ID_area,  @ID_snow_report);""",
+							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{first[0]}');",
+							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+							(@ID_snow_issue, @ID_altitude, '{first[1]}');""",
+							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{second[0]}');",
+							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+							(@ID_snow_issue, @ID_altitude, '{second[1]}');""",
+							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{third[0]}');",
+							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
+							(@ID_snow_issue, @ID_altitude, '{third[1]}');"""
 						]
 				queries["risks_queries"].append(query)
-		print(queries)
+		print(queries["risks_queries"][3])
 		return queries
 
 	def _get_bulletin_data(self) -> None:
