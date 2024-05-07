@@ -17,4 +17,9 @@ def logout():
 
 @profile_bp.route('/profile/admin/', methods=['GET'])
 def admin():
-    return render_template("user/admin_profile.html")
+    if "username" in session:
+        return render_template("user/admin_profile.html")
+    else
+        return render_template("user/settings.html")
+
+@
