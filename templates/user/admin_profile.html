@@ -60,6 +60,12 @@
 
         <!--link your profile with tg bot-->
         <h2 class="mt-3">Collega il tuo account al <span style="color: #00667C;">Bot Telegram</span></h2>
+        <div class="mb-2">
+            <!--messaggi da inserire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            (linked) <span style="color: green;"><i class="fa-solid fa-check"></i> Account gi&agrave; collegato</span>
+            (not linked) <span style="color: red;"><i class="fa-solid fa-xmark"></i> Account non ancora collegato</span>-->
+            {{liked_account}}
+        </div>
         <p>
             Come ricavare il tuo <strong>ID Telegram</strong>:
             <ol>
@@ -75,7 +81,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </span>
         </div>
-        <div id="error" class="error-msg"></div>
+        <div id="error" class="error-msg mb-3"></div>
         <button type="button" class="btn btn-success" id="confirmTgID" onclick="InsertChatID()" disabled>Conferma</button>
 
         <!--create new admin user-->
