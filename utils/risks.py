@@ -11,8 +11,7 @@ def get_query_last_hydro(area_name: str, risk_name: str) -> str:
     
     query = f"""SELECT Report.starting_date, Report.ending_date, Color.color_name
             FROM Report
-            JOIN Report_criticalness ON Report.ID_report = Report_criticalness.ID_report
-            JOIN Criticalness ON Report_criticalness.ID_issue = Criticalness.ID_issue
+            JOIN Criticalness ON Report.ID_report = Criticalness.ID_report
             JOIN Area ON Criticalness.ID_area = Area.ID_area
             JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
             JOIN Color ON Criticalness.ID_color = Color.ID_color
