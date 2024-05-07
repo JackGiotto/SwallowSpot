@@ -72,7 +72,7 @@ while listen == True:
             with open(filename, 'wb') as f:
                 f.write(backup_data)
                                        # stampa il messaggio
-            ssl_client_socket.send("Thanks for the file!".encode())       # invia un messaggio crittato al client
+            # ssl_client_socket.send("Thanks for the file!".encode())       # invia un messaggio crittato al client
         
         ssl_client_socket.close()                                       # chiude la connessione
         

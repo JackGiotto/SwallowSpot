@@ -1,5 +1,28 @@
 
 # process running in the server for Swallow Spot DB
+
+import socket, ssl
+
+ipAddr = '172.30.4.9'
+port = 8080
+
+with open('backup.sql', 'rb') as f:     # Read the file content
+    backup_data = f.read()
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)   # Create an SSL context
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Create a socket
+
+context.load_verify_locations("certificate/server.crt")     # caricato il certificato
+
+ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")     
+
+ssl_client_socket.connect((ipAddr, port))
+
+ssl_client_socket.send(backup_data)     # invia il backup al server
+
+ssl_client_socket.close()       # chiude il socket
+
 """ 
 import paramiko
 
@@ -132,40 +155,6 @@ except Exception as e:
     print(f'Errore generico: {e}') """
 
 # mysqldump -u martini -p "Swallow Spot" > backup.sql
-
-import socket
-import ssl
-
-ipAddr = '192.168.0.113'
-port = 8080
-
-# Read the file content
-with open('cities/cities.txt', 'rb') as f:
-    backup_data = f.read()
-
-# Create an SSL context
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-
-# Create a socket
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-context.load_verify_locations("certificate/server.crt")
-
-# Connect to the server
-ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")
-ssl_client_socket.connect((ipAddr, port))
-
-# Send data
-ssl_client_socket.send(backup_data)
-
-# Receive response
-response = ssl_client_socket.recv(1024)
-print("Response from server:", response.decode())
-
-# Close the connection
-ssl_client_socket.close()
-
-
 
 """
 import ssl
