@@ -17,3 +17,26 @@ function logout() {
     }
     )
 }
+
+//on admin page
+
+function checkInput(input) {
+    var tgid = input.value.trim();
+    var errorMsg = document.getElementById("error");
+    var confirm = document.getElementById("confirmTgID");
+    $("#confirmIDcheck").empty();
+    html_block = "";
+    // Verifica se l'input contiene solo numeri e ha una lunghezza compresa tra 1 e 9
+    if (/^\d{9}$/.test(tgid)) {
+        errorMsg.innerHTML = "ID valido";
+        errorMsg.style.color = "green";
+        html_block = '<i class="fa-solid fa-check"></i>';
+        confirm.disabled = false;
+    } else {
+        errorMsg.innerHTML = "ID non valido: deve contenere 9 numeri";
+        errorMsg.style.color = "darkred";
+        html_block = '<i class="fa-solid fa-xmark"></i>';
+        confirm.disabled = true;
+    }
+    $("#confirmIDcheck").append(html_block)
+}

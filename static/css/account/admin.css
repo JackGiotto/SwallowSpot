@@ -22,7 +22,6 @@
     align-items: center;
     text-align: center;
     padding: 5px;
-    color: #404040;
     cursor: pointer;
 }
 
@@ -47,6 +46,10 @@
 }
 
 #telegramID {
+    max-width: 12rem;
+}
+
+#newAdminUser {
     max-width: 15rem;
 }
   

@@ -35,7 +35,7 @@
                                         c13.703,0,25.789,8.26,30.803,21.04c0.63,1.621,2.351,2.534,4.058,2.14c15.425-3.568,29.919,3.883,36.604,17.168
                                         c0.508,1.027,1.503,1.736,2.641,1.897c17.368,2.473,30.481,17.569,30.481,35.112c0,19.58-15.937,35.509-35.52,35.509H97.391
                                         v7.025h44.761c23.459,0,42.538-19.079,42.538-42.535C184.69,71.545,169.884,53.901,149.968,50.186z"
-                                    style="fill:#010002;"
+                                    style="fill:black;"
                                     ></path>
                                 </g>
                                 <g>
@@ -45,7 +45,7 @@
                                         L63.31,85.127c-1.403,1.403-1.403,3.672,0,5.075c1.403,1.406,3.672,1.406,5.075,0L82.296,76.29v97.227
                                         c0,1.99,1.603,3.597,3.593,3.597c1.979,0,3.59-1.607,3.59-3.597V76.165l14.033,14.036
                                         C104.91,91.608,107.183,91.608,108.586,90.201z"
-                                    style="fill:#010002;"
+                                    style="fill:black;"
                                     ></path>
                                 </g>
                             </g>
@@ -61,7 +61,10 @@
         <!--link your profile with tg bot-->
         <h2 class="mt-3">Collega il tuo account al <span style="color: #00667C;">Bot Telegram</span></h2>
         <div class="input-group mb-2 mt-2">
-            <input type="text" class="form-control" id="telegramID" placeholder="ID Telegram" oninput="checkInput(this)">
+            <input type="text" class="form-control" id="telegramID" name="telegramID" placeholder="ID Telegram" oninput="checkInput(this)">
+            <span class="input-group-text" id="confirmIDcheck">
+                <i class="fa-solid fa-xmark"></i>
+            </span>
         </div>
         <p id="error"></p>
         <button type="button" class="btn btn-success" id="confirmTgID" disabled>Conferma</button>
@@ -71,6 +74,16 @@
 
         <!--add admin user from existing account-->
         <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
+        <div class="input-group mb-2 mt-2">
+            <input type="text" class="form-control" id="newAdminUser" name="newAdminUser" placeholder="Inserisci nome utente">
+        </div>
+        <div class="error-msg">
+            {{msg_error}}
+        </div>
+        <div class="success-msg mb-3">
+            {{msg_success}}
+        </div>
+        <button type="button" class="btn btn-success" id="confirmNewAdmin" disabled>Conferma</button>
 
         <a href="{{ url_for('profile.user') }}" class="btn btn-success btn-lg mt-5">Impostazioni del profilo</a>
         <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-3">Azioni Super Admin</a>
@@ -90,20 +103,27 @@
         infoArea.textContent = fileName;
     }
 
-    function checkInput(input) {
-        var tgid = input.value.trim();
-        var errorMsg = document.getElementById("error");
-        var confirm = document.getElementById("confirmTgID");
-        // Verifica se l'input contiene solo numeri e ha una lunghezza compresa tra 1 e 9
-        if (/^\d{9}$/.test(tgid)) {
-            errorMsg.innerHTML = "ID valido";
-            errorMsg.style.color = "green";
-            confirm.disabled = false;
-        } else {
-            errorMsg.innerHTML = "ID non valido: deve contenere 9 numeri";
-            errorMsg.style.color = "darkred";
-            confirm.disabled = true;
-        }
+    //light/dark mode
+    var path = document.querySelectorAll("path");
+    var confirms = document.querySelectorAll(".input-group-text");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        path.forEach(function (e) {
+            e.style.fill = "white";
+        });
+        confirms.forEach(function (e) {
+            e.setAttribute('data-bs-theme', "dark");
+        });
+    }
+    else {
+        //light mode
+        path.forEach(function (e) {
+            e.style.fill = "black";
+        });
+        confirms.forEach(function (e) {
+            e.setAttribute('data-bs-theme', "light");
+        });
     }
 </script>
 

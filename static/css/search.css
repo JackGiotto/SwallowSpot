@@ -19,3 +19,13 @@
     cursor: pointer;
     background-color: #59A4BC88;
 }
+
+/*other*/
+
+.error-msg {
+    color: darkred;
+}
+
+.success-msg {
+    color: green;
+}
