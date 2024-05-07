@@ -143,17 +143,17 @@
 
         const connection = mysql.createConnection({
         host: 'localhost',
-        //#user: 'root',
-        //password: 'password',
+        user: 'root',
+        password: 'password',
         database: 'Swallow Spot'
         });
 
         connection.connect();
 
-        /*connection.query('UPDATE tabella SET ID_telegram = '+Chat_ID+'  WHERE iduser.username= '+Username+';', (error, results, fields) => {
+        connection.query('UPDATE tabella SET ID_telegram = '+Chat_ID+'  WHERE iduser.username= '+Username+';', (error, results, fields) => {
         if (error) throw error;
         console.log(results);
-        });*/
+        });
 
         connection.end();
     }
