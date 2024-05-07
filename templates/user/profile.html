@@ -45,10 +45,38 @@
             </label>
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
+        <!--admin section-->
+        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
         <!--logout-->
-        <button type="button" class="btn btn-danger btn-lg mt-4" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        <!--delete account-->
+        <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
 
-        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-5">Sezione Utente Amministratore</a>
+        <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmDeleteLabel"><i class="fa-solid fa-eraser"></i> Elimina account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sei sicuro/a di voler aliminare l'account?<br>
+                        Ma proprio sicuro?<br>
+                        Ma sicuro sicuro????<br>
+                        ...<br>
+                        Ma totalmente sicurissimissimo? :(
+                        <form action="/profile/delete" method="delete" class="input-group mt-2">
+                            <input type="password" name="passwordDelete" id="passwordDelete" class="form-control" placeholder="Inserisci la tua password per conferma">
+                            <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-danger">S&iacute;, sono sicuro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -65,6 +93,16 @@
 </div>
 
 <script>
+    //show password (it has to stay here)
+    $(document).ready(function () {
+        $('#showPasswordToggle').on('click', function () {
+            var passwordInput = $('#passwordDelete');
+            var type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+            passwordInput.attr('type', type);
+            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+        });
+    });
+
     //dark / light mode
     if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
         document.getElementById("toggle").checked = false;
@@ -81,7 +119,8 @@
         var body = document.querySelector("body");
         var cookiesLabel = document.getElementById("cookies");
         var cookiesModal = document.getElementById("customizeCookies");
-        var confirms = document.querySelectorAll(".input-group-text");
+        var deleteModal = document.getElementById("confirmDelete");
+        var confirms = document.querySelectorAll(".input-group");
 
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
@@ -91,6 +130,7 @@
             body.style.color = "#212529";
             cookiesLabel.style.backgroundColor = "#EDFCFF";
             cookiesModal.setAttribute('data-bs-theme', "light");
+            deleteModal.setAttribute('data-bs-theme', "light");
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "light");
             });
@@ -103,6 +143,7 @@
             body.style.color = "white";
             cookiesLabel.style.backgroundColor = "#222222";
             cookiesModal.setAttribute('data-bs-theme', "dark");
+            deleteModal.setAttribute('data-bs-theme', "dark");
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "dark");
             });

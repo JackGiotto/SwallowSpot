@@ -36,7 +36,20 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    //light/dark mode
+    var searchbar = document.getElementById("searchbar");
+    var autocomplete = document.getElementById("autocomplete-list");
 
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        searchbar.setAttribute('data-bs-theme', "dark");
+        autocomplete.style.backgroundColor = "#212529";
+    }
+    else {
+        //light mode
+        searchbar.setAttribute('data-bs-theme', "light");
+        autocomplete.style.backgroundColor = "white";
+    }
 
     function check_password() {
         psw1 = $("#textPassword").val();

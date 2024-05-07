@@ -58,6 +58,16 @@
     font-weight: bold;
 }
 
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
+#deleteProfile:hover {
+    background-color: #8a1c27;
+    border-color: #8a1c27;
+}
+
 /*other*/
 
 .input-group-text .fa-check {
