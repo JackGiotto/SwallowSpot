@@ -67,7 +67,7 @@
             </span>
         </div>
         <p id="error"></p>
-        <button type="button" class="btn btn-success" id="confirmTgID" disabled>Conferma</button>
+        <button type="button" class="btn btn-success" id="confirmTgID" onclick="InsertChatID()" disabled>Conferma</button>
 
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
@@ -124,6 +124,29 @@
         confirms.forEach(function (e) {
             e.setAttribute('data-bs-theme', "light");
         });
+    }
+
+    function InsertChatID() 
+    {
+        const Chat_ID = document.getElementById('telegramID').value;
+        const Username = document.getElementById('username').value;
+        const mysql = require('mysql');
+
+        const connection = mysql.createConnection({
+        host: 'localhost',
+        //#user: 'root',
+        //password: 'password',
+        database: 'Swallow Spot'
+        });
+
+        connection.connect();
+
+        connection.query('UPDATE tabella SET ID_telegram = 'Chat_ID'  WHERE iduser.username= 'Username'', (error, results, fields) => {
+        if (error) throw error;
+        console.log(results);
+        });
+
+        connection.end();
     }
 </script>
 
