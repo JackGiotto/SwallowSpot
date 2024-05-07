@@ -12,12 +12,13 @@
 <div class="overview">
     <button class="btn btn-warning m-2 btn-lg"><i class="fa-solid fa-circle-exclamation"></i>&ThickSpace; La mia situazione</button>
     <button class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-circle-question"></i>&ThickSpace; Come funziona SwalloSpot</button>
-    <a href="{{ url_for('hydro') }}" class="btn btn-danger m-2 btn-lg"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Consulta gli ultimi bollettini</a>
+    <a href="{{ url_for('reports.hydro') }}" class="btn btn-danger m-2 btn-lg"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Consulta gli ultimi bollettini</a>
     <a href="" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
 </div>
 
 <div class="your-situation mt-5">
     <h1>Situazione attuale nella tua zona</h1>
+    {{ bulletin_data | safe}}
 </div>
 
 <div class="service-desc mt-5">

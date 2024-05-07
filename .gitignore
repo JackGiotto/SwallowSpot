@@ -1,4 +1,6 @@
+/test/*
 /venv/*
+/test.py
 *pycache*
 Dockerfile
 .env

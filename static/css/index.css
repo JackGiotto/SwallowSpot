@@ -136,7 +136,7 @@ header #links a:hover {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    border: 5px double #00283B;
+    border: 5px double #00667C;
     background-color: #EDFCFF;
     border-radius: 1em;
     padding: 1em;
@@ -345,6 +345,7 @@ footer img {
 
 .btn-success:hover {
     background-color: #00202e;
+    border-color: #00202e;
 }
 
 .btn-primary {
@@ -354,4 +355,5 @@ footer img {
 
 .btn-primary:hover {
     background-color: #004c5e;
+    border-color: #004c5e;
 }
