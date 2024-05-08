@@ -41,6 +41,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin: 0 1rem;
 }
 
 .risk-out-home {

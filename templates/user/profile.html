@@ -110,9 +110,14 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
-    var bar = document.getElementById("bar");
-    var wid = window.getComputedStyle(bar, null);
-    document.getElementById("autocomplete-list").style.width = wid.getPropertyValue("width");
+    /*autocomplete list size*/
+    function setAutocompleteListWidth() {
+        var inputWidth = document.getElementById('bar').offsetWidth;
+        document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
+    }
+
+    document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
+    window.addEventListener('resize', setAutocompleteListWidth);
 
     //show password (it has to stay here)
     $(document).ready(function () {

@@ -21,6 +21,7 @@ header {
     transition: top 0.3s;
     display: flex;
     gap: 2%;
+    z-index: 2;
 }
 
 header div{
@@ -162,7 +163,7 @@ header #links a:hover {
 /*container for different pages' layouts*/
 
 .content {
-    margin: 10rem 1rem 7rem;
+    margin: 10rem 0 7rem;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
@@ -191,6 +192,7 @@ footer {
     /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
     gap: 4vw;
+    z-index: 3;
 }
 
 .footer-in {
