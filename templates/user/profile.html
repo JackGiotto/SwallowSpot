@@ -110,6 +110,10 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    var bar = document.getElementById("bar");
+    var wid = window.getComputedStyle(bar, null);
+    document.getElementById("autocomplete-list").style.width = wid.getPropertyValue("width");
+
     //show password (it has to stay here)
     $(document).ready(function () {
         $('#showPasswordToggle').on('click', function () {

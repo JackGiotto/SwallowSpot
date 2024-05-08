@@ -119,3 +119,27 @@
     background-color: purple;
     box-shadow: 0 0 15px purple;
 }
+
+/*snowflake*/
+
+.snowflake {
+    position: relative;
+    width: 7rem;
+    height: 7rem;
+}
+  
+svg {
+    width: 100%;
+    height: 100%;
+}
+  
+.color-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Regola la larghezza dell'overlay di colore */
+    height: 70%; /* Regola l'altezza dell'overlay di colore */
+    background-color: #1100ff; /* Colore predefinito (blu) */
+    mix-blend-mode: saturation; /* Imposta la modalità di fusione del colore */
+    z-index: 2;
+}

@@ -36,10 +36,10 @@
     display: none;
 }
 
-#autocomplete-list {
+/*#autocomplete-list {
     width: calc(100% - 6rem);
     max-width: 15.8rem;
-}
+}*/
 
 /*visual mode change section*/
 
