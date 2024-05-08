@@ -1,5 +1,4 @@
 from utils.cfd_analyzer.pdf_reader import Pdf_reader
+from telegram_bot.main import start_bot
 
-
-pdf = Pdf_reader("./bulletins/test_snow.pdf")
-pdf.add_to_db()
+start_bot()

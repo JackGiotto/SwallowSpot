@@ -22,6 +22,8 @@ class Hydro:
 	def __init__(self, pdf_path):
 		self.path = pdf_path
 		self._get_bulletin_data()
+		self._telegram()
+
 
 	def get_data(self) -> dict:
 		"""get date and risks of the bulletin
@@ -50,6 +52,12 @@ class Hydro:
 
 			# debug
 			#print("RISK QUERY:", risk_query)
+
+	async def _telegram(self):
+		for tipo, colore in self.data["risks"]["Vene-B"]["risks_value"].items():
+			print(tipo, colore)
+			if (colore != "VERDE"):
+				await tb.alert_control(tipo, colore)
 
 	def _get_queries(self) -> dict:
 		#print(self.data["risks"])

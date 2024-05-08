@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import pymysql
 import os
 
+import pymysql.cursors
+
 load_dotenv()
 class Database:
     def connect(self):
@@ -16,9 +18,27 @@ class Database:
         return connection
 
 
+    def connectOtherCursor(self): 
+        connection = pymysql.connect (
+            host= os.getenv("SERVERNAME"),
+            user= os.getenv("DBUSER"),
+            password= os.getenv("PASSWORD"),
+            database= os.getenv("DBNAME"),
+            cursorclass=pymysql.cursors.Cursor
+        )
+        return connection
 
     def executeQuery(self, query):
         connection = self.connect()
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            res = cursor.fetchall()
+            connection.commit()
+            connection.close()
+            return res
+    
+    def executeQueryOtherCursor(self, query):
+        connection = self.connectOtherCursor()
         with connection.cursor() as cursor:
             cursor.execute(query)
             res = cursor.fetchall()

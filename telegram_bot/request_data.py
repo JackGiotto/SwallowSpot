@@ -7,6 +7,7 @@ import pymysql
 import json,os
 import xmltodict
 import urllib.request
+from models import db
 
 
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
@@ -34,13 +35,13 @@ async def create_connection():
     return mydb    
 
 async def verify_user(chat_id):
-    mydb = await create_connection()
+    #mydb = await create_connection()
     
-    mycursor = mydb.cursor()
+    #mycursor = mydb.cursor()
     
-    mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
+    myresult = db.executeQueryOtherCursor(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
 
-    myresult = mycursor.fetchall()
+    #myresult = mycursor.fetchall()
        
     if myresult:
         return True
@@ -51,7 +52,7 @@ async def verify_user(chat_id):
 #request database to find chat-id admin
 async def find_id(INFO,chat_id):
     
-    mydb = create_connection()
+    #mydb = create_connection()
     
     bot = Bot(token=TOKEN)
     
@@ -60,13 +61,14 @@ async def find_id(INFO,chat_id):
             [InlineKeyboardButton("Inoltra", callback_data='Send')],
             [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
         ]
-        mycursor = mydb.cursor()
+        
+        #mycursor = mydb.cursor()
 
-        mycursor.execute(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
+        myresult = db.executeQueryOtherCursor(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
 
 
 
-        myresult = mycursor.fetchall()
+        #myresult = mycursor.fetchall()
         for x in myresult:
             reply_markup = InlineKeyboardMarkup(keyboard)
             await bot.send_message(chat_id=chat_id, text=x, reply_markup=reply_markup)
