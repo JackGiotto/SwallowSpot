@@ -15,50 +15,40 @@ let touchSupport = 0;
 
 
 
-// Section of controls (3 in total) to see if the device is touchscreen or not, this is useful to know if the movements should be taken by touch or keyboard arrows
+// Section of controls to see if the device is touchscreen or not, this is useful to know if the movements should be taken by touch or keyboard arrows
 
-// Function that control if the device support multiple touch, if it support it, it could be a touchscreen device
+// Check if the device support multiple touch, if it support it, it could be a touchscreen device
 function hasTouchSupport(){
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 }
 
-// Second check based on the width of the device
+// Check based on the width of the device
 function isMobile(){
     const minWidth = 768;           // Minimum width for desktop devices
     return window.innerWidth < minWidth || screen.width < minWidth;
 }
 
-
+// Function that groups the checks and their calls
 function touchSupportCheck(){
 
-    if(platform.isMobile){
-        touchSupport+=1
+    if(platform.isMobile){          // Check using a library that provides information about the browser, operating system, and device type by parsing the user agent string
+        touchSupport+=1;
     }
-    if(hasTouchSupport()){
-        touchSupport+=1
+    if(hasTouchSupport()){          // Method above
+        touchSupport+=1;
     }
-    if(isMobile()){         // Third check using a library that provides information about the browser, operating system, and device type by parsing the user agent string
-        touchSupport+=1
+    if(isMobile()){                 // Method above
+        touchSupport+=1;
     }
-
-    // If touchSupport is 2 or 3 means that probably is a touchscreen device
-    if(touchSupport >= 2){
-        // The device is touchscreen                        ****** TO BE IMPLEMENTED ******
-    }
-    else{
-        // The devise is NOT touchscreen                    ****** TO BE IMPLEMENTED ******
-    }
+    return touchSupport;
 }
-
-
-
 
 
 
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
-const updateFoodPosition = () => {
+const foodPosition = () => {
     // Passing a random 1-30 value as food position
     foodX = Math.floor(Math.random()*30)+1;
     foodY = Math.floor(Math.random()*30)+1;
@@ -75,27 +65,30 @@ const changeDirection = e =>{
     if(e.key === "ArrowUp" && speedY != 1){
         speedX = 0;
         speedY = -1;
-    } else if(e.key === "ArrowDown" && speedY != -1){
+    }
+    else if(e.key === "ArrowDown" && speedY != -1){
         speedX = 0;
         speedY = 1;
-    } else if(e.key === "ArrowLeft" && speedX != 1){
+    }
+    else if(e.key === "ArrowLeft" && speedX != 1){
         speedX = -1;
         speedY = 0;
-    } else if(e.key === "ArrowRight" && speedX != -1){
+    }
+    else if(e.key === "ArrowRight" && speedX != -1){
         speedX = 1;
         speedY = 0;
     }
 }
 
-// Call to "changeDirection" on each key click and passing key dataset value as an object
+// Call to "changeDirectionK" on each key click and passing key dataset value as an object
 controls.forEach(button => button.addEventListener("click", () => changeDirection({ key: button.dataset.key })));
 const initGame = () =>{
     if(gameOver) return handleGameOver();
     let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
     
-    // Checking if the snake hit the food
+    // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
-        updateFoodPosition();
+        foodPosition();
         snakeBody.push([foodY, foodX]); // Pushing food position to snake body array
         score++;
         highScore = score >= highScore ? score : highScore;
@@ -112,9 +105,6 @@ const initGame = () =>{
     for(let i = snakeBody.length-1; i>0; i--){
         snakeBody[i] = snakeBody[i-1];
     }
-    snakeBody[0] = [snakeX, snakeY];            // Setting first element of snake body to current snake position
-    
-    // Control of the snake head if is out of wall, in this case gameOver it set to true
     if(snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30){
         return gameOver = true;
     }
@@ -122,7 +112,7 @@ const initGame = () =>{
     for(let i=0; i<snakeBody.length; i++){
         html += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;          // Adding a div for each part of the snake's body
         
-        // Control of the snake head hit the body, in this case it set gameOver to true
+        // Check if the snake head hit the body, in this case it set gameOver to true
         if(i !== 0 && snakeBody[0][1] == snakeBody[i][1] && snakeBody[0][0] == snakeBody[i][0]){
             gameOver = true;
         }
@@ -130,7 +120,165 @@ const initGame = () =>{
     playBoard.innerHTML = html;
 }
 
-touchSupportCheck();
-updateFoodPosition();
+
+// T1
+foodPosition();
+setIntervalId = setInterval(initGame, 100);
+
+if(touchSupportCheck() >= 2){       // If touchSupport is 2 or 3 means that probably is a touchscreen device so we add the EventListener for it
+    document.addEventListener("touchstart", startTouch, false);
+    document.addEventListener("touchmove", changeDirectionT, false);
+}
+else{
+    document.addEventListener("keyup", changeDirectionK);
+}
+
+// T2
+foodPosition();
 setIntervalId = setInterval(initGame, 100);
 document.addEventListener("keyup", changeDirection);
+
+/* ------ */
+
+
+myElement.addEventListener("touchstart", startTouch, false);
+myElement.addEventListener("touchmove", moveTouch, false);
+ 
+// Swipe Up / Down / Left / Right
+var initialX = null;
+var initialY = null;
+ 
+function startTouch(e){
+    initialX = e.touches[0].clientX;
+    initialY = e.touches[0].clientY;
+};
+ 
+function moveTouch(e){
+    if(initialX === null){
+        return;
+    }
+
+    if(initialY === null){
+        return;
+    }
+ 
+    var currentX = e.touches[0].clientX;
+    var currentY = e.touches[0].clientY;
+    
+    var diffX = initialX - currentX;
+    var diffY = initialY - currentY;
+    
+    if(Math.abs(diffX) > Math.abs(diffY)){
+
+        // Horizontal swipe
+        if(diffX > 0){
+            // swiped left
+            console.log("left");
+            speedX = -1;
+            speedY = 0;
+        }
+        else{
+            // swiped right
+            console.log("right");
+            speedX = 1;
+            speedY = 0;
+        }
+    }
+    else{   // Vertical swipe
+        if(diffY > 0){
+            // swiped up
+            console.log("up");
+            speedX = 0;
+            speedY = -1;
+        }
+        else{
+            // swiped down
+            console.log("down");
+            speedX = 0;
+            speedY = 1;
+        }
+    }
+
+    initialX = null;
+    initialY = null;
+
+    e.preventDefault();
+};
+
+
+
+const changeDirectionT = e => {
+    if(e.type === "keyup" && !isTouchDevice()){       // Event from the keyboard and the device doesn't support touch
+        handleKeyboardMovement(e);
+    }
+    else if(e.type === "touchstart" || e.type === "touchmove"){      // Event from touch
+        handleTouchMovement(e);
+    }
+}
+
+const handleKeyboardMovement = e => {
+    if(e.key === "ArrowUp" && speedY !== 1){
+    }
+    else if(e.key === "ArrowLeft" && speedX !== 1){
+        speedX = -1;
+        speedY = 0;
+    }
+    else if(e.key === "ArrowRight" && speedX !== -1){
+        speedX = 1;
+        speedY = 0;
+    }
+}
+
+const handleTouchMovement = e => {
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+
+    const diffX = touchX - initialX;
+    const diffY = touchY - initialY;
+
+    if(Math.abs(diffX) > Math.abs(diffY)){
+        // Horizontal swipe
+        if(diffX > 0){
+            if(speedX !== -1){      // Swipe right
+                speedX = 1;
+                speedY = 0;
+            }
+        }
+        else{
+            if(speedX !== 1){       // Swipe left
+                speedX = -1;
+                speedY = 0;
+            }
+        }
+    }
+    // Vertical swipe
+    else{
+        if(diffY > 0){
+            if(speedY !== -1){      // Swipe down
+                speedX = 0;
+                speedY = 1;
+            }
+        }
+        else{
+            if(speedY !== 1){       // Swipe up
+                speedX = 0;
+                speedY = -1;
+            }
+        }
+    }
+}
+
+// Check if the device is touchscreen
+const isTouchDevice = () => {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+// Based on the type of input it add the event listener
+if(isTouchDevice()){
+    document.addEventListener("touchstart", startTouch, false);
+    document.addEventListener("touchmove", changeDirectionT, false);
+}
+else{
+    document.addEventListener("keyup", changeDirectionK);
+}
+
