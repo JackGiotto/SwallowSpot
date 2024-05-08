@@ -82,8 +82,10 @@
             </span>
         </div>
         <div id="error" class="error-msg mb-3"></div>
-        <button href="{{ url_for('profile.telegram') }}" type="button" class="btn btn-success" id="confirmTgID" disabled>Conferma</button>
-
+        <form method="POST" action="../../views/profile/profile.py">
+        <a  href="{{ url_for('profile.insert_chat_id') }}" type="button" name="chat_id" class="btn btn-success" id="confirmTgID" disabled>Conferma</a>
+        <input type="hidden" name="file_id" value="{{file['id']}}" />
+        </form>    
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
 
