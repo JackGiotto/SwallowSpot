@@ -162,8 +162,7 @@ header #links a:hover {
 /*container for different pages' layouts*/
 
 .content {
-    margin-top: 10rem;
-    margin-bottom: 7rem;
+    margin: 10rem 1rem 7rem;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
