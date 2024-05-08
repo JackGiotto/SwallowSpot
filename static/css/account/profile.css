@@ -36,6 +36,11 @@
     display: none;
 }
 
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
 /*visual mode change section*/
 
 .visual-mode {
