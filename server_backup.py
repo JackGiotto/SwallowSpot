@@ -5,22 +5,23 @@ import socket, ssl
 
 listen = True
 ipAddr = '0.0.0.0'
-port = 8492
+port = 8495
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)                                               # contesto SSL
 context.load_cert_chain(certfile="certificate/server.crt", keyfile="certificate/server.key")    # caricamento dei certificati
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       # create an Internet Socket for TCP Connection
 
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 server_socket.bind((ipAddr, port))      # Bind the socket to a host and port
 
 server_socket.listen(5)     # socket in ascolto
 
-print("Server is listening...")
-
 while listen == True:
 
     try:
+        print("Server is listening...")
         
         client_socket, addr = server_socket.accept()                    # accetta le connessioni in arrivo
         
@@ -35,13 +36,16 @@ while listen == True:
             if chunk < bytes(1024):
                 break
         
-        filename = "new_backup.sql"
+        filename = "backup.sql"
 
         with open(filename, 'wb') as f:
             f.write(backup_data)
 
-        ssl_client_socket.close()                                       # chiude la connessione
+        message = 'Finished successfully'
+        server_socket.send(message.encode())                                      # chiude la connessione
         
+        print("Socket client has been closed...")
+
     except KeyboardInterrupt:
         print('Server chiuso')
         listen = False
