@@ -75,16 +75,16 @@
                 <li>Copia il <strong>chat_id</strong> ricevuto e inseriscilo nel testo qui sotto</li>
             </ol>
         </p>
+        <form method="POST" action="{{url_for('profile.insert_chat_id')}}">
         <div class="input-group mb-2">
-            <input type="text" class="form-control" id="telegramID" name="telegramID" placeholder="ID Telegram" oninput="checkInput(this)">
+            <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInput(this)">
             <span class="input-group-text" id="confirmIDcheck">
                 <i class="fa-solid fa-xmark"></i>
             </span>
         </div>
         <div id="error" class="error-msg mb-3"></div>
-        <form method="POST" action="../../views/profile/profile.py">
-        <a  href="{{ url_for('profile.insert_chat_id') }}" type="button" name="chat_id" class="btn btn-success" id="confirmTgID" disabled>Conferma</a>
-        <input type="hidden" name="file_id" value="{{file['id']}}" />
+        
+        <a  href="{{ url_for('profile.insert_chat_id') }}" type="button"  class="btn btn-success" id="confirmTgID" disabled>Conferma</a>
         </form>    
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>

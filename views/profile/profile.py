@@ -33,11 +33,8 @@ def insert_chat_id():
         )
         # Creare un cursore per eseguire le query
         cursor = db.cursor()
-        print("cd")
-        tag = request.form.get['chat_id']
-        print("cd")
         # Get the username/password associated with this tag
-        chat_id = tag_lookup(tag)
+        chat_id = request.form["ChatID"]
         print("cd")
         # Recupera i dati inviati dal client
         username = session["username"]
