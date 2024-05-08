@@ -34,10 +34,10 @@ function touchSupportCheck(){
     if(platform.isMobile){          // Check using a library that provides information about the browser, operating system, and device type by parsing the user agent string
         touchSupport+=1;
     }
-    if(hasTouchSupport()){          // Method above
+    if(hasTouchSupport()){          // Method above with it explanation
         touchSupport+=1;
     }
-    if(isMobile()){                 // Method above
+    if(isMobile()){                 // Method above with it explanation
         touchSupport+=1;
     }
     return touchSupport;
@@ -49,7 +49,7 @@ function touchSupportCheck(){
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
 const foodPosition = () => {
-    // Passing a random 1-30 value as food position
+    // Assign a random value from 1 to 30 to X and Y to determine a position
     foodX = Math.floor(Math.random()*30)+1;
     foodY = Math.floor(Math.random()*30)+1;
 }
@@ -61,7 +61,7 @@ const handleGameOver = () =>{
     location.reload();
 }
 
-const changeDirection = e =>{
+const changeDirectionK = e =>{
     if(e.key === "ArrowUp" && speedY != 1){
         speedX = 0;
         speedY = -1;
@@ -83,13 +83,14 @@ const changeDirection = e =>{
 // Call to "changeDirectionK" on each key click and passing key dataset value as an object
 controls.forEach(button => button.addEventListener("click", () => changeDirection({ key: button.dataset.key })));
 const initGame = () =>{
-    if(gameOver) return handleGameOver();
+    if(gameOver)
+        return handleGameOver();
     let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
     
     // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
         foodPosition();
-        snakeBody.push([foodY, foodX]); // Pushing food position to snake body array
+        snakeBody.push([foodY, foodX]);         // Pushing food position to snake body array
         score++;
         highScore = score >= highScore ? score : highScore;
         localStorage.setItem("high-score", highScore);
@@ -102,7 +103,7 @@ const initGame = () =>{
     snakeY += speedY;
     
     // Shifting forward the values of the elements in the snake body by one
-    for(let i = snakeBody.length-1; i>0; i--){
+    for(let i=snakeBody.length-1; i>0; i--){
         snakeBody[i] = snakeBody[i-1];
     }
     if(snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30){
@@ -136,7 +137,8 @@ else{
 // T2
 foodPosition();
 setIntervalId = setInterval(initGame, 100);
-document.addEventListener("keyup", changeDirection);
+document.addEventListener("keyup", changeDirectionK);
+
 
 /* ------ */
 
@@ -172,13 +174,13 @@ function moveTouch(e){
 
         // Horizontal swipe
         if(diffX > 0){
-            // swiped left
+            // Swiped left
             console.log("left");
             speedX = -1;
             speedY = 0;
         }
         else{
-            // swiped right
+            // Swiped right
             console.log("right");
             speedX = 1;
             speedY = 0;
@@ -186,13 +188,13 @@ function moveTouch(e){
     }
     else{   // Vertical swipe
         if(diffY > 0){
-            // swiped up
+            // Swiped up
             console.log("up");
             speedX = 0;
             speedY = -1;
         }
         else{
-            // swiped down
+            // Swiped down
             console.log("down");
             speedX = 0;
             speedY = 1;
@@ -218,6 +220,12 @@ const changeDirectionT = e => {
 
 const handleKeyboardMovement = e => {
     if(e.key === "ArrowUp" && speedY !== 1){
+        speedX = 0;
+        speedY = -1;
+    }
+    else if(e.key === "ArrowDown" && speedY != -1){
+        speedX = 0;
+        speedY = 1;
     }
     else if(e.key === "ArrowLeft" && speedX !== 1){
         speedX = -1;
@@ -228,6 +236,7 @@ const handleKeyboardMovement = e => {
         speedY = 0;
     }
 }
+
 
 const handleTouchMovement = e => {
     const touchX = e.touches[0].clientX;
