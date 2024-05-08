@@ -11,7 +11,7 @@ def hydro():
 
 @reports_bp.route('/snow/')
 def snow():
-    return render_template("reports/snow.html", data = _get_all_bulletin_snow)
+    return render_template("reports/snow.html", data = _get_all_bulletin_snow())
 
 @reports_bp.route('/ava/')
 def ava():
@@ -69,7 +69,6 @@ def _get_all_bulletin_hydro(date = "last"):
         result[area]["date"]["starting_date"] = parse_date(str(bulletin["starting_date"]))
         result[area]["date"]["ending_date"] = parse_date(str(bulletin["ending_date"]))
 
-
     return result
 
     # debug
@@ -95,15 +94,16 @@ def _get_all_bulletin_snow(date = "last"):
                 "Medio-basso Agordino": [],
                 'Cadore' : [],
                 'Feltrino-Val Belluna': [],
-                'Altopiano dei Sette Comuni': []
+                'Altopiano dei sette comuni': []
             }
     bulletin = None
     for area in areas:
         #print("AREA\n\n\n\n", area)
         bulletin = _get_snow_bulletin(area, date)
         result[area] = bulletin
-    
-    print ("RISULTATO", result)
+        
+    print("RESULT", json.dumps(result, indent="\t"))
+    return result
     
 
 def _get_snow_bulletin(area, date):

@@ -10,9 +10,9 @@
         <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
     </div>
     <div class="dates mb-3">
-        <button class="btn btn-primary tablinks" onclick="openTab(event, 'first')" id="defaultOpen">primo giorno</button>
-        <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">secondo giorno</button>
-        <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">terzo giorno</button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'first')" id="defaultOpen">{{ data["Cadore"][0]["date"][:10] }}</button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">{{ data["Cadore"][3]["date"][:10] }} </button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][6]["date"][:10] }}</button>
     </div>
     <div id="first" class="risk-out-out tabcontent">
         <p>prima</p> <!--da levare-->
