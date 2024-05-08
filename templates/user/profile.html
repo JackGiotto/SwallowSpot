@@ -9,7 +9,8 @@
     <div id="profile">
         <h1>Profilo di <strong>{{ username }}</strong></h1>
         <!--change username-->
-        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')">Modifica nome utente</button>
+        <h2 class="mt-4">Modifica il tuo <span style="color: #00667C">nome utente</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeName')">Modifica nome utente</button>
         <div class="dismissDefault" id="changeName">
             <div class="input-group mb-2 mt-2">
                 <input type="text" class="form-control" placeholder="Nuovo nome utente">
@@ -18,7 +19,8 @@
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
         <!--change password-->
-        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changePsw')">Modifica password</button>
+        <h2 class="mt-4">Modifica la tua <span style="color: #00667C">password</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')">Modifica password</button>
         <div class="dismissDefault" id="changePsw">
             <div class="input-group mb-2 mt-2">
                 <input type="password" class="form-control" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1">
@@ -37,6 +39,19 @@
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
             <button type="button" class="btn btn-success">Conferma</button>
         </div>
+        <!--change area-->
+        <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')">Modifica zona di residenza</button>
+        <div class="dismissDefault" id="changeArea">
+            <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
+                <input autocomplete="false" name="hidden" type="text" style="display: none;">
+                <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="dismissSection('changeArea')">Annulla</button>
+            <button type="button" class="btn btn-success">Conferma</button>
+        </div>
+        
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
@@ -92,7 +107,13 @@
     </div>
 </div>
 
+<script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
+
 <script>
+    var bar = document.getElementById("bar");
+    var wid = window.getComputedStyle(bar, null);
+    document.getElementById("autocomplete-list").style.width = wid.getPropertyValue("width");
+
     //show password (it has to stay here)
     $(document).ready(function () {
         $('#showPasswordToggle').on('click', function () {
