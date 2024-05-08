@@ -15,7 +15,7 @@
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][6]["date"][:10] }}</button>
     </div>
     <div id="first" class="risk-out-out tabcontent">
-        <!--<p>prima</p> da levare-->
+        <!--<p>prima</p> <!--da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
             <div class="snowflake">
@@ -41,17 +41,22 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle orange"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle purple"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -59,18 +64,23 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
@@ -114,20 +124,25 @@
     </div>
 
     <div id="second" class="risk-out-out tabcontent">
-        <p>seconda</p> <!--da levare-->
+        <!--<p>seconda</p> <!--da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">50%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle green"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle yellow"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle green"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -135,17 +150,22 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle orange"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle purple"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -153,54 +173,69 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Feltre, Sovramonte</p>
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
@@ -208,20 +243,25 @@
     </div>
 
     <div id="third" class="risk-out-out tabcontent">
-        <p>terza</p> <!--da levare-->
+        <!--<p>terza</p> <!--da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">25%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle red"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle yellow"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle green"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -229,17 +269,22 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle orange"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle purple"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -247,54 +292,69 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Feltre, Sovramonte</p>
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>>1500 m</p>
+                    <div class="meters">15-20</div>
+                    <p>>2000 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
