@@ -7,47 +7,44 @@ listen = True
 ipAddr = '0.0.0.0'
 port = 8495
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)                                               # contesto SSL
-context.load_cert_chain(certfile="certificate/server.crt", keyfile="certificate/server.key")    # caricamento dei certificati
+context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH) # SSL context
+context.load_cert_chain(certfile="certificate/server.crt", keyfile="certificate/server.key") # Load server certificate
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       # create an Internet Socket for TCP Connection
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-server_socket.bind((ipAddr, port))      # Bind the socket to a host and port
+server_socket.bind((ipAddr, port))
 
-server_socket.listen(5)     # socket in ascolto
+server_socket.listen(5)
 
 while listen == True:
-
     try:
         print("Server is listening...")
-        
-        client_socket, addr = server_socket.accept()                    # accetta le connessioni in arrivo
-        
-        ssl_client_socket = context.wrap_socket(client_socket, server_side=True)    # aggiunge protocollo SSL al socket
-        
+        client_socket, addr = server_socket.accept()
+
+        ssl_client_socket = context.wrap_socket(client_socket, server_side=True)
+
         backup_data = b''
-        
         while True:
             chunk = ssl_client_socket.recv(1024)
             backup_data += chunk
-            
-            if chunk < bytes(1024):
-                break
-        
-        filename = "backup.sql"
 
+            if len(chunk) < 1024:
+                break
+
+        filename = "backup.sql"
         with open(filename, 'wb') as f:
             f.write(backup_data)
 
-        message = 'Finished successfully'
-        server_socket.send(message.encode())                                      # chiude la connessione
-        
-        print("Socket client has been closed...")
+        message = str(len(backup_data))
+        ssl_client_socket.send(message.encode())
+        ssl_client_socket.close()
 
+        print("Socket client has been closed...")
     except KeyboardInterrupt:
         print('Server chiuso')
         listen = False
+
         
     

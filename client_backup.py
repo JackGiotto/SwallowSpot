@@ -24,32 +24,28 @@ except Exception as e:
     print("Error:", e)
 """
 
+import socket, ssl
+
 ipAddr = '127.0.0.1'
 port = 8495
 
-with open('new_backup.sql', 'rb') as f:     # Read the file content
+with open('new_backup.sql', 'rb') as f:
     backup_data = f.read()
-print('Closing file')
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)   # Create an SSL context
+context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH) # Create an SSL context
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Create a socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-context.load_verify_locations("certificate/server.crt")     # caricato il certificato
-
-ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")     
+ssl_client_socket = context.wrap_socket(client_socket, server_hostname="localhost")
 
 ssl_client_socket.connect((ipAddr, port))
-print('Socket connected to ', ipAddr, ' with port ', port)
 
-ssl_client_socket.send(backup_data)     # invia il backup al server
-print('Data sent in bytes')
+ssl_client_socket.send(backup_data)
 
 message = ssl_client_socket.recv(1024)
-# print(message.decode())
 
-ssl_client_socket.close()       # chiude il socket
-print('Socket close')
-# mysqldump -u martini -p "Swallow Spot" > backup.sql
+if message.decode() == str(len(backup_data)):
+    print('Backup completed successfully!')
+
+ssl_client_socket.close()
+
