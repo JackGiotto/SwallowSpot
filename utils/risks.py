@@ -25,6 +25,13 @@ def get_query_last_hydro(area_name: str, risk_name: str) -> str:
 
 
 def get_date_last_snow() -> str:
+    """get the date of the last snow bulletin
+
+    Returns:
+        str: query
+    """
+
+
     query = """
             SELECT Snow_report.date
             FROM Snow_report
@@ -35,6 +42,15 @@ def get_date_last_snow() -> str:
     return date
 
 def get_query_snow(area_name: str, date: str) -> str:
+    """get query for snow bulletin
+
+    Args:
+        area_name (str): name of the area
+        date (str): date of the bullettin code
+
+    Returns:
+        str: query
+    """
 
     query = """
             SELECT Snow_report.date
