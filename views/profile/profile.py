@@ -18,3 +18,19 @@ def logout():
 @profile_bp.route('/profile/admin/', methods=['GET'])
 def admin():
     return render_template("user/admin_profile.html")
+
+@app.route('/insert_chat_id', methods=['POST'])
+def insert_chat_id():
+    try:
+        # Recupera i dati inviati dal client
+        chat_id = request.json['chat_id']
+        username = request.json['username']
+
+        # Esegue la query per aggiornare l'ID di chat nel database
+        query = "UPDATE tabella SET ID_telegram = %s WHERE username = %s"
+        cursor.execute(query, (chat_id, username))
+        db.commit()
+
+        return jsonify({"success": True, "message": "Chat ID inserito con successo"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
