@@ -14,6 +14,7 @@ def user():
     if "username" in session:
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
+        
         if request.method == "GET":
             return render_template("user/profile.html", cities=cities, username=session["username"])
 
@@ -44,7 +45,8 @@ def user():
                 #hasing password
                 new_password=_hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
-            elif "user_delete" in request.form:
+            
+            elif "delete_account" in request.form:
                 db.executeQuery("DELETE FROM `User` WHERE ((`ID_user` = '"+str(id_user)+"'))")
 
         return render_template("user/profile.html")
@@ -61,19 +63,15 @@ def logout():
 def admin():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
-    
-    if "username" in session:
-        return render_template("user/admin_profile.html")
-    else
-        return render_template("user/settings.html")
-
-
 
     if "username" in session:
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
+        id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
+        id_role = id_role[0]["ID_role"]
+
         if request.method == "GET":
-            return render_template("user/profile.html", cities=cities, username=session["username"])
+            return render_template("user/profile.html", cities=cities, username=session["username"], user_perms=id_role)
 
         elif request.method == "POST":
             if "new_username" in request.form:
@@ -143,13 +141,6 @@ def _has_special_character(s):
     special_characters = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
     return special_characters.search(s) is not None
             
-
-@profile_bp.route('/profile/logout/', methods=['POST'])
-def logout():
-    session.clear()
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
-
-
 def _hash_password(password):
     # Converte la password in una stringa di byte
     password_bytes = password.encode('utf-8')
@@ -181,9 +172,3 @@ def _has_special_character(s):
     """
     special_characters = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
     return special_characters.search(s) is not None
-            
-
-@profile_bp.route('/profile/logout/', methods=['POST'])
-def logout():
-    session.clear()
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}

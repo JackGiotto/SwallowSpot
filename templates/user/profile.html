@@ -64,7 +64,11 @@
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
         <!--admin section-->
-        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+        <div id="adminUser">
+            <form action="{{ url_for('profile.admin') }}" >
+                <button type="button" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+            </form>
+        </div>
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
@@ -83,7 +87,7 @@
                         Ma sicuro sicuro????<br>
                         ...<br>
                         Ma totalmente sicurissimissimo? :(
-                        <form action="/profile/delete" method="delete" class="input-group mt-2" name="delete_account>
+                        <form action="/profile/delete" method="POST" class="input-group mt-2" name="delete_account">
                             <input type="password" name="passwordDelete" id="passwordDelete" class="form-control" placeholder="Inserisci la tua password per conferma">
                             <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>
                         </form>
@@ -111,6 +115,19 @@
 </div>
 
 <script>
+    //check user perms
+    window.onload(check_user('{{user_perms}}'))
+    function check_user(val){
+        console.log("ci siamo??????")
+        if(val == 1){
+            dismissSection("adminUser")
+            console.log("qui ci siamo")
+        }
+        else if(val > 1)
+            showSection("adminUser")
+        else
+            dismissSection("adminUser")
+    }
     //check passwords
     function check_password() {
         psw1 = $("#textPassword").val();
