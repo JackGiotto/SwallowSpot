@@ -37,6 +37,8 @@ CREATE TABLE `Admin` (
 
 LOCK TABLES `Admin` WRITE;
 /*!40000 ALTER TABLE `Admin` DISABLE KEYS */;
+INSERT INTO `Admin` VALUES
+('741878550',6);
 /*!40000 ALTER TABLE `Admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +130,7 @@ CREATE TABLE `Color` (
   `color_name` varchar(35) NOT NULL,
   PRIMARY KEY (`ID_color`),
   UNIQUE KEY `color_name` (`color_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +143,8 @@ INSERT INTO `Color` VALUES
 (3,'arancio'),
 (2,'gialla'),
 (4,'rossa'),
-(1,'verde');
+(1,'verde'),
+(5,'viola');
 /*!40000 ALTER TABLE `Color` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +170,7 @@ CREATE TABLE `Criticalness` (
   CONSTRAINT `fk_criticalness_color` FOREIGN KEY (`ID_color`) REFERENCES `Color` (`ID_color`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_criticalness_report` FOREIGN KEY (`ID_report`) REFERENCES `Report` (`ID_report`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_criticalness_risk` FOREIGN KEY (`ID_risk`) REFERENCES `Risk` (`ID_risk`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,30 +204,30 @@ INSERT INTO `Criticalness` VALUES
 (139,8,1,2,47),
 (140,8,2,1,47),
 (141,8,3,1,47),
-(142,1,1,1,48),
-(143,1,2,1,48),
-(144,1,3,1,48),
-(145,2,1,1,48),
-(146,2,2,1,48),
-(147,2,3,1,48),
-(148,3,1,2,48),
-(149,3,2,2,48),
-(150,3,3,1,48),
-(151,4,1,1,48),
-(152,4,2,1,48),
-(153,4,3,1,48),
-(154,5,1,1,48),
-(155,5,2,1,48),
-(156,5,3,1,48),
-(157,6,1,2,48),
-(158,6,2,1,48),
-(159,6,3,1,48),
-(160,7,1,1,48),
-(161,7,2,1,48),
-(162,7,3,1,48),
-(163,8,1,1,48),
-(164,8,2,1,48),
-(165,8,3,1,48);
+(166,1,1,1,49),
+(167,1,2,1,49),
+(168,1,3,1,49),
+(169,2,1,1,49),
+(170,2,2,1,49),
+(171,2,3,1,49),
+(172,3,1,2,49),
+(173,3,2,2,49),
+(174,3,3,1,49),
+(175,4,1,1,49),
+(176,4,2,1,49),
+(177,4,3,1,49),
+(178,5,1,1,49),
+(179,5,2,1,49),
+(180,5,3,1,49),
+(181,6,1,2,49),
+(182,6,2,1,49),
+(183,6,3,1,49),
+(184,7,1,1,49),
+(185,7,2,1,49),
+(186,7,3,1,49),
+(187,8,1,1,49),
+(188,8,2,1,49),
+(189,8,3,1,49);
 /*!40000 ALTER TABLE `Criticalness` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +245,7 @@ CREATE TABLE `Report` (
   `path` varchar(35) NOT NULL,
   PRIMARY KEY (`ID_report`),
   UNIQUE KEY `path` (`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +256,7 @@ LOCK TABLES `Report` WRITE;
 /*!40000 ALTER TABLE `Report` DISABLE KEYS */;
 INSERT INTO `Report` VALUES
 (47,'2024-01-07 14:00:00','2024-01-08 00:00:00','./bulletins/test.pdf'),
-(48,'2024-02-09 14:00:00','2024-02-11 14:00:00','./bulletins/test2.pdf');
+(49,'2024-02-09 14:00:00','2024-02-11 14:00:00','./bulletins/test2.pdf');
 /*!40000 ALTER TABLE `Report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1056,7 +1059,7 @@ CREATE TABLE `User` (
   KEY `fk_user_role` (`ID_role`),
   CONSTRAINT `fk_user_area` FOREIGN KEY (`ID_area`) REFERENCES `Area` (`ID_area`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_role` FOREIGN KEY (`ID_role`) REFERENCES `Role` (`ID_role`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1070,7 +1073,8 @@ INSERT INTO `User` VALUES
 (6,'leo','8535e86c8118bbbb0a18ac72d15d3a2b37b18d1bce1611fc60165f322cf57386',3,3),
 (7,'davide','7483119d8b8d25d8ce6d8e5812c67abd860ff89f922feacd762ec4cd130feb16',3,3),
 (9,'stefani','68c232adb20e0e658edaa0499e6011ca0c061b4358a89fad6b9a046748789efd',7,3),
-(13,'tommaso','8ffbeac20731de54ac2d7d4c3d811c7c900b279f9b917a6ccd3df29b2820cb63',6,3);
+(13,'tommaso','8ffbeac20731de54ac2d7d4c3d811c7c900b279f9b917a6ccd3df29b2820cb63',6,3),
+(24,'marco','7cf4537051f00c77eb33543a62239c7a873f54715bc3c399a3011d01c74d09a9',3,1);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1083,4 +1087,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-08  9:03:50
+-- Dump completed on 2024-05-08 17:41:36
