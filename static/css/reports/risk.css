@@ -1,12 +1,15 @@
-#lastUpdate {
-    text-align: center;
-}
-
 .reports {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+
+.categories, .dates {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .risk-out-out {
@@ -78,6 +81,17 @@
     border-radius: 50%;
 }
 
+.meters {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid #59A4BC;
+}
+
 .on {
     background-color: #00283B;
     border-color: #00283B;
@@ -123,23 +137,16 @@
 /*snowflake*/
 
 .snowflake {
-    position: relative;
-    width: 7rem;
-    height: 7rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
-  
-svg {
-    width: 100%;
-    height: 100%;
+
+.snowflake i {
+    font-size: 7rem;
 }
-  
-.color-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%; /* Regola la larghezza dell'overlay di colore */
-    height: 70%; /* Regola l'altezza dell'overlay di colore */
-    background-color: #1100ff; /* Colore predefinito (blu) */
-    mix-blend-mode: saturation; /* Imposta la modalità di fusione del colore */
-    z-index: 2;
+
+.percentage {
+    font-weight: bold;
+    font-size: 200%;
 }

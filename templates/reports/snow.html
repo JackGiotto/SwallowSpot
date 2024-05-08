@@ -15,24 +15,25 @@
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][6]["date"][:10] }}</button>
     </div>
     <div id="first" class="risk-out-out tabcontent">
-        <p>prima</p> <!--da levare-->
+        <!--<p>prima</p> da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
             <div class="snowflake">
-                {{img|safe}}
-                <div class="color-overlay"></div>
-              </div>
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">70%</div>
+            </div>
+
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle red"></span>
+                    <div class="meters">15-20</div>
+                    <p>1000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">15-20</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle yellow"></span>
-                    <p>2000 m</p>
-                </div>
-                <div class="risk">
-                    <span class="circle green"></span>
+                    <div class="meters">15-20</div>
                     <p>>2000 m</p>
                 </div>
             </div>
