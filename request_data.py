@@ -3,8 +3,8 @@ from telegram import Update ,Bot
 from telegram.ext import Application, CommandHandler, MessageHandler,filters , ContextTypes ,CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import TelegramError
-import mysql.connector
-import json
+import pymysql
+import json,os
 import xmltodict
 import urllib.request
 
@@ -13,6 +13,25 @@ TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
 BOT_USERNAME: Final="@SwallowSpotBot" 
 INFO: Final= None
 
+
+
+
+
+
+
+TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
+BOT_USERNAME: Final="@SwallowSpotBot" 
+
+
+async def create_connection():
+
+    mydb = pymysql.connect(
+    host= os.getenv("SERVERNAME"),
+    user= os.getenv("DBUSER"),
+    password= os.getenv("PASSWORD"),
+    database= os.getenv("DBNAME"),
+    )
+    return mydb    
 
 async def verify_user(chat_id):
     mydb = await create_connection()
@@ -27,25 +46,6 @@ async def verify_user(chat_id):
         return True
     else:
         return False
-
-
-
-
-
-
-TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
-BOT_USERNAME: Final="@SwallowSpotBot" 
-
-
-async def create_connection():
-    mydb = mysql.connector.connect(
-    host="localhost",
-    port=3306,  # La porta predefinita di MySQL in XAMPP
-    user="root",
-    password="",  # Lasciare vuoto se non hai impostato una password
-    database="swallow spot"  # Speci
-    )
-    return mydb    
 
 
 #request database to find chat-id admin

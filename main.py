@@ -6,6 +6,7 @@ from telegram.error import TelegramError
 import json
 import xml.etree.ElementTree as ET
 from request_data import *
+from dotenv import load_dotenv
 
 #Credenziali per associare il Bot Telegram e il programma in python
 TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
@@ -414,12 +415,13 @@ async def manual_send_snow(update:Update, context):
         
 if __name__=='__main__':
     app = Application.builder().token(TOKEN).build()
-
+    
+    load_dotenv()
     
     #associazione ai comandi del bot alle funzione
     app.add_handler(CommandHandler('start', start_command))
-    #  app.add_handler(CommandHandler('help', help_command))
-    #  app.add_handler(CommandHandler('custom', custom_command))
+    #app.add_handler(CommandHandler('help', help_command))
+    #app.add_handler(CommandHandler('custom', custom_command))
     
     app.add_handler(CallbackQueryHandler(button))
     
