@@ -21,26 +21,41 @@ def logout():
 def admin():
     return render_template("user/admin_profile.html")
 
-@profile_bp.route('/profile/insert_chat_id', methods=['GET', 'POST'])
+@profile_bp.route('/profile/insert_chat_id', methods=['POST'])
 def insert_chat_id():
-        print("cd")
-        db = pymysql.connect (
-            host= os.getenv("SERVERNAME"),
-            user= os.getenv("DBUSER"),
-            password= os.getenv("PASSWORD"),
-            database= os.getenv("DBNAME"),
-            cursorclass=pymysql.cursors.DictCursor
-        )
-        # Creare un cursore per eseguire le query
-        cursor = db.cursor()
-        # Get the username/password associated with this tag
-        chat_id = request.form["ChatID"]
-        print("cd")
-        # Recupera i dati inviati dal client
-        username = session["username"]
-        print("cd")
+    db = pymysql.connect(
+        host=os.getenv("SERVERNAME"),
+        user=os.getenv("DBUSER"),
+        password=os.getenv("PASSWORD"),
+        database=os.getenv("DBNAME"),
+        cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    # Creare un cursore per eseguire le query
+    cursor = db.cursor()
+
+    # Recupera il valore inserito dall'utente nell'input con name="ChatID"
+    chat_id = str(request.form["ChatID"])
+
+    # Recupera il nome utente dalla sessione
+    username = session["username"]
+    print("username",str(username))
+    user_query = "SELECT ID_user FROM User WHERE username = %s"
+    cursor.execute(user_query, (username,))
+    user_result = cursor.fetchone()
+
+    if user_result:
+        user_id = int(user_result["ID_user"])
+        print("iduser",str(user_id))
         # Esegue la query per aggiornare l'ID di chat nel database
-        query = "UPDATE Admin SET ID_telegram = %s WHERE username = %s"% (chat_id, username) 
+        query = f"INSERT INTO Admin (ID_user, ID_telegram) VALUES ({user_id}, '{chat_id}')"
         print(query)
-        cursor.execute(query, (chat_id, username))
+        cursor.execute(query)
         db.commit()
+
+
+    # Chiudi la connessione al database
+    db.close()
+
+    # Ritorna una risposta di successo o reindirizza a una nuova pagina
+    return render_template("user/admin_profile.html")
