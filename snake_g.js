@@ -1,4 +1,4 @@
-import platform from 'platform';
+import platform from 'platform';        // library for checking the device support type
 const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
@@ -48,8 +48,9 @@ function touchSupportCheck(){
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
+
+// Assign a random value from 1 to 30 to X and Y to determine a position
 const foodPosition = () => {
-    // Assign a random value from 1 to 30 to X and Y to determine a position
     foodX = Math.floor(Math.random()*30)+1;
     foodY = Math.floor(Math.random()*30)+1;
 }
@@ -126,7 +127,7 @@ const initGame = () =>{
 foodPosition();
 setIntervalId = setInterval(initGame, 100);
 
-if(touchSupportCheck() >= 2){       // If touchSupport is 2 or 3 means that probably is a touchscreen device so we add the EventListener for it
+if(touchSupportCheck() >= 2){       // If touchSupport is 2 or 3 means that probably is a touchscreen device so the EventListener is added
     document.addEventListener("touchstart", startTouch, false);
     document.addEventListener("touchmove", changeDirectionT, false);
 }
