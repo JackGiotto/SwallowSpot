@@ -64,11 +64,9 @@
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
         <!--admin section-->
-        <div id="adminUser">
-            <form action="{{ url_for('profile.admin') }}" >
-                <button type="button" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
-            </form>
-        </div>
+        <form action="{{ url_for('profile.admin') }}" id="adminUser">
+            <button type="button" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+        </form>
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
@@ -116,11 +114,12 @@
 
 <script>
     //check user perms
-    window.onload(check_user('{{user_perms}}'))
-    function check_user(val){
+    var val = "{{user_perms}}";
+    window.onload = function check_user(val){
+        console.log(val);
         console.log("ci siamo??????")
         if(val == 1){
-            dismissSection("adminUser")
+            document.getElementById("adminUser").remove();
             console.log("qui ci siamo")
         }
         else if(val > 1)

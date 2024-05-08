@@ -14,9 +14,12 @@ def user():
     if "username" in session:
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
-        
+        id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
+        id_role = id_role[0]["ID_role"]
+        print(id_role)
         if request.method == "GET":
-            return render_template("user/profile.html", cities=cities, username=session["username"])
+            return render_template("user/profile.html", cities=cities, username=session["username"], user_perms=id_role)
+
 
         elif request.method == "POST":
             if "new_username" in request.form:
@@ -67,11 +70,10 @@ def admin():
     if "username" in session:
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
-        id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
-        id_role = id_role[0]["ID_role"]
+        
 
         if request.method == "GET":
-            return render_template("user/profile.html", cities=cities, username=session["username"], user_perms=id_role)
+            return render_template("user/profile.html", cities=cities, username=session["username"])
 
         elif request.method == "POST":
             if "new_username" in request.form:
