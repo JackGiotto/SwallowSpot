@@ -7,12 +7,11 @@ reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
 @reports_bp.route('/hydro/')
 def hydro():
-    return render_template("reports/hydro.html", data = _get_all_bulletins_hydro())
+    return render_template("reports/hydro.html", data = _get_all_bulletin_hydro())
 
 @reports_bp.route('/snow/')
 def snow():
-    _get_all_bulletin_snow()
-    return render_template("reports/snow.html")
+    return render_template("reports/snow.html", data = _get_all_bulletin_snow)
 
 @reports_bp.route('/ava/')
 def ava():
@@ -22,7 +21,7 @@ def ava():
 def reports():
     return redirect(url_for("reports.hydro"))
 
-def _get_all_bulletins_hydro(date = "last"):
+def _get_all_bulletin_hydro(date = "last"):
     """get the risks of every area for an hydro bulletin
     """
 
