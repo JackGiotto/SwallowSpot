@@ -100,9 +100,9 @@ async def control():
     liv = float(val)
     # control of the Brenta height value
     if liv >= 2.3 and liv < 2.8:
-        return "GIALLO"
+        return "GIALLA"
     elif liv >= 2.8 and liv < 3.2:
-        return "ROSSO"
+        return "ROSSA"
     elif liv >= 3.2:
         return "VIOLA"
     else:

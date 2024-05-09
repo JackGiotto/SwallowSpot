@@ -55,58 +55,74 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 async def alert_control(tipo, colore):
     bot = Bot(token=TOKEN)
     global INFO
+    import requests
+
+  
     keyboard = []  # Definisci e inizializza la variabile keyboard
 
     query = """
-                SELECT ID_telegram as chat_id
+                SELECT GroupID as chat_id
                 FROM Admin;
             """
     result = db.executeQueryOtherCursor(query)
-    print("ciao")
     try:
         messaggio = ""  # Assicurati che il messaggio non sia vuoto
         if tipo == "idraulico":
             colore = await control()
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idraulico 🟡"
-            elif colore == "GIALLO":
-                messaggio += "\nPericolo Arancione di idraulico 🟠"    
-            elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idraulico 🔴"
+            print("colore",str(colore))
+            if colore == "GIALLA":
+                messaggio = "\nPericolo Giallo di idraulico 🟡"
+            elif colore == "ARANCIONE":
+                messaggio = "\nPericolo Arancione di idraulico 🟠"    
+            elif colore == "ROSSA":
+                messaggio = "\nPericolo Rosso di idraulico 🔴"
             elif colore == "VIOLA":
-                messaggio += "\nPericolo Viola di idraulico 🟣"    
+                messaggio = "\nPericolo Viola di idraulico 🟣"    
             else: 
                 return;    
             INFO["idro"] = messaggio
             tmp = 'sendidro'
         elif tipo == "idrogeologico":
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di idrogeologico 🟡"
-            elif colore == "GIALLO":
-                messaggio += "\nPericolo Arancione di idrogeologico 🟠"    
+            if colore == "GIALLA":
+                messaggio = "\nPericolo Giallo di idrogeologico 🟡"
+            elif colore == "ARANCIONE":
+                messaggio = "\nPericolo Arancione di idrogeologico 🟠"    
             elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di idrogeologico 🔴"
+                messaggio = "\nPericolo Rosso di idrogeologico 🔴"
             INFO["idrogeo"] = messaggio
             tmp = 'sendidrogeo'
         elif tipo == "idrogeologico con temporali":
-            if colore == "GIALLO":
-                messaggio += "\nPericolo Giallo di Idrogeologica per Temporali 🟡"
-            elif colore == "GIALLO":
-                messaggio += "\nPericolo Arancione di idrogeologico  per Temporali 🟠"   
+            if colore == "GIALLA":
+                messaggio = "\nPericolo Giallo di Idrogeologica per Temporali 🟡"
+            elif colore == "ARANCIONE":
+                messaggio = "\nPericolo Arancione di idrogeologico  per Temporali 🟠"   
             elif colore == "ROSSO":
-                messaggio += "\nPericolo Rosso di Idrogeologica per Temporali 🔴"
+                messaggio = "\nPericolo Rosso di Idrogeologica per Temporali 🔴"
             INFO["temp"] = messaggio
             tmp = 'sendtem'
-        else: return    
+        else: 
+            return    
         # Assicurati che il messaggio non sia vuoto prima di inviarlo
+        
         if messaggio:
             keyboard = [
                 [InlineKeyboardButton("Inoltra", callback_data=tmp)],
                 [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            for chat_id in result:
-                await bot.send_message(chat_id=chat_id, text=messaggio, reply_markup=reply_markup)
+            url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+            for x in result:
+                t_id=x[0]
+                params = {
+                    'chat_id': t_id,
+                    'text': messaggio,
+                    'reply_markup': reply_markup.to_json()  # Converte la tastiera inline in JSON
+                }
+
+                # Effettua la richiesta POST per inviare il messaggio
+                response = requests.post(url, json=params)
+
+                #await bot.send_message(chat_id=int(t_id), text=messaggio, reply_markup=reply_markup)
                 print("Notifica inviata a " + messaggio + " con successo!")
         else:
             print("Il messaggio è vuoto, non inviato.")
@@ -119,7 +135,7 @@ async def snow_control(val):
     global INDEX
     index=0  
     query = """
-                SELECT ID_telegram as chat_id
+                SELECT GroupID as chat_id
                 FROM Admin;
             """
     result = db.executeQueryOtherCursor(query)
@@ -155,8 +171,17 @@ async def snow_control(val):
                 INFO["snow"][INDEX]=(messaggio)    
                 print("mess:"+INFO["snow"][INDEX])
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                for chat_id in result:
-                    await bot.send_message(chat_id=chat_id, text=INFO["snow"][INDEX], reply_markup=reply_markup)
+                for x in result:
+                    t_id=x[0]
+                    url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+                    params = {
+                        'chat_id': chat_id,
+                        'text': INFO["snow"][INDEX],
+                        'reply_markup': reply_markup.to_json()  # Converte la tastiera inline in JSON
+                    }
+
+                    # Effettua la richiesta POST per inviare il messaggio
+                    response = requests.post(url, json=params)
                     print("Notifica inviata a "+str(chat_id)+" con successo!")
                 
             except TelegramError as e:
@@ -240,7 +265,9 @@ async def button(update: Update, context):
 #request database to find chat-id admin 
 async def give_id(update: Update,chat_id_value):
     query = update.callback_query
-    await query.edit_message_text(text=f"il tuo chat id è {chat_id_value}")
+    bot = Bot(token=TOKEN)
+    await query.edit_message_text(text=f"ecco il tuo chat id")
+    await bot.send_message(chat_id=chat_id_value, text=f"{chat_id_value}")
 
 #function to forward the alert of the message sent to the admin to the Telegram group
 async def send(update:Update, context,arg,index):
@@ -425,7 +452,14 @@ async def manual_send_snow(update:Update, context):
     except TelegramError as e:
         print(f"Si è verificato un errore nell'invio della notifica: {e}")
         await query.edit_message_text(text=f"Si è verificato un errore nell'invio della notifica: {e}")
-        
+ 
+async def get_group_id(update: Update, context):
+    # Ottieni l'ID del gruppo
+    group_id = update.message.chat_id
+    
+    # Invia l'ID del gruppo come risposta al comando
+    await update.message.reply_text(f"L'ID di questo gruppo è: {group_id}")
+            
 def start_bot():
     app = Application.builder().token(TOKEN).build()
         
@@ -433,7 +467,7 @@ def start_bot():
     app.add_handler(CommandHandler('start', start_command))
     #app.add_handler(CommandHandler('help', help_command))
     #app.add_handler(CommandHandler('custom', custom_command))
-    
+    app.add_handler(CommandHandler("get_group_id", get_group_id))
     app.add_handler(CallbackQueryHandler(button))
     
     
