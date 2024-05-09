@@ -428,9 +428,7 @@ async def manual_send_snow(update:Update, context):
         
 def start_bot():
     app = Application.builder().token(TOKEN).build()
-    
-
-    
+        
     #associazione ai comandi del bot alle funzione
     app.add_handler(CommandHandler('start', start_command))
     #app.add_handler(CommandHandler('help', help_command))
@@ -442,5 +440,4 @@ def start_bot():
     app.add_error_handler(error)
     print("Polling....")
     app.run_polling(poll_interval=3)
-    
-    
+
