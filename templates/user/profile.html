@@ -9,6 +9,7 @@
     <div id="profile">
         <h1>Profilo di <strong>{{ username }}</strong></h1>
         <!--change username-->
+        <h2 class="mt-4">Modifica il tuo <span style="color: #00667C">nome utente</span></h2>
         <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')"><i class="fa-solid fa-pencil"></i> Modifica nome utente</button>
         <form action="{{url_for('profile.user')}}" method="POST">
             <div class="dismissDefault" id="changeName">
