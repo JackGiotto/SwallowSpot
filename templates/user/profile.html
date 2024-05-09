@@ -10,7 +10,7 @@
         <h1>Profilo di <strong>{{ username }}</strong></h1>
         <!--change username-->
         <h2 class="mt-4">Modifica il tuo <span style="color: #00667C">nome utente</span></h2>
-        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeName')">Modifica nome utente</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeName')"><i class="fa-solid fa-pencil"></i> Modifica nome utente</button>
         <div class="dismissDefault" id="changeName">
             <div class="input-group mb-2 mt-2">
                 <input type="text" class="form-control" placeholder="Nuovo nome utente">
@@ -20,7 +20,7 @@
         </div>
         <!--change password-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">password</span></h2>
-        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')">Modifica password</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')"><i class="fa-solid fa-pencil"></i> Modifica password</button>
         <div class="dismissDefault" id="changePsw">
             <div class="input-group mb-2 mt-2">
                 <input type="password" class="form-control" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1">
@@ -41,7 +41,7 @@
         </div>
         <!--change area-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
-        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')">Modifica zona di residenza</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
         <div class="dismissDefault" id="changeArea">
             <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
                 <input autocomplete="false" name="hidden" type="text" style="display: none;">
@@ -61,7 +61,7 @@
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
         <!--admin section-->
-        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->

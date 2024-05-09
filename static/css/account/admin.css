@@ -45,11 +45,11 @@
     text-align: center;
 }
 
-#telegramID {
-    max-width: 12rem;
+#newAdminUser {
+    max-width: 15rem;
 }
 
-#newAdminUser {
+#bkpServerIP {
     max-width: 15rem;
 }
   
