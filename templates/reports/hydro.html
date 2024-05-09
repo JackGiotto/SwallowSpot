@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="reports">
+    <h1>Ultimo bollettino</h1>
+    <div class="categories mb-3">
+        <a href="{{ url_for('reports.hydro') }}" class="btn btn-success m-2 btn-lg">Rischi idrologici</a>
+        <a href="{{ url_for('reports.snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
+        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
+    </div>
+    <p id="lastUpdate">
+        Ultimo aggiornamento:<br>
+        Data inizio: {{data['Vene-A']["date"]["starting_date"]}}<br>
+        Data fine: {{data['Vene-A']["date"]["ending_date"]}}
+    </p>
+    <div style="width: 100%;">
+        <div class="risk-out" id="vene-a">
+            <h2>Vene-A</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-A"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-A"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-A"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Alto Piave</p>
+        </div>
+        <div class="risk-out" id="vene-h">
+            <h2>Vene-H</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-H"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-H"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-H"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Piave Pedemontano</p>
+        </div>
+        <div class="risk-out" id="vene-b">
+            <h2>Vene-B</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-B"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-B"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-B"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Alto Brenta-Bacchiglione-Alpone</p>
+        </div>
+        <div class="risk-out" id="vene-c">
+            <h2>Vene-C</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-C"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-C"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-C"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Adige-Garda e Monti Lessini</p>
+        </div>
+        <div class="risk-out" id="vene-d">
+            <h2>Vene-D</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-D"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-D"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-D"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Po, Fissero-Tartaro-CanalBianco e Basso Adige</p>
+        </div>
+        <div class="risk-out" id="vene-e">
+            <h2>Vene-E</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-E"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-E"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-E"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Basso Brenta-Bacchiglione</p>
+        </div>
+        <div class="risk-out" id="vene-f">
+            <h2>Vene-F</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-F"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-F"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-F"]["risks"]["idrogeologico con temporali"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Basso Piave, Sile e Bacino scolante in laguna</p>
+        </div>
+        <div class="risk-out" id="vene-g">
+            <h2>Vene-G</h2>
+            <div class="risk-in">
+                <div class="risk">
+                    <span class="circle {{data["Vene-G"]["risks"]["idraulico"]}}"></span>
+                    <p>Rischio idraulico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-G"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico</p>
+                </div>
+                <div class="risk">
+                    <span class="circle {{data["Vene-G"]["risks"]["idrogeologico"]}}"></span>
+                    <p>Rischio idro-geologico per temporale</p>
+                </div>
+            </div>
+            <p class="basin">Bacino correlato: Livenza, Lemene e Tagliamento</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

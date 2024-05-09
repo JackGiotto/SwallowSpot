@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="logo">
+    <picture>
+        <source media="(max-width: 767px)" srcset="{{ url_for('static', filename='images/swallowspot_title_mini.png') }}" id="logoMini">
+        <img src="{{ url_for('static', filename='images/swallowspot_title_main.png') }}" alt="SwallowSpot Alert System" id="logoMaxi">
+    </picture>
+</div>
+
+<div class="overview" id="navLinks">
+    <a class="btn btn-warning m-2 btn-lg" href="#yourSituation"><i class="fa-solid fa-circle-exclamation"></i>&ThickSpace; La mia situazione</a>
+    <a class="btn btn-primary m-2 btn-lg" href="#howWorks"><i class="fa-solid fa-circle-question"></i>&ThickSpace; Come funziona SwalloSpot</a>
+    <a href="{{ url_for('reports.hydro') }}" class="btn btn-danger m-2 btn-lg"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Consulta gli ultimi bollettini</a>
+    <a href="" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
+</div>
+
+<div class="your-situation mt-5" id="yourSituation">
+    <h1>Ultima situazione nella tua zona</h1>
+    {{ bulletin_data | safe}}
+</div>
+
+<div class="service-desc mt-5" id="howWorks">
+    <h1>Come funziona SwallowSpot</h1>
+    <p>
+        Benvenuti su <strong>SwallowSpot</strong>!
+        <br>
+        Il luogo ideale per ottenere informazioni aggiornate sulle condizioni meteorologiche della <u>Regione Veneto</u>. Questo sito sarà il vostro punto di riferimento per accedere ai <u>bollettini meteo</u> ufficiali pubblicati dalla regione, garantendo così una visione chiara e completa delle previsioni e delle eventuali allerte presenti.
+        <br>
+        Il sito si occupa di monitorare diverse tipologie di situazioni meteorologiche che possono influenzare il territorio veneto, tra cui <u>nevicate</u>, situazioni <u>idrauliche</u> e <u>idrogeologiche</u>, nonché allerte specifiche legate a <u>temporali</u> e <u>valanghe</u>.
+        <br>
+        Grazie alla classificazione in quattro colori distinti - <strong style="color: green;">Verde</strong>, <strong style="color: gold;">Giallo</strong>, <strong style="color: orange;">Arancione</strong> e <strong style="color: red;">Rosso</strong> - potrà essere immediatamente valutato il livello di rischio associato a ciascuna situazione.
+    </p>
+</div>
+
+<script>
+    //light/dark mode
+    var logoMini = document.getElementById("logoMini");
+    var logoMaxi = document.getElementById("logoMaxi");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini_darkmode.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main_darkmode.png') }}";
+    }
+    else {
+        //light mode
+        logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini.png') }}";
+        logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main.png') }}";
+    }
+</script>
+
+{% endblock %}

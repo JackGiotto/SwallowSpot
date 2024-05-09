@@ -1,0 +1,152 @@
+.reports {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.categories, .dates {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.risk-out-out {
+    width: 100%;
+}
+
+.risk-out {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+}
+
+.risk-out p {
+    margin-top: 1rem;
+}
+
+.risk-out .basin {
+    text-align: center;
+}
+
+.risk-out:nth-child(odd) {
+    background-color: rgba(89, 164, 188, 0.3);
+}
+
+.risk-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+}
+
+.risk {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 450px) {
+    .risk-in {
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .risk {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .risk p {
+        text-align: center;
+    }
+}
+
+.risk p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.meters {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid #59A4BC;
+}
+
+.on {
+    background-color: #00283B;
+    border-color: #00283B;
+}
+
+.on:hover {
+    background-color: #00202e;
+    border-color: #00202e;
+}
+
+/*classes for different colors when active*/
+
+.unactive {
+    background-color: lightslategray;
+    box-shadow: 0 0 15px lightslategray;
+}
+
+.green {
+    background-color: green;
+    box-shadow: 0 0 15px green;
+}
+
+.yellow {
+    background-color: gold;
+    box-shadow: 0 0 15px gold;
+}
+
+.orange {
+    background-color: orange;
+    box-shadow: 0 0 15px orange;
+}
+
+.red {
+    background-color: red;
+    box-shadow: 0 0 15px red;
+}
+
+.purple {
+    background-color: purple;
+    box-shadow: 0 0 15px purple;
+}
+
+/*snowflake*/
+
+.snowflake {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.snowflake i {
+    font-size: 7rem;
+}
+
+.percentage {
+    font-weight: bold;
+    font-size: 200%;
+}

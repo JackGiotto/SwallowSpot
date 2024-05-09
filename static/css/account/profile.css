@@ -1,0 +1,100 @@
+.profile-out {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem;
+    margin-top: 0;
+}
+
+.profile-out h1 {
+    text-align: center;
+}
+
+/*section that appear when non logged in*/
+
+#notAccessed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*display: none; /*DA TOGLIERE*/
+}
+
+/*profile section*/
+
+#profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#profile strong {
+    color: #00667C;
+}
+
+.dismissDefault {
+    display: none;
+}
+
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
+/*#autocomplete-list {
+    width: calc(100% - 6rem);
+    max-width: 15.8rem;
+}*/
+
+/*visual mode change section*/
+
+.visual-mode {
+    margin: 1.5rem;
+    padding: 1.5rem;
+    border-top: 2px solid gainsboro;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.visual-out {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.visual-out p {
+    margin: 0;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
+#deleteProfile:hover {
+    background-color: #8a1c27;
+    border-color: #8a1c27;
+}
+
+/*other*/
+
+.input-group-text .fa-check {
+    color: green;
+}
+
+.input-group-text .fa-xmark {
+    color: red;
+}
+
+.btn-outline-primary {
+    border-color: #006b83;
+    color: #006b83;
+}
+
+.btn-outline-primary:hover {
+    background-color: #006b83;
+    border-color: #006b83;
+}
+

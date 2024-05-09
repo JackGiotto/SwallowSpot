@@ -1,0 +1,81 @@
+{% extends "auth/login_layout.html" %}
+
+{% block content %}
+
+<h2>Registrati</h2>
+
+<form action="{{ url_for('auth.signup') }}" method="post">
+    <div class="input-group mb-3">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
+    </div>
+    <div class="input-group mb-3">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" onkeyup="check_password()" aria-describedby="showPasswordToggle">
+        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+    </div>
+    <div class="input-group mb-3">
+        <input name="password2" type="password" class="form-control" id="textPassword2" placeholder="Conferma password" onkeyup="check_password()" aria-label="Password" aria-describedby="showPasswordToggle2">
+        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+        <span class="input-group-text" id="confirmPsw2">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
+    </div>
+    <div id="searchbar" class="mb-3">        <!--search bar-->
+        <input autocomplete="false" name="hidden" type="text" style="display: none;">
+        <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+        <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
+    </div>
+    <div class="error-msg">
+        {{msg}}
+    </div>
+    <br>
+    <button type="button" id="signup-submit" class="btn btn-success mb-2" >Registrati</button>
+    <br>
+    <a href="{{ url_for('auth.login') }}">Ho gi&agrave; un account</a>
+</form>
+
+<script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
+
+<script>
+    //light/dark mode
+    var searchbar = document.getElementById("searchbar");
+    var autocomplete = document.getElementById("autocomplete-list");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        searchbar.setAttribute('data-bs-theme', "dark");
+        autocomplete.style.backgroundColor = "#212529";
+    }
+    else {
+        //light mode
+        searchbar.setAttribute('data-bs-theme', "light");
+        autocomplete.style.backgroundColor = "white";
+    }
+
+    function check_password() {
+        psw1 = $("#textPassword").val();
+        psw2 = $("#textPassword2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#signup-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#signup-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }    
+    /*else
+        document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-xmark"></i>'
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        psw2.setAttribute('data-bs-theme', "dark");
+    }
+    else {
+        //light mode
+        psw2.setAttribute('data-bs-theme', "light");
+    }*/
+</script>
+
+{% endblock %}
