@@ -4,6 +4,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler,filters , C
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import TelegramError
 import json
+import requests
 import xml.etree.ElementTree as ET
 from telegram_bot.request_data import *
 from models import db
@@ -175,15 +176,14 @@ async def snow_control(val):
                     t_id=x[0]
                     url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
                     params = {
-                        'chat_id': chat_id,
+                        'chat_id': t_id,
                         'text': INFO["snow"][INDEX],
                         'reply_markup': reply_markup.to_json()  # Converte la tastiera inline in JSON
                     }
 
                     # Effettua la richiesta POST per inviare il messaggio
                     response = requests.post(url, json=params)
-                    print("Notifica inviata a "+str(chat_id)+" con successo!")
-                
+                    
             except TelegramError as e:
                 print(f"Si è verificato un errore nell'invio della notifica: {e}")
         
