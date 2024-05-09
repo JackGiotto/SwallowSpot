@@ -1,0 +1,57 @@
+import os
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+import time
+
+def authenticate():
+    # Load credentials from file
+    credentials = None
+    if os.path.exists('credentials.json'):
+        credentials = Credentials.from_authorized_user_file('credentials.json')
+
+    # If credentials are expired or missing, refresh or request new ones
+    if not credentials or not credentials.valid:
+        if credentials and credentials.expired and credentials.refresh_token:
+            credentials.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'secret.json',
+                scopes=['https://www.googleapis.com/auth/gmail.readonly']
+            )
+            credentials = flow.run_local_server(port=0)
+
+        # Save credentials to file
+        with open('credentials.json', 'w') as credentials_file:
+            credentials_file.write(credentials.to_json())
+
+    return credentials
+
+def list_messages(service, user_id='me'):
+    try:
+        # List messages from inbox
+        response = service.users().messages().list(userId=user_id, labelIds=['INBOX']).execute()
+        messages = response.get('messages', [])
+
+        if messages:
+            for message in messages:
+                msg = service.users().messages().get(userId=user_id, id=message['id']).execute()
+                print('Message snippet: {}'.format(msg['snippet']))
+
+    except HttpError as error:
+        print('An error occurred: {}'.format(error))
+
+def main():
+    # Authenticate with Gmail API
+    credentials = authenticate()
+    service = build('gmail', 'v1', credentials=credentials)
+
+    # Continuously read emails
+    while True:
+        list_messages(service)
+        time.sleep(60)  # Check for new emails every minute
+
+if __name__ == '__main__':
+    main()
