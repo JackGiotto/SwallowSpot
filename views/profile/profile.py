@@ -24,13 +24,15 @@ def user():
 
         elif request.method == "POST":
             if "new_username" in request.form:
-                new_username = request.form["new_username"]
-                db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
-                session["username"]=new_username
-                return render_template("user/profile.html", cities = cities, username=session["username"])
-            # check if username is already taken
-            if bool(result):
-                return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
+                # check if username is already taken
+                if bool(result):
+                    return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
+                else:
+                    new_username = request.form["new_username"]
+                    db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
+                    session["username"]=new_username
+                    return render_template("user/profile.html", cities = cities, username=session["username"])
+            
 
             elif "city" in request.form:
                 new_zone = request.form["city"]
