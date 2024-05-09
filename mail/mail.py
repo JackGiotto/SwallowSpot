@@ -52,6 +52,7 @@ def main():
     while True:
         list_messages(service)
         time.sleep(60)  # Check for new emails every minute
+    service.close()
 
 if __name__ == '__main__':
     main()
