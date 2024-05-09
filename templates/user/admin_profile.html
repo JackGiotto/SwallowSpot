@@ -75,18 +75,16 @@
                 <li>Copia il <strong>chat_id</strong> ricevuto e inseriscilo nel testo qui sotto</li>
             </ol>
         </p>
-        <form method="POST" action="{{ url_for('profile.insert_chat_id') }}">
+        <form method="POST" action="{{ url_for('profile.insert_id') }}">
             <div class="input-group mb-2">
-                <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInput(this)">
+                <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInputs()">
                 <span class="input-group-text" id="confirmIDcheck">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
             </div>
             <div id="error" class="error-msg mb-3"></div>
             
-            <button type="submit" class="btn btn-success" id="confirmTgID" disabled>Conferma</button>
-        </form>
-
+        
         <div class="mb-3">
             <!--messaggi da inserire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             (linked) <span style="color: green;"><i class="fa-solid fa-check"></i> Account gi&agrave; collegato</span>
@@ -102,46 +100,20 @@
                 <li>Copia il <strong>group_id</strong> ricevuto e inseriscilo nel testo qui sotto</li>
             </ol>
         </p>
-        <form method="POST" action="{{ url_for('profile.insert_chat_id') }}">
             <div class="input-group mb-2">
                 <span class="input-group-text" id="basic-addon1">-</span>
-                <input type="text" class="form-control" id="GroupID" name="GroupID" placeholder="ID gruppo Telegram" oninput="checkGroupInput(this)">
+                <input type="text" class="form-control" id="GroupID" name="GroupID" placeholder="ID gruppo Telegram" oninput="checkInputs()">
+
                 <span class="input-group-text" id="confirmGroupIDcheck">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
             </div>
             <div id="error2" class="error-msg mb-3"></div>
 
-            <button type="submit" class="btn btn-success" id="confirmTgGroupID" disabled>Conferma</button>
+            <button type="submit" class="btn btn-success" id="confirmButton">Conferma</button>
         </form>
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
-        <form action="{{ url_for('auth.signup') }}" method="post">
-            <div class="input-group mb-3">
-                <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
-            </div>
-            <div class="input-group mb-3">
-                <input name="password" type="password" class="form-control" id="psw1" placeholder="Password" aria-label="Password" onkeyup="check_password()" aria-describedby="showPasswordToggle">
-                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>      
-            </div>
-            <div class="input-group mb-3">
-                <input name="password2" type="password" class="form-control" id="psw2" placeholder="Conferma password" onkeyup="check_password()" aria-label="Password" aria-describedby="showPasswordToggle2">
-                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
-                <span class="input-group-text" id="confirmPsw2">
-                    <i class="fa-solid fa-xmark"></i>
-                </span>
-            </div>
-            <div id="searchbar" class="mb-3">        <!--search bar-->
-                <input autocomplete="false" name="hidden" type="text" style="display: none;">
-                <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
-                <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
-            </div>
-            <div class="error-msg">
-                {{msg}}
-            </div>
-            <br>
-            <button type="button" id="psw-submit" class="btn btn-success mb-2" >Registra nuovo account</button>
-        </form>
 
         <!--add admin user from existing account-->
         <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
@@ -163,32 +135,17 @@
         <!--backups-->
         <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
         <div class="input-group mt-2">
-            <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup" oninput="checkInputIP(this)" maxlength="15">
-            <span class="input-group-text" id="confirmIPcheck">
-                <i class="fa-solid fa-xmark"></i>
-            </span>
+            <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup">
         </div>
-        <div class="error-msg mb-3">
-            <div id="IPerror"></div>
+        <div class="error-msg">
             {{ip_error}}
         </div>
-        <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn" disabled><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
+        <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn"><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
         <p class="mt-1">Il file di backup viene salvato (dove?)</p>
     </div>
 </div>
 
-<script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
-
 <script>
-    /*autocomplete list size*/
-    function setAutocompleteListWidth() {
-        var inputWidth = document.getElementById('bar').offsetWidth;
-        document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
-    }
-
-    document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
-    window.addEventListener('resize', setAutocompleteListWidth);
-
     //show file name under the upload button
     var input = document.getElementById( 'uploadReport' );
     var infoArea = document.getElementById( 'fileName' );
