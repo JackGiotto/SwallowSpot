@@ -20,20 +20,20 @@
             <h2>Alto Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Alto Agordino"][0]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][0]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][1]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Alto Agordino"][2]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -43,20 +43,20 @@
             <h2>Medio-basso Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Medio-basso Agordino"][0]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][0]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][1]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Medio-basso Agordino"][2]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -66,57 +66,65 @@
             <h2>Cadore</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Cadore"][0]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Cadore"][2]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">{{ data["Feltrino-Val Belluna"][0]["percentage"] }}%</div>
+            </div>
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>> 1500 m</p>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][2]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Feltre, Sovramonte</p>
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <div class="snowflake">
+                <i class="fa-regular fa-snowflake"></i>
+                <div class="percentage">{{ data["Altopiano dei sette comuni"][0]["percentage"] }}%</div>
+            </div>
             <div class="risk-in">
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <span class="circle unactive"></span>
-                    <p>> 1500 m</p>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][2]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
@@ -129,20 +137,20 @@
             <h2>Alto Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">50%</div>
+                <div class="percentage">{{ data["Alto Agordino"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][3]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][4]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Alto Agordino"][5]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -152,20 +160,19 @@
             <h2>Medio-basso Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Medio-basso Agordino"][3]["percentage"] }}%</div>
             </div>
-
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][3]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][4]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Medio-basso Agordino"][5]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -175,21 +182,21 @@
             <h2>Cadore</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Cadore"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Cadore"][5]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
@@ -198,21 +205,21 @@
             <h2>Feltrino - Val Belluna</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Feltrino-Val Belluna"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][5]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Feltre, Sovramonte</p>
@@ -221,21 +228,21 @@
             <h2>Altopiano dei Sette Comuni</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Altopiano dei sette comuni"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][5]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
@@ -243,25 +250,25 @@
     </div>
 
     <div id="third" class="risk-out-out tabcontent">
-        <!--<p>terza</p> <!--da levare-->
+        <!--<p>terza</p> da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">25%</div>
+                <div class="percentage">{{ data["Alto Agordino"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][6]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Alto Agordino"][7]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Alto Agordino"][8]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -271,20 +278,20 @@
             <h2>Medio-basso Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Medio-basso Agordino"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>1000 m</p>
-                </div>
-                <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][6]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][7]["value"] }}</div>
+                    <p>2000 m</p>
+                </div>
+                <div class="risk">
+                    <div class="meters">{{ data["Medio-basso Agordino"][8]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -294,21 +301,21 @@
             <h2>Cadore</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Cadore"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Cadore"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Cadore"][8]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Borca di Cadore, Calalzo, Cibiana, Valle di Cadore, Zoppè di Cadore, San Pietro di Cadore</p>
@@ -317,21 +324,21 @@
             <h2>Feltrino - Val Belluna</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Feltrino-Val Belluna"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][8]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Feltre, Sovramonte</p>
@@ -340,21 +347,21 @@
             <h2>Altopiano dei Sette Comuni</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">70%</div>
+                <div class="percentage">{{ data["Altopiano dei sette comuni"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">15-20</div>
-                    <p>>2000 m</p>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][8]["value"] }}</div>
+                    <p>>1500 m</p>
                 </div>
             </div>
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
