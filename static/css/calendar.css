@@ -1,0 +1,7 @@
+.pop-out {
+    position: fixed;
+    padding: 2rem;
+    width: 15rem;
+    right: 0;
+    bottom: 10%;
+}
