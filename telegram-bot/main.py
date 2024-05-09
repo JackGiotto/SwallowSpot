@@ -226,7 +226,10 @@ async def button(update: Update, context):
 #request database to find chat-id admin 
 async def give_id(update: Update,chat_id_value):
     query = update.callback_query
-    await query.edit_message_text(text=f"il tuo chat id è {chat_id_value}")
+    bot = Bot(token=TOKEN)
+    await query.edit_message_text(text=f"ecco il tuo chat")
+    await bot.send_message(chat_id=id,text=f"{chat_id_value}")
+
 
 #function to forward the alert of the message sent to the admin to the Telegram group
 async def send(update:Update, context,arg,index):
