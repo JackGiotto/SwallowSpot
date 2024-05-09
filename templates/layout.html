@@ -13,6 +13,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_visual_mode.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_notification.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/home/home.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/info/info.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/reports/risk.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/profile.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/admin.css') }}>
@@ -52,7 +53,7 @@
                 <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
                 <a href="{{ url_for('reports.hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
                 <a href=""><i class="fa-solid fa-circle-down"></i>&ThickSpace; Scarica bollettini</a>
-                <a href=""><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
+                <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
             <div id="account">
                 <h5>Account</h5>
@@ -223,6 +224,22 @@
             $(this).find('i').toggleClass('fa-eye fa-eye-slash');
         });
     });
+
+    //check if identical passwords
+    function check_password() {
+        psw1 = $("#psw1").val();
+        psw2 = $("#psw2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#psw-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#psw-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }
 </script>
 <!-- in caso di necessità-->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

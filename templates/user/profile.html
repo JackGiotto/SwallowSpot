@@ -9,7 +9,7 @@
     <div id="profile">
         <h1>Profilo di <strong>{{ username }}</strong></h1>
         <!--change username-->
-        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')">Modifica nome utente</button>
+        <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeName')"><i class="fa-solid fa-pencil"></i> Modifica nome utente</button>
         <form action="{{url_for('profile.user')}}" method="POST">
             <div class="dismissDefault" id="changeName">
                 <div class="input-group mb-2 mt-2">
@@ -24,15 +24,15 @@
         </div>
         <!--change password-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">password</span></h2>
-        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')">Modifica password</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')"><i class="fa-solid fa-pencil"></i> Modifica password</button>
         <div class="dismissDefault" id="changePsw">
         <form action="{{url_for('profile.user')}}" method="POST">
             <div class="input-group mb-2 mt-2">
-                <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="textPassword" placeholder="Nuova password" aria-describedby="confirmPsw1">
+                <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1">
                 <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
             </div>
             <div class="input-group mb-2">
-                <input type="password" class="form-control" id="textPassword2" onkeyup="check_password()" uplaceholder="Conferma nuova password" aria-describedby="confirmPsw2">
+                <input type="password" class="form-control" id="psw2" onkeyup="check_password()" uplaceholder="Conferma nuova password" aria-describedby="confirmPsw2">
                 <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
                 <span class="input-group-text" id="confirmPsw2">
                     <i class="fa-solid fa-xmark"></i>
@@ -47,7 +47,7 @@
         <!--allow notifications-->
         <!--change area-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
-        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')">Modifica zona di residenza</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
         <div class="dismissDefault" id="changeArea">
             <form action="{{url_for('profile.user')}}" method="POST">
                 <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
@@ -69,7 +69,7 @@
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
         <!--admin section-->
-        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
@@ -118,23 +118,15 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
-    //check passwords
-    function check_password() {
-        psw1 = $("#textPassword").val();
-        psw2 = $("#textPassword2").val();
-        $("#confirmPsw2").empty();
-        html_block = "";
-        if (psw1 === psw2 && psw1 != '') {
-            html_block = '<i class="fa-solid fa-check"></i>';
-        } else {
-            html_block = '<i class="fa-solid fa-xmark"></i>';
-        }
-        $("#confirmPsw2").append(html_block)
-    }
     
-    var bar = document.getElementById("bar");
-    var wid = window.getComputedStyle(bar, null);
-    document.getElementById("autocomplete-list").style.width = wid.getPropertyValue("width");
+    /*autocomplete list size*/
+    function setAutocompleteListWidth() {
+        var inputWidth = document.getElementById('bar').offsetWidth;
+        document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
+    }
+
+    document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
+    window.addEventListener('resize', setAutocompleteListWidth);
 
     //show password (it has to stay here)
     $(document).ready(function () {

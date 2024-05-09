@@ -11,9 +11,9 @@
 
 <div class="overview" id="navLinks">
     <a class="btn btn-warning m-2 btn-lg" href="#yourSituation"><i class="fa-solid fa-circle-exclamation"></i>&ThickSpace; La mia situazione</a>
-    <a class="btn btn-primary m-2 btn-lg" href="#howWorks"><i class="fa-solid fa-circle-question"></i>&ThickSpace; Come funziona SwalloSpot</a>
+    <a class="btn btn-primary m-2 btn-lg" href="#howWorks"><i class="fa-solid fa-circle-question"></i>&ThickSpace; Cos'&egrave; SwalloSpot</a>
     <a href="{{ url_for('reports.hydro') }}" class="btn btn-danger m-2 btn-lg"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Consulta gli ultimi bollettini</a>
-    <a href="" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
+    <a href="{{ url_for('info.info') }}" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
 </div>
 
 <div class="your-situation mt-5" id="yourSituation">
@@ -23,16 +23,28 @@
 
 <div class="service-desc mt-5" id="howWorks">
     <h1>Come funziona SwallowSpot</h1>
-    <p>
+    <div>
         Benvenuti su <strong>SwallowSpot</strong>!
         <br>
-        Il luogo ideale per ottenere informazioni aggiornate sulle condizioni meteorologiche della <u>Regione Veneto</u>. Questo sito sarà il vostro punto di riferimento per accedere ai <u>bollettini meteo</u> ufficiali pubblicati dalla regione, garantendo così una visione chiara e completa delle previsioni e delle eventuali allerte presenti.
-        <br>
-        Il sito si occupa di monitorare diverse tipologie di situazioni meteorologiche che possono influenzare il territorio veneto, tra cui <u>nevicate</u>, situazioni <u>idrauliche</u> e <u>idrogeologiche</u>, nonché allerte specifiche legate a <u>temporali</u> e <u>valanghe</u>.
-        <br>
-        Grazie alla classificazione in quattro colori distinti - <strong style="color: green;">Verde</strong>, <strong style="color: gold;">Giallo</strong>, <strong style="color: orange;">Arancione</strong> e <strong style="color: red;">Rosso</strong> - potrà essere immediatamente valutato il livello di rischio associato a ciascuna situazione.
-    </p>
+        Il luogo ideale per ottenere informazioni aggiornate sulle condizioni meteorologiche della <u>Regione Veneto</u>.
+        <br><br>
+        <button id="showMoreSm" class="showButton" onclick="showMore('showMoreSm', 'readMoreSm')">Leggi ancora <i class="fa-solid fa-angle-down"></i></button>
+        <div id="readMoreSm" class="dismissDefault">
+            Questo sito sarà il vostro punto di riferimento per accedere ai <u>bollettini meteo</u> ufficiali pubblicati dalla regione, garantendo così una visione chiara e completa delle previsioni e delle eventuali allerte presenti.
+            <br><br>
+            <button id="showMoreMd" class="showButton" onclick="showMore('showMoreMd', 'readMoreMd')">Leggi ancora <i class="fa-solid fa-angle-down"></i></button>
+            <div id="readMoreMd" class="dismissDefault">
+                Il sito si occupa di monitorare diverse tipologie di situazioni meteorologiche che possono influenzare il territorio veneto, tra cui <u>nevicate</u>, situazioni <u>idrauliche</u> e <u>idrogeologiche</u>, nonché allerte specifiche legate a <u>temporali</u> e <u>valanghe</u>.
+                <br><br>
+                Grazie alla classificazione in quattro colori distinti - <strong style="color: green;">Verde</strong>, <strong style="color: gold;">Giallo</strong>, <strong style="color: orange;">Arancione</strong> e <strong style="color: red;">Rosso</strong> - potrà essere immediatamente valutato il livello di rischio associato a ciascuna situazione.
+            </div>
+            <br><br>
+            <button id="showLess" class="showButton dismissDefault" onclick="showLess()">Leggi meno <i class="fa-solid fa-angle-up"></i></button>
+        </div>
+    </div>
 </div>
+
+<script src="{{url_for('static', filename = 'js/home.js')}}"></script>
 
 <script>
     //light/dark mode
