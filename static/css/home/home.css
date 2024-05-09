@@ -44,6 +44,10 @@
     margin: 0 1rem;
 }
 
+#divisorySpace {
+    margin-bottom: 20rem;
+}
+
 .risk-out-home {
     width: 100%;
     display: flex;
