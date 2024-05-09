@@ -3,8 +3,11 @@ from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp
 import os
 
+from flask_sslify import SSLify
+
 app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
+sslify = SSLify(app)
 
 
 app.permanent_session_lifetime = timedelta(minutes=50)
@@ -17,4 +20,7 @@ app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"))
+    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/server.crt', 'certificate/server.key'))
+    
+# pip install Flask-SSLify
+
