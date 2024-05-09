@@ -162,10 +162,17 @@
     </div>
 </div>
 
-<div class="pop-out card">
-    <div id="clendar-out">
-        <input type="date" class="form-control">
+<div class="pop-out" id="popOut">
+    <div class="show-pop-out card" id="showPopOut">
+        <span onclick="showPopOut('popOut', 'showPopOut')">
+            <i class="fa-solid fa-angle-left"></i>
+        </span>
     </div>
+    <form action="" method="get" id="clendar-out" class="card">
+        <p>Inserisci la data del bollettino che vuoi visualizzare:</p>
+        <input type="date" class="form-control">
+        <button class="btn btn-success mt-2">Conferma</button>
+    </form>
 </div>
 
 <script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
