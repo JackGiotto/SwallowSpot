@@ -18,7 +18,8 @@ def user():
         id_role = id_role[0]["ID_role"]
         print(id_role)
         if request.method == "GET":
-            return render_template("user/profile.html", cities=cities, username=session["username"], user_perms=id_role)
+            show_button = True if id_role>1 else False
+            return render_template("user/profile.html", cities=cities, username=session["username"], user_perms=id_role, show_button=show_button)
 
 
         elif request.method == "POST":
