@@ -224,6 +224,22 @@
             $(this).find('i').toggleClass('fa-eye fa-eye-slash');
         });
     });
+
+    //check if identical passwords
+    function check_password() {
+        psw1 = $("#psw1").val();
+        psw2 = $("#psw2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#psw-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#psw-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }
 </script>
 <!-- in caso di necessità-->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
