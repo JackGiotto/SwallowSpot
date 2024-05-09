@@ -65,3 +65,29 @@ function checkGroupInput(input) {
     }
     $("#confirmGroupIDcheck").append(html_block)
 }
+
+//check if IP is right
+function checkInputIP(input) {
+    var IPaddress = input.value.trim();
+    var doBackup = document.getElementById("backupBtn");
+    var error = document.getElementById("IPerror");
+
+    $("#confirmIPcheck").empty();
+    html_block = "";
+
+    // Check if the input is a valid IP address
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(IPaddress)) {
+        error.innerHTML = "";
+        doBackup.disabled = false; // Enable doBackup
+        html_block = '<i class="fa-solid fa-check"></i>';
+    } else if (IPaddress == '') {
+        error.innerHTML = "";
+        doBackup.disabled = true; // Disable doBackup
+        html_block = '<i class="fa-solid fa-xmark"></i>';
+    } else {
+        error.innerHTML = "L'indirizzo IP inserito non &egrave valido";
+        doBackup.disabled = true; // Disable doBackup
+        html_block = '<i class="fa-solid fa-xmark"></i>';
+    }
+    $("#confirmIPcheck").append(html_block)
+}

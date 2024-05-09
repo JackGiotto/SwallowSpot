@@ -163,12 +163,16 @@
         <!--backups-->
         <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
         <div class="input-group mt-2">
-            <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup">
+            <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup" oninput="checkInputIP(this)" maxlength="15">
+            <span class="input-group-text" id="confirmIPcheck">
+                <i class="fa-solid fa-xmark"></i>
+            </span>
         </div>
-        <div class="error-msg">
+        <div class="error-msg mb-3">
+            <div id="IPerror"></div>
             {{ip_error}}
         </div>
-        <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn"><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
+        <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn" disabled><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
         <p class="mt-1">Il file di backup viene salvato (dove?)</p>
     </div>
 </div>
