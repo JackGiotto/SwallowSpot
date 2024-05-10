@@ -38,11 +38,11 @@ CREATE TABLE Altitude
 
 CREATE TABLE Report     -- bollettino
 (
-    ID_report INT AUTO_INCREMENT,           -- ID univoco per ogni bollettino
-    starting_date DATETIME NOT NULL,        -- data di inizio validità
-    ending_date DATETIME NOT NULL,          -- data di fine validità
-    path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
-    CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- vincolo di chiave primaria di Report
+    ID_report INT AUTO_INCREMENT,                   -- ID univoco per ogni bollettino
+    starting_date DATETIME NOT NULL UNIQUE,         -- data di inizio validità
+    ending_date DATETIME NOT NULL,                  -- data di fine validità
+    path VARCHAR(35) NOT NULL UNIQUE,               -- percorso del file nel server
+    CONSTRAINT pk_report PRIMARY KEY (ID_report)    -- vincolo di chiave primaria di Report
 );
 
 
@@ -63,7 +63,7 @@ CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettin
 CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
 (
     ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
-    date DATETIME NOT NULL,                 -- data di inizio validità
+    date DATETIME NOT NULL UNIQUE,          -- data di inizio validità
     path VARCHAR(35) NOT NULL UNIQUE,       -- percorso del file nel server
     CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
 );
@@ -104,6 +104,7 @@ CREATE TABLE User       -- utente e i suoi dati
 CREATE TABLE Admin      -- amministratori del sito
 (
     ID_telegram VARCHAR(15),                            -- ID assegnato da telegram per ogni amministratore
+    groupID VARCHAR(15) NOT NULL UNIQUE,
     ID_user INT NOT NULL,                               -- ID user dell'admin
     CONSTRAINT pk_admin PRIMARY KEY (ID_telegram),      -- vincolo di chiave primaria di Admin
     CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- vincolo di chiave esterna relativo all'utente
@@ -120,7 +121,7 @@ CREATE TABLE Snow_criticalness_altitude         -- tabella ponte tra criticità 
 );
 
 /*
--- for debug
+-- debug
 DROP TABLE Snow_criticalness_altitude;
 DROP TABLE Admin;
 DROP TABLE User;
