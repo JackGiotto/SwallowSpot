@@ -23,10 +23,12 @@ def user():
 
 
         elif request.method == "POST":
+            result = db.executeQuery("SELECT username FROM User where username = '" + session["username"] + "';")
+
             if "new_username" in request.form:
                 # check if username is already taken
                 if bool(result):
-                    return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
+                    return render_template("user/profile.html", msg1="username non disponibile", cities = cities, username=session["username"])
                 else:
                     new_username = request.form["new_username"]
                     db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
@@ -47,7 +49,7 @@ def user():
                 #checks password
                 if (len(new_password) < 8 or not _has_number(new_password) or not _has_uppercase(new_password) or not _has_special_character(new_password)):
                     print("Length condition or case condition or special character condition or number condition is met")
-                    return render_template("user/profile.html", msg="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
+                    return render_template("user/profile.html", msg2="la password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
                 #hasing password
                 new_password=_hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
@@ -74,15 +76,16 @@ def admin():
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
         
-
         if request.method == "GET":
             return render_template("user/profile.html", cities=cities, username=session["username"])
 
         elif request.method == "POST":
+            result = db.executeQuery("SELECT username FROM User where username = '" + session["username"] + "';")
+
             if "new_username" in request.form:
                 # check if username is already taken
                 if bool(result):
-                    return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
+                    return render_template("user/profile.html", msg="username non disponibile", cities = cities, username=session["username"])
                 else:
                     new_username = request.form["new_username"]
                     db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")

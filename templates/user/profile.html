@@ -19,6 +19,7 @@
                 <button type="submit" class="btn btn-success">Conferma</button>
             </div>
         </form>
+        {{msg1}}
         <!--change zone-->
         <button type="button" class="btn btn-primary btn-lg mt-4" onclick="showSection('changeZone')">Modifica residenza</button>
         <form action="{{url_for('profile.user')}}" method="POST">
@@ -51,10 +52,9 @@
             </div>
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
             <button type="submit" class="btn btn-success">Conferma</button>
-            <br>
-            {{msg}}
         </form>
         </div>
+        {{msg2}}
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
@@ -72,8 +72,9 @@
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
-        <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
-
+        <form action="{{url_for('profile.user')}}" method="POST">
+            <button type="submit" name="delete_account" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
+        </form>
         <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog">
                 <div class="modal-content">
