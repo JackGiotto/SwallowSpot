@@ -6,7 +6,7 @@ import json
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
-@profile_bp.route('/profile/', methods=['GET','POST', 'DELETE'])
+@profile_bp.route('/profile/', methods=['GET','POST'])
 def user():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
@@ -65,7 +65,7 @@ def logout():
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 #route x ADMIN
-@profile_bp.route('/profile/admin/', methods=['GET'])
+@profile_bp.route('/profile/admin/', methods=['GET','POST'])
 def admin():
     cities_query = '''SELECT city_name, ID_city FROM Topology;'''
     cities = db.executeQuery(cities_query)
@@ -80,14 +80,15 @@ def admin():
 
         elif request.method == "POST":
             if "new_username" in request.form:
-                new_username = request.form["new_username"]
-                db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
-                session["username"]=new_username
-                return render_template("user/profile.html", cities = cities, username=session["username"])
-            # check if username is already taken
-            if bool(result):
-                return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
-
+                # check if username is already taken
+                if bool(result):
+                    return render_template("auth/signup.html", msg="username non disponibile", cities = cities, username=session["username"])
+                else:
+                    new_username = request.form["new_username"]
+                    db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
+                    session["username"]=new_username
+                    return render_template("user/profile.html", cities = cities, username=session["username"])
+            
             elif "city" in request.form:
                 new_zone = request.form["city"]
                 new_zone = db.executeQuery("SELECT ID_area, ID_city FROM Topology WHERE ID_city = "+str(new_zone)+";")
@@ -95,6 +96,9 @@ def admin():
                 print(new_zone)
                 db.executeQuery("UPDATE User SET ID_area = "+str(new_zone)+" WHERE ID_user = "+str(id_user)+";")
                 print('area è stata modificata')
+            
+            elif "admin_section" in request.form:
+                return render_template("user/admin_profile.html")
 
             elif "new_password" in request.form:
                 new_password = request.form["new_password"]
