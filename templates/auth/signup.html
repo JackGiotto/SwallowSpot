@@ -8,9 +8,21 @@
     <div class="input-group mb-3">
         <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
     </div>
-    <div class="input-group mb-3">
-        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" onkeyup="check_password()" aria-describedby="showPasswordToggle">
-        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+    <div id="pswRequirements" class="mb-3">
+        <div class="input-group">
+            <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" onkeyup="check_password()" onfocus="showRequirements()" onblur="dismissRequirements()" aria-describedby="showPasswordToggle">
+            <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+        </div>
+        <div id="requirements" class="card">
+            <div class="triangle-up"></div>
+            La password deve contenere almeno:
+            <ul>
+                <li>8 caratteri</li>
+                <li>un numero</li>
+                <li>una lettera maiuscola</li>
+                <li>un carattere speciale</li>
+            </ul>
+        </div>
     </div>
     <div class="input-group mb-3">
         <input name="password2" type="password" class="form-control" id="textPassword2" placeholder="Conferma password" onkeyup="check_password()" aria-label="Password" aria-describedby="showPasswordToggle2">
@@ -36,6 +48,32 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    /*contenitive password div size*/
+    function setDivHeight() {
+        var inputHeight = document.getElementById('textPassword').offsetHeight;
+        document.getElementById('pswRequirements').style.height = inputHeight + 'px';
+    }
+
+    window.addEventListener('load', setDivHeight);
+    window.addEventListener('resize', setDivHeight);
+
+    //show psw requirements
+    function showRequirements() {
+        var bubble = document.getElementById("requirements");
+
+        bubble.classList.add("showing");
+        bubble.style.display = "block";
+        bubble.style.opacity = "1";
+    }
+
+    function dismissRequirements() {
+        var bubble = document.getElementById("requirements");
+
+        bubble.classList.add("showing");
+        bubble.style.display = "block";
+        bubble.style.opacity = "1";
+    }
+
     //light/dark mode
     var searchbar = document.getElementById("searchbar");
     var autocomplete = document.getElementById("autocomplete-list");
