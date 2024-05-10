@@ -1,0 +1,29 @@
+.pop-out {
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    left: 100%;
+    bottom: 10%;
+}
+
+.show-pop-out {
+    position: absolute;
+    right: calc(100% - 0.5rem);
+    bottom: 1rem;
+}
+
+.show-pop-out span {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 1.1rem 0.5rem 0.8rem;
+    font-size: 2rem;
+}
+
+.show-pop-out:hover {
+    cursor: pointer;
+}
+
+#clendar-out {
+    padding: 1rem;
+    width: 15rem;
+}
