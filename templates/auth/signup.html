@@ -61,6 +61,7 @@
     function showRequirements() {
         var bubble = document.getElementById("requirements");
 
+        bubble.classList.remove("dismissed");
         bubble.classList.add("showing");
         bubble.style.display = "block";
         bubble.style.opacity = "1";
@@ -69,9 +70,10 @@
     function dismissRequirements() {
         var bubble = document.getElementById("requirements");
 
-        bubble.classList.add("showing");
-        bubble.style.display = "block";
-        bubble.style.opacity = "1";
+        bubble.classList.remove("showing");
+        bubble.classList.add("dismissed");
+        bubble.style.display = "none";
+        bubble.style.opacity = "0";
     }
 
     //light/dark mode

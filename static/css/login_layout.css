@@ -100,7 +100,7 @@ body {
 }
 
 .showing {
-    animation: showing 1s ease-out;
+    animation: showing .5s;
 }
 
 @keyframes showing {
@@ -109,6 +109,19 @@ body {
     }
     to {
         opacity: 1;
+    }
+}
+
+.dismissed {
+    animation: dismissed .5s;
+}
+
+@keyframes dismissed {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
 
