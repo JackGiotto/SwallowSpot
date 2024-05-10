@@ -25,12 +25,13 @@ function checkInputs() {
     var errorMsg1 = document.getElementById("error");
     var errorMsg2 = document.getElementById("error2");
     var confirmButton = document.getElementById("confirmButton");
-
+    var confirmIDcheck = document.getElementById("confirmIDcheck");
+    var confirmGroupIDcheck = document.getElementById("confirmGroupIDcheck");
     // Verifica se l'input ChatID è valido
     var validChatID = /^\d{9}$/.test(tgid);
     if (validChatID) {
         errorMsg1.innerHTML = "";
-        html_block = '<i class="fa-solid fa-check"></i>';
+        confirmIDcheck.innerHTML = '<i class="fa-solid fa-check"></i>';
     } else {
         errorMsg1.innerHTML = "ID non valido: deve contenere 9 numeri";
     }
@@ -39,7 +40,7 @@ function checkInputs() {
     var validGroupID = /^\d{13}$/.test(gtgid);
     if (validGroupID) {
         errorMsg2.innerHTML = "";
-        html_block = '<i class="fa-solid fa-check"></i>';
+        confirmGroupIDcheck.innerHTML = '<i class="fa-solid fa-check"></i>';
     } else {
         errorMsg2.innerHTML = "ID non valido: deve contenere 14 numeri";
     }
