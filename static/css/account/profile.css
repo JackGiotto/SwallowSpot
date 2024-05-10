@@ -35,6 +35,11 @@
     display: none;
 }
 
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
 /*#autocomplete-list {
     width: calc(100% - 6rem);
     max-width: 15.8rem;
