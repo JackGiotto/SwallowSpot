@@ -27,25 +27,36 @@
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">password</span></h2>
         <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')"><i class="fa-solid fa-pencil"></i> Modifica password</button>
         <div class="dismissDefault" id="changePsw">
-        <form action="{{url_for('profile.user')}}" method="POST">
-            <div class="input-group mb-2 mt-2">
-                <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1">
-                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
-            </div>
-            <div class="input-group mb-2">
-                <input type="password" class="form-control" id="psw2" onkeyup="check_password()" uplaceholder="Conferma nuova password" aria-describedby="confirmPsw2">
-                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
-                <span class="input-group-text" id="confirmPsw2">
-                    <i class="fa-solid fa-xmark"></i>
-                </span>
-            </div>
-            <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
-            <button type="submit" class="btn btn-success">Conferma</button>
-            <br>
-            {{msg}}
-        </form>
+            <form action="{{url_for('profile.user')}}" method="POST">
+                <div id="pswRequirements" class="mb-3">
+                    <div class="input-group mb-2 mt-2">
+                        <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">
+                        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
+                    </div>
+                    <div id="requirements" class="card">
+                        <div class="triangle-up" id="triangle"></div>
+                        La password deve contenere almeno:
+                        <ul>
+                            <li>8 caratteri</li>
+                            <li>un numero</li>
+                            <li>una lettera maiuscola</li>
+                            <li>un carattere speciale</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-group mb-2">
+                    <input type="password" class="form-control" id="psw2" onkeyup="check_password()" placeholder="Conferma nuova password" aria-describedby="confirmPsw2">
+                    <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+                    <span class="input-group-text" id="confirmPsw2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
+                <button type="submit" class="btn btn-success">Conferma</button>
+                <br>
+                {{msg}}
+            </form>
         </div>
-        <!--allow notifications-->
         <!--change area-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
         <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
@@ -75,7 +86,7 @@
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
         <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
-
+        
         <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog">
                 <form action="/profile/" method="post" class="modal-content">
@@ -125,10 +136,10 @@
         var inputWidth = document.getElementById('bar').offsetWidth;
         document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
     }
-
+    
     document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
     window.addEventListener('resize', setAutocompleteListWidth);
-
+    
     //show password (it has to stay here)
     $(document).ready(function () {
         $('#showPasswordToggle').on('click', function () {
@@ -138,7 +149,7 @@
             $(this).find('i').toggleClass('fa-eye fa-eye-slash');
         });
     });
-
+    
     //dark / light mode
     if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
         document.getElementById("toggle").checked = false;
@@ -147,9 +158,9 @@
     else {
         document.getElementById("toggle").checked = true;
     }
-
+    
     document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
-
+    
     function changeMode() {
         var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
@@ -157,7 +168,9 @@
         var cookiesModal = document.getElementById("customizeCookies");
         var deleteModal = document.getElementById("confirmDelete");
         var confirms = document.querySelectorAll(".input-group");
-
+        var requirements = document.getElementById("requirements");
+        var triangle = document.getElementById("triangle");
+        
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
             //light mode
@@ -170,6 +183,8 @@
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "light");
             });
+            requirements.setAttribute('data-bs-theme', "light");
+            triangle.style.borderBottomColor = "white";
         }
         else {
             localStorage.setItem("mode", "dark");
@@ -183,9 +198,11 @@
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "dark");
             });
+            requirements.setAttribute('data-bs-theme', "dark");
+            triangle.style.borderBottomColor = "#212529";
         }
     }
-
+    
     //notifications
     if(localStorage.getItem("notifications") == "off") {        //check the notifications state from the local storage variable
         document.getElementById("toggleNotif").checked = false;
@@ -194,12 +211,12 @@
     else {
         document.getElementById("toggleNotif").checked = true;
     }
-
+    
     document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status
-
+    
     function changeNotif() {
         var notif = document.getElementById("notificationStatus");
-
+        
         if(document.getElementById("toggleNotif").checked) {
             localStorage.setItem("notifications", "on");
             //notification yes

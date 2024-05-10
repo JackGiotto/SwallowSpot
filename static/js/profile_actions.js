@@ -48,3 +48,22 @@ function checkInputs() {
     // Abilita il pulsante di conferma solo se entrambi gli input sono validi
     confirmButton.disabled = !(validChatID && validGroupID);
 }
+
+//show psw requirements
+function showRequirements() {
+    var bubble = document.getElementById("requirements");
+
+    bubble.classList.remove("dismissed");
+    bubble.classList.add("showing");
+    bubble.style.display = "block";
+    bubble.style.opacity = "1";
+}
+
+function dismissRequirements() {
+    var bubble = document.getElementById("requirements");
+
+    bubble.classList.remove("showing");
+    bubble.classList.add("dismissed");
+    bubble.style.display = "none";
+    bubble.style.opacity = "0";
+}
