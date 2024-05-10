@@ -43,6 +43,30 @@ def list_messages(service, user_id='me'):
     except HttpError as error:
         print('An error occurred: {}'.format(error))
 
+def get_emails():
+    # Autenticati
+    creds = authenticate_google()
+    # Costruisci l'API client di Gmail
+    service = build('gmail', 'v1', credentials=creds)
+
+    # Chiamata all'API di Gmail per ottenere le email
+    results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
+    messages = results.get('messages', [])
+
+    if not messages:
+        print("Nessuna email trovata.")
+    else:
+        print("Elenco delle email:")
+        for message in messages:
+            msg = service.users().messages().get(userId='me', id=message['id']).execute()
+            # Decodifica il corpo del messaggio
+            raw_data = msg['payload']['parts'][0]['body']['data']
+            message_body = base64.urlsafe_b64decode(raw_data).decode('utf-8')
+            print("From:", msg['payload']['headers'][17]['value'])
+            print("Subject:", msg['payload']['headers'][19]['value'])
+            print("Body:", message_body)
+            print("---------------------------------------")
+
 def main():
     # Authenticate with Gmail API
     credentials = authenticate()

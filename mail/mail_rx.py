@@ -4,13 +4,15 @@ import webbrowser
 import os
 
 #credentials
-MAIL = "swallowspottesting@gmail.com"
-__PASSWORD = "RondineSpottatrice"
-IMAP_SERVER = "imap.gmail.com"
+MAIL = "swallowspot@yahoo.com"
+__PASSWORD = "RondineSpottatrice" #private variable
+IMAP_SERVER = "imap.mail.yahoo.com"
 
-mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+
 
 def emials_fetch():
+     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+
      #select the mail's field where mails arrives
      mail.select("inbox")
 
@@ -51,6 +53,8 @@ def emials_fetch():
      print('-' * 50)
     
 def main():
+     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+
      #connection to imap server
      print("pronto per connetterti")
      mail.login(MAIL, __PASSWORD)
