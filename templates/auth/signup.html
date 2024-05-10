@@ -6,7 +6,7 @@
 
 <form action="{{ url_for('auth.signup') }}" method="post">
     <div class="input-group mb-3">
-        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
+        <input name="username" type="text" class="form-control" id="username" placeholder="Username" aria-label="Username">
     </div>
     <div id="pswRequirements" class="mb-3">
         <div class="input-group">
@@ -14,7 +14,7 @@
             <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
         </div>
         <div id="requirements" class="card">
-            <div class="triangle-up"></div>
+            <div class="triangle-up" id="triangle"></div>
             La password deve contenere almeno:
             <ul>
                 <li>8 caratteri</li>
@@ -79,19 +79,26 @@
     //light/dark mode
     var searchbar = document.getElementById("searchbar");
     var autocomplete = document.getElementById("autocomplete-list");
+    var requirements = document.getElementById("requirements");
+    var triangle = document.getElementById("triangle");
 
     if(localStorage.getItem("mode") == "dark") {
         //dark mode
         searchbar.setAttribute('data-bs-theme', "dark");
+        requirements.setAttribute('data-bs-theme', "dark");
         autocomplete.style.backgroundColor = "#212529";
+        triangle.style.borderBottomColor = "#212529";
     }
     else {
         //light mode
         searchbar.setAttribute('data-bs-theme', "light");
+        requirements.setAttribute('data-bs-theme', "light");
         autocomplete.style.backgroundColor = "white";
+        triangle.style.borderBottomColor = "white";
     }
 
     //check if identical passwords
+
     function check_password() {
         psw1 = $("#textPassword").val();
         psw2 = $("#textPassword2").val();
@@ -99,10 +106,10 @@
         html_block = "";
         if (psw1 === psw2 && psw1 != '') {
             html_block = '<i class="fa-solid fa-check"></i>';
-            $("#signup-submit").prop("type", "submit");
+            //$("#signup-submit").prop("type", "submit");
         } else {
             html_block = '<i class="fa-solid fa-xmark"></i>';
-            $("#signup-submit").prop("type", "button");
+            //$("#signup-submit").prop("type", "button");
         }
         $("#confirmPsw2").append(html_block)
     }
@@ -117,6 +124,27 @@
         //light mode
         psw2.setAttribute('data-bs-theme', "light");
     }*/
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var input1 = document.getElementById('username');
+        var input2 = document.getElementById('textPassword');
+        var input3 = document.getElementById('textPassword2');
+        var input4 = document.getElementById('bar');
+        var button = document.getElementById('signup-submit');
+    
+        function controlInput() {
+            if (input1.value.trim() !== '' && input2.value.trim() !== '' && input3.value.trim() !== '' && input4.value.trim() !== '' && input2.value == input3.value) {
+                button.type = "submit";
+            } else {
+                button.type = "button";
+            }
+        }
+    
+        input1.addEventListener('input', controlInput);
+        input2.addEventListener('input', controlInput);
+        input3.addEventListener('input', controlInput);
+        input4.addEventListener('input', controlInput);
+    });
 </script>
 
 {% endblock %}
