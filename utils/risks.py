@@ -57,6 +57,7 @@ def get_date_last_snow() -> str:
     return date
 
 def get_query_snow(area_name: str, date: str) -> str:
+    print("date")
     """get query for snow bulletin
 
     Args:
@@ -67,14 +68,6 @@ def get_query_snow(area_name: str, date: str) -> str:
         str: query
     """
 
-    query = """
-            SELECT Snow_report.date
-            FROM Snow_report
-            ORDER BY Snow_report.date DESC
-            LIMIT 1;
-    """
-
-    date = db.executeQuery(query)[0]['date']
     query = f"""
                 SELECT Snow_criticalness.date, Snow_criticalness_altitude.value, Snow_criticalness.percentage
                 FROM Snow_report
@@ -97,6 +90,7 @@ def parse_date_us_it(date: str) -> str:
     Returns:
         str: date with italian notation
     """
+
     date = date.split(" ")
     time = date[1]
     date = date[0]
@@ -132,6 +126,7 @@ def parse_date_it_us(date: str) -> str:
     Returns:
         str: date with italian notation
     """
+
     date = date.split(" ")
     time = date[1]
     date = date[0]
