@@ -19,9 +19,9 @@
             <i class="fa-solid fa-xmark"></i>
         </span>
     </div>
-    <div id="searchbar" class="mb-3">        <!--barra di ricerca-->
+    <div id="searchbar" class="mb-3">        <!--search bar-->
         <input autocomplete="false" name="hidden" type="text" style="display: none;">
-        <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+        <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
         <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
     </div>
     <div class="error-msg">
@@ -36,8 +36,22 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    //light/dark mode
+    var searchbar = document.getElementById("searchbar");
+    var autocomplete = document.getElementById("autocomplete-list");
 
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        searchbar.setAttribute('data-bs-theme', "dark");
+        autocomplete.style.backgroundColor = "#212529";
+    }
+    else {
+        //light mode
+        searchbar.setAttribute('data-bs-theme', "light");
+        autocomplete.style.backgroundColor = "white";
+    }
 
+    //check if identical passwords
     function check_password() {
         psw1 = $("#textPassword").val();
         psw2 = $("#textPassword2").val();
@@ -51,7 +65,7 @@
             $("#signup-submit").prop("type", "button");
         }
         $("#confirmPsw2").append(html_block)
-    }    
+    }
     /*else
         document.getElementById("confimPsw2").innerHTML='<i class="fa-solid fa-xmark"></i>'
 

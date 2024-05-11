@@ -1,6 +1,6 @@
 .autocomplete-items {
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     width: calc(100% - 2rem);
     max-height: 7rem;
     overflow: auto;
@@ -18,4 +18,14 @@
 .autocomplete-item:hover {
     cursor: pointer;
     background-color: #59A4BC88;
+}
+
+/*other*/
+
+.error-msg {
+    color: darkred;
+}
+
+.success-msg {
+    color: green;
 }

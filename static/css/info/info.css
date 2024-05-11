@@ -1,0 +1,9 @@
+strong {
+    color: #00667C;
+}
+
+.infoContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

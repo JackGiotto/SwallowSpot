@@ -1,6 +1,6 @@
 from flask import Flask
 from datetime import timedelta
-from views import auth_bp, home_bp, profile_bp, reports_bp
+from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 import os
 
 from flask_sslify import SSLify
@@ -16,6 +16,7 @@ app.register_blueprint(auth_bp, url_prefix='/{}'.format(auth_bp.name))
 app.register_blueprint(home_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
+app.register_blueprint(info_bp)
 
 
 

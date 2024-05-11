@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 3rem;
-    margin-top: 0;
+    margin: 0 3rem;
 }
 
 .profile-out h1 {
@@ -36,6 +35,16 @@
     display: none;
 }
 
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
+/*#autocomplete-list {
+    width: calc(100% - 6rem);
+    max-width: 15.8rem;
+}*/
+
 /*visual mode change section*/
 
 .visual-mode {
@@ -56,6 +65,16 @@
     margin: 0;
     font-size: x-large;
     font-weight: bold;
+}
+
+#deleteProfile {
+    background-color: #a4222f;
+    border-color: #a4222f;
+}
+
+#deleteProfile:hover {
+    background-color: #8a1c27;
+    border-color: #8a1c27;
 }
 
 /*other*/

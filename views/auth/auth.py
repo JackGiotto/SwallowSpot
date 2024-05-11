@@ -1,7 +1,13 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
 from models import db
 from utils.get_data import get_cities
 from utils.password import hash_password, has_number, has_special_character, has_uppercase
+from datetime import timedelta
+
+
+
+BASE_SESSION_DURATION = 24 # hours
+LONGER_SESSION_DURATION = 30 # days
 
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates')
@@ -16,6 +22,7 @@ def login():
             # the user is logged
             return redirect(url_for("home.home"))
     elif request.method == "POST": # login
+        print(request.form)
         username = request.form["username"]
         password = request.form["password"]
         password = hash_password(password)
@@ -28,6 +35,11 @@ def login():
             # correct
             session.permanent = True
             session["username"] = username
+            if ("remember" in request.form):
+                print("here")
+                current_app.permanent_session_lifetime = timedelta(days = LONGER_SESSION_DURATION)
+            else:
+                current_app.permanent_session_lifetime = timedelta(hours = BASE_SESSION_DURATION)
             return redirect(url_for("home.home"))
         else:
             # username does not exist or password is not correct =

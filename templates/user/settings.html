@@ -40,7 +40,6 @@
         var body = document.querySelector("body");
         var cookiesLabel = document.getElementById("cookies");
         var cookiesModal = document.getElementById("customizeCookies");
-        var confirms = document.querySelectorAll(".input-group-text");
 
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
@@ -50,9 +49,6 @@
             body.style.color = "#212529";
             cookiesLabel.style.backgroundColor = "#EDFCFF";
             cookiesModal.setAttribute('data-bs-theme', "light");
-            confirms.forEach(function (e) {
-                e.setAttribute('data-bs-theme', "light");
-            });
         }
         else {
             localStorage.setItem("mode", "dark");
@@ -62,9 +58,6 @@
             body.style.color = "white";
             cookiesLabel.style.backgroundColor = "#222222";
             cookiesModal.setAttribute('data-bs-theme', "dark");
-            confirms.forEach(function (e) {
-                e.setAttribute('data-bs-theme', "dark");
-            });
         }
     }
 </script>
