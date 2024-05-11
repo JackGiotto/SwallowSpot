@@ -1,17 +1,31 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from models import db
 import json
-from utils.risks import convert_risk_color, get_query_last_hydro, get_query_snow, get_date_last_snow, parse_date
+from utils.risks import convert_risk_color, get_query_last_hydro, get_query_hydro, get_query_snow, get_date_last_snow, parse_date_us_it, parse_date_it_us
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
-@reports_bp.route('/hydro/')
+@reports_bp.route('/hydro/', methods=['GET'])
 def hydro():
-    return render_template("reports/hydro.html", data = _get_all_bulletin_hydro())
+    if not 'date' in request.args:
+        return redirect(url_for("reports.hydro") + "?date=last")
 
-@reports_bp.route('/snow/')
+    date = request.args['date']
+    data = _get_all_bulletin_hydro(date)
+    return render_template("reports/hydro.html", data = data)
+
+@reports_bp.route('/snow/', methods=['GET'])
 def snow():
-    return render_template("reports/snow.html", data = _get_all_bulletin_snow())
+    if not 'date' in request.args:
+        return redirect(url_for("reports.snow") + "?date=last")
+
+    date = request.args['date']
+    if date != 'last':
+        print(date)
+        date = parse_date_it_us(date + " 00:00:00")
+    print(date)
+    data = _get_all_bulletin_snow(date)
+    return render_template("reports/snow.html", data = data)
 
 @reports_bp.route('/ava/')
 def ava():
@@ -19,7 +33,7 @@ def ava():
 
 @reports_bp.route('/')
 def reports():
-    return redirect(url_for("reports.hydro"))
+    return redirect(url_for("reports.hydro") + "?date=last")
 
 def _get_all_bulletin_hydro(date = "last"):
     """get the risks of every area for an hydro bulletin
@@ -66,8 +80,8 @@ def _get_all_bulletin_hydro(date = "last"):
         for risk in risks:
             bulletin = _get_hydro_bulletin(area, risk, date)
             result[area]["risks"][risk] = convert_risk_color(bulletin["color_name"])
-        result[area]["date"]["starting_date"] = parse_date(str(bulletin["starting_date"]))
-        result[area]["date"]["ending_date"] = parse_date(str(bulletin["ending_date"]))
+        result[area]["date"]["starting_date"] = parse_date_us_it(str(bulletin["starting_date"]))
+        result[area]["date"]["ending_date"] = parse_date_us_it(str(bulletin["ending_date"]))
 
     return result
 
@@ -82,10 +96,13 @@ def _get_hydro_bulletin(area, risk, date):
     
     if (date == 'last'):
         query = get_query_last_hydro(area, risk)
+    else:
+        query = get_query_hydro(area, risk, date)
     return db.executeQuery(query)[0]
 
 def _get_all_bulletin_snow(date = "last"):
     areas = ["Alto Agordino", "Medio-basso Agordino", 'Cadore', 'Feltrino-Val Belluna', "Altopiano dei sette comuni"]
+    print("data", date)
     if (date == "last"):
         date = get_date_last_snow()
 
@@ -98,11 +115,9 @@ def _get_all_bulletin_snow(date = "last"):
             }
     bulletin = None
     for area in areas:
-        #print("AREA\n\n\n\n", area)
         bulletin = _get_snow_bulletin(area, date)
         result[area] = bulletin
         
-    print("RESULT", json.dumps(result, indent="\t"))
     return result
     
 
@@ -112,7 +127,6 @@ def _get_snow_bulletin(area, date):
     risks = [{}, {}, {}, {}, {}, {}, {}, {}, {}]
     i=0
     for row in data:
-        print("RIGA:", row, "\n\n")
 
         risks[i] = _parse_row(row)
         i += 1
@@ -120,7 +134,7 @@ def _get_snow_bulletin(area, date):
 
 def _parse_row(row):
     new_risk = {}
-    new_risk["date"] = parse_date(str(row['date']))
+    new_risk["date"] = parse_date_us_it(str(row['date']))
     new_risk["value"] = str(row['value'])
     new_risk["percentage"] = str(row['percentage'])
     return new_risk

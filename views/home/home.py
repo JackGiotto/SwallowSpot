@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, request
 from models import db
-from utils.risks import convert_risk_color, get_query_last_hydro, parse_date
+from utils.risks import convert_risk_color, get_query_last_hydro, parse_date_us_it
 from utils.get_data import get_cities, get_bulletins_dates
 import json
 
@@ -38,7 +38,7 @@ def home():
 
         bulletin_data = f'''<div class="risk-out-home">
                                 <h2>{area_name}</h2>
-                                <p id="lastUpdate">Ultimo aggiornamento:<br>Data inizio: {parse_date(str(starting_date))}<br>Data fine: {parse_date(str(ending_date))}</p>
+                                <p id="lastUpdate">Ultimo aggiornamento:<br>Data inizio: {parse_date_us_it(str(starting_date))}<br>Data fine: {parse_date_us_it(str(ending_date))}</p>
                                 <div class="risk-in">
                                     <div class="risk">
                                         <span class="circle {convert_risk_color(hydraulic)}"></span>
