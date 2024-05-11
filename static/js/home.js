@@ -13,11 +13,11 @@ function showMore(button_id, div_id) {
 }
 
 function showLess() {
-    if (wid == "sm") {
+    if (wid == "md") {
         document.getElementById("showMoreSm").style.display = " initial";
         document.getElementById("readMoreSm").style.display = "none";
     }
-    else if (wid == "md") {
+    else if (wid == "sm") {
         document.getElementById("showMoreMd").style.display = " initial";
         document.getElementById("readMoreMd").style.display = "none";
     }

@@ -19,49 +19,51 @@ function logout() {
 }
 
 //on admin page
-
-function checkInput(input) {
-    var tgid = input.value.trim();
-    var errorMsg = document.getElementById("error");
-    var confirm = document.getElementById("confirmTgID");
-    $("#confirmIDcheck").empty();
-    html_block = "";
-    // Verifica se l'input contiene solo numeri e ha una lunghezza compresa tra 1 e 9
-    if (/^\d{9}$/.test(tgid)) {
-        errorMsg.innerHTML = "";
-        html_block = '<i class="fa-solid fa-check"></i>';
-        confirm.disabled = false;
-    } else if (tgid == '') {
-        errorMsg.innerHTML = "";
-        html_block = '<i class="fa-solid fa-xmark"></i>';
-        confirm.disabled = true;
+function checkInputs() {
+    var tgid = document.getElementById("ChatID").value.trim();
+    var gtgid = document.getElementById("GroupID").value.trim();
+    var errorMsg1 = document.getElementById("error");
+    var errorMsg2 = document.getElementById("error2");
+    var confirmButton = document.getElementById("confirmButton");
+    var confirmIDcheck = document.getElementById("confirmIDcheck");
+    var confirmGroupIDcheck = document.getElementById("confirmGroupIDcheck");
+    // Verifica se l'input ChatID è valido
+    var validChatID = /^\d{9}$/.test(tgid);
+    if (validChatID) {
+        errorMsg1.innerHTML = "";
+        confirmIDcheck.innerHTML = '<i class="fa-solid fa-check"></i>';
     } else {
-        errorMsg.innerHTML = "ID non valido: deve contenere 9 numeri";
-        html_block = '<i class="fa-solid fa-xmark"></i>';
-        confirm.disabled = true;
+        errorMsg1.innerHTML = "ID non valido: deve contenere 9 numeri";
     }
-    $("#confirmIDcheck").append(html_block)
+
+    // Verifica se l'input GroupID è valido
+    var validGroupID = /^\d{13}$/.test(gtgid);
+    if (validGroupID) {
+        errorMsg2.innerHTML = "";
+        confirmGroupIDcheck.innerHTML = '<i class="fa-solid fa-check"></i>';
+    } else {
+        errorMsg2.innerHTML = "ID non valido: deve contenere 14 numeri";
+    }
+
+    // Abilita il pulsante di conferma solo se entrambi gli input sono validi
+    confirmButton.disabled = !(validChatID && validGroupID);
 }
 
-function checkGroupInput(input) {
-    var tgid = input.value.trim();
-    var errorMsg = document.getElementById("error2");
-    var confirm = document.getElementById("confirmTgGroupID");
-    $("#confirmGroupIDcheck").empty();
-    html_block = "";
-    // Verifica se l'input contiene solo numeri e ha una lunghezza compresa tra 1 e 9
-    if (/^\d{14}$/.test(tgid)) {
-        errorMsg.innerHTML = "";
-        html_block = '<i class="fa-solid fa-check"></i>';
-        confirm.disabled = false;
-    } else if (tgid == '') {
-        errorMsg.innerHTML = "";
-        html_block = '<i class="fa-solid fa-xmark"></i>';
-        confirm.disabled = true;
-    } else {
-        errorMsg.innerHTML = "ID non valido: deve contenere 14 numeri";
-        html_block = '<i class="fa-solid fa-xmark"></i>';
-        confirm.disabled = true;
-    }
-    $("#confirmGroupIDcheck").append(html_block)
+//show psw requirements
+function showRequirements() {
+    var bubble = document.getElementById("requirements");
+
+    bubble.classList.remove("dismissed");
+    bubble.classList.add("showing");
+    bubble.style.display = "block";
+    bubble.style.opacity = "1";
+}
+
+function dismissRequirements() {
+    var bubble = document.getElementById("requirements");
+
+    bubble.classList.remove("showing");
+    bubble.classList.add("dismissed");
+    bubble.style.display = "none";
+    bubble.style.opacity = "0";
 }

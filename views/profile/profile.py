@@ -4,14 +4,12 @@ from utils.password import hash_password, has_uppercase, has_number, has_special
 from utils.get_data import get_cities
 import os
 import json
+from models import db
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
 @profile_bp.route('/profile/', methods=['GET','POST'])
 def user():
-    cities_query = '''SELECT city_name, ID_city FROM Topology;'''
-    cities = db.executeQuery(cities_query)
-
     if "username" in session:
         id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
         id_user = id_user[0]["ID_user"]
@@ -82,3 +80,30 @@ def user():
 def logout():
     session.clear()
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@profile_bp.route('/profile/admin/', methods=['GET'])
+def admin():
+    return render_template("user/admin_profile.html")
+
+@profile_bp.route('/profile/insert_id', methods=['POST'])
+def insert_id():    
+    # Recupera il valore inserito dall'utente nell'input con name="ChatID"
+    chat_id = str(request.form["ChatID"])
+    group_id = str(request.form["GroupID"])
+    # Recupera il nome utente dalla sessione
+    username = session["username"]
+    print("username",str(username))
+    user_query = f"SELECT ID_user FROM User WHERE username = {username}"
+    user_result = db.executeQuery(user_query)[0]
+
+    if user_result:
+        user_id = int(user_result["ID_user"])
+        print("iduser",str(user_id))
+        # Esegue la query per aggiornare l'ID di chat nel database
+        query = f"INSERT INTO Admin (ID_user, ID_telegram,GroupID) VALUES ({user_id}, '{chat_id}','{group_id}')"
+        print(query)
+        db.executeQuery(query)
+            # Chiudi la connessione al database
+
+    # Ritorna una risposta di successo o reindirizza a una nuova pagina
+    return render_template("user/admin_profile.html")
