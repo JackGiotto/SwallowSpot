@@ -83,7 +83,27 @@ def logout():
 
 @profile_bp.route('/profile/admin/', methods=['GET'])
 def admin():
-    return render_template("user/admin_profile.html")
+
+    # checks if user is admin
+    id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
+    id_user = id_user[0]["ID_user"]
+    id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
+    id_role = id_role[0]["ID_role"]
+
+    if id_role <= 1:
+        return redirect(url_for("profile.user"))
+    elif id_role > 2:
+        backup = f"""
+                    <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
+                    <div class="input-group mt-2">
+                        <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup">
+                    </div>
+                    <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn"><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
+                    <p class="mt-1">Il file di backup viene salvato (dove?)</p>
+                """
+
+
+    return render_template("user/admin_profile.html", super_admin = backup)
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
 def insert_id():    
@@ -93,7 +113,7 @@ def insert_id():
     # Recupera il nome utente dalla sessione
     username = session["username"]
     print("username",str(username))
-    user_query = f"SELECT ID_user FROM User WHERE username = {username}"
+    user_query = f"SELECT ID_user FROM User WHERE username = '{username}'"
     user_result = db.executeQuery(user_query)[0]
 
     if user_result:
