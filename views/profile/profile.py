@@ -127,3 +127,26 @@ def insert_id():
 
     # Ritorna una risposta di successo o reindirizza a una nuova pagina
     return render_template("user/admin_profile.html")
+
+@profile_bp.route('/profile/new_admin', methods=['POST'])
+def new_admin():
+    new_admin_username = request.form["newAdminUser"]
+    query = f"""SELECT ID_role
+                FROM User
+                WHERE username = '{new_admin_username}';
+            """
+    result = db.executeQuery(query)
+    if bool(result):
+        id_role_new_user = result[0]["ID_role"]
+        if (id_role_new_user == 1):
+            query = f"""
+                        UPDATE User
+                        SET ID_role = 2
+                        WHERE username = '{new_admin_username}'; 
+                    """
+            db.executeQuery(query)
+            return render_template("user/admin_profile.html", msg_success_user = f"Aggiunto {new_admin_username} agli admin")
+        else:
+            return render_template("user/admin_profile.html", msg_error_user = f"Errore: puoi aggiungere agli admin solo utenti non admin")
+    else:
+        return render_template("user/admin_profile.html", msg_error_user = f"Username non trovato")
