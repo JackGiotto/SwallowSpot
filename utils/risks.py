@@ -54,7 +54,7 @@ def get_query_snow(area_name: str, date: str) -> str:
     query = """
             SELECT Snow_report.date
             FROM Snow_report
-            ORDER BY Snow_report.ID_snow_report DESC
+            ORDER BY Snow_report.date DESC
             LIMIT 1;
     """
 
