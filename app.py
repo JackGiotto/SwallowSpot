@@ -1,9 +1,8 @@
 from flask import Flask
+from flask_sslify import SSLify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 import os
-
-from flask_sslify import SSLify
 
 app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
@@ -19,6 +18,4 @@ app.register_blueprint(info_bp)
 
 if __name__ == "__main__":
     app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem'))
-    
-# pip install Flask-SSLify
 

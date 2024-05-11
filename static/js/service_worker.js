@@ -3,29 +3,69 @@
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     '/',
-    '../css/animations.css',
-    '../favicon/swallowspot_favicon.png',
-    '../images/login_background_2.png',
-    '/auth/signup/',
-    '/auth/login/',
-    "/reports/hydro/",
-    "/reports/snow/",
-    "/profile/"
+    '/templates/layout.html',
+    '/templates/info.html',
+    '/templates/home.html',
+    '/templates/user/settings.html',
+    '/templates/user/profile.html',
+    '/templates/user/admin_profile.html',
+    '/templates/reports/snow.html',
+    '/templates/reports/hydro.html',
+    '/templates/reports/ava.html',
+    '/templates/auth/signup.html',
+    '/templates/auth/login.html',
+    '/templates/auth/login_layout.html',
+    '/temp/login.html',
+    '/static/js/search_bar.js',
+    '/static/js/profile_actions.js',
+    '/static/js/main.js',
+    '/static/js/home.js',
+    '/static/images/swallowspot_title_mini.png',
+    '/static/images/swallowspot_title_mini_darkmode.png',
+    '/static/images/swallowspot_title_main.png',
+    '/static/images/swallowspot_title_main_darkmode.png',
+    '/static/images/swallowspot_footer_icon.png',
+    '/static/images/login_background_darkmode.png',
+    '/static/images/login_background_2.png',
+    '/static/images/bell-solid.svg',
+    '/static/favicon/swallowspot_favicon.png',
+    '/static/css/search.css',
+    '/static/css/login_layout.css',
+    '/static/css/index.css',
+    '/static/css/animations.css',
+    '/static/css/slider/slider.css',
+    '/static/css/slider/slider_visual_mode.css',
+    '/static/css/slider/slider_notification.css',
+    '/static/css/reports/risk.css',
+    '/static/css/info/info.css',
+    '/static/css/home/home.css',
+    '/static/css/account/profile.css',
+    '/static/css/account/admin.css'
 ];
 
 self.addEventListener('install', function (event)       // when the service worker is installed
 {
-    event.waitUntil         // inserisce elementi nella cache della pagina web
+    event.waitUntil         // waits until the event is completed
     (                   
-        caches.open(CACHE_NAME)
-        .then(function(cache)        // promessa 
+        caches.open(CACHE_NAME)         // opens the cache
+        .then(function(cache)           // promise 
         {
+            return cache.addAll
+            ([
+                urlsToCache
+            ]).catch(function(error)
+            {
+                console.error("Errore durante il caricamento: ", error);
+            });
+
+            /*
             return cache.addAll([urlsToCache])
             .catch(function(error)
             {
                 console.error("Error during the loading into the cookies: ", error)
-            });
-        })    
+            }); 
+            */
+        }) 
     );
 });
 
