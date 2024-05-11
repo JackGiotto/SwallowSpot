@@ -27,3 +27,43 @@ function dismissPopOut(pop_out_id, show_id, calendar_id) {
         pop_out.style.right = "auto";
     }, 990);
 }
+
+function getBulletinsDates(type) {
+    return new Promise((resolve, reject) => {
+        $.get("/bulletins_dates", { "type": type })
+            .done(function(data, status) {
+                resolve(JSON.parse(data)['dates']);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching bulletin dates:", errorThrown);
+                reject(new Error("Failed to fetch bulletin dates"));
+            });
+    });
+}
+
+async function createCalendar(type){
+    data = await getBulletinsDates(type);
+    //highlight days
+    let dates = data;
+    classDict = {
+        0: 'event'
+    };
+
+    function get2DigitFmt(val) {
+        return ('0' + val).slice(-2);
+    }
+    
+    flatpickr("#dateInput", {
+        dateFormat: "d-m-Y",
+        altInput: true,
+        altFormat: "j F Y",
+        onDayCreate: function(dObj, dStr, fp, dayElem){
+            let date = dayElem.dateObj,
+            key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),
+            value = classDict[dates[key]];
+            if (value) {
+                dayElem.className += ' ' + value;
+            }
+        }
+    });
+}

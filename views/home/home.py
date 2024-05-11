@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, request
 from models import db
 from utils.risks import convert_risk_color, get_query_last_hydro, parse_date
-from utils.get_data import get_cities
+from utils.get_data import get_cities, get_bulletins_dates
 import json
 
 home_bp = Blueprint('home', __name__, template_folder='templates')
@@ -62,3 +62,10 @@ def home():
 def cities():
     cities = get_cities()
     return json.dumps({'success':True, 'cities': cities}), 200, {'ContentType':'application/json'}
+
+
+@home_bp.route('/bulletins_dates', methods=['GET'])
+def bulletins_dates():
+    type = request.args.get('type')
+    bulletins_dates = get_bulletins_dates(type)
+    return json.dumps({'success':True, 'dates': bulletins_dates}), 200, {'ContentType':'application/json'}

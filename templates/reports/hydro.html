@@ -175,35 +175,13 @@
     </form>
 </div>
 
-<script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
 
 <script>
     //highlight days
-    var dates = {
-        20240513: 0
-    },
-    classDict = {
-        0: 'event'
-    }
-    
-    function get2DigitFmt(val) {
-        return ('0' + val).slice(-2);
-    }
-    
-    flatpickr("#dateInput", {
-        dateFormat: "d-m-Y",
-        altInput: true,
-        altFormat: "j F Y",
-        onDayCreate: function(dObj, dStr, fp, dayElem){
-            var date = dayElem.dateObj,
-            key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),
-            value = classDict[dates[key]];
-            if (value) {
-                dayElem.className += ' ' + value;
-            }
-        }
-    });
+    $(document).ready(createCalendar("hydro"));
 </script>
 
 {% endblock %}
