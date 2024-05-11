@@ -41,8 +41,6 @@
             </div>
             <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
             <button type="submit" class="btn btn-success">Conferma</button>
-            <br>
-            {{msg}}
         </form>
         </div>
         <!--allow notifications-->
@@ -61,6 +59,9 @@
             </form>
         </div>
         
+        <div class="error-msg">
+            {{msg2}}
+        </div>
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
@@ -70,7 +71,11 @@
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
         </div>
         <!--admin section-->
-        <a href="{{ url_for('profile.admin') }}" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
+        {% if show_button %}
+            <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
+                <button type="submit" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+            </form>
+        {% endif %}
         <!--logout-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         <!--delete account-->
@@ -78,7 +83,7 @@
 
         <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog">
-                <form action="/profile/" method="post" class="modal-content">
+                <form action="{{ url_for('profile.user') }}" method="POST" class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="confirmDeleteLabel"><i class="fa-solid fa-eraser"></i> Elimina account</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -101,6 +106,9 @@
                 </form>
             </div>
         </div>
+        <div class="error-msg">
+            {{msgpsw}}
+        </div>
     </div>
 </div>
 
@@ -117,8 +125,22 @@
 </div>
 
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
-
+<input type="hidden" id="hiddenInput" name="hiddenInput" value="{{user_perms}}">
 <script>
+    //check passwords
+    function check_password() {
+        psw1 = $("#textPassword").val();
+        psw2 = $("#textPassword2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+        }
+        $("#confirmPsw2").append(html_block)
+    }
+    
     
     /*autocomplete list size*/
     function setAutocompleteListWidth() {
