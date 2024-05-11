@@ -9,18 +9,17 @@ def get_query_last_hydro(area_name: str, risk_name: str) -> str:
     Returns:
         str: query
     """    
-    
-    
+
     query = f"""SELECT Report.starting_date, Report.ending_date, Color.color_name
-            FROM Report
-            JOIN Criticalness ON Report.ID_report = Criticalness.ID_report
-            JOIN Area ON Criticalness.ID_area = Area.ID_area
-            JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
-            JOIN Color ON Criticalness.ID_color = Color.ID_color
-            WHERE Area.area_name = '{area_name}' and Risk.risk_name = '{risk_name}'
-            ORDER BY Report.ID_report DESC
-            LIMIT 1;
-        """
+                FROM Report
+                JOIN Criticalness ON Report.ID_report = Criticalness.ID_report
+                JOIN Area ON Criticalness.ID_area = Area.ID_area
+                JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
+                JOIN Color ON Criticalness.ID_color = Color.ID_color
+                WHERE Area.area_name = '{area_name}' AND Risk.risk_name = '{risk_name}'
+                ORDER BY starting_date DESC
+                LIMIT 1;
+            """
     return query
 
 
@@ -35,7 +34,7 @@ def get_date_last_snow() -> str:
     query = """
             SELECT Snow_report.date
             FROM Snow_report
-            ORDER BY Snow_report.ID_snow_report DESC
+            ORDER BY Snow_report.date DESC
             LIMIT 1;
     """
     date = db.executeQuery(query)[0]['date']
