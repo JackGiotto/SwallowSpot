@@ -106,3 +106,16 @@
         rotate: 0;
     }
 }
+
+/*events*/
+
+.event {
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    background: #59A4BC;
+}
+
+.event:hover {
+    background: #4c8ca1;
+}
