@@ -13,7 +13,7 @@ const urlsToCache = [
     "/profile/"
 ];
 
-self.addEventListener('install', function (event)       // quando viene installato il mio service worker
+self.addEventListener('install', function (event)       // when the service worker is installed
 {
     event.waitUntil         // inserisce elementi nella cache della pagina web
     (                   

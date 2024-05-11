@@ -64,7 +64,7 @@
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
-                <input type="checkbox" id="toggleNotif" checked />
+                <input type="checkbox" id="toggleNotif" checked  onclick="allowNotifications()"/>
                 <span class="slider3"></span>
             </label>
             <p>Notifiche: <span id="notificationStatus">SI</span></p>
@@ -109,7 +109,7 @@
     <h2>Modifica il tema di visualizzazione</h2>
     <div class="visual-out">
         <label class="switch2">
-            <input type="checkbox" id="toggle" checked />
+            <input type="checkbox" id="toggle" checked/>
             <span class="slider2"></span>
         </label>
         <p><span id="modeStatus">Light</span> Mode</p>
@@ -117,6 +117,7 @@
 </div>
 
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
+<script src="{{url_for('static', filename = 'js/main.js')}}"></script>
 
 <script>
     

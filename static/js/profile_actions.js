@@ -1,8 +1,11 @@
-function showSection(id) {
+
+function showSection(id) 
+{
     document.getElementById(id).style.display = "block";
 }
 
-function dismissSection(id) {
+function dismissSection(id) 
+{
     document.getElementById(id).style.display = "none";
 }
 

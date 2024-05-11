@@ -1,21 +1,36 @@
+// installation of the Service Worker on the browser
 
-if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/js/service_worker.js')
-    .then(function(registration) { // Corrected the function parameter name from 'registration' to 'registration'
-        console.log("Registration is ok ", registration);
+if('serviceWorker' in navigator) 
+{
+    navigator.serviceWorker.register('/static/js/service_worker.js')        // registration of the SW
+    .then(function(registration)                                            // if the SW is register correctly
+    { 
+        console.log("SW registration successfully ", registration);         
     })
-    .catch(function(error) {
-        console.error("There was an error: ", error);
+    .catch(function(error)                                                  // if something go wrong during the registration
+    {
+        console.error("There was an error during SW registration: ", error);
     });
 }
 
-window.onload = function() {
-    document.getElementById('telegram').addEventListener('click', function() {
+function allowNotifications()           // ask the user if he would like to have notfication
+{
+    Notification.requestPermission()
+}
+
+window.onload = function() 
+{
+    document.getElementById('telegram').addEventListener('click', function() 
+    {
         Notification.requestPermission()
-        .then(function(permission) {
-            if(permission === 'granted') {
-                navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification('Notifica push', {
+        .then(function(permission) 
+        {
+            if(permission === 'granted') 
+            {
+                navigator.serviceWorker.ready.then(function(registration) 
+                {
+                    registration.showNotification('Notifica push', 
+                    {
                         body: 'Ciao Pietro'
                     });
                 });
@@ -23,6 +38,9 @@ window.onload = function() {
         });
     });
 }
+
+
+
 
 
 /* 
