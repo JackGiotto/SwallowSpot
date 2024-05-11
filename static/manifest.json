@@ -1,20 +1,44 @@
 {
-    "name": "Swallow Spot",
-    "short_name": "SwSpot",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#007bff",
-    "icons": [
-      {
-        "src": "/static/images/swallowspot_title_mini.png",
-        "sizes": "1080x1080",
-        "type": "image/png"
-      }
-    ],
-    "description": "An awesome Progressive Web App",
-    "orientation": "portrait",
-    "scope": "/",
-    "lang": "it-IT"
-  }
-  
+  "name": "Swallow Spot",
+  "short_name": "SwSpot",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "icons": [
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/pwa_images/swallowspot_pwa_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "description": "An awesome Progressive Web App",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "it-IT"
+}
