@@ -204,6 +204,24 @@
             }
         }
     });
+
+    //light/dark mode
+    var popOut = document.getElementById("popOut");
+    var arrowPopOut = document.getElementById("showPopOut");
+    var dateInput = document.getElementById("dateInput");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        popOut.setAttribute('data-bs-theme', "dark");
+        arrowPopOut.setAttribute('data-bs-theme', "dark");
+        dateInput.setAttribute('data-bs-theme', "dark");
+    }
+    else {
+        //light mode
+        popOut.setAttribute('data-bs-theme', "light");
+        arrowPopOut.setAttribute('data-bs-theme', "light");
+        dateInput.setAttribute('data-bs-theme', "light");
+    }
 </script>
 
 {% endblock %}

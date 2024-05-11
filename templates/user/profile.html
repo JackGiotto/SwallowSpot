@@ -64,7 +64,7 @@
             <form action="{{url_for('profile.user')}}" method="POST">
                 <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
                     <input autocomplete="false" name="hidden" type="text" style="display: none;">
-                    <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                    <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
                     <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
                 </div>
                 <button type="button" class="btn btn-secondary" onclick="dismissSection('changeArea')">Annulla</button>
@@ -194,6 +194,8 @@
         var confirms = document.querySelectorAll(".input-group");
         var requirements = document.getElementById("requirements");
         var triangle = document.getElementById("triangle");
+        var searchbar = document.getElementById("searchbar");
+        var autocomplete = document.getElementById("autocomplete-list");
         
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
@@ -209,6 +211,8 @@
             });
             requirements.setAttribute('data-bs-theme', "light");
             triangle.style.borderBottomColor = "white";
+            searchbar.setAttribute('data-bs-theme', "white");
+            autocomplete.style.backgroundColor = "#white";
         }
         else {
             localStorage.setItem("mode", "dark");
@@ -224,6 +228,8 @@
             });
             requirements.setAttribute('data-bs-theme', "dark");
             triangle.style.borderBottomColor = "#212529";
+            searchbar.setAttribute('data-bs-theme', "dark");
+            autocomplete.style.backgroundColor = "#212529";
         }
     }
     
