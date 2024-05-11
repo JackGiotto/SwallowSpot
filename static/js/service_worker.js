@@ -62,8 +62,6 @@ self.addEventListener('push', function(event)       // quando si effettua richie
     );
 });
 
-
-
 /*
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [

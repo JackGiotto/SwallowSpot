@@ -9,7 +9,6 @@ app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
 sslify = SSLify(app)
 
-
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = "klosterpatia"
 app.register_blueprint(auth_bp, url_prefix='/{}'.format(auth_bp.name))
@@ -18,10 +17,8 @@ app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
 
-
-
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/server.crt', 'certificate/server.key'))
+    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem'))
     
 # pip install Flask-SSLify
 
