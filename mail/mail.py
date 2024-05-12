@@ -5,8 +5,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import time
-
 def authenticate():
+    scope=['https://www.googleapis.com/auth/gmail.readonly']
+
     # Load credentials from file
     credentials = None
     if os.path.exists('credentials.json'):
@@ -17,10 +18,7 @@ def authenticate():
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'secret.json',
-                scopes=['https://www.googleapis.com/auth/gmail.readonly']
-            )
+            InstalledAppFlow.from_client_secrets_file("./secret.json", scopes=scope)
             credentials = flow.run_local_server(port=0)
 
         # Save credentials to file
@@ -28,7 +26,7 @@ def authenticate():
             credentials_file.write(credentials.to_json())
 
     return credentials
-
+"""
 def list_messages(service, user_id='me'):
     try:
         # List messages from inbox
@@ -41,14 +39,9 @@ def list_messages(service, user_id='me'):
                 print('Message snippet: {}'.format(msg['snippet']))
 
     except HttpError as error:
-        print('An error occurred: {}'.format(error))
+        print('An error occurred: {}'.format(error))"""
 
-def get_emails():
-    # Autenticati
-    creds = authenticate_google()
-    # Costruisci l'API client di Gmail
-    service = build('gmail', 'v1', credentials=creds)
-
+def get_emails(credentials, service):
     # Chiamata all'API di Gmail per ottenere le email
     results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
     messages = results.get('messages', [])
@@ -74,7 +67,7 @@ def main():
 
     # Continuously read emails
     while True:
-        list_messages(service)
+        get_emails(credentials, service)
         time.sleep(60)  # Check for new emails every minute
     service.close()
 
