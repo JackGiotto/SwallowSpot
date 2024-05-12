@@ -1,75 +1,90 @@
-import os
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-import time
-def authenticate():
-    scope=['https://www.googleapis.com/auth/gmail.readonly']
+# import the required libraries 
+from googleapiclient.discovery import build 
+from google_auth_oauthlib.flow import InstalledAppFlow 
+from google.auth.transport.requests import Request 
+import pickle 
+import os.path 
+import base64 
+import email 
+from bs4 import BeautifulSoup 
 
-    # Load credentials from file
-    credentials = None
-    if os.path.exists('credentials.json'):
-        credentials = Credentials.from_authorized_user_file('credentials.json')
+# Define the SCOPES. If modifying it, delete the token.pickle file. 
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'] 
 
-    # If credentials are expired or missing, refresh or request new ones
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            InstalledAppFlow.from_client_secrets_file("secret.json", scopes=scope)
-            credentials = flow.run_local_server(port=0)
+def getEmails(): 
+	# Variable creds will store the user access token. 
+	# If no valid token found, we will create one. 
+	creds = None
 
-        # Save credentials to file
-        with open('credentials.json', 'w') as credentials_file:
-            credentials_file.write(credentials.to_json())
+	# The file token.pickle contains the user access token. 
+	# Check if it exists 
+	if os.path.exists('token.pickle'): 
 
-    return credentials
-"""
-def list_messages(service, user_id='me'):
-    try:
-        # List messages from inbox
-        response = service.users().messages().list(userId=user_id, labelIds=['INBOX']).execute()
-        messages = response.get('messages', [])
+		# Read the token from the file and store it in the variable creds 
+		with open('token.pickle', 'rb') as token: 
+			creds = pickle.load(token) 
 
-        if messages:
-            for message in messages:
-                msg = service.users().messages().get(userId=user_id, id=message['id']).execute()
-                print('Message snippet: {}'.format(msg['snippet']))
+	# If credentials are not available or are invalid, ask the user to log in. 
+	if not creds or not creds.valid: 
+		if creds and creds.expired and creds.refresh_token: 
+			creds.refresh(Request()) 
+		else: 
+			flow = InstalledAppFlow.from_client_secrets_file('secret.json', SCOPES) 
+			creds = flow.run_local_server(port=0) 
 
-    except HttpError as error:
-        print('An error occurred: {}'.format(error))"""
+		# Save the access token in token.pickle file for the next run 
+		with open('token.pickle', 'wb') as token: 
+			pickle.dump(creds, token) 
 
-def get_emails(credentials, service):
-    # Chiamata all'API di Gmail per ottenere le email
-    results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
-    messages = results.get('messages', [])
+	# Connect to the Gmail API 
+	service = build('gmail', 'v1', credentials=creds) 
 
-    if not messages:
-        print("Nessuna email trovata.")
-    else:
-        print("Elenco delle email:")
-        for message in messages:
-            msg = service.users().messages().get(userId='me', id=message['id']).execute()
-            # Decodifica il corpo del messaggio
-            raw_data = msg['payload']['parts'][0]['body']['data']
-            message_body = base64.urlsafe_b64decode(raw_data).decode('utf-8')
-            print("From:", msg['payload']['headers'][17]['value'])
-            print("Subject:", msg['payload']['headers'][19]['value'])
-            print("Body:", message_body)
-            print("---------------------------------------")
+	# request a list of all the messages 
+	result = service.users().messages().list(userId='me').execute() 
 
-def main():
-    # Authenticate with Gmail API
-    credentials = authenticate()
-    service = build('gmail', 'v1', credentials=credentials)
+	# We can also pass maxResults to get any number of emails. Like this: 
+	# result = service.users().messages().list(maxResults=200, userId='me').execute() 
+	messages = result.get('messages') 
 
-    # Continuously read emails
-    while True:
-        get_emails(credentials, service)
-        time.sleep(60)  # Check for new emails every minute
-    service.close()
+	# messages is a list of dictionaries where each dictionary contains a message id. 
 
-if __name__ == '__main__':
-    main()
+	# iterate through all the messages 
+	for msg in messages: 
+		# Get the message from its id 
+		txt = service.users().messages().get(userId='me', id=msg['id']).execute() 
+
+		# Use try-except to avoid any Errors 
+		try: 
+			# Get value of 'payload' from dictionary 'txt' 
+			payload = txt['payload'] 
+			headers = payload['headers'] 
+
+			# Look for Subject and Sender Email in the headers 
+			for d in headers: 
+				if d['name'] == 'Subject': 
+					subject = d['value'] 
+				if d['name'] == 'From': 
+					sender = d['value'] 
+
+			# The Body of the message is in Encrypted format. So, we have to decode it. 
+			# Get the data and decode it with base 64 decoder. 
+			parts = payload.get('parts')[0] 
+			data = parts['body']['data'] 
+			data = data.replace("-","+").replace("_","/") 
+			decoded_data = base64.b64decode(data) 
+
+			# Now, the data obtained is in lxml. So, we will parse 
+			# it with BeautifulSoup library 
+			soup = BeautifulSoup(decoded_data , "lxml") 
+			body = soup.body() 
+
+			# Printing the subject, sender's email and message 
+			print("Subject: ", subject) 
+			print("From: ", sender) 
+			print("Message: ", body) 
+			print('\n') 
+		except: 
+			pass
+
+
+getEmails()
