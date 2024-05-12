@@ -1,0 +1,73 @@
+{
+    "risks_columns": {
+        "idraulico": 3,
+        "idrogeologico": 4,
+        "idrogeologico con temporali": 5
+    },
+    "risks_template": {
+        "Vene-A": {
+            "row": 5,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-H": {
+            "row": 6,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-B": {
+            "row": 7,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-C": {
+            "row": 8,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-D": {
+            "row": 9,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-E": {
+            "row": 10,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-F": {
+            "row": 11,
+            "risks_value": {
+                "idraulico" : "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }
+        },
+        "Vene-G": {
+            "row": 12,
+            "risks_value": {
+                "idraulico": "",
+                "idrogeologico": "",
+                "idrogeologico con temporali": ""
+            }	
+        }
+    }
+}
