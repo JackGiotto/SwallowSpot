@@ -18,7 +18,7 @@ def authenticate():
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
-            InstalledAppFlow.from_client_secrets_file("./secret.json", scopes=scope)
+            InstalledAppFlow.from_client_secrets_file("secret.json", scopes=scope)
             credentials = flow.run_local_server(port=0)
 
         # Save credentials to file
