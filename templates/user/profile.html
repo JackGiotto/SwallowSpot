@@ -78,10 +78,10 @@
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
-                <input type="checkbox" id="toggleNotif" checked />
+                <input type="checkbox" id="toggleNotif" />
                 <span class="slider3"></span>
             </label>
-            <p>Notifiche: <span id="notificationStatus">SI</span></p>
+            <p>Notifiche: <span id="notificationStatus">NO</span></p>
         </div>
         <!--admin section-->
         {% if show_button %}
@@ -234,12 +234,13 @@
     }
     
     //notifications
-    if(localStorage.getItem("notifications") == "off") {        //check the notifications state from the local storage variable
-        document.getElementById("toggleNotif").checked = false;
+    if(localStorage.getItem("notifications") == "on") {        //check the notifications state from the local storage variable
+        document.getElementById("toggleNotif").checked = true;
         changeNotif();
     }
     else {
-        document.getElementById("toggleNotif").checked = true;
+        document.getElementById("toggleNotif").checked = false
+        changeNotif();;
     }
     
     document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status

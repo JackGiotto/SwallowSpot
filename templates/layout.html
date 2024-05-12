@@ -34,8 +34,7 @@
         <div id="links">
             <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i> Home</a>
             <a href="{{ url_for('reports.hydro') }}" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
-            <a href="" class="shrink2"><i class="fa-solid fa-circle-down"></i> Scarica Bollettini</a>
-            <!--<a href="" class="shrink2"><i class="fa-solid fa-bookmark"></i> Info e Legende</a>-->
+            <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i> Info e legende sui rischi</a>
         </div>
         <!--login-->
         <div id="login" class="nav-sides" title="Profilo e impostazioni">
@@ -54,7 +53,6 @@
                 <h5>Links principali</h5>
                 <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
                 <a href="{{ url_for('reports.hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
-                <a href=""><i class="fa-solid fa-circle-down"></i>&ThickSpace; Scarica bollettini</a>
                 <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
             <div id="account">
