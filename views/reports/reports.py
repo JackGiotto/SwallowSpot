@@ -7,6 +7,7 @@ from datetime import datetime
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
+
 @reports_bp.route('/hydro/', methods=['GET'])
 def hydro():
     if not 'date' in request.args:
@@ -21,28 +22,51 @@ def hydro():
 
     return render_template("reports/hydro.html", data = data)
 
-@reports_bp.route('/reports.downloadpdf/', methods=['GET','POST'])
-def downloadpdf():
-    print("prova") 
+
+@reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
+def downloadpdfSnow():
     db.connect()
-    print("prova")     
-    print("prova") 
+    
     if request.method == 'GET':
         date = request.args.get('date')
-    print("old",date)    
+    date=date+" 00:00"
     date=converti_data(date)
-    print("new",date)	
+   
+    query = f"""SELECT Snow_report.path
+                FROM Snow_report
+                WHERE Snow_report.date LIKE '{date}%'
+                ORDER BY date DESC
+                LIMIT 1;
+            """
+   
+    pdf_path=db.executeQuery(query)
+    pdf_path=pdf_path[0]['path']
+    pdf_path="static/bulletins/snow/prov.pdf"
+    nome_file = os.path.basename(pdf_path)
+    return send_file(pdf_path, as_attachment=True)    
+
+
+@reports_bp.route('/reports.downloadpdfIdro/', methods=['GET','POST'])
+def downloadpdfIdro():
+  
+    db.connect()
+
+    if request.method == 'GET':
+        date = request.args.get('date')
+   
+    date=converti_data(date)
+   
     query = f"""SELECT Report.path
                 FROM Report
                 WHERE Report.starting_date LIKE '{date}%'
                 ORDER BY starting_date DESC
                 LIMIT 1;
             """
-    print("prova")     
+      
     pdf_path=db.executeQuery(query)
     pdf_path=pdf_path[0]['path']
-    print("prova",pdf_path)
-    pdf_path="static/bulletin/prov.pdf"
+    
+    pdf_path="static/bulletins/idro/prov.pdf"
     nome_file = os.path.basename(pdf_path)
     return send_file(pdf_path, as_attachment=True)    
 
