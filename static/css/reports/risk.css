@@ -150,3 +150,16 @@
     font-weight: bold;
     font-size: 200%;
 }
+
+/*bullettin not found*/
+
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.not-found h2 {
+    color: rgb(180, 59, 59);
+}
