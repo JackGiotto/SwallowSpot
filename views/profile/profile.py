@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, redirect, session, request, url_fo
 from models import db
 from utils.password import hash_password, has_uppercase, has_number, has_special_character
 from utils.get_data import get_cities
-import os
 import json
+from utils.bulletins_utils import save_bulletin
 from models import db
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
@@ -150,3 +150,10 @@ def new_admin():
             return render_template("user/admin_profile.html", msg_error_user = f"Errore: puoi aggiungere agli admin solo utenti non admin")
     else:
         return render_template("user/admin_profile.html", msg_error_user = f"Username non trovato")
+
+@profile_bp.route('/profile/new_bulletin', methods=['POST'])
+def new_bulletin():
+    result = save_bulletin(request.files['uploadReport'])
+    if (result[0] == "-"):
+        return render_template("user/admin_profile.html", upload_error = "Errore: il file inserito non è leggibile") 
+    return render_template("user/admin_profile.html")

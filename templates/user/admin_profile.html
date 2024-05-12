@@ -10,7 +10,7 @@
         <h1>Sezione Utente <strong style="color: #00667C">Amministratore</strong></h1>
         <!--insert report manually-->
         <h2 class="mt-3">Carica un bollettino <span style="color: #00667C;">manualmente</span></h2>
-        <form action="" method="post" class="uploadContainer mt-4" id="uploadArea">
+        <form action="{{ url_for('profile.new_bulletin') }}" method="POST" class="uploadContainer mt-4" id="uploadArea"  enctype="multipart/form-data">
             <label for="uploadReport" class="labelFile">
                 <span>
                     <svg

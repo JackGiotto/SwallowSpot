@@ -1,5 +1,6 @@
 from models import db
 
+
 def get_cities(want_list = False):
     """get all cities saved in the database
 
@@ -41,3 +42,12 @@ def get_bulletins_dates(type: str) -> dict["str", "str"]:
         print (result[index])
    
     return result
+
+def convert_date(date: str) -> str:
+    """converts date from italian to american (used in bulletin analysis)
+    """
+    splitted= date.split("-")
+    day = splitted[0]
+    month = splitted[1]
+    year = splitted[2]
+    return year + "-" + month + "-" + day

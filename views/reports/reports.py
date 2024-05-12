@@ -37,7 +37,7 @@ def snow():
         date = parse_date_it_us(date + " 00:00:00")
         
     else:
-        title = "Ultimo Bollettino"
+        title = "Ultimo bollettino"
     print("date", date)
     data = _get_all_bulletin_snow(date)
 
