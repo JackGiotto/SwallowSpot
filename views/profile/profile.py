@@ -85,25 +85,15 @@ def logout():
 def admin():
 
     # checks if user is admin
-    id_user = db.executeQuery("SELECT ID_user FROM User WHERE username ='"+session["username"]+"';")
-    id_user = id_user[0]["ID_user"]
     id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
     id_role = id_role[0]["ID_role"]
 
     if id_role <= 1:
         return redirect(url_for("profile.user"))
-    elif id_role > 2:
-        backup = f"""
-                    <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
-                    <div class="input-group mt-2">
-                        <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup">
-                    </div>
-                    <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn"><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
-                    <p class="mt-1">Il file di backup viene salvato (dove?)</p>
-                """
+    elif id_role == 3:
+        session["superadmin"] = 1
 
-
-    return render_template("user/admin_profile.html", super_admin = backup)
+    return render_template("user/admin_profile.html")
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
 def insert_id():    
@@ -128,8 +118,8 @@ def insert_id():
     # Ritorna una risposta di successo o reindirizza a una nuova pagina
     return render_template("user/admin_profile.html")
 
-@profile_bp.route('/profile/new_admin', methods=['POST'])
-def new_admin():
+@profile_bp.route('/profile/change_to_admin', methods=['POST'])
+def change_to_admin():
     new_admin_username = request.form["newAdminUser"]
     query = f"""SELECT ID_role
                 FROM User
@@ -147,9 +137,47 @@ def new_admin():
             db.executeQuery(query)
             return render_template("user/admin_profile.html", msg_success_user = f"Aggiunto {new_admin_username} agli admin")
         else:
-            return render_template("user/admin_profile.html", msg_error_user = f"Errore: puoi aggiungere agli admin solo utenti non admin")
+            return render_template("user/admin_profile.html", msg_error_user = f"Errore: Puoi aggiungere agli admin solo utenti non admin")
     else:
-        return render_template("user/admin_profile.html", msg_error_user = f"Username non trovato")
+        return render_template("user/admin_profile.html", msg_error_user = f"Errore: Username non trovato")
+
+@profile_bp.route('/profile/new_admin', methods=['POST'])
+def new_admin():
+        # check if credential are correct
+        new_admin_username = request.form["username"]
+        password = request.form["new_password"]
+        id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
+        id_role = id_role[0]["ID_role"]
+
+        if (new_admin_username == ''):
+            return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
+        if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
+            print("Length condition or case condition or special character condition or number condition is met")
+            return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
+        
+        password = hash_password(password)
+        city = request.form["city"]
+        if city not in get_cities(want_list=True):
+            return render_template("user/admin_profile.html", new_msg_error="Errore: Il comune inserito non è valido")
+        # zone = request.form["zone"]
+        # confronto credenziali con DB
+
+        sql = "SELECT username FROM User where username = '" + new_admin_username + "';"
+        result = db.executeQuery(sql)
+
+        # check if username is already taken
+        if bool(result):
+            return render_template("user/admin_profile.html", new_msg_error="Errore: L'username inserito è già utilizzato da un altro utente")
+        else:
+            ID_area_query = f''' SELECT Topology.ID_area 
+                                FROM Topology
+                                WHERE Topology.city_name = "{city}"
+                            '''
+            ID_area = db.executeQuery(ID_area_query)
+            # save credentials into database
+            db.executeQuery("INSERT INTO User (username, password, ID_area, ID_role) VALUES ('" + new_admin_username + "', '" + password + "', " + str(ID_area[0]["ID_area"]) +", 2);")
+            return render_template("user/admin_profile.html", new_msg_success="Account creato con successo")
+
 
 @profile_bp.route('/profile/new_bulletin', methods=['POST'])
 def new_bulletin():
@@ -157,3 +185,4 @@ def new_bulletin():
     if ("Errore" in result):
         return render_template("user/admin_profile.html", upload_error = result) 
     return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")
+
