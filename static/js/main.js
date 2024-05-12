@@ -1,19 +1,16 @@
 // installation of the Service Worker on the browser
 
-if('serviceWorker' in navigator) 
+if('serviceWorker' in navigator)        // if service worker are supported
 {
-    navigator.serviceWorker.register('/static/js/service_worker.js')        // registration of the SW
-    .then(function(registration)                                            // if the SW is register correctly
-    { 
-        console.log("SW registration successfully ", registration);         
-    })
-    .catch(function(error)                                                  // if something go wrong during the registration
-    {
-        console.error("There was an error during SW registration: ", error);
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+        .register('../../service_worker.js')        // registration of the SW
+        .then(reg => console.log("SW registration successfully "))
+        .catch(err => console.error("There was an error during SW registration: ", err));
     });
 }
 
-function allowNotifications()           // ask the user if he would like to have notfication
+/* function allowNotifications()           // ask the user if he would like to have notfication
 {
     Notification.requestPermission()
 }
@@ -37,7 +34,7 @@ window.onload = function()
             }
         });
     });
-}
+} */
 
 
 

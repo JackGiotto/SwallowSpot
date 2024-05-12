@@ -1,6 +1,100 @@
-// service-worker
+// service worker
+self.addEventListener('install', e => {
+    console.log("ServiceWorker: installed");
+});
 
-const CACHE_NAME = 'my-site-cache-v1';
+self.addEventListener('activate', e => {
+    console.log("ServiceWorker: activated");
+});
+
+/* const CACHE_NAME = 'my-site-cache-v1';
+const urlsToCache = [
+    '/',
+    '/templates/layout.html',
+    '/templates/info.html',
+    '/templates/home.html',
+    '/templates/user/settings.html',
+    '/templates/user/profile.html',
+    '/templates/user/admin_profile.html',
+    '/templates/reports/snow.html',
+    '/templates/reports/hydro.html',
+    '/templates/reports/ava.html',
+    '/templates/auth/signup.html',
+    '/templates/auth/login.html',
+    '/templates/auth/login_layout.html',
+    '/temp/login.html',
+    '/static/js/search_bar.js',
+    '/static/js/profile_actions.js',
+    '/static/js/main.js',
+    '/static/js/home.js',
+    '/static/images/swallowspot_title_mini.png',
+    '/static/images/swallowspot_title_mini_darkmode.png',
+    '/static/images/swallowspot_title_main.png',
+    '/static/images/swallowspot_title_main_darkmode.png',
+    '/static/images/swallowspot_footer_icon.png',
+    '/static/images/login_background_darkmode.png',
+    '/static/images/login_background_2.png',
+    '/static/images/bell-solid.svg',
+    '/static/favicon/swallowspot_favicon.png',
+    '/static/css/search.css',
+    '/static/css/login_layout.css',
+    '/static/css/index.css',
+    '/static/css/animations.css',
+    '/static/css/slider/slider.css',
+    '/static/css/slider/slider_visual_mode.css',
+    '/static/css/slider/slider_notification.css',
+    '/static/css/reports/risk.css',
+    '/static/css/info/info.css',
+    '/static/css/home/home.css',
+    '/static/css/account/profile.css',
+    '/static/css/account/admin.css',
+];
+
+self.addEventListener('install', function (event)       // when the service worker is installed
+{
+    event.waitUntil         // waits until the event is completed
+    (                   
+        caches.open(CACHE_NAME)         // opens the cache
+        .then(function(cache)           // promise 
+        {
+            return cache.addAll
+            ([
+                '/',
+                '/manifest.json'
+            ])
+            .catch(function(error)
+            {
+                console.error("Error during the loading into the cookies: ", error)
+            }); 
+        }) 
+    );
+});
+
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        caches.match(event.request)
+        .then(function(response) {
+            // Cache hit - return response
+            if (response) {
+                return response;
+            }
+            return fetch(event.request);
+        })
+    );
+});
+
+self.addEventListener('push', function(event) {
+    const options = {
+        body: event.data.text(),
+    };
+
+    event.waitUntil(
+        self.registration.showNotification('Push notification', options)
+    );
+}); */
+
+
+/* const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     '/',
     '/templates/layout.html',
@@ -52,7 +146,8 @@ self.addEventListener('install', function (event)       // when the service work
         {
             return cache.addAll
             ([
-                urlsToCache
+                '/',
+                '/home/martinidatabase/swallowspot/swallowspot/requirements.txt'
             ]).catch(function(error)
             {
                 console.error("Errore durante il caricamento: ", error);
@@ -64,7 +159,7 @@ self.addEventListener('install', function (event)       // when the service work
             {
                 console.error("Error during the loading into the cookies: ", error)
             }); 
-            */
+            *//*
         }) 
     );
 });
@@ -100,7 +195,8 @@ self.addEventListener('push', function(event)       // quando si effettua richie
     (
         self.registration.showNotification('Push notification', options)        // shows a notification
     );
-});
+}); 
+*/
 
 /*
 const CACHE_NAME = 'my-site-cache-v1';
