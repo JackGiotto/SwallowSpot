@@ -23,8 +23,7 @@ def hydro():
 
 
     if data == None:
-        # redirect to error page
-        pass
+        return render_template("reports/hydro_error.html")
 
     return render_template("reports/hydro.html", data = data, title = title)
 
@@ -68,17 +67,7 @@ def downloadpdfIdro():
         pdf_path=pdf_path[0]['path']
         print(pdf_path)
 
-        return send_file(pdf_path, as_attachment=True)    
-
-
-
-def converti_data(data_stringa):
-    # Formattare la stringa di input come una data
-    data = datetime.strptime(data_stringa, "%d/%m/%Y %H:%M")
-    # Convertire la data nel formato desiderato
-    data_formattata = data.strftime("%Y-%m-%d %H:%M:%S")
-    return data_formattata
-
+        return send_file(pdf_path, as_attachment=True)
 
 @reports_bp.route('/snow/', methods=['GET'])
 def snow():
@@ -97,14 +86,9 @@ def snow():
     data = _get_all_bulletin_snow(date)
 
     if data == None:
-        # redirect to error page
-        pass
+        return render_template("reports/snow_error.html")
 
     return render_template("reports/snow.html", data = data, title=title)
-
-@reports_bp.route('/ava/')
-def ava():
-    return render_template("reports/ava.html")
 
 @reports_bp.route('/')
 def reports():
