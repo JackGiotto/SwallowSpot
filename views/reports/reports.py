@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request ,send_file
 from models import db
 import json
 from utils.risks import convert_risk_color, get_query_last_hydro, get_query_hydro, get_query_snow, get_date_last_snow, parse_date_us_it, parse_date_it_us
+import os
+from datetime import datetime
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
+
 
 @reports_bp.route('/hydro/', methods=['GET'])
 def hydro():
@@ -24,6 +27,64 @@ def hydro():
         pass
 
     return render_template("reports/hydro.html", data = data, title = title)
+
+
+@reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
+def downloadpdfSnow():
+    db.connect()
+    
+    if request.method == 'GET':
+        date = request.args.get('date')
+    date=date+" 00:00"
+    date=converti_data(date)
+   
+    query = f"""SELECT Snow_report.path
+                FROM Snow_report
+                WHERE Snow_report.date LIKE '{date}%'
+                ORDER BY date DESC
+                LIMIT 1;
+            """
+   
+    pdf_path=db.executeQuery(query)
+    pdf_path=pdf_path[0]['path']
+    pdf_path="static/bulletins/snow/prov.pdf"
+    nome_file = os.path.basename(pdf_path)
+    return send_file(pdf_path, as_attachment=True)    
+
+
+@reports_bp.route('/reports.downloadpdfIdro/', methods=['GET','POST'])
+def downloadpdfIdro():
+  
+    db.connect()
+
+    if request.method == 'GET':
+        date = request.args.get('date')
+   
+    date=converti_data(date)
+   
+    query = f"""SELECT Report.path
+                FROM Report
+                WHERE Report.starting_date LIKE '{date}%'
+                ORDER BY starting_date DESC
+                LIMIT 1;
+            """
+      
+    pdf_path=db.executeQuery(query)
+    pdf_path=pdf_path[0]['path']
+    
+    pdf_path="static/bulletins/idro/prov.pdf"
+    nome_file = os.path.basename(pdf_path)
+    return send_file(pdf_path, as_attachment=True)    
+
+
+
+def converti_data(data_stringa):
+    # Formattare la stringa di input come una data
+    data = datetime.strptime(data_stringa, "%d/%m/%Y %H:%M")
+    # Convertire la data nel formato desiderato
+    data_formattata = data.strftime("%Y-%m-%d %H:%M:%S")
+    return data_formattata
+
 
 @reports_bp.route('/snow/', methods=['GET'])
 def snow():
