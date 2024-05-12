@@ -7,7 +7,7 @@
     <div class="categories mb-3">
         <a href="{{ url_for('reports.hydro') }}" class="btn btn-success m-2 btn-lg">Rischi idrologici</a>
         <a href="{{ url_for('reports.snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
-        <a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>
+        <!--<a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>-->
     </div>
     <p id="lastUpdate">
         Ultimo aggiornamento:<br>
@@ -182,6 +182,24 @@
 <script>
     //highlight days
     $(document).ready(createCalendar("hydro"));
+
+    //light/dark mode
+    var popOut = document.getElementById("popOut");
+    var arrowPopOut = document.getElementById("showPopOut");
+    var dateInput = document.getElementById("dateInput");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        popOut.setAttribute('data-bs-theme', "dark");
+        arrowPopOut.setAttribute('data-bs-theme', "dark");
+        dateInput.setAttribute('data-bs-theme', "dark");
+    }
+    else {
+        //light mode
+        popOut.setAttribute('data-bs-theme', "light");
+        arrowPopOut.setAttribute('data-bs-theme', "light");
+        dateInput.setAttribute('data-bs-theme', "light");
+    }
 </script>
 
 {% endblock %}

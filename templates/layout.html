@@ -34,8 +34,7 @@
         <div id="links">
             <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i> Home</a>
             <a href="{{ url_for('reports.hydro') }}" class="shrink1"><i class="fa-solid fa-triangle-exclamation"></i> Ultimi Bollettini</a>
-            <a href="" class="shrink2"><i class="fa-solid fa-circle-down"></i> Scarica Bollettini</a>
-            <!--<a href="" class="shrink2"><i class="fa-solid fa-bookmark"></i> Info e Legende</a>-->
+            <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i> Info e legende sui rischi</a>
         </div>
         <!--login-->
         <div id="login" class="nav-sides" title="Profilo e impostazioni">
@@ -54,10 +53,9 @@
                 <h5>Links principali</h5>
                 <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
                 <a href="{{ url_for('reports.hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
-                <a href=""><i class="fa-solid fa-circle-down"></i>&ThickSpace; Scarica bollettini</a>
                 <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
-            {% if 'username' not in session%}
+            {% if 'username' not in session %}
                 <div id="account">
                     <h5>Account</h5>
                     <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
@@ -145,7 +143,6 @@
                     <div class="column">
                         <div class="row foot-subtitle">Creato con</div>
                         <div class="row">Flask</div>
-                        <div class="row">Ajax</div>
                         <div class="row">Bootstrap</div>
                         <div class="row">Font Awesome</div>
                         <div class="row">W3schools</div>
@@ -229,20 +226,23 @@
         });
     });
 
-    //check if identical passwords
-    function check_password() {
-        psw1 = $("#psw1").val();
-        psw2 = $("#psw2").val();
-        $("#confirmPsw2").empty();
-        html_block = "";
-        if (psw1 === psw2 && psw1 != '') {
-            html_block = '<i class="fa-solid fa-check"></i>';
-            $("#psw-submit").prop("type", "submit");
-        } else {
-            html_block = '<i class="fa-solid fa-xmark"></i>';
-            $("#psw-submit").prop("type", "button");
-        }
-        $("#confirmPsw2").append(html_block)
+    //show psw requirements
+    function showRequirements() {
+        var bubble = document.getElementById("requirements");
+
+        bubble.classList.remove("dismissed");
+        bubble.classList.add("showing");
+        bubble.style.display = "block";
+        bubble.style.opacity = "1";
+    }
+
+    function dismissRequirements() {
+        var bubble = document.getElementById("requirements");
+
+        bubble.classList.remove("showing");
+        bubble.classList.add("dismissed");
+        bubble.style.display = "none";
+        bubble.style.opacity = "0";
     }
 </script>
 <!-- in caso di necessità-->

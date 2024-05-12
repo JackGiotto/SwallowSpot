@@ -84,7 +84,7 @@
         </p>
         <form method="POST" action="{{ url_for('profile.insert_id') }}">
             <div class="input-group mb-2">
-                <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInputs()">
+                <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInput(this)">
                 <span class="input-group-text" id="confirmIDcheck">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
@@ -109,18 +109,56 @@
         </p>
             <div class="input-group mb-2">
                 <span class="input-group-text" id="basic-addon1">-</span>
-                <input type="text" class="form-control" id="GroupID" name="GroupID" placeholder="ID gruppo Telegram" oninput="checkInputs()">
-
+                <input type="text" class="form-control" id="GroupID" name="GroupID" placeholder="ID gruppo Telegram" oninput="checkGroupInput(this)">
                 <span class="input-group-text" id="confirmGroupIDcheck">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
             </div>
             <div id="error2" class="error-msg mb-3"></div>
 
-            <button type="submit" class="btn btn-success" id="confirmButton">Conferma</button>
+            <button type="submit" class="btn btn-success" id="confirmButton" disabled>Conferma</button>
         </form>
+
         <!--create new admin user-->
         <h2 class="mt-3">Crea un nuovo profilo <span style="color: #00667C;">Amministratore</span></h2>
+        <form action="{{ url_for('auth.signup') }}" method="post">
+            <div class="input-group mb-3">
+                <input name="username" id="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
+            </div>
+            <div id="pswRequirements" class="mb-3">
+                <div class="input-group mb-2 mt-2">
+                    <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">
+                    <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
+                </div>
+                <div id="requirements" class="card">
+                    <div class="triangle-up" id="triangle"></div>
+                    La password deve contenere almeno:
+                    <ul>
+                        <li>8 caratteri</li>
+                        <li>un numero</li>
+                        <li>una lettera maiuscola</li>
+                        <li>un carattere speciale</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input name="password2" type="password" class="form-control" id="psw2" placeholder="Conferma password" onkeyup="check_password()" aria-label="Password" aria-describedby="showPasswordToggle2">
+                <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+                <span class="input-group-text" id="confirmPsw2">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+            <div id="searchbar" class="mb-3">        <!--search bar-->
+                <input autocomplete="false" name="hidden" type="text" style="display: none;">
+                <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
+            </div>
+            <div class="error-msg">
+                {{msg}}
+            </div>
+            <br>
+            <button type="button" id="create-submit" class="btn btn-success mb-2" >Registra nuovo account</button>
+        </form>
 
         <!--add admin user from existing account-->
         <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
@@ -139,16 +177,39 @@
         <a href="{{ url_for('profile.user') }}" class="btn btn-success btn-lg mt-5"><i class="fa-solid fa-gear"></i> Impostazioni del profilo</a>
 
         <!--super admin actions-->
-        <h1 class="mt-5">Sezione Utente <strong style="color: #00667C">Super Amministratore</strong></h1>
-        <!--backups-->
-        {{ super_admin|safe }}
-        <div class="error-msg">
-            {{ip_error}}
-        </div>
+        {% if ('username' in session) %}
+            <h1 class="mt-5">Sezione Utente <strong style="color: #00667C">Super Amministratore</strong></h1>
+            <!--backups-->
+            <div class="error-msg">
+            <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
+            <div class="input-group mt-2">
+                <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup" oninput="checkInputIP(this)" maxlength="15">
+                <span class="input-group-text" id="confirmIPcheck">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+            <div class="error-msg mb-3">
+                <div id="IPerror"></div>
+                {{ip_error}}
+            </div>
+            <button type="button" class="btn btn-success btn-lg mt-2" id="backupBtn" disabled><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
+            <p class="mt-1">Il file di backup viene salvato (dove?)</p>
+        {% endif %}
     </div>
 </div>
 
+<script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
+
 <script>
+    /*autocomplete list size*/
+    function setAutocompleteListWidth() {
+        var inputWidth = document.getElementById('bar').offsetWidth;
+        document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
+    }
+
+    document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
+    window.addEventListener('resize', setAutocompleteListWidth);
+
     //show file name under the upload button
     var input = document.getElementById( 'uploadReport' );
     var infoArea = document.getElementById( 'fileName' );
@@ -184,6 +245,43 @@
         });
     }
 
+    //check if identical passwords
+    function check_password() {
+        psw1 = $("#psw1").val();
+        psw2 = $("#psw2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            //$("#psw-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            //$("#psw-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }
+
+    //enable create button
+    document.addEventListener('DOMContentLoaded', function() {
+        var input1 = document.getElementById('username');
+        var input2 = document.getElementById('psw1');
+        var input3 = document.getElementById('psw2');
+        var input4 = document.getElementById('bar');
+        var button = document.getElementById('create-submit');
+    
+        function controlInput() {
+            if (input1.value.trim() !== '' && input2.value.trim() !== '' && input3.value.trim() !== '' && input4.value.trim() !== '' && input2.value == input3.value) {
+                button.type = "submit";
+            } else {
+                button.type = "button";
+            }
+        }
+    
+        input1.addEventListener('input', controlInput);
+        input2.addEventListener('input', controlInput);
+        input3.addEventListener('input', controlInput);
+        input4.addEventListener('input', controlInput);
+    });
 </script>
 
 {% endblock %}

@@ -52,7 +52,7 @@
                     </span>
                 </div>
                 <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
-                <button type="submit" class="btn btn-success">Conferma</button>
+                <button type="button" class="btn btn-success" id="psw-submit">Conferma</button>
                 <br>
                 {{msg}}
             </form>
@@ -64,7 +64,7 @@
             <form action="{{url_for('profile.user')}}" method="POST">
                 <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
                     <input autocomplete="false" name="hidden" type="text" style="display: none;">
-                    <input type="text"placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                    <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
                     <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
                 </div>
                 <button type="button" class="btn btn-secondary" onclick="dismissSection('changeArea')">Annulla</button>
@@ -78,11 +78,16 @@
         <!--notification switch-->
         <div class="visual-out mt-5">
             <label class="switch3">
-                <input type="checkbox" id="toggleNotif" checked />
+                <input type="checkbox" id="toggleNotif" />
                 <span class="slider3"></span>
             </label>
-            <p>Notifiche: <span id="notificationStatus">SI</span></p>
+            <p>Notifiche: <span id="notificationStatus">NO</span></p>
         </div>
+        <p class="mt-1">
+            Se attivi le notifiche avrai la possibilit&agrave; di ricevere un avviso ogni qualvolta il tuo paese rientri in una zona di pericolo.
+            <br>
+            (Funziona solo se sei connesso ad internet)
+        </p>
         <!--admin section-->
         {% if show_button %}
             <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
@@ -173,6 +178,22 @@
             $(this).find('i').toggleClass('fa-eye fa-eye-slash');
         });
     });
+
+    //check if identical passwords
+    function check_password() {
+        psw1 = $("#psw1").val();
+        psw2 = $("#psw2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#psw-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#psw-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }
     
     //dark / light mode
     if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
@@ -194,6 +215,8 @@
         var confirms = document.querySelectorAll(".input-group");
         var requirements = document.getElementById("requirements");
         var triangle = document.getElementById("triangle");
+        var searchbar = document.getElementById("searchbar");
+        var autocomplete = document.getElementById("autocomplete-list");
         
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
@@ -209,6 +232,8 @@
             });
             requirements.setAttribute('data-bs-theme', "light");
             triangle.style.borderBottomColor = "white";
+            searchbar.setAttribute('data-bs-theme', "white");
+            autocomplete.style.backgroundColor = "#white";
         }
         else {
             localStorage.setItem("mode", "dark");
@@ -224,16 +249,19 @@
             });
             requirements.setAttribute('data-bs-theme', "dark");
             triangle.style.borderBottomColor = "#212529";
+            searchbar.setAttribute('data-bs-theme', "dark");
+            autocomplete.style.backgroundColor = "#212529";
         }
     }
     
     //notifications
-    if(localStorage.getItem("notifications") == "off") {        //check the notifications state from the local storage variable
-        document.getElementById("toggleNotif").checked = false;
+    if(localStorage.getItem("notifications") == "on") {        //check the notifications state from the local storage variable
+        document.getElementById("toggleNotif").checked = true;
         changeNotif();
     }
     else {
-        document.getElementById("toggleNotif").checked = true;
+        document.getElementById("toggleNotif").checked = false
+        changeNotif();;
     }
     
     document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status
