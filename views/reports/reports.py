@@ -143,7 +143,7 @@ def _get_all_bulletin_snow(date = "last") -> dict[str, dict[str, str]]:
         if bulletin == None:
             return None
         result[area] = bulletin
-        
+    print("RISULTATO", json.dumps(result, indent="\t"))
     return result
     
 
