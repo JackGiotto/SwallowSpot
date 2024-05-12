@@ -17,10 +17,7 @@ def getEmails():
 	creds = None
 
 	# The file token.pickle contains the user access token. 
-	# Check if it exists 
 	if os.path.exists('token.pickle'): 
-
-		# Read the token from the file and store it in the variable creds 
 		with open('token.pickle', 'rb') as token: 
 			creds = pickle.load(token) 
 
