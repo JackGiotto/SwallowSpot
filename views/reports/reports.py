@@ -13,11 +13,17 @@ def hydro():
     date = request.args['date']
     data = _get_all_bulletin_hydro(date)
 
+    if date == "last":
+        title = "Ultimo bollettino"
+    else:
+        title = "Bollettino del: " + date.replace("-", "/")
+
+
     if data == None:
         # redirect to error page
         pass
 
-    return render_template("reports/hydro.html", data = data)
+    return render_template("reports/hydro.html", data = data, title = title)
 
 @reports_bp.route('/snow/', methods=['GET'])
 def snow():
@@ -27,7 +33,11 @@ def snow():
     date = request.args['date']
     if date != 'last':
         print(date)
+        title = "Bollettino del: " + date.replace("-", "/")
         date = parse_date_it_us(date + " 00:00:00")
+        
+    else:
+        title = "Ultimo Bollettino"
     print("date", date)
     data = _get_all_bulletin_snow(date)
 
@@ -35,7 +45,7 @@ def snow():
         # redirect to error page
         pass
 
-    return render_template("reports/snow.html", data = data)
+    return render_template("reports/snow.html", data = data, title=title)
 
 @reports_bp.route('/ava/')
 def ava():
