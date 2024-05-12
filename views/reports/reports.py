@@ -31,50 +31,44 @@ def hydro():
 
 @reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
 def downloadpdfSnow():
-    db.connect()
     
     if request.method == 'GET':
         date = request.args.get('date')
-    date=date+" 00:00"
-    date=converti_data(date)
-   
-    query = f"""SELECT Snow_report.path
-                FROM Snow_report
-                WHERE Snow_report.date LIKE '{date}%'
-                ORDER BY date DESC
-                LIMIT 1;
-            """
-   
-    pdf_path=db.executeQuery(query)
-    pdf_path=pdf_path[0]['path']
-    pdf_path="static/bulletins/snow/prov.pdf"
-    nome_file = os.path.basename(pdf_path)
-    return send_file(pdf_path, as_attachment=True)    
+        date=date+" 00:00:00"
+        date=parse_date_it_us(date)
+        query = f"""SELECT Snow_report.path
+                    FROM Snow_report
+                    WHERE Snow_report.date LIKE '{date}%'
+                    ORDER BY date DESC
+                    LIMIT 1;
+                """
+    
+        pdf_path=db.executeQuery(query)
+        pdf_path=pdf_path[0]['path']
+        print(pdf_path)
+
+        return send_file(pdf_path, as_attachment=True)  
 
 
-@reports_bp.route('/reports.downloadpdfIdro/', methods=['GET','POST'])
+@reports_bp.route('/reports/downloadpdfIdro/', methods=['GET'])
 def downloadpdfIdro():
-  
-    db.connect()
-
     if request.method == 'GET':
         date = request.args.get('date')
-   
-    date=converti_data(date)
-   
-    query = f"""SELECT Report.path
-                FROM Report
-                WHERE Report.starting_date LIKE '{date}%'
-                ORDER BY starting_date DESC
-                LIMIT 1;
-            """
-      
-    pdf_path=db.executeQuery(query)
-    pdf_path=pdf_path[0]['path']
+        date = date +":00"
+        date=parse_date_it_us(date)
     
-    pdf_path="static/bulletins/idro/prov.pdf"
-    nome_file = os.path.basename(pdf_path)
-    return send_file(pdf_path, as_attachment=True)    
+        query = f"""SELECT Report.path
+                    FROM Report
+                    WHERE Report.starting_date LIKE '{date}%'
+                    ORDER BY starting_date DESC
+                    LIMIT 1;
+                """
+        
+        pdf_path=db.executeQuery(query)
+        pdf_path=pdf_path[0]['path']
+        print(pdf_path)
+
+        return send_file(pdf_path, as_attachment=True)    
 
 
 

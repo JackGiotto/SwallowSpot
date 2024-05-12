@@ -126,7 +126,7 @@ def parse_date_it_us(date: str) -> str:
     Returns:
         str: date with italian notation
     """
-
+    date = date.replace("/", "-")
     date = date.split(" ")
     time = date[1]
     date = date[0]
