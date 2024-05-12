@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 import os
@@ -14,6 +14,10 @@ app.register_blueprint(home_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 

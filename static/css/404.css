@@ -14,9 +14,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 img {
-    width: 20rem;
-    height: 20rem;
+    width: 15rem;
+    height: 15rem;
 }
