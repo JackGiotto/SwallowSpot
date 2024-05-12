@@ -2,24 +2,23 @@ import camelot
 import json
 from utils.get_data import convert_date
 from models import db
+import PyPDF2
 
 class Snow:
-
-	# Number of the pages where date and risks can be collected
-	PAGES_NUMBERS = {
-		"date": "2",
-		"risk": "2"
-	}
 
 	# the position in the table of the date
 	DATE_POSITION = {
 		"column": 1,
 	}
 
+	PAGES_NUMBERS = {}
+
 	data = {"type": "snow"}
 
-	def __init__(self, pdf_path) -> None:
+	def __init__(self, pdf_path, pages) -> None:
 		self.path = pdf_path
+		self.PAGES_NUMBERS["date"] = pages
+		self.PAGES_NUMBERS["risk"] = pages
 		self._get_bulletin_data()
 
 	def get_data(self) -> dict:
@@ -42,7 +41,6 @@ class Snow:
 		# Loop through the risk queries
 		for risk_query in queries["risks_queries"]:
 			# Execute the risk query
-
 			risk_query[1] = risk_query[1].replace("@ID_snow_report", str(report_id))
 			
 			id_crit = db.executeTransaction(risk_query[0:3], select=True)["new_id"]
@@ -88,8 +86,9 @@ class Snow:
 
 	def _get_bulletin_data(self) -> None:
 		print("Analyzing Snow bulletin, path:", self.path)
-		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)
-		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[0].df) 
+
+		self.data["date"] = self._get_date(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
+		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)) 
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_date(self, table) -> dict[str, str]:
@@ -108,7 +107,6 @@ class Snow:
 	def _get_risks(self, table) -> dict[str, any]:
 		"""get the value associated with every risk
 		"""
-	
 		with open("utils/cfd_analyzer/templates/risks_template_snow.json", "r") as f:
 			RISKS = json.load(f)
 		
@@ -180,5 +178,13 @@ class Snow:
 		date = date.replace("/", "-")
 		date = convert_date(date) + " 00:00:00"
 		return date
+	
+	def _get_sub_table(self, table):
+		i = 0
+		for row in table[1]:
+			if row == "Data":
+				submatrix = table[i:]
+				return submatrix			
+			i += 1
 # debug
 #snow = Snow("./test/data/test_snow.pdf")

@@ -154,6 +154,6 @@ def new_admin():
 @profile_bp.route('/profile/new_bulletin', methods=['POST'])
 def new_bulletin():
     result = save_bulletin(request.files['uploadReport'])
-    if (result[0] == "-"):
-        return render_template("user/admin_profile.html", upload_error = "Errore: il file inserito non è leggibile") 
-    return render_template("user/admin_profile.html")
+    if ("Errore" in result):
+        return render_template("user/admin_profile.html", upload_error = result) 
+    return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")

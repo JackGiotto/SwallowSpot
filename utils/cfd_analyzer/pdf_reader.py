@@ -1,17 +1,24 @@
 from utils.cfd_analyzer import cfd_classes
 import camelot
+import PyPDF2
 
 class Pdf_reader:
 
 	analyzer = None
 
 	def __init__(self, path):
+		pages = "2"
+		with open(path, 'rb') as file:
+			reader = PyPDF2.PdfFileReader(file)
+			if reader.numPages == 1:
+				pages="1"
 		try:
-			if ("PREVISTA" in camelot.read_pdf(path, flavor='stream', pages="2")[0].df[2][0]):
-				self.analyzer = cfd_classes.Hydro(path)
+			if ("PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[2][0]):
+				self.analyzer = cfd_classes.Hydro(path, pages)
 			else:
-				self.analyzer = cfd_classes.Snow(path)
-		except:
+				self.analyzer = cfd_classes.Snow(path, pages)
+		except Exception as e:
+			print(e)
 			self.analyzer = None
 
 	def get_cfd_data(self) -> dict[str, any]:
