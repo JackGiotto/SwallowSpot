@@ -7,6 +7,7 @@ const urlsToCache = [
     '/layout.html',
     '/auth/login_layout.html',
     */
+    '/static/manifest.json',
     '/info/',
     '/reports/hydro/',
     '/reports/ava/',
