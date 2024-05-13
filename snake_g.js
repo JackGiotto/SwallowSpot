@@ -5,14 +5,13 @@ const controls = document.querySelectorAll(".controls i");
 
 let gameOver = false;
 let foodX, foodY;
-let snakeX = 5, snakeY = 5;
+let snakeX = 15, snakeY = 15;           // To spawn the snake in the centre of the field
 let speedX = 0, speedY = 0;
 let snakeBody = [];
 let setIntervalId;
 let score = 0;
 let touchSupport = 0;
-var initialX = null;
-var initialY = null;
+var initialX = null, initialY = null;
 
 
 
@@ -54,7 +53,7 @@ function touchSupportCheck(){
 
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
-highScoreElement.innerText = `High Score: ${highScore}`;
+highScoreElement.innerText = `Punteggio massimo: ${highScore}`;
 
 // Assign a random value from 1 to 30 to X and Y to determine a position
 const foodPosition = () => {
@@ -68,7 +67,7 @@ const handleGameOver = () =>{
     clearInterval(setIntervalId);
     document.getElementById("gameOverScreen").style.display = "block";
     document.getElementById("scoreDisplay").innerText = "Punteggio ottenuto: " + score;
-    // Event listener for the button "Continua
+    // Event listener for the button "Continua"
     document.getElementById("continueButton").addEventListener("click", () => {
         document.getElementById("gameOverScreen").style.display = "none";
         foodPosition();
@@ -205,7 +204,7 @@ const initGame = () =>{
     playBoard.innerHTML = html;
 }
 
-document.getElementById("gameOverScreen").style.display = "none";           // Make sure that the "Game Over" is not displayed
+document.getElementById("gameOverScreen").style.display = "none";           // Hide the "Game Over" screen
 foodPosition();
 setIntervalId = setInterval(initGame, 100);
 
