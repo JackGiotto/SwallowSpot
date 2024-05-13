@@ -67,46 +67,31 @@
 
         <!--link your profile with tg bot-->
         <h2 class="mt-3">Collega il tuo account al <span style="color: #00667C;">Bot Telegram</span></h2>
-        <div class="mb-2">
-            <!--messaggi da inserire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            (linked) <span style="color: green;"><i class="fa-solid fa-check"></i> Account gi&agrave; collegato</span>
-            (not linked) <span style="color: red;"><i class="fa-solid fa-xmark"></i> Account non ancora collegato</span>-->
-            {{linked_account}}
-        </div>
-        <p>
-            Come ricavare il tuo <strong>USER ID Telegram</strong>:
+        <form method="POST" action="{{ url_for('profile.insert_id') }}">
+            <!--chat ID-->
+            <p>Come ricavare il tuo <strong>USER ID Telegram</strong>:</p>
             <ol>
                 <li>Apri <strong>Telegram</strong> e cerca "<i><strong>SwallowSpotBot&ThinSpace;</strong></i>"</li>
                 <li>Avvia una chat e digita "<code>/start</code>"</li>
                 <li>Clicca "<strong>Dammi il mio CHAT_ID</strong>"</li>
                 <li>Copia il <strong>chat_id</strong> ricevuto e inseriscilo nel testo qui sotto</li>
             </ol>
-        </p>
-        <form method="POST" action="{{ url_for('profile.insert_id') }}">
             <div class="input-group mb-2">
                 <input type="text" class="form-control" id="ChatID" name="ChatID" placeholder="ID Telegram" oninput="checkInput(this)">
                 <span class="input-group-text" id="confirmIDcheck">
                     <i class="fa-solid fa-xmark"></i>
                 </span>
             </div>
-            <div id="error" class="error-msg mb-3"></div>
+            <div id="error" class="error-msg mb-4"></div>
             
-        
-        <div class="mb-3">
-            <!--messaggi da inserire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            (linked) <span style="color: green;"><i class="fa-solid fa-check"></i> Account gi&agrave; collegato</span>
-            (not linked) <span style="color: red;"><i class="fa-solid fa-xmark"></i> Account non ancora collegato</span>-->
-            {{linked_group}}
-        </div>
-        <p>
-            Come ricavare il tuo <strong> GROUP ID</strong>:
+            <!--group ID-->
+            <p>Come ricavare il tuo <strong> GROUP ID</strong>:</p>
             <ol>
                 <li>Apri <strong>Telegram</strong> e crea un gruppo con dentro il nostro <strong>Bot</strong>&ThinSpace;</i></li>
                 <li>Imposta il Bot come <strong>admin</strong> del gruppo Telegram</li>
                 <li>Digita "<code>/group_id</code>"</li>
                 <li>Copia il <strong>group_id</strong> ricevuto e inseriscilo nel testo qui sotto</li>
             </ol>
-        </p>
             <div class="input-group mb-2">
                 <span class="input-group-text" id="basic-addon1">-</span>
                 <input type="text" class="form-control" id="GroupID" name="GroupID" placeholder="ID gruppo Telegram" oninput="checkGroupInput(this)">
