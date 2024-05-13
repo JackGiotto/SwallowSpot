@@ -1,11 +1,124 @@
 // service worker
-self.addEventListener('install', e => {
-    console.log("ServiceWorker: installed");
+
+const CACHE_NAME = 'v2';
+const urlsToCache = [
+    '/',
+    /*
+    '/layout.html',
+    '/auth/login_layout.html',
+    */
+    '/info/',
+    '/reports/hydro/',
+    '/reports/ava/',
+    '/reports/snow/',
+    '/profile/',
+    '/auth/login/',
+    '/auth/signup/',
+    '/static/js/search_bar.js',
+    '/static/js/profile_actions.js',
+    '/static/js/main.js',
+    '/static/js/home.js',
+    '/static/images/swallowspot_title_mini.png',
+    '/static/images/swallowspot_title_mini_darkmode.png',
+    '/static/images/swallowspot_title_main.png',
+    '/static/images/swallowspot_title_main_darkmode.png',
+    '/static/images/swallowspot_footer_icon.png',
+    '/static/images/login_background_darkmode.png',
+    '/static/images/login_background_2.png',
+    '/static/images/bell-solid.svg',
+    '/static/favicon/swallowspot_favicon.png',
+    '/static/css/search.css',
+    '/static/css/login_layout.css',
+    '/static/css/index.css',
+    '/static/css/animations.css',
+    '/static/css/slider/slider.css',
+    '/static/css/slider/slider_visual_mode.css',
+    '/static/css/slider/slider_notification.css',
+    '/static/css/reports/risk.css',
+    '/static/css/info/info.css',
+    '/static/css/home/home.css',
+    '/static/css/account/profile.css',
+    '/static/css/account/admin.css',
+];
+
+
+self.addEventListener('install', function (event)       // quando viene installato il mio service worker
+{
+    event.waitUntil         // inserisce elementi nella cache della pagina web
+    (                   
+        caches.open(CACHE_NAME).then(function(cache)        // promessa 
+        {
+            return cache.addAll
+            ([
+                urlsToCache
+            ]).catch(function(error)
+            {
+                console.error("Errore durante il caricamento: ", error)
+            });
+        })    
+    );
 });
 
-self.addEventListener('activate', e => {
-    console.log("ServiceWorker: activated");
+self.addEventListener('fetch', (event) =>       // quando il browser prova a recuperare una risorsa (evento fetch)
+{     
+    if (event.request.mode === 'navigate')      // se il tipo di richiesta è di navigazione (apre nuova pagina o ricarica)
+    {
+        event.respondWith(caches.open(CACHE_NAME).then((cache) =>       // risposta del SW all'evento fetch e apertura della cache
+        {
+            return fetch(event.request.url).then((fetchedResponse) =>       // richiesta di risposta da evento fetch
+            {
+                cache.put(event.request, fetchedResponse.clone());      // memorizza risposta nella cache
+                return fetchedResponse;         // risposta al browser
+            }).catch(() => 
+            {
+                return cache.match(event.request.url);      // se la rete non è raggiungibile recupera la risposta nella cache
+            });
+        }));
+    }
 });
+
+/*
+self.addEventListener('install', e => {         
+    console.log("ServiceWorker: installed");
+    
+    e.waitUntil(
+        caches
+        .open(CACHE_NAME)
+        .then(cache => {
+            console.log('Caching files');
+            cache.addAll(urlsToCache);
+        })
+        .then(() => self.skipWaiting())
+    );
+});
+
+self.addEventListener('activate', e => {    // activates the SW
+    console.log("ServiceWorker: activated");
+    
+    e.waitUntil(        // removes old cache files
+        caches.keys()
+        .then(cacheNames =>{
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if(cache != CACHE_NAME)
+                    {
+                        console.log('SW: clearing Old cache');
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        })
+    );
+});
+*/
+
+/*
+self.addEventListener('fetch', e => {   // for fetch event
+    console.log('Service worker: Fetching');
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+});
+*/
+
 
 /* const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
