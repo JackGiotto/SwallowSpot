@@ -57,7 +57,6 @@ def get_date_last_snow() -> str:
     return date
 
 def get_query_snow(area_name: str, date: str) -> str:
-    print("date")
     """get query for snow bulletin
 
     Args:
@@ -78,7 +77,6 @@ def get_query_snow(area_name: str, date: str) -> str:
 
                 WHERE Area.area_name = '{area_name}' AND Snow_report.date = '{date}';
             """
-    print(query)
     return query
 
 

@@ -8,7 +8,6 @@ home_bp = Blueprint('home', __name__, template_folder='templates')
 
 @home_bp.route('/')
 def home():
-    print (session)
     if "username" not in session:
         bulletin_data = '''
                     Per rimanere aggiornato sulla tua zona esegui l'accesso
@@ -62,6 +61,6 @@ def cities():
 
 @home_bp.route('/bulletins_dates', methods=['GET'])
 def bulletins_dates():
-    type = request.args.get('type')
-    bulletins_dates = get_bulletins_dates(type)
+    type_of_bulletin = request.args.get('type')
+    bulletins_dates = get_bulletins_dates(type_of_bulletin)
     return json.dumps({'success':True, 'dates': bulletins_dates}), 200, {'ContentType':'application/json'}

@@ -48,7 +48,6 @@ def user():
                 new_password = request.form["new_password"]
                 #checks password
                 if (len(new_password) < 8 or not has_number(new_password) or not has_uppercase(new_password) or not has_special_character(new_password)):
-                    print("Length condition or case condition or special character condition or number condition is met")
                     return render_template("user/profile.html", msg2="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", username=session["username"])
                 #hasing password
                 new_password=hash_password(new_password)
@@ -57,7 +56,6 @@ def user():
             
             elif "passwordDelete" in request.form:
                 password = request.form['passwordDelete']
-                print(password)
                 password = hash_password(password)
                 sql = "SELECT username, password FROM User where username = '" + session["username"] + "' and password = '" + password +"';"
                 result = db.executeQuery(sql)
@@ -102,18 +100,14 @@ def insert_id():
     group_id = str(request.form["GroupID"])
     # Recupera il nome utente dalla sessione
     username = session["username"]
-    print("username",str(username))
     user_query = f"SELECT ID_user FROM User WHERE username = '{username}'"
     user_result = db.executeQuery(user_query)[0]
 
     if user_result:
         user_id = int(user_result["ID_user"])
-        print("iduser",str(user_id))
         # Esegue la query per aggiornare l'ID di chat nel database
         query = f"INSERT INTO Admin (ID_user, ID_telegram,GroupID) VALUES ({user_id}, '{chat_id}','{group_id}')"
-        print(query)
         db.executeQuery(query)
-            # Chiudi la connessione al database
 
     # Ritorna una risposta di successo o reindirizza a una nuova pagina
     return render_template("user/admin_profile.html")
@@ -152,7 +146,6 @@ def new_admin():
         if (new_admin_username == ''):
             return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
         if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
-            print("Length condition or case condition or special character condition or number condition is met")
             return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
         
         password = hash_password(password)
@@ -185,4 +178,3 @@ def new_bulletin():
     if ("Errore" in result):
         return render_template("user/admin_profile.html", upload_error = result) 
     return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")
-

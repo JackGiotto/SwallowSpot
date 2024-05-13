@@ -2,8 +2,6 @@ from flask import Blueprint, render_template, redirect, url_for, request ,send_f
 from models import db
 import json
 from utils.risks import convert_risk_color, get_query_last_hydro, get_query_hydro, get_query_snow, get_date_last_snow, parse_date_us_it, parse_date_it_us
-import os
-from datetime import datetime
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
@@ -27,7 +25,6 @@ def hydro():
                     FROM Report
                     WHERE starting_date LIKE '{parse_date_it_us(date + " 00:00:00")[:10]}%';
                 """
-        print(query)
         result = db.executeQuery(query)
 
     if bool(result):
@@ -54,7 +51,6 @@ def downloadpdfSnow():
     
         pdf_path=db.executeQuery(query)
         pdf_path=pdf_path[0]['path']
-        print(pdf_path)
 
         return send_file(pdf_path, as_attachment=True)  
 
@@ -75,7 +71,6 @@ def downloadpdfIdro():
         
         pdf_path=db.executeQuery(query)
         pdf_path=pdf_path[0]['path']
-        print(pdf_path)
 
         return send_file(pdf_path, as_attachment=True)
 
@@ -86,13 +81,11 @@ def snow():
 
     date = request.args['date']
     if date != 'last':
-        print(date)
         title = "Bollettino del: " + date.replace("-", "/")
         date = parse_date_it_us(date + " 00:00:00")
         
     else:
         title = "Ultimo bollettino"
-    print("date", date)
     data = _get_all_bulletin_snow(date)
 
     if data == None:
@@ -174,10 +167,8 @@ def _get_all_bulletin_snow(date = "last") -> dict[str, dict[str, str]]:
     """ 
 
     areas = ["Alto Agordino", "Medio-basso Agordino", 'Cadore', 'Feltrino-Val Belluna', "Altopiano dei sette comuni"]
-    print("data", date)
     if (date == "last"):
         date = get_date_last_snow()
-    print("lamiabelladata", date)
 
     result = {
                 "Alto Agordino": [],
@@ -192,7 +183,6 @@ def _get_all_bulletin_snow(date = "last") -> dict[str, dict[str, str]]:
         if bulletin == None:
             return None
         result[area] = bulletin
-    print("RISULTATO", json.dumps(result, indent="\t"))
     return result
     
 

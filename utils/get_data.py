@@ -39,7 +39,6 @@ def get_bulletins_dates(type: str) -> dict["str", "str"]:
     for elem in dates:
         index = (str(elem[date])[:10]).replace("-", "")
         result[index] = "0"
-        print (result[index])
    
     return result
 
