@@ -170,7 +170,7 @@
     </div>
     <form action="" method="get" id="calendar-out" class="card">
         <p>Inserisci la data del bollettino che vuoi visualizzare:</p>
-        <input type="date" class="form-control" id="dateInput" placeholder="Seleziona la data">
+        <input type="text" class="form-control" id="dateInput" placeholder="Seleziona la data">
         <button class="btn btn-success mt-2">Conferma</button>
     </form>
 </div>
@@ -181,7 +181,8 @@
 <script>
     //highlight days
     var dates = {
-        20240513: 0
+        20240513: 0,
+        20240523: 0
     },
     classDict = {
         0: 'event'
@@ -195,6 +196,7 @@
         dateFormat: "d-m-Y",
         altInput: true,
         altFormat: "j F Y",
+        disableMobile: "true",
         onDayCreate: function(dObj, dStr, fp, dayElem){
             var date = dayElem.dateObj,
             key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),
