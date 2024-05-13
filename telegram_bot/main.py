@@ -69,7 +69,7 @@ async def alert_control(tipo, colore):
     try:
         messaggio = ""  # Assicurati che il messaggio non sia vuoto
         if tipo == "idraulico":
-            colore = await control()
+           
             print("colore",str(colore))
             if colore == "GIALLA":
                 messaggio = "\nPericolo Giallo di idraulico 🟡"
