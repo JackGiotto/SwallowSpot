@@ -1,21 +1,6 @@
 //variables
 const cookies=["no","no","no"];
-//function for unified id 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
-//document.addEventListener('DOMContentLoaded', function() {
-//    document.querySelector('#output').innerHTML = uniqid();
-//  });
-  
-function uniqid() {
-  var id = getRandomInt(0, Date.now());
-  return id;
-}
-    
 //genera data scadenza cookies persistents (30 giorni)
 var expireDate = new Date();
 expireDate.setDate(expireDate.getDate() + 30);
@@ -78,13 +63,13 @@ function activate_personal_cookie(){
 
 //funtions that creates cookies
 function create_session_cookie(){
-    document.cookie = "IDSESSION = "+uniqid()//cookie di sessione (expires)
+    document.cookie = "IDSESSION = null; path=/"//cookie di sessione (expires)
 }
 function create_technical_cookie(){
-    document.cookie = "IDSPOTLIGHT= "+uniqid()+";expires=" + expireDate.toUTCString();//cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
+    document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/"; //cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
 }
 function create_personal_cookie(){
-    document.cookie = "IDSWOT="+uniqid()+";expires=" + expireDate.toUTCString();//cookie personali(SWOT: Swallowspot Work Organizational Tool)
+    document.cookie = "SWOT = null;expires=" + expireDate.toUTCString()+"; path=/";//cookie personali(SWOT: Swallowspot Work Organizational Tool)
 }
 
 //cookies functions
