@@ -3,11 +3,10 @@
 {% block content %}
 
 <div class="reports">
-    <h1>Ultimo bollettino</h1>
+    <h1>{{ title }}</h1>
     <div class="categories mb-3">
         <a href="{{ url_for('reports.hydro') }}" class="btn btn-success m-2 btn-lg">Rischi idrologici</a>
         <a href="{{ url_for('reports.snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
-        <!--<a href="{{ url_for('reports.ava') }}" class="btn btn-primary m-2 btn-lg" style="display: none;">Rischi valanghe</a>-->
     </div>
     <p id="lastUpdate">
         Ultimo aggiornamento:<br>
@@ -160,6 +159,8 @@
             <p class="basin">Bacino correlato: Livenza, Lemene e Tagliamento</p>
         </div>
     </div>
+    <a href="{{ url_for('reports.downloadpdfIdro', date=data['Vene-A']['date']['starting_date']) }}" class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-download"></i> Scarica Bollettino</a>
+
 </div>
 
 <div class="pop-out" id="popOut">
@@ -170,40 +171,18 @@
     </div>
     <form action="" method="get" id="calendar-out" class="card">
         <p>Inserisci la data del bollettino che vuoi visualizzare:</p>
-        <input type="date" class="form-control" id="dateInput" placeholder="Seleziona la data">
+        <input type="date" class="form-control" id="dateInput" name="date" placeholder="Seleziona la data">
         <button class="btn btn-success mt-2">Conferma</button>
     </form>
 </div>
 
-<script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
 
 <script>
     //highlight days
-    var dates = {
-        20240513: 0
-    },
-    classDict = {
-        0: 'event'
-    }
-    
-    function get2DigitFmt(val) {
-        return ('0' + val).slice(-2);
-    }
-    
-    flatpickr("#dateInput", {
-        dateFormat: "d-m-Y",
-        altInput: true,
-        altFormat: "j F Y",
-        onDayCreate: function(dObj, dStr, fp, dayElem){
-            var date = dayElem.dateObj,
-            key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),
-            value = classDict[dates[key]];
-            if (value) {
-                dayElem.className += ' ' + value;
-            }
-        }
-    });
+    $(document).ready(createCalendar("hydro"));
 
     //light/dark mode
     var popOut = document.getElementById("popOut");

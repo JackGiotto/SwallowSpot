@@ -22,7 +22,6 @@ def login():
             # the user is logged
             return redirect(url_for("home.home"))
     elif request.method == "POST": # login
-        print(request.form)
         username = request.form["username"]
         password = request.form["password"]
         password = hash_password(password)
@@ -36,7 +35,6 @@ def login():
             session.permanent = True
             session["username"] = username
             if ("remember" in request.form):
-                print("here")
                 current_app.permanent_session_lifetime = timedelta(days = LONGER_SESSION_DURATION)
             else:
                 current_app.permanent_session_lifetime = timedelta(hours = BASE_SESSION_DURATION)
@@ -64,7 +62,6 @@ def signup():
         if (username == ''):
             return render_template("auth/signup.html", msg="Errore: Il nome utente non può essere vuoto")
         if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
-            print("Length condition or case condition or special character condition or number condition is met")
             return render_template("auth/signup.html", msg="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
         
         password = hash_password(password)

@@ -22,6 +22,22 @@ def get_query_last_hydro(area_name: str, risk_name: str) -> str:
             """
     return query
 
+def get_query_hydro(area_name: str, risk_name: str, date: str) -> str:
+    
+    date += " 00:00:00"
+    date = parse_date_it_us(date)
+    date = date.split(" ")[0]
+    query = f"""SELECT Report.starting_date, Report.ending_date, Color.color_name
+                FROM Report
+                JOIN Criticalness ON Report.ID_report = Criticalness.ID_report
+                JOIN Area ON Criticalness.ID_area = Area.ID_area
+                JOIN Risk ON Criticalness.ID_risk = Risk.ID_risk
+                JOIN Color ON Criticalness.ID_color = Color.ID_color
+                WHERE Area.area_name = '{area_name}' AND Risk.risk_name = '{risk_name}' AND Report.starting_date LIKE '{date}%'
+                ORDER BY starting_date DESC
+                LIMIT 1;
+            """
+    return query
 
 def get_date_last_snow() -> str:
     """get the date of the last snow bulletin
@@ -51,14 +67,6 @@ def get_query_snow(area_name: str, date: str) -> str:
         str: query
     """
 
-    query = """
-            SELECT Snow_report.date
-            FROM Snow_report
-            ORDER BY Snow_report.date DESC
-            LIMIT 1;
-    """
-
-    date = db.executeQuery(query)[0]['date']
     query = f"""
                 SELECT Snow_criticalness.date, Snow_criticalness_altitude.value, Snow_criticalness.percentage
                 FROM Snow_report
@@ -72,7 +80,7 @@ def get_query_snow(area_name: str, date: str) -> str:
     return query
 
 
-def parse_date(date: str) -> str:
+def parse_date_us_it(date: str) -> str:
     """converts date from american notation to italian notation
 
     Args:
@@ -80,6 +88,7 @@ def parse_date(date: str) -> str:
     Returns:
         str: date with italian notation
     """
+
     date = date.split(" ")
     time = date[1]
     date = date[0]
@@ -106,3 +115,21 @@ def convert_risk_color(color:str) -> str:
         "viola": "purple"
     }
     return colors[color]
+
+def parse_date_it_us(date: str) -> str:
+    """converts date from italian notation to american notation
+
+    Args:
+        date (str): date with american notation
+    Returns:
+        str: date with italian notation
+    """
+    date = date.replace("/", "-")
+    date = date.split(" ")
+    time = date[1]
+    date = date[0]
+    date = date.split("-")
+    day = date[0]
+    month = date[1]
+    year = date[2]
+    return year + "-" + month + "-" + day + " " + time
