@@ -134,14 +134,14 @@
             $(this).find('i').toggleClass('fa-eye fa-eye-slash');
         });
     });
-
     //dark / light mode
-    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
-        document.getElementById("toggle").checked = false;
+    if(document.cookie.includes("light")) {        //check the visual mode state from the cookie variable
+        document.getElementById("toggle").checked = true;
         changeMode();
     }
-    else {
-        document.getElementById("toggle").checked = true;
+    else if(document.cookie.includes("dark")) {
+        document.getElementById("toggle").checked = false;
+        changeMode();
     }
 
     document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
@@ -155,7 +155,7 @@
         var confirms = document.querySelectorAll(".input-group");
 
         if(document.getElementById("toggle").checked) {
-            localStorage.setItem("mode", "light");
+            document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/";
             //light mode
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
@@ -168,7 +168,7 @@
             });
         }
         else {
-            localStorage.setItem("mode", "dark");
+            document.cookie = "SPOTLIGHT = dark;expires=" + expireDate.toUTCString()+"; path=/";
             //dark mode
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";

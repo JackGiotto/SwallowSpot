@@ -88,7 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>here go the cookies informations</p>
+                    <p>SwallowSpot implementa i cookie, per maggiori dettagli leggere l'informativa al seguente link <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}">clicca qui</a></p>        
                     <br>
                     <label class="switch">
                         <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
@@ -178,19 +178,7 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    //disappearing navbar function
-    /*var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("menu").style.top = "0";
-        } else {
-            document.getElementById("menu").style.top = "-100px";
-        }
-        prevScrollpos = currentScrollPos;
-    }*/
-    
+<script>    
     //cookies functions
     function reject(){
         cookies1 = document.getElementById("cookies");
@@ -203,16 +191,25 @@
     var body = document.querySelector("body");
     var cookiesLabel = document.getElementById("cookies");
     var cookiesModal = document.getElementById("customizeCookies");
+    
+    
+    function fetchCookie(){
+        cookies= document.cookie //fetching cookies string
+        if(cookies.text.includes("SPOTLIGHT = dark")){//check if is wirtten "dark" 
+            rslt = "dark";
+        }
+        else if(cookies.includes("SPOTLIGHT = light")){//check if is wirtten "dark" 
+            rslt = "light";
+        }
+    }
 
-    if(localStorage.getItem("mode") == "dark") {
-        //dark mode
+    if( rslt == "dark") {//then set dark mode
         body.style.backgroundColor = "#222222";
         body.style.color = "white";
         cookiesLabel.style.backgroundColor = "#222222";
         cookiesModal.setAttribute('data-bs-theme', "dark");
     }
-    else {
-        //light mode
+    else {//set the mode to light mode
         body.style.backgroundColor = "#EDFCFF";
         body.style.color = "#212529";
         cookiesLabel.style.backgroundColor = "#EDFCFF";
@@ -238,6 +235,4 @@
         });
     });
 </script>
-<!-- in caso di necessità-->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </html>
