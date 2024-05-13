@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="{{ url_for('static', filename='js/buttons.js') }}"></script> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/swallowspot_favicon.png') }}" type="image/x-icon">
@@ -71,9 +72,9 @@
         <h5><i class="fa-solid fa-cookie"></i> Cookies</h5>
         <p>here goes the description and the indications for the cookies!!!!!!!!!!!! mmmmmh yummmy</p>
         <div id="cookieButtons">
-            <button type="button" class="btn btn-secondary" onclick="reject()"><i class="fa-solid fa-xmark"></i> Rifiuta tutti</button>
-            <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> Accetta tutti</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies"><i class="fa-solid fa-pencil"></i> Personalizza</button>
+            <button type="button" class="btn btn-secondary" id="btn-reject" onclick="reject()"><i class="fa-solid fa-xmark"></i> Rifiuta tutti</button>
+            <button type="button" class="btn btn-success" id="btn-accept" onclick="accept()"><i class="fa-solid fa-check"></i> Accetta tutti</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies" id="btn-customize"><i class="fa-solid fa-pencil"></i> Personalizza</button>
         </div>
     </div>
     
@@ -86,17 +87,29 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    here go the cookies informations<br>
-                    <form action=""> <!--save the choices for cookies-->
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </form>
+                    <p>here go the cookies informations</p>
+                    <br>
+                    <label class="switch">
+                        <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
+                        <span class="slider"></span>
+                    </label>
+                    &ThickSpace; <strong>Cookies di sessione</strong>
+                    <br><br>
+                    <label class="switch">
+                        <input id="checkbox1" type="checkbox" onclick="activate_technical_cookie()">
+                        <span class="slider"></span>
+                    </label>
+                    &ThickSpace; <strong>Cookies tecnici</strong>
+                    <br><br>
+                    <label class="switch">
+                        <input id="checkbox2" type="checkbox" onclick="activate_personal_cookie()">
+                        <span class="slider"></span>
+                    </label>
+                    &ThickSpace; <strong>Cookies personali</strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-primary">Salva le mie scelte</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="customize()">Salva le mie scelte</button>
                 </div>
             </div>
         </div>
