@@ -30,7 +30,7 @@
             <form action="{{url_for('profile.user')}}" method="POST">
                 <!--old password-->
                 <div class="input-group mb-3 mt-2">
-                    <input type="password" class="form-control" id="pswOld" placeholder="Vecchia password">
+                    <input name="old_password" type="password" class="form-control" id="pswOld" placeholder="Vecchia password">
                     <button class="btn btn-outline-primary" type="button" id="showOldPasswordToggle"><i class="fa-solid fa-eye"></i></button>
                 </div>
                 <!--new password-->
