@@ -28,8 +28,12 @@
         <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')"><i class="fa-solid fa-pencil"></i> Modifica password</button>
         <div class="dismissDefault" id="changePsw">
             <form action="{{url_for('profile.user')}}" method="POST">
-                <div id="pswRequirements" class="mb-3">
-                    <div class="input-group mb-2 mt-2">
+                <div class="input-group mb-3 mt-2">
+                    <input type="password" class="form-control" id="pswOld" placeholder="Vecchia password">
+                    <button class="btn btn-outline-primary" type="button" id="showOldPasswordToggle"><i class="fa-solid fa-eye"></i></button>
+                </div>
+                <div id="pswRequirements" class="mb-2">
+                    <div class="input-group">
                         <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">
                         <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
                     </div>
@@ -91,7 +95,7 @@
         <!--admin section-->
         {% if show_button %}
             <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
-                <button type="submit" class="btn btn-success btn-lg mt-4">Sezione Utente Amministratore</a>
+                <button type="submit" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
             </form>
         {% endif %}
         <!--logout-->
@@ -145,21 +149,6 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 <input type="hidden" id="hiddenInput" name="hiddenInput" value="{{user_perms}}">
 <script>
-    //check passwords
-    function check_password() {
-        psw1 = $("#textPassword").val();
-        psw2 = $("#textPassword2").val();
-        $("#confirmPsw2").empty();
-        html_block = "";
-        if (psw1 === psw2 && psw1 != '') {
-            html_block = '<i class="fa-solid fa-check"></i>';
-        } else {
-            html_block = '<i class="fa-solid fa-xmark"></i>';
-        }
-        $("#confirmPsw2").append(html_block)
-    }
-    
-    
     /*autocomplete list size*/
     function setAutocompleteListWidth() {
         var inputWidth = document.getElementById('bar').offsetWidth;
