@@ -47,6 +47,19 @@
 <script src="{{url_for('static', filename = 'js/home.js')}}"></script>
 
 <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register("/service_worker.js", { scope: '/' })
+          .then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      } 
+
     //light/dark mode
     var logoMini = document.getElementById("logoMini");
     var logoMaxi = document.getElementById("logoMaxi");
@@ -61,6 +74,7 @@
         logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini.png') }}";
         logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main.png') }}";
     }
+
 </script>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 // service worker
 
-const CACHE_NAME = 'v2';
+const CACHE_NAME = 'swallow_spot_cache';
 const urlsToCache = [
     '/',
     /*
@@ -11,20 +11,14 @@ const urlsToCache = [
     '/reports/hydro/',
     '/reports/ava/',
     '/reports/snow/',
-    '/profile/',
-    '/auth/login/',
-    '/auth/signup/',
     '/static/js/search_bar.js',
     '/static/js/profile_actions.js',
-    '/static/js/main.js',
     '/static/js/home.js',
     '/static/images/swallowspot_title_mini.png',
     '/static/images/swallowspot_title_mini_darkmode.png',
     '/static/images/swallowspot_title_main.png',
     '/static/images/swallowspot_title_main_darkmode.png',
     '/static/images/swallowspot_footer_icon.png',
-    '/static/images/login_background_darkmode.png',
-    '/static/images/login_background_2.png',
     '/static/images/bell-solid.svg',
     '/static/favicon/swallowspot_favicon.png',
     '/static/css/search.css',
@@ -41,6 +35,42 @@ const urlsToCache = [
     '/static/css/account/admin.css',
 ];
 
+self.addEventListener('install', event => {
+    console.log("Installed service worker");
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(cache => {
+            return cache.addAll(urlsToCache);
+        })
+    );
+});
+
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if (cache !== CACHE_NAME) {
+                        console.log('Deleting old cache');
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        })
+    );
+});
+
+self.addEventListener('fetch', event => {
+    console.log(`fetching ${event.request.url}`);
+    event.respondWith(
+        fetch(event.request)
+        .catch(() => caches.match(event.request))
+    );
+});
+
+
+/*
 
 self.addEventListener('install', function (event)       // quando viene installato il mio service worker
 {
@@ -76,6 +106,7 @@ self.addEventListener('fetch', (event) =>       // quando il browser prova a rec
         }));
     }
 });
+/*
 
 /*
 self.addEventListener('install', e => {         

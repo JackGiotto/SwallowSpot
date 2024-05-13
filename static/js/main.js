@@ -4,7 +4,7 @@ if('serviceWorker' in navigator)        // if service worker are supported
 {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-        .register('static/service_worker.js')        // registration of the SW
+        .register('../service_worker.js')        // registration of the SW
         .then(reg => console.log("SW registration successfully "))
         .catch(err => console.error("There was an error during SW registration: ", err));
     });
