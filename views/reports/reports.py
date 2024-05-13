@@ -14,14 +14,24 @@ def hydro():
         return redirect(url_for("reports.hydro") + "?date=last")
 
     date = request.args['date']
-    data = _get_all_bulletin_hydro(date)
+    data = None
 
     if date == "last":
         title = "Ultimo bollettino"
+        result = "0"
     else:
         title = "Bollettino del: " + date.replace("-", "/")
+        # checks if there are any bulletins with the selected date in the database
+        query = f"""
+                    SELECT ID_report
+                    FROM Report
+                    WHERE starting_date LIKE '{parse_date_it_us(date + " 00:00:00")[:10]}%';
+                """
+        print(query)
+        result = db.executeQuery(query)
 
-
+    if bool(result):
+        data = _get_all_bulletin_hydro(date)
     if data == None:
         return render_template("reports/hydro_error.html")
 
