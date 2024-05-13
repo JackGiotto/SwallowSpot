@@ -67,6 +67,13 @@ const handleGameOver = () =>{
     clearInterval(setIntervalId);
     document.getElementById("gameOverScreen").style.display = "block";
     document.getElementById("scoreDisplay").innerText = "Punteggio ottenuto: " + score;
+
+    if(score > highScore){
+        highScore = score;
+        localStorage.setItem("high-score", highScore);
+        highScoreElement.innerText = `Punteggio massimo: ${highScore}`;
+    }
+
     // Event listener for the button "Continua"
     document.getElementById("continueButton").addEventListener("click", () => {
         document.getElementById("gameOverScreen").style.display = "none";
