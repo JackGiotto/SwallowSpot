@@ -1,5 +1,6 @@
 // installation of the Service Worker on the browser
 
+/*
 if('serviceWorker' in navigator)        // if service worker are supported
 {
     window.addEventListener('load', () => {
@@ -9,6 +10,7 @@ if('serviceWorker' in navigator)        // if service worker are supported
         .catch(err => console.error("There was an error during SW registration: ", err));
     });
 }
+*/
 
 /* function allowNotifications()           // ask the user if he would like to have notfication
 {

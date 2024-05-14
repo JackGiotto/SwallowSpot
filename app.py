@@ -1,5 +1,5 @@
-from flask import Flask, make_response, send_from_directory
-from flask_sslify import SSLify, render_template
+from flask import Flask, make_response, send_from_directory, render_template
+from flask_sslify import SSLify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 import os
@@ -22,8 +22,9 @@ def sw():
                      send_from_directory("./static", "service_worker.js"))
     #change the content header file. Can also omit; flask will handle correctly.
     response.headers['Content-Type'] = 'application/javascript'
-    return response@app.errorhandler(404)
+    return response
 
+@app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
