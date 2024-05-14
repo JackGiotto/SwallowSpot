@@ -39,56 +39,17 @@
     var logoMini = document.getElementById("logoMini");
     var logoMaxi = document.getElementById("logoMaxi");
 
-    var rslt = fetchCookie();
-    function fetchCookie(){
-        cookies = document.cookie //fetching cookies string
-        if(cookies.includes("dark")){//check if is wirtten "dark" and return 0 for dark mode
-            rslt = "dark";
-        }
-        else {
-            rslt = "light";
-        }
-    }
-
     input.addEventListener( 'change', showFileName );
     
-    if(rslt == "dark") {
+    if(localStorage.getItem("mode") == "dark") {
         //dark mode
         logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini_darkmode.png') }}";
         logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main_darkmode.png') }}";
-        changeMode();
     }
     else {
         //light mode
         logoMini.srcset = "{{ url_for('static', filename='images/swallowspot_title_mini.png') }}";
         logoMaxi.src = "{{ url_for('static', filename='images/swallowspot_title_main.png') }}";
-        changeMode();
-    }
-    
-    function changeMode() {
-        var body = document.querySelector("body");
-        //genera data scadenza cookies persistents (30 giorni)
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 30);
-
-        if(document.getElementById("toggle").checked) {
-            document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/";
-            //light mode
-            status.innerHTML = "Light";
-            body.style.backgroundColor = "#EDFCFF";
-            body.style.color = "#212529";
-            cookiesLabel.style.backgroundColor = "#EDFCFF";
-            cookiesModal.setAttribute('data-bs-theme', "light");
-        }
-        else {
-            document.cookie = "SPOTLIGHT = dark;expires=" + expireDate.toUTCString()+"; path=/";
-            //dark mode
-            status.innerHTML = "Dark";
-            body.style.backgroundColor = "#222222";
-            body.style.color = "white";
-            cookiesLabel.style.backgroundColor = "#222222";
-            cookiesModal.setAttribute('data-bs-theme', "dark");
-        }
     }
 </script>
 

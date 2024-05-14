@@ -135,11 +135,11 @@
         });
     });
     //dark / light mode
-    if(document.cookie.includes("light")) {        //check the visual mode state from the cookie variable
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the cookie variable
         document.getElementById("toggle").checked = true;
         changeMode();
     }
-    else if(document.cookie.includes("dark")) {
+    else if(localStorage.getItem("mode") == "dark") {
         document.getElementById("toggle").checked = false;
         changeMode();
     }
@@ -155,7 +155,7 @@
         var confirms = document.querySelectorAll(".input-group");
 
         if(document.getElementById("toggle").checked) {
-            document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/";
+            localStorage.setItem("mode", "light");
             //light mode
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
@@ -168,7 +168,7 @@
             });
         }
         else {
-            document.cookie = "SPOTLIGHT = dark;expires=" + expireDate.toUTCString()+"; path=/";
+            localStorage.setItem("mode", "dark");
             //dark mode
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";

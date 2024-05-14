@@ -88,7 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>SwallowSpot implementa i cookie, per maggiori dettagli leggere l'informativa al seguente link <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}">clicca qui</a></p>        
+                    <p>SwallowSpot memorizza informazioni riguardanti l'utente con finalità di servizio, per maggiori dettagli leggere l'informativa al seguente link <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}">clicca qui</a></p>        
                     <br>
                     <label class="switch">
                         <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
@@ -191,19 +191,9 @@
     var body = document.querySelector("body");
     var cookiesLabel = document.getElementById("cookies");
     var cookiesModal = document.getElementById("customizeCookies");
-    
-    
-    function fetchCookie(){
-        cookies= document.cookie //fetching cookies string
-        if(cookies.text.includes("SPOTLIGHT = dark")){//check if is wirtten "dark" 
-            rslt = "dark";
-        }
-        else if(cookies.includes("SPOTLIGHT = light")){//check if is wirtten "dark" 
-            rslt = "light";
-        }
-    }
 
-    if( rslt == "dark") {//then set dark mode
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
         body.style.backgroundColor = "#222222";
         body.style.color = "white";
         cookiesLabel.style.backgroundColor = "#222222";

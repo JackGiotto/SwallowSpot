@@ -25,30 +25,24 @@
 
 <script>
     //dark / light mode
-    if(document.cookie.includes("dark")) {        //check the visual mode state from the local storage variable
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
         document.getElementById("toggle").checked = false;
         changeMode();
     }
     else {
         document.getElementById("toggle").checked = true;
-        changeMode()
     }
 
     document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
-
-    ib
 
     function changeMode() {
         var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
         var cookiesLabel = document.getElementById("cookies");
         var cookiesModal = document.getElementById("customizeCookies");
-        //genera data scadenza cookies persistents (30 giorni)
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 30);
-
+    
         if(document.getElementById("toggle").checked) {
-            document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/";
+            localStorage.setItem("mode", "light");
             //light mode
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
@@ -57,7 +51,7 @@
             cookiesModal.setAttribute('data-bs-theme', "light");
         }
         else {
-            document.cookie = "SPOTLIGHT = dark;expires=" + expireDate.toUTCString()+"; path=/";
+            localStorage.setItem("mode", "dark");
             //dark mode
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";
