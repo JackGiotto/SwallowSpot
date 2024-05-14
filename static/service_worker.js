@@ -3,14 +3,10 @@
 const CACHE_NAME = 'swallow_spot_cache';
 const urlsToCache = [
     '/',
-    /*
-    '/layout.html',
-    '/auth/login_layout.html',
-    */
     '/static/manifest.json',
     '/info/',
     '/reports/hydro/',
-    '/reports/ava/',
+    // '/reports/ava/', <- error in the cache
     '/reports/snow/',
     '/static/js/search_bar.js',
     '/static/js/profile_actions.js',
@@ -69,6 +65,7 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request))
     );
 });
+
 
 
 /*
