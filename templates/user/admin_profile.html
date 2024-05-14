@@ -165,7 +165,7 @@
 
         <!--add admin user from existing account-->
         <h2 class="mt-3">Aggiungi un account esistente agli <span style="color: #00667C;">Amministratori</span></h2>
-        <form action="{{ url_for('profile.change_to_admin') }}" method="post">
+        <form action="{{ url_for('profile.change_to_admin') }}" method="POST">
             <div class="input-group mb-2 mt-2">
                 <input type="text" class="form-control" id="newAdminUser" name="newAdminUser" placeholder="Inserisci nome utente">
             </div>
@@ -185,7 +185,7 @@
             <!--backups-->
             <div class="error-msg">
             <h2 class="mt-3">Esegui un <span style="color: #00667C;">backup</span> del database</h2>
-            <div class="input-group mt-2">
+            <form method="POST"  class="input-group mt-2">
                 <input type="text" class="form-control" id="bkpServerIP" placeholder="IP del server per backup" oninput="checkInputIP(this)" maxlength="15">
                 <span class="input-group-text" id="confirmIPcheck">
                     <i class="fa-solid fa-xmark"></i>
