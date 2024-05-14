@@ -12,7 +12,6 @@ function reject(){
 function accept(){
 
     create_session_cookie();
-    create_technical_cookie();
     create_personal_cookie();
     disappear();
 }
@@ -21,9 +20,6 @@ function customize(){
         create_session_cookie();
     }
     if(cookies[1] == "yes"){
-        create_technical_cookie();
-    }
-    if(cookies[2] == "yes"){
         create_personal_cookie();
     }   
     disappear(); 
@@ -40,16 +36,6 @@ function activate_session_cookie(){
         console.log("IDSESSION denied");
     }
 }
-function activate_technical_cookie(){
-    var checkbox = document.getElementById("checkbox1");
-    if(checkbox.checked){
-        cookies[1]="yes";
-        console.log("IDSPOTLIGHT agreed");
-    }else{
-        cookies[1]="no";
-        console.log("IDSPOTLIGHT denied");
-    }
-}
 function activate_personal_cookie(){
     var checkbox = document.getElementById("checkbox2");
     if(checkbox.checked){
@@ -64,9 +50,6 @@ function activate_personal_cookie(){
 //funtions that creates cookies
 function create_session_cookie(){
     document.cookie = "IDSESSION = null; path=/"//cookie di sessione (expires)
-}
-function create_technical_cookie(){
-    document.cookie = "SPOTLIGHT = light;expires=" + expireDate.toUTCString()+"; path=/"; //cookie tecnici (SPOTLIGHT: Swallowspot Planning and Operational Tool for High-efficiency)
 }
 function create_personal_cookie(){
     document.cookie = "SWOT = null;expires=" + expireDate.toUTCString()+"; path=/";//cookie personali(SWOT: Swallowspot Work Organizational Tool)
