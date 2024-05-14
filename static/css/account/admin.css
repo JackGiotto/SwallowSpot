@@ -52,4 +52,8 @@
 #bkpServerIP {
     max-width: 15rem;
 }
+
+#bkpServerPort {
+    max-width: 10rem;
+}
   

@@ -46,7 +46,14 @@ def user():
 
             elif "new_password" in request.form:
                 new_password = request.form["new_password"]
+                old_password = request.form["old_password"]
                 #checks password
+                if old_password==new_password:
+                    return render_template("user/profile.html", msg2="Errore: La password nuova non deve essere uguale alla password vecchia ", username=session["username"])
+                old_password=hash_password(old_password)
+                result=db.executeQuery("SELECT User.password FROM User WHERE password = '"+str(old_password)+"';")
+                if not result:
+                    return render_template("user/profile.html", msg2="Errore: La password vecchia non è corretta ", username=session["username"])
                 if (len(new_password) < 8 or not has_number(new_password) or not has_uppercase(new_password) or not has_special_character(new_password)):
                     return render_template("user/profile.html", msg2="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", username=session["username"])
                 #hasing password
