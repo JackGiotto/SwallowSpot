@@ -1,6 +1,7 @@
 from utils.cfd_analyzer.pdf_reader import Pdf_reader
 from telegram_bot.main import start_bot, alert_control,snow_control
 from threading import Thread
+from utils.db_backup.client_backup import start_backup
 import asyncio
 
 async def saluta():
@@ -25,4 +26,5 @@ def main():
     start_bot()
 
 # Run the main function
-main()
+#main()
+start_backup("192.168.0.12", "8495")

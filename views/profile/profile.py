@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, redirect, session, request, url_for
+import json
 from models import db
 from utils.password import hash_password, has_uppercase, has_number, has_special_character
 from utils.get_data import get_cities
-import json
 from utils.bulletins_utils import save_bulletin
-from models import db
+from utils.db_backup.client_backup import start_backup
+from threading import Thread
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
@@ -185,3 +186,13 @@ def new_bulletin():
     if ("Errore" in result):
         return render_template("user/admin_profile.html", upload_error = result) 
     return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")
+
+@profile_bp.route('/profile/backup', methods=['POST'])
+def backup():
+    IP_address = request.form["bkpServerIP"]
+    port_number = request.form["bkpServerPort"]
+    print("backup " + IP_address + port_number)
+    result = start_backup(IP_address, port_number)
+    if 'Errore' in result:
+        return render_template("user/admin_profile.html", ip_error = result)
+    return render_template("user/admin_profile.html")
