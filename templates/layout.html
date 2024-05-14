@@ -180,7 +180,22 @@
         }
         prevScrollpos = currentScrollPos;
     }*/
-    
+    // Check if browser supports Notifications API
+    navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data && event.data.action === 'showNotification') {
+          // Request permission to show notifications
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              // Show notification
+              new Notification('Notification Title', {
+                body: 'Notification Body'
+              });
+            }
+          });
+        }
+      });
+
+      
     //cookies functions
     function reject(){
         cookies1 = document.getElementById("cookies");

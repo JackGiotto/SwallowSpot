@@ -30,6 +30,7 @@ const urlsToCache = [
     '/static/css/home/home.css',
     '/static/css/account/profile.css',
     '/static/css/account/admin.css',
+    'static/risk.json'
 ];
 
 self.addEventListener('install', event => {
@@ -66,8 +67,43 @@ self.addEventListener('fetch', event => {
     );
 });
 
+self.addEventListener('push', function(event)       // quando si effettua richiesta di notifica da una pagina 
+{
+    const options = 
+    {
+        body: event.data.text(),
+    };
 
-
+    event.waitUntil     // mantiene attivo il sw finché tutte le promesse vengono mantenute
+    (
+        self.registration.showNotification('Notifica push', options)        // mostra una notifica
+    );
+});
+// Function to check if notification should be sent
+async function checkNotification() {
+    try {
+      // Open the cache
+      const cache = await caches.open(CACHE_NAME);
+      // Retrieve the JSON file from the cache
+      const response = await cache.match('/static/risk.json');
+      if (response) {
+        // Parse JSON data
+        const data = await response.json();
+        // Check if the value of the key 'value' is true
+        if (data.value === true) {
+          // Show notification
+          self.registration.showNotification('Notification Title', {
+            body: 'Notification Body'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error checking notification:', error);
+    }
+  }
+  
+  // Check for notification every 30 seconds
+  setInterval(checkNotification, 10 * 1000);
 /*
 
 self.addEventListener('install', function (event)       // quando viene installato il mio service worker
