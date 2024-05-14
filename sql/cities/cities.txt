@@ -1,0 +1,550 @@
+BL    Agorca                        25001    Vene-A    Mont-1    Mont-1D
+BL    Alano di Piave                25002    Vene-H    Mont-2    Mont-2B
+BL    Alleghe                       25003    Vene-A    Mont-1    Mont-1D
+BL    Alpago                        25072    Vene-H    Mont-2    Mont-2A
+BL    Arsie                         25004    Vene B    Mont-2    Mont-2B
+BL    Auronzo di Cadore             25005    Vene A    Mont-1	 Mont-1A
+BL    Belluno                       25006    Vene-H    Mont-2    Mont-2B
+BL    Borca di Cadore               25007    Vene-A    Mont-1    Mont-1B
+BL    Borgo Valbelluna              25074    Vene-H    Mont-2    Mont-2B
+BL    Calalzo di Cadore             25008    Vene-A    Mont-1    Mont-1C
+BL    Canale d Agordo               25023    Vene-A    Mont-1    Mont 1D
+BL    Cencenighe Agordino           25010    Vene-A    Mont-1    Mont-1D
+BL    Cesiomaggiore                 25011    Vene-H    Mont-2    Mont-2B
+BL    Chies d'Alpago                25012    Vene H    Mont-2    Mont-2A
+BL    Cibiana di Cadore             25013    Vene-A    Mont-1    Mont-1C
+BL    Colle Santa Lucia             25014    Vene-A    Mont-1    Mont-1D
+BL    Comelico Superiore            25015    Vene-A    Mont-1    Mont-1A
+BL    Cortina d'Ampezzo             25016    Vene A    Mont-1    Mont-1B
+BL    Danta di Cadore               25017    Vene A    Mont-1    Mont-1A
+BL    Domegge di Cadore             25018    Vene A    Mont-1    Mont-1C
+BL    Falcade                       25019    Vene A    Mont-1    Mont-1D
+BL    Feltre                        25021    Vene-H    Mont-2    Mont-2B
+BL    Fonzaso                       25022    Vene B    Mont 2    Mont-2B
+BL    Cosaldo                       25025    Vene A    Mont-1    Mont-1D
+BL    La Valle Agordina             25027    Vene-A    Mont-1    Mont-1D
+BL    Lamon                         25026    Vene B    Mont-2    Mont-1D
+BL    Limana                        25029    Vene-H    Mont-2    Mont-2B
+BL    Livinallongo del Col di Lana  25030    Vene-A    Mont-2    Mont-1D
+BL    Longarone                     25071    Vene-A    Mont-1    Mont-10
+BL    Lorenzago di Cadore    	    25032    Vene-A    Mont-2    Mont 2B
+BL    Lozzo di Cadore               25033    Vene-A    Mont 1    Mont 1C
+BL    Ospitale di Cadore            25035    Vene-A    Mont-1    Mont 1C
+BL    Pedavena                        25036    Vene-H    Mont-2    Mont-2B
+BL    Perarolo di Cadore              25037    Vene-A    Mont-1    Mont-1C
+BL    Pieve di Cadore                 25039    Vene-A    Mont-1    Mont-1C
+BL    Ponte nelle Alpi                25040    Vene-H    Mont-2    Mont-2B
+BL    Quero Vas                       25070    Vene-H    Mont-2    Mont-2B
+BL    Rivamonte Agordino              25043    Vene-A    Mont-1    Mont-1D
+BL    Rocca Pietore                   25044    Vene-A    Mont-1    Mont-1D
+BL    San Gregorio nelle Alpi         25045    Vene-H    Mont-2    Mont-2B
+BL    San Nicolo' di Comelico         25046    Vene-A    Mont-1    Mont-1A
+BL    San Pietro di Cadore            25047    Vene-A    Mont-1    Mont-1A
+BL    San Tomaso Agordino             25049    Vene-A    Mont-1    Mont-1D
+BL    San Vito di Cadore              25051    Vene-A    Mont-1    Mont-1B
+BL    Santa Giustina                  25048    Vene-H    Mont-2    Mont-2B
+BL    Santo Stefano di Cadore         25050    Vene-A    Mont-1    Mont-1A
+BL    Sedico                          25053    Vene-H    Mont-2    Mont-2B
+BL    Selva di Cadore                 25054    Vene-A    Mont-1    Mont-1D
+BL    Seren del Grappa                25055    Vene-H    Mont-2    Mont-2B
+BL    Sospirolo                       25056    Vene-H    Mont-2    Mont-2B
+BL    Soverzene                       25057    Vene-H    Mont-2    Mont-2B
+BL    Sovramonte                      25058    Vene-B    Mont-2    Mont-2B
+BL    Taibon Agordino                 25059    Vene-A    Mont-1    Mont-1D
+BL    Tambre                          25060    Vene-H    Mont-2    Mont-2A
+BL    Val di Zoldo                    25073    Vene-A    Mont-1    Mont-1D
+BL    Vallada Agordina                25062    Vene-A    Mont-1    Mont-1D
+BL    Valle di Cadore                 25063    Vene-A    Mont-1    Mont-1C
+BL    Vigo di Cadore                  25065    Vene-A    Mont-1    Mont-1C
+BL    Vodo Cadore                     25066    Vene-A    Mont-1    Mont-1C
+BL    Voltago Agordino                25067    Vene-A    Mont-1    Mont-1D
+BL    Zoppe' di Cadore                25069    Vene-A    Mont-1    Mont-1D
+PD    Abano Terme                     28001    Vene-E
+PD    Agna                            28002    Vene-E
+PD    Albignasego                     28003    Vene-E
+PD    Anguillara Veneta               28004    Vene-E
+PD    Arqua' Petrarca                 28005    Vene-E
+PD    Arre                            28006    Vene-E
+PD    Arzergrande                  28007    Vene-E
+PD    Bagnoli di Sopra             28008    Vene-E
+PD    Baone                        28009    Vene-E
+PD    Barbona                      28010    Vene-E
+PD    Battaglia Terme              28011    Vene-E
+PD    Boara Pisani                 28012    Vene-E
+PD    Borgo Veneto                 28107    Vene-E
+PD    Borgoricco                   28013    Vene-E
+PD    Bovolenta                    28014    Vene-E
+PD    Brugine                      28015    Vene-E
+PD    Cadoneghe                    28016    Vene-E
+PD    Campo San Martino            28020    Vene-E
+PD    Campodarsego                 28017    Vene-E
+PD    Campodoro                    28018    Vene-E
+PD    Camposampiero                28019    Vene-E
+PD    Candiana                     28021    Vene-E
+PD    Carceri                      28022    Vene-E
+PD    Carmignano di Brenta         28023    Vene-E
+PD    Cartura                      28026    Vene-E
+PD    Casale di Scodosia           28027    Vene-E
+PD    Casalserugo                  28028    Vene-E
+PD    Castelbaldo                  28029    Vene-E
+PD    Cervarese Santa Croce        28030    Vene-E
+PD    Cinto Euganeo                28031    Vene-E
+PD    Cittadella                   28032    Vene-E
+PD    Codevigo                     28033    Vene-E
+PD    Conselve                     28034    Vene-E
+PD    Correzzola                   28035    Vene-E
+PD    Curtarolo                    28036    Vene-E
+PD    Due Carrare                  28106    Vene-E
+PD    Este                         28037    Vene-E
+PD    Fontaniva                    28038    Vene-E
+PD    Galliera Veneta              28039    Vene-E
+PD    Galzignano Terme             28040    Vene-E
+PD    Gazzo|                       28041    Vene-E
+PD    Grantorto                   28042    Vene-E
+PD    Granze                      28043    Vene-E
+PD    Legnaro                     28044    Vene-E
+PD    Limena                      28045    Vene-E
+PD    Loreggia                    28046    Vene-E
+PD    Lozzo Atestino              28047    Vene-E
+PD    Masera' di Padova           28048    Vene-E
+PD    Masi                        28049    Vene-E
+PD    Massanzago                  28050    Vene-F
+PD    Megliadino San Vitale       28052    Vene-E
+PD    Merlara                     28053    Vene-E
+PD    Mestrino                    28054    Vene-E
+PD    Monselice                   28055    Vene-E
+PD    Montagnana                  28056    Vene-E
+PD    Montegrotto Terme           28057    Vene-E
+PD    Noventa Padovana            28058    Vene-E
+PD    Ospedaletto Euganeo         28059    Vene-E
+PD    Padova                      28060    Vene-E
+PD    Pernumia                    28061    Vene-E
+PD    Piacenza d'Adige            28062    Vene-E
+PD    Piazzola sul Brenta         28063    Vene-E
+PD    Piombino Dese               28064    Vene-F
+PD    Piove di Sacco              28065    Vene-E
+PD    Polverara                   28066    Vene-E
+PD    Ponso                       28067    Vene-E
+PD    Ponte San Nicolo'           28069    Vene-E
+PD    Pontelongo                  28068    Vene-E
+PD    Pozzonovol                  28070    Vene-E
+PD    Rovolon                     28071    Vene-E
+PD    Rubano                      28072    Vene-E
+PD    Saccolongo                  28073    Vene-E
+PD    San Giorgio delle Pertiche  28075    Vene-E
+PD    San Giorgio in Bosco        28076    Vene-E
+PD    San Martino di Lupari       28077    Vene-E
+PD    San Pietro in Gu'           28078    Vene-E
+PD    San Pietro Viminario            28079    Vene-E
+PD    Santa Giustina in Colle         28080    Vene-E
+PD    Sant'Angelo di Piove di Sacco   28082    Vene-E
+PD    Sant'Elena                      28083    Vene-E
+PD    Sant'Urbano                     28084    Vene-E
+PD    Saonara                         28085    Vene-E
+PD    Selvazzano Dentro               28086    Vene-E
+PD    Solesino                        28087    Vene-E
+PD    Stanghella                      28088    Vene-E
+PD    Teolo                           28089    Vene-E
+PD    Terrassa Padovana               28090    Vene-E
+PD    Tombolo                         28091    Vene-E
+PD    Torreglia                       28092    Vene-E
+PD    Trebaseleghe                    28093    Vene-F
+PD    Tribano                         28094    Vene-E
+PD    Urbana                          28095    Vene-E
+PD    Veggiano                        28096    Vene-E
+PD    Vescovana                       28097    Vene-E
+PD    Vighizzolo d'Este               28098    Vene-E
+PD    Vigodarzere                     28099    Vene-E
+PD    Vigonza                         28100    Vene-E
+PD    Villa del Conte                 28101    Vene-E
+PD    Villa Estense                   28102    Vene-E
+PD    Villafranca Padovana            28103    Vene-E
+PD    Villanova di Camposampiero      28104    Vene-F
+PD    Vo'                             28105    Vene-E
+RO    Adria                           29001    Vene-D
+RO    Ariano nel Polesine             29002    Vene-D
+RO    Arqua' Polesine                 29003    Vene-D
+RO    Badia Polesine                  29004    Vene-D
+RO    Bagnolo di Po                   29005    Vene-D
+RO    Bergantino                      29006    Vene-D
+RO    Bosaro                          29007    Vene-D
+RO    Calto                           29008    Vene-D
+RO    Canaro                          29009    Vene-D
+RO    Candal                       29010    Vene-D
+RO    Castelguglielmo              29011    Vene-D
+RO    Castelmassa                  29012    Vene-D
+RO    Castelnovo Bariano           29013    Vene-D
+RO    Ceneselli                    29014    Vene-D
+RO    Ceregnano                    29015    Vene-D
+RO    Corbola                      29017    Vene-D
+RO    Costa di Rovigo              29018    Vene-D
+RO    Crespino                     29019    Vene-D
+RO    Ficarolo                     29021    Vene-D
+RO    Fiesso Umbertiano            29022    Vene-D
+RO    Frassinelle Polesine         29023    Vene-D
+RO    Fratta Polesine              29024    Vene-D
+RO    Gaiba                        29025    Vene-D
+RO    Gavello                      29026    Vene-D
+RO    Giacciano con Baruchella     29027    Vene-D
+RO    Guarda Veneta                29028    Vene-D
+RO    Lendinara                    29029    Vene-D
+RO    Loreo                        29030    Vene-D
+RO    Lusia                        29031    Vene-D
+RO    Melara                       29032    Vene-D
+RO    Occhiobello                  29033    Vene-D
+RO    Papozze                      29034    Vene-D
+RO    Pettorazza Grimani           29035    Vene-D
+RO    Pincara                      29036    Vene-D
+RO    Polesella                    29037    Vene-D
+RO    Pontecchio Polesine          29038    Vene-D
+RO    Porto Tolle                  29039    Vene-D
+RO    Porto Viro                   29052    Vene-D
+RO    Rosolina                     29040    Vene-D
+RO    Rovigo                       29041    Vene-D
+RO    Salara                       29042    Vene-D
+RO    San Bellino                  29043    Vene-D
+RO    San Martino di Venezze       29044    Vene-D
+RO    Stienta                      29045    Vene-D
+RO    Taglio di Po                29046    Vene-D
+RO    Trecenta                    29047    Vene-D
+RO    Villadose                   29048    Vene-D
+RO    Villanova del Ghebbo        29050    Vene-D
+RO    Villanova Marchesana        29051    Vene-D
+RO    Villlamarzana               29049    Vene-D
+TV    Altivole                    26001    Vene-F
+TV    Arcade                      26002    Vene-F
+TV    Asolo                       26003    Vene-B
+TV    Borso del Grappa            26004    Vene-B
+TV    Breda di Piave              26005    Vene-F
+TV    Caerano di San Marco        26006    Vene-H
+TV    Cappella Maggiore           26007    Vene-H
+TV    Carbonera                   26008    Vene-F
+TV    Casale sul Sile             26009    Vene-F
+TV    Casier                      26010    Vene-F
+TV    Castelcucco                 26011    Vene-B
+TV    Castelfranco Veneto         26012    Vene-E
+TV    Castello di Godego          26013    Vene-E
+TV    Cavaso del Tomba            26014    Vene-H
+TV    Cessalto                    26015    Vene-G
+TV    Chiarano                    26016    Vene-G
+TV    Cimadolmo                   26017    Vene-F
+TV    Cison di Valmarino          26018    Vene-H
+TV    Codogne'                    26019    Vene-G
+TV    Colle Umberto               26020    Vene-H
+TV    Conegliano                  26021    Vene-H
+TV    Cordignano                  26022    Vene-H
+TV    Cornuda                     26023    Vene-H
+TV    Crocetta del Montello       26025    Vene-H
+TV    Farra di Soligo             26026    Vene-H
+TV    Follina                     26027    Vene-H
+IV    Fontanelle                  26028    Vene-G
+TV    Fonte                       26029    Vene-B
+TV    Fregona                     26030    Vene-H
+TV    Gaiarine                      26031    Vene-G
+TV    Giavera del Montello          26032    Vene-H
+TV    Godega di Sant'Urbano        26033    Vene-G
+TV    Gorgo al Monticano           26034    Vene-G
+TV    Istrana                       26035    Vene-F
+TV    Loria                         26036    Vene-E
+TV    Mansue'                       26037    Vene-G
+TV    Mareno di Piave               26038    Vene-G
+TV    Maser                         26039    Vene-H
+TV    Maserada sul Piave            26040    Vene-F
+TV    Meduna di Livenza             26041    Vene-G
+TV    Miane                         26042    Vene-H
+TV    Mogliano Veneto               26043    Vene-F
+TV    Monastier di Treviso          26044    Vene-F
+TV    Monfumo                       26045    Vene-B
+TV    Montebelluna                  26046    Vene-H
+TV    Morgano                       26047    Vene-F
+TV    Moriago della Battaglia       26048    Vene-H
+TV    Motta di Livenza              26049    Vene-G
+TV    Nervesa della Battaglia       26050    Vene-H
+TV    Oderzo                        26051    Vene-G
+TV    Ormelle                       26052    Vene-F
+TV    Orsago                        26053    Vene-G
+TV    Paese                         26055    Vene-F
+TV    Pederobba                     26056    Vene-H
+TV    Pieve del Grappa              26096    Vene-B
+TV    Pieve di Soligo               26057    Vene-H
+TV    Ponte di Piave                26058    Vene-F
+TV    Ponzano Veneto                26059    Vene-F
+TV    Portobuffole                  26060    Vene-G
+TV    Possagno                      26061    Vene-H
+TV    Povegliano                    26062    Vene-F
+TV    Preganziol                    26063    Vene-F
+TV    Quinto di Treviso             26064    Vene-F
+TV    Refrontolo                    26065    Vene-H
+TV    Resana                             26066    Vene-E
+TV    Revine Lago                     26067    Vene-H    Mont-2    Mont-2B
+TV    Riese Pio X                     26068    Vene-E
+TV    Roncade                           26069    Vene-F
+TV    Salgareda                       26070    Vene-F
+TV    San Biagio di Callalta     26071    Vene-F
+TV    San Fior                           26072    Vene-H
+TV    San Pietro di Feletto        26073    Vene-H
+TV    San Polo di Piave             26074    Vene-F
+TV    San Vendemiano              26076    Vene-H
+TV    San Zenone  degli Ezzelini 26077    Vene-B
+TV    Santa Lucia di Piave          26075    Vene-F
+TV    Sarmede                         26078    Vene-H    Mont-2    Mont-2B
+TV    Segusino                        26079    Vene-H    Mont-2    Mont-2B
+TV    Sernaglia della Battaglia   26080    Vene-H
+TV    Silea                               26081    Vene-F
+TV    Spresiano                       26082    Vene-F
+TV    Susegana                       26083    Vene-H
+TV    Tarzo                              26084    Vene-H
+TV    Trevignano                     26085    Vene-F
+TV    Treviso                           26086    Vene-F
+TV    Valdobbiadene               26087    Vene-H    Mont-2    Mont-2B
+TV    Vazzola                          26088    Vene-G
+TV    Vedelago                        26089    Vene-F
+TV    Vidor                               26090    Vene-H
+TV    Villorba                          26091    Vene-F
+TV    Vittorio Veneto               26092    Vene-H    Mont-2    Mont-2B
+TV    Volpago del Montello      26093    Vene-H
+TV    Zenson di Piave              26094    Vene-F
+TV    Zero Branco                    26095    Vene-F
+VE    Annone Veneto              27001    Vene-G
+VE    Campagna Lupia            27002    Vene-F
+VE    Campolongo Maggiore  27003    Vene-E
+VE    Camponogara                 27004    Vene-F
+VE    Caorle                              27005    Vene-G
+VE    Cavallino-Treporti          27044    Vene-F
+VE    Cavarzere                         27006    Vene-E
+VE    Ceggia                               27007    Vene-G
+VE    Chioggia                          27008    Vene-E
+VE    Cinto Caomaggiore          27009    Vene-G
+VE    Cona                                27010    Vene-E
+VE    Concordia Sagittaria         27011    Vene-G
+VE    Dolo                                 27012    Vene-F
+VE    Eraclea                             27013    Vene-F
+VE    Fiesso d'Artico                  27014    Vene-E
+VE    Fossalta di Piave                 27015    Vene-F
+VE    Fossalta di Portogruaro     27016    Vene-G
+VE    Fosso'                               27017    Vene-E
+VE    Gruaro                               27018    Vene-G
+VE    Jesolo                                27019    Vene-F
+VE    Marcon                              27020    Vene-F
+VE    Martellago                         27021    Vene-F
+VE    Meolo                               27022    Vene-F
+VE    Mira                                   27023    Vene-F
+VE    Mirano                              27024    Vene-F
+VE    Musile di Piave                    27025    Vene-F
+VE    Noale                               27026    Vene-F
+VE    Noventa di Piave                27027    Vene-F
+VE    Pianiga                             27028    Vene-F
+VE    Portogruaro                      27029    Vene-G
+VE    Pramaggiore                       27030    Vene-G
+VE    Quarto d'Altino                   27031    Vene-F
+VE    Salzano                            27032    Vene-F
+VE    San Dona' di Piave             27033    Vene-F
+VE    San Michele al Tagliamento  27034    Vene-G
+VE    San Stino di Livenza            27036    Vene-G
+VE    Santa Maria di Sala             27035    Vene-F
+VE    Scorze'                             27037    Vene-F
+VE    Spinea                              27038    Vene-F
+VE    Stra                                    27039    Vene-E
+VE    Teglio Veneto                  27040    Vene-G
+VE    Torre di Mosto                  27041    Vene-G
+VE    VENEZIA                        27042    Vene-F
+VE    Vigonovo                        27043    Vene-E
+VI    Agugliaro                         24001    Vene-E
+VI    Albettone                         24002    Vene-E
+VI    Alonte                               24003    Vene-E
+VI    Altavilla Vicentina                24004    Vene-B
+VI    Altissimo                          24005    Vene-B
+VI    Arcugnano                        24006    Vene-E
+VI    Arsiero                               24007    Vene-B    Mont-2    Mont-2C
+VI    Arzignano                         24008    Vene-B
+VI    Asiago                               24009    Vene-B    Mont-2    Mont-2C
+VI    Asigliano Veneto                 24010    Vene-E
+VI    Barbarano Mossano           24124    Vene-E
+VI    Bassano del Grappa            24012    Vene-B
+VI    Bolzano Vicentino                24013    Vene-B
+VI    Breganze                          24014    Vene-B
+VI    Brendola                            24015    Vene-E
+VI    Bressanvido                      24016    Vene-B
+VI    Brogliano                          24017    Vene-B
+VI    Caldogno                         24018    Vene-B
+VI    Caltrano                           24019    Vene-B    Mont-2    Mont-2C
+VI    Calvene                            24020    Vene-B    Mont-2    Mont-2C
+VI    Camisano Vicentino           24021    Vene-E
+VI    Campiglia dei Berici           24022    Vene-E
+VI    Carre'                               24024    Vene-B
+VI    Cartigliano                       24025    Vene-E
+VI    Cassola                             24026    Vene-E
+VI    Castegnero                        24027    Vene-E
+VI    Castelgomberto                 24028    Vene-B
+VI    Chiampo                           24029    Vene-B
+VI    Chiuppano                       24030    Vene-B
+VI    Cogollo del Cengio            24032    Vene-B    Mont-2    Mont-2C
+VI    Colceresa                         24126    Vene-B
+VI    Cornedo Vicentino              24034    Vene-B
+VI    Costabissara                       24035    Vene-B
+VI    Creazzo                              24036    Vene-B
+VI    Crespadoro                        24037    Vene-B    Mont-2    Mont-2C
+VI    Dueville                               24038    Vene-B
+VI    Enego                                 24039    Vene-B    Mont-2    Mont-2C
+VI    Fara Vicentino                     24040    Vene-B
+VI    Foza                                   24041    Vene-B    Mont-2    Mont-2C
+VI    Gallio                                   24042    Vene-B    Mont-2    Mont-2C
+VI    Gambellara                        24043    Vene-B
+VI    Gambugliano                      24044    Vene-B
+VI    Grisignano di Zocco           24046    Vene-E
+VI    Grumolo delle Abbadesse  24047    Vene-E
+VI    Isola Vicentina                     24048    Vene-B
+VI    Laghi                                    24049    Vene-B    Mont-2    Mont-2C
+VI    Lastebasse                            24050    Vene-B    Mont-2    Mont-2C
+VI    Longare                               24051    Vene-B
+VI    Lonigo                                  24052    Vene-E
+VI    Lugo di Vicenza                    24053    Vene-B    Mont-2    Mont-2C
+VI    Lusiana Conco                    24127    Vene-B    Mont-2    Mont-2C
+VI    Malo                                    24055    Vene-B
+VI    Marano Vicentino               24056    Vene-B
+VI    Marostica                            24057    Vene-B
+VI    Monte di Malo                     24063    Vene-B
+VI    Montebello Vicentino         24060    Vene-B
+VI    Montecchio Maggiore        24061    Vene-B
+VI    Montecchio Precalcino       24062    Vene-B
+VI    Montegalda                         24064    Vene-E
+VI    Montegaldella                    24065    Vene-E
+VI    Monteviale                         24066    Vene-B
+VI    Monticello Conte Otto        24067    Vene-B
+VI    Montorso Vicentino             24068    Vene-B
+VI    Mussolente                         24070    Vene-B
+VI    Nanto                                  24071    Vene-E
+VI    Nogarole Vicentino             24072    Vene-B
+VI    Nove                                24073    Vene-B
+VI    Noventa Vicentina            24074    Vene-E
+VI    Orgiano                            24075    Vene-E
+VI    Pedemonte                      24076    Vene-B    Mont-2    Mont-2C
+VI    Pianezze                           24077    Vene-B
+VI    Piovene Rocchette           24078    Vene-B
+VI    Poiana Maggiore              24079    Vene-E
+VI    Posina                                24080    Vene-B    Mont-2    Mont-2C
+VI    Pove del Grappa               24081    Vene-B    Mont-2    Mont-2C
+VI    Pozzoleone                      24082    Vene-E
+VI    Quinto Vicentino                24083    Vene-B
+VI    Recoaro Terme                24084    Vene-B    Mont-2    Mont-2C
+VI    Roana                              24085    Vene-B    Mont-2    Mont-2C
+VI    Romano d'Ezzelino           24086    Vene-B    Mont-2    Mont-2C
+VI    Rosa'                               24087    Vene-E
+VI    Rossano Veneto               24088    Vene-E
+VI    Rotzo                               24089    Vene-B    Mont-2    Mont-2C
+VI    Salcedo                             24090    Vene-B
+VI    San Pietro Mussolino      24094    Vene-B
+VI    San Vito di Leguzzano        24096    Vene-B
+VI    Sandrigo                          24091    Vene-B
+VI    Santorso                          24095    Vene-B
+VI    Sarcedo                           24097    Vene-B
+VI    Sarego                             24098    Vene-E
+VI    Schiavon                          24099    Vene-B
+VI    Schio                                24100    Vene-B
+VI    Solagna                           24101    Vene-B    Mont-2    Mont-2C
+VI    Sossano                          24102    Vene-E
+VI    Sovizzo                            24103    Vene-B
+VI    Tezze sul Brenta              24104    Vene-E
+VI    Thiene                             24105    Vene-B
+VI    Tonezza del Cimone        24106    Vene-B    Mont-2    Mont-2C
+VI    Torrebelvicino                  24107    Vene-B
+VI    Torri di Quartesolo            24108    Vene-B
+VI    Trissino                            24110    Vene-B
+VR    Affi                                         23001    Vene-C
+VR    Albaredo d'Adige                    23002    Vene-E
+VR    Angiari                                   23003    Vene-D
+VR    Arcole                                    23004    Vene-B
+VR    Badia Calavena                       23005    Vene-C
+VR    Bardolino                                23006    Vene-C
+VR    Belfiore                                    23007    Vene-C
+VR    Bevilacqua                               23008    Vene-E
+VR    Bonavigo                                 23009    Vene-E
+VR    Boschi Sant Anna                    23010    Vene-E
+VR    Bosco Chiesanuova                23011    Vene-C    Mont-2    Mont-2D
+VR    Bovolone                                23012    Vene-D
+VR    Brentino Belluno                    23013    Vene-C    Mont-2    Mont-2D
+VR    Brenzone sul Garda               23014    Vene-C    Mont-2    Mont-2D
+VR    Bussolengo                            23015    Vene-C
+VR    Buttapietra                             23016    Vene-D
+VR    Caldi ero                                  23017    Vene-C
+VR    Caprino Veronese                   23018    Vene-C    Mont-2    Mont-2D
+VR    Casaleone                               23019    Vene-D
+VR    Castagnaro                             23020    Vene-D
+VR    Castel d'Azzano                      23021    Vene-D
+VR    Castelnuovo del Garda           23022    Vene-C
+VR    Cavaion Veronese                 23023    Vene-C
+VR    Cazzano di Tramigna            23024    Vene-B
+VR    Cerea                                       23025    Vene-D
+VR    Cerro Veronese                     23026    Vene-C
+VR    Cologna Veneta                      23027    Vene-E
+VR    Colognola ai Colli                   23028    Vene-C
+VR    Concamarise                          23029    Vene-D
+VR    Costermano sul Garda           23030    Vene-C
+VR    Dolce'                                      23031    Vene-C    Mont-2    Mont-2D
+VR    Erbe'                                        23032    Vene-D
+VR    Erbezzo                                    23033    Vene-C    Mont-2    Mont-2D
+VR    Ferrara di Monte Baldo          23034    Vene-C    Mont-2    Mont-2D
+VR    Fumane                                   23035    Vene-C
+VR    Garda                                       23036    Vene-C
+VR    Gazzo Veronese                     23037    Vene-D
+VR    Grezzana                                23038    Vene-C
+VR    Illasi                                         23039    Vene-C
+VR    Isola della Scala                       23040    Vene-D
+VR    Isola Rizza                               23041    Vene-D
+VR    Lavagno                                   23042    Vene-C
+VR    Lazise                                      23043    Vene-C
+VR    Legnago                                   23044    Vene-D
+VR    Malcesine                                 23045    Vene-C    Mont-2    Mont-2D
+VR    Marano di Valpolicella             23046    Vene-C
+VR    Mezzane di Sotto                    23047    Vene-C
+VR    Minerbe                                    23048    Vene-E
+VR    Montecchia di Crosara           23049    Vene-B
+VR    Monteforte d'Alpone               23050    Vene-B
+VR    Mozzecane                              23051    Vene-D
+VR    Negrar                                     23052    Vene-C
+VR    Nogara                                    23053    Vene-D
+VR    Nogarole Rocca                      23054    Vene-D
+VR    Oppeano                                 23055    Vene-D
+VR    Palu'                                         23056    Vene-D
+VR    Pastrengo                                23057    Vene-C
+VR    Pescantina                              23058    Vene-C
+VR    Peschiera del Garda                23059    Vene-C
+VR    Povegliano Veronese              23060    Vene-D
+VR    Pressana                                  23061    Vene-E
+VR    Rivoli Veronese                         23062    Vene-C
+VR    Ronca'                                    23063    Vene-B
+VR    Ronco all'Adige                        23064    Vene-C
+VR    Roverchiara                             23065    Vene-D
+VR    Rovere' Veronese                     23067    Vene-C    Mont-2    Mont-2D
+VR    Roveredo di Gua'                     23066    Vene-E
+VR    Salizzole                                  23068    Vene-D
+VR    San Bonifacio                           23069    Vene-B
+VR    San Giovanni Ilarione              23070    Vene-B
+VR    San Giovanni Lupatoto              23071    Vene-D
+VR    San Martino Buon Albergo      23073    Vene-C
+VR    San Mauro di Saline                23074    Vene-C
+VR    San Pietro di Morubio               23075    Vene-D
+VR    San Pietro in Cariano                23076    Vene-C
+VR    San Zeno di Montagna              23079    Vene-C    Mont-2    Mont-2D
+VR    Sanguinetto                             23072    Vene-D
+VR    Sant'Ambrogio di Valpolicella   23077    Vene-C
+VR    Sant'Anna d'Alfaedo                  23078    Vene-C    Mont-2    Mont-2D
+VR    Selva di Progno                         23080    Vene-C    Mont-2    Mont-2D
+VR    Soave                                        23081    Vene-B
+VR    Sommacampagna                      23082    Vene-C
+VR    Sona                                        23083    Vene-C
+VR    Sorga'                                     23084    Vene-D
+VR    Terrazzo                                  23085    Vene-E
+VR    Torri del Benaco                      23086    Vene-C
+VR    Tregnago                                 23087    Vene-C
+VR    Trevenzuolo                            23088    Vene-D
+VR    Valeggio sul Mincio                  23089    Vene-C
+VR    Velo Veronese                           23090    Vene-C    Mont-2    Mont-20
+VR    Verona                                     23091    Vene-C
+VR    Veronella                                 23092    Vene-E
+VR    Vestenanova                       23093    Vene-B
+VR    Vigasio                                  23094    Vene-D
+VR    Villa Bartolomea               23095    Vene-D
+VR    Villafranca di Verona       23096    Vene-D
+VR    Zevio                                      23097    Vene-C
+VR    Zimella                                 23098    Vene-E
