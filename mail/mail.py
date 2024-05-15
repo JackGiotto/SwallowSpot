@@ -5,7 +5,7 @@ from time import sleep
 import os
 
 #JSON list allowed sender
-global allowed_senders = {
+allowed_senders = {
     "allowed_senders": [
         "marco.stefani2005@gmail.com",
         "maggiotto.05@gmail.com",
@@ -16,7 +16,7 @@ global allowed_senders = {
 def check_sender(msg):    
     sender = msg.get('From', '')
     
-    if sender in allowed_sender['allowed_senders']:
+    if sender in allowed_senders['allowed_senders']:
         return True
     else:
         return False
@@ -58,10 +58,7 @@ def emails_fetch(mail):
                             filename = content_disposition.split("filename=")[1].strip().strip('"')
                         else:
                             filename = "attachment.pdf"  # Default filename if not specified
-                        print("Content type:", content_type)
-                        print("Type:", type(pdf))
                         result = save_bulletin(pdf, filename=filename)
-                        print(result)
                     try:
                         body = part.get_payload(decode=True).decode()
                     except:
@@ -82,9 +79,7 @@ def get_emails():
 
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     #connection to imap server
-    print("pronto per connetterti")
     mail.login(MAIL, __PASSWORD)
-    print("ok connesso")
     emails_fetch(mail)
 
 
@@ -93,9 +88,3 @@ def start_cycle():
         get_emails()
         sleep(60 * 30)
 
-"""
-if __name__ == '__main__':
-    main()
-else:    # close connection
-    mail.close()
-"""
