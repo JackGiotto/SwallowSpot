@@ -4,6 +4,7 @@ import os
 import PyPDF2
 
 def save_bulletin(file) -> str:
+    print(file.filename)
     if file and file.filename.endswith('.pdf'):
             filename = secure_filename(file.filename)
             filename = _unique_filename(os.getenv("BULLETINS_FOLDER"), filename)

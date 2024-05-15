@@ -3,6 +3,7 @@ from telegram_bot.main import start_bot, alert_control,snow_control
 from threading import Thread
 from utils.db_backup.client_backup import start_backup
 import asyncio
+from mail.mail import get_emails
 
 async def saluta():
     p = Pdf_reader("./bulletins/prova.txt")
@@ -20,3 +21,4 @@ async def saluta():
 def run_saluta():
     asyncio.run(saluta())
 
+get_emails()

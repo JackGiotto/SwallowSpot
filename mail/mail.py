@@ -2,15 +2,12 @@ import imaplib
 import email
 import webbrowser
 import os
+from utils.bulletins_utils import save_bulletin
 
 #credentials
-MAIL = "swallowspottesting@gmail.com"
-__PASSWORD = "sgef pxbq ivqo dqpb"
-IMAP_SERVER = "imap.gmail.com"
 
-mail = imaplib.IMAP4_SSL(IMAP_SERVER)
 
-def emials_fetch():
+def emials_fetch(mail):
     #select the mail's field where mails arrives
     mail.select("inbox")
 
@@ -43,6 +40,8 @@ def emials_fetch():
                 content_disposition = str(part.get("Content-Disposition"))
                 print("content type",content_type)
                 print("TIPO", type(pdf))
+                result = save_bulletin(pdf)
+                print(result)
             try:
                 body = part.get_payload(decode=True).decode()
             except:
@@ -54,15 +53,22 @@ def emials_fetch():
     print('Subject:', subject)
     print('Body:', body)
     
-def main():
-     #connection to imap server
-     print("pronto per connetterti")
-     mail.login(MAIL, __PASSWORD)
-     print("ok connesso")
-     emials_fetch()
+def get_emails():
+    MAIL = "swallowspottesting@gmail.com"
+    __PASSWORD = "sgef pxbq ivqo dqpb"
+    IMAP_SERVER = "imap.gmail.com"
+
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+    #connection to imap server
+    print("pronto per connetterti")
+    mail.login(MAIL, __PASSWORD)
+    print("ok connesso")
+    emials_fetch(mail)
 
 
+"""
 if __name__ == '__main__':
     main()
 else:    # close connection
     mail.close()
+"""
