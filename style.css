@@ -1,34 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');    /* Import the 'Open Sans' font from Google Fonts */
 
-* {
+*{
   margin: 0;        /* Reset margin for all elements */
   padding: 0;       /* Reset padding for all elements */
   box-sizing: border-box;       /* Set box-sizing to border-box for all elements */
   font-family: 'Open Sans', sans-serif;     /* Set font family to 'Open Sans' for all elements */
 }
 
-body {
+
+body{
   display: flex;        /* Display body as flex container */
   align-items: center;      /* Align items vertically in the center */
   justify-content: center;      /* Justify content horizontally in the center */
   min-height: 100vh;        /* Set minimum height to 100% of viewport height */
-  background: #007000aa;        /* Apply semi-transparent dark green background to body */
+  background: #248a38;        /* Set the color of the snake's body */
 }
 
-.wrapper {
-  width: 65vmin;        /* Set width of wrapper to 65vmin */
-  height: 70vmin;       /* Set height of wrapper to 70vmin */
+
+.wrapper{
+  width: 65vmin;        /* Set width of wrapper */
+  height: 70vmin;       /* Set height of wrapper */
   display: flex;        /* Display wrapper as flex container */
   overflow: hidden;     /* Hide overflowing content */
   flex-direction: column;       /* Set flex direction to column */
   justify-content: center;      /* Align content vertically in the center */
   border-radius: 5px;       /* Apply border radius of 5px */
-  background: #007000aa;        /* Apply semi-transparent dark green background to wrapper */
-  box-shadow: 0 0px 30px rgb(0, 255, 0);  /* Add a bright green shadow to wrapper */
+  background: #4e8d5c;        /* Set the colour for the background of the score table */
+  box-shadow: 0 0px 30px #00FF00;     /* Add a bright green shadow to wrapper */
 }
 
-.game-details {
-  color: #000000;       /* Set color to black for game details */
+
+.game-details{
+  color: #dadada;       /* Set the colour for the score text */
   font-weight: 500;     /* Set font weight to 500 for game details */
   font-size: 1.2rem;        /* Set font size to 1.2rem for game details */
   padding: 20px 27px;       /* Apply padding of 20px top and bottom, 27px left and right */
@@ -36,73 +39,67 @@ body {
   justify-content: space-between;       /* Align content with space between */
 }
 
-.play-board {
+
+.play-board{
   height: 100%;     /* Set height of play board to 100% */
   width: 100%;      /* Set width of play board to 100% */
   display: grid;        /* Display play board as grid */
-  background: #007000aa;        /* Apply semi-transparent dark green background to play board */
+  background: #7bc957;        /* Set the colour of the playboard (field) */
   grid-template: repeat(30, 1fr) / repeat(30, 1fr);     /* Set grid template for play board */
-  
 }
 
 
-.play-board .food::after {
-  content: "🍎";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  font-size: x-large;
+/*
+.play-board .food{
+  background-image: url('/RedAppleEmoji.png');
+  background-size: cover;
+  background-position: center bottom;
+}*/
+
+.play-board .food {
+  background-image: url('/RedAppleEmoji.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
 }
 
-.play-board .head {
-  background: #00ff00;      /* Set green background for snake's head cells */
+
+.play-board .head{
+  background: #248a38;      /* Set the color of the snake head */
 }
 
-.controls {
-  display: none;        /* Hide controls initially */
-  justify-content: space-between;       /* Align controls with space between */
-}
 
-.controls i {
-  padding: 25px 0;      /* Apply padding of 25px top and bottom, 0 left and right */
-  text-align: center;       /* Center align text */
-  font-size: 1.3rem;        /* Set font size to 1.3rem */
-  color: #B8C6DC;       /* Set color to #B8C6DC */
-  width: calc(100% / 4);        /* Calculate width based on 1/4 of container */
-  cursor: pointer;      /* Set cursor to pointer */
-  border-right: 1px solid #171B26;      /* Apply right border */
-}
-
-@media screen and (max-width: 800px) {
-  .wrapper {
-    width: 90vmin;      /* Set width of wrapper to 90vmin for smaller screens */
-    height: 100vmin;        /* Set height of wrapper to 115vmin for smaller screens */
+@media screen and (max-width: 800px){
+  .wrapper{
+    width: 90vmin;
+    height: 100vmin;
   }
 
-  .game-details {
-    font-size: 1rem;        /* Set font size to 1rem for smaller screens */
-    padding: 15px 27px;     /* Apply padding of 15px top and bottom, 27px left and right */
+  .game-details{
+    font-size: 1rem;
+    padding: 15px 27px;
   }
 
-  .controls {
-    display: flex;      /* Display controls for smaller screens */
+  .controls{
+    display: flex;
   }
 
-  .controls i {
-    padding: 15px 0;        /* Apply padding of 15px top and bottom, 0 left and right */
-    font-size: 1rem;        /* Set font size to 1rem for controls on smaller screens */
+  .controls i{
+    padding: 15px 0;
+    font-size: 1rem;
   }
 }
 
-#gameOverScreen {
+
+#gameOverScreen{
   display: none;        /* Hide game over screen */
-  position: absolute;       /* Set position to absolute */
-  top: 50%;     /* Position at 50% from top */
-  left: 50%;        /* Position at 50% from left */
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);     /* Center the screen */
   text-align: center;       /* Center align text */
-  background-color: #f00;       /* Apply red background */
-  color: #fff;      /* Set color to white */
-  padding: 20px;        /* Apply padding of 20px */
-  border-radius: 5px;       /* Apply border radius of 5px */
+  background-color: #d8d8d8;     /* Set the colour of the background of the game over screen  */
+  color: #1d1d1d;     /* Set the colour of the text of the game over screen */
+  padding: 20px;
+  border-radius: 5px;
 }
