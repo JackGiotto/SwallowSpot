@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="reports">
+    <h1>Ultimo bollettino</h1>
+    <div class="categories mb-3">
+        <a href="" class="btn btn-success m-2 btn-lg">Rischi idrologici</a>
+        <a href="{{ url_for('reports.snow') }}" class="btn btn-primary m-2 btn-lg">Previsioni nevicate</a>
+    </div>
+    <div class="not-found">
+        <h2 class="not-found">Non sono presenti bollettini in questa data!</h2>
+        <a href="{{ url_for('reports.hydro') }}" class="btn btn-primary m-2 btn-lg">Torna all'ultimo bollettino</a>
+    </div>
+</div>
+
+<div class="pop-out" id="popOut">
+    <div class="show-pop-out card" id="showPopOut">
+        <span onclick="showPopOut('popOut', 'showPopOut', 'calendar-out')">
+            <i class="fa-solid fa-angle-left"></i>
+        </span>
+    </div>
+    <form action="" method="get" id="calendar-out" class="card">
+        <p>Inserisci la data del bollettino che vuoi visualizzare:</p>
+        <input type="date" class="form-control" id="dateInput" placeholder="Seleziona la data">
+        <button class="btn btn-success mt-2">Conferma</button>
+    </form>
+</div>
+
+<script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    //highlight days
+    var dates = {
+        20240513: 0
+    },
+    classDict = {
+        0: 'event'
+    }
+    
+    function get2DigitFmt(val) {
+        return ('0' + val).slice(-2);
+    }
+    
+    flatpickr("#dateInput", {
+        dateFormat: "d-m-Y",
+        altInput: true,
+        altFormat: "j F Y",
+        onDayCreate: function(dObj, dStr, fp, dayElem){
+            var date = dayElem.dateObj,
+            key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),
+            value = classDict[dates[key]];
+            if (value) {
+                dayElem.className += ' ' + value;
+            }
+        }
+    });
+
+    //light/dark mode
+    var popOut = document.getElementById("popOut");
+    var arrowPopOut = document.getElementById("showPopOut");
+    var dateInput = document.getElementById("dateInput");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        popOut.setAttribute('data-bs-theme', "dark");
+        arrowPopOut.setAttribute('data-bs-theme', "dark");
+        dateInput.setAttribute('data-bs-theme', "dark");
+    }
+    else {
+        //light mode
+        popOut.setAttribute('data-bs-theme', "light");
+        arrowPopOut.setAttribute('data-bs-theme', "light");
+        dateInput.setAttribute('data-bs-theme', "light");
+    }
+</script>
+
+{% endblock %}

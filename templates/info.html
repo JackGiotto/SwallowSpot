@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="infoContent">
+    <h1>Informazioni e panoramica sulle funzionalit&agrave; di <strong class="highlighted">SwallowSpot</strong></h1>
+    <br>
+    <!--descrizione bollettini-->
+    <h2>Bollettini</h2>
+    <p>
+        I bollettini sui <u>rischi idraulici</u>, <u>idrogeologici</u>, <u>idrogeologici per temporali</u> e le <u>previsioni sulle nevicate</u> sono elaborati e stilati dal <strong>Centro Funzionale Decentrato</strong> della <strong>Regione Veneto</strong>, tenuto da <u>Protezione Civile</u> e <u>Polizia Locale</u>.
+        <br><br>
+        Forniscono informazioni utili all'individuazione di <strong>allerte meteo</strong> all'interno della regione.
+        <br><br>
+        Di seguito sono riportate tutte le informazioni e le legende sui vari rischi, utili agli utenti di questo sito per comprendere la lettura corretta dei dati.
+    </p>
+    <!--tipi rischi-->
+    <h2 class="mt-4">Tipologie di rischi</h2>
+    <ul>
+        <li>
+            <strong>Nevicate</strong>: rischio indotto da precipitazioni nevose con accumulo al suolo in quantit&agrave; tali da generare difficolt&agrave; e danni alle persone ed alle attivit&agrave; ordinariamente svolte dalla popolazione.
+        </li>
+        <br>
+        <li>
+            <strong>Rischi Idraulici</strong>: allagamenti e alluvioni in genere dovuti all'incapacit&agrave; di smaltire l'acqua caduta da parte di fognature e piccoli corsi d'acqua o dai corsi d'acqua pi&ugrave; importanti, come torrenti e fiumi.
+        </li>
+        <br>
+        <li>
+            <strong>Rischi Idrogeologici</strong>: frane, scivolamenti di terra, crolli di roccia, colate di fango, etc., possono creare situazioni di pericolo per strade, ferrovie e anche abitazioni.
+        </li>
+        <br>
+        <li>
+            <strong>Idrogeologica per tempeste</strong>: eventi di pioggia generalmente molto improvvisi, localizzati e violenti, accompagnati accompagnato spesso da fulmini evento, e sono caratterizzati da una elevata incertezza previsionale.
+        </li>
+    </ul>
+    <!--colorazioni-->
+    <h2 class="mt-4 mb-3">Significato delle cololorazioni</h2>
+    <span class="circle green"></span>
+    <p class="mt-2"><strong style="color: green;">Verde (Normalit&agrave;)</strong>: in questo caso non sono previste criticit&agrave;.</p>
+    <br>
+    <span class="circle yellow"></span>
+    <p class="mt-2"><strong style="color: gold;">Giallo (Fase di Vigilanza)</strong>: di solito associata a eventi molto circoscritti, anche intensi, di difficile localizzazione e previsione temporale.</p>
+    <br>
+    <span class="circle orange"></span>
+    <p class="mt-2"><strong style="color: orange;">Arancione (Fase di Attenzione)</strong>: di solito associata a fenomeni meteo diffusi con possibili effetti sulla stabilit&agrave; dei versanti e sui corsi d'acqua.</p>
+    <br>
+    <span class="circle red"></span>
+    <p class="mt-2"><strong style="color: red;">Rosso (Fase di Pre Allarme)</strong>: di solito associata a fenomeni meteo diffusi di particolare intensit&agrave; e persistenza, con conseguenti effetti al suolo rilevanti, quali frane diffuse ed esondazioni di corsi d'acqua anche principali.</p>
+    <!--previsioni nevicate-->
+    <h2 class="mt-4">Lettura delle previsioni nevicate</h2>
+    <!--lista province-->
+    <h2 class="mt-4">Province appartenenti alle zone regionali (VENE)</h2>
+    <ul>
+        <li>
+            <strong>VENE-A</strong>: Belluno (BL)
+        </li>
+        <li>
+            <strong>VENE-H</strong>: Belluno (BL), Treviso (TV)
+        </li>
+        <li>
+            <strong>VENE-B</strong>: Vicenza (VI), Belluno (BL), Treviso (TV), Verona (VR)
+        </li>
+        <li>
+            <strong>VENE-C</strong>: Verona (VR)
+        </li>
+        <li>
+            <strong>VENE-F</strong>: Rovigo (RO), Verona (VR)
+        </li>
+        <li>
+            <strong>VENE-E</strong>: Padova (PD), Vicenza (VI), Verona (VR), Venezia (VE), Treviso (TV)
+        </li>
+        <li>
+            <strong>VENE-F</strong>: Venezia (VE), Treviso (TV), Padova (PD)
+        </li>
+        <li>
+            <strong>VENE-G</strong>: Venezia (VE), Treviso (TV)
+        </li>
+    </ul>
+    <br>
+    <p>
+        <strong>Nota</strong>: Le varie zone non seguono i confini precisi di ogni provincia, perci&ograve; alcune di queste compaiono pi&ugrave; volte nella legenda.
+        <br>
+        I <u>bacini idrografici di riferimento</u> sono scritti direttamente sotto ogni bollettino nella pagina apposita.
+        <br><br>
+        Per quanto riguarda i comuni interessati per i <u>bollettini sulle nevicate</u>, sono tutti gi&agrave; presenti nella pagina apposita.
+    </p>
+    <h2 class="mt-4">Visualizzazione dei vecchi bollettini</h2>
+    <p>
+        Sul lato delle pagine contenenti i vari bollettini &egrave; presente una <u>linguetta</u> che, se premuta, d&agrave; accesso ad un <strong>calendario</strong> dove &egrave; possibile selezionare le date corrispondenti ai <strong>vecchi bollettini meteo</strong> per consultarli.
+        <br><br>
+        Scorrendo in basso nelle medesime pagine &egrave; presente un pulsante che offre la possibilit&agrave; di <strong>scaricare</strong> il PDF del bollettino visualizzato.
+    </p>
+    <div id="admin-description">
+        <h2 class="mt-4">Informazioni per gli <strong class="highlighted">Amministratori</strong></h2>
+        <p>All'interno dell'apposita pagina del profilo per gli <strong>Admin</strong> sono presenti funzionalit&agrave; aggiuntive, quali:</p>
+        <ul>
+            <li>
+                Caricare <u>manualmente</u> un PDF di un bollettino per inserirlo nel database.
+            </li>
+            <br>
+            <li>
+                Collegare il proprio <strong>account Telegram + un gruppo</strong> della stessa piattaforma per ricevere pi&ugrave; prontamente le <u>notifiche</u> sulle varie allerte meteo.
+                <br><br>
+                <strong>Nota</strong>: il collegamento al gruppo &egrave; <u>necessario</u> per ricevere notifiche, dato che Telegram <strong>non permette</strong> ai Bot l'invio di messaggi diretti all'utente per prevenire lo <strong>spam</strong>.
+            </li>
+            <br>
+            <li>
+                Creare un <u>nuovo account amministratore</u> (che pu&ograve; essere assegnato ad un eventuale nuovo operatore che provveder&agrave; poi a modificare le proprie credenziali a piacimento) o <u>aggiungere agli amministratori</u> un account <u>gi&agrave; esistente</u> (nel caso in cui qualche operatore abbia gi&agrave; provveduto alla creazione di un account personale).
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

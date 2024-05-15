@@ -1,0 +1,277 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<div class="profile-out">
+    <div id="profile">
+        <h1>Profilo di <strong>{{ username }}</strong></h1>
+        <!--change username-->
+        <h2 class="mt-4">Modifica il tuo <span style="color: #00667C">nome utente</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeName')"><i class="fa-solid fa-pencil"></i> Modifica nome utente</button>
+        <form action="{{url_for('profile.user')}}" method="POST">
+            <div class="dismissDefault" id="changeName">
+                <div class="input-group mb-2 mt-2">
+                    <input name="new_username" type="text" class="form-control" placeholder="Nuovo nome utente">
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('changeName')">Annulla</button>
+                <button type="submit" class="btn btn-success">Conferma</button>
+            </div>
+        </form>
+        <div class="error-msg">
+            {{msg}}
+        </div>
+        <!--change password-->
+        <h2 class="mt-4">Modifica la tua <span style="color: #00667C">password</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changePsw')"><i class="fa-solid fa-pencil"></i> Modifica password</button>
+        <div class="dismissDefault" id="changePsw">
+            <form action="{{url_for('profile.user')}}" method="POST">
+                <!--old password-->
+                <div class="input-group mb-3 mt-2">
+                    <input name="old_password" type="password" class="form-control" id="pswOld" placeholder="Vecchia password">
+                    <button class="btn btn-outline-primary" type="button" id="showOldPasswordToggle"><i class="fa-solid fa-eye"></i></button>
+                </div>
+                <!--new password-->
+                <div id="pswRequirements" class="mb-2">
+                    <div class="input-group">
+                        <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">
+                        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
+                    </div>
+                    <div id="requirements" class="card">
+                        <div class="triangle-up" id="triangle"></div>
+                        La password deve contenere almeno:
+                        <ul>
+                            <li>8 caratteri</li>
+                            <li>un numero</li>
+                            <li>una lettera maiuscola</li>
+                            <li>un carattere speciale</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--confirm new password-->
+                <div class="input-group mb-2">
+                    <input type="password" class="form-control" id="psw2" onkeyup="check_password()" placeholder="Conferma nuova password" aria-describedby="confirmPsw2">
+                    <button class="btn btn-outline-primary" type="button" id="showPasswordToggle2"><i class="fa-solid fa-eye"></i></button>
+                    <span class="input-group-text" id="confirmPsw2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('changePsw')">Annulla</button>
+                <button type="button" class="btn btn-success" id="psw-submit">Conferma</button>
+                <br>
+                {{msg}}
+            </form>
+        </div>
+        <!--change area-->
+        <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
+        <div class="dismissDefault" id="changeArea">
+            <form action="{{url_for('profile.user')}}" method="POST">
+                <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
+                    <input autocomplete="false" name="hidden" type="text" style="display: none;">
+                    <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                    <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('changeArea')">Annulla</button>
+                <button type="submit" class="btn btn-success">Conferma</button>
+            </form>
+        </div>
+        
+        <div class="error-msg">
+            {{msg2}}
+        </div>
+        <!--notification switch-->
+        <div class="visual-out mt-5">
+            <label class="switch3">
+                <input type="checkbox" id="toggleNotif" checked  onclick="allowNotifications()"/>
+                <span class="slider3"></span>
+            </label>
+            <p>Notifiche: <span id="notificationStatus">NO</span></p>
+        </div>
+        <p class="mt-1">
+            Se attivi le notifiche avrai la possibilit&agrave; di ricevere un avviso ogni qualvolta il tuo paese rientri in una zona di pericolo.
+            <br>
+            (Funziona solo se sei connesso ad internet)
+        </p>
+        <!--admin section-->
+        {% if show_button %}
+            <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
+                <button type="submit" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
+            </form>
+        {% endif %}
+        <!--logout-->
+        <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        <!--delete account-->
+        <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
+        
+        <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog">
+                <form action="{{ url_for('profile.user') }}" method="POST" class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmDeleteLabel"><i class="fa-solid fa-eraser"></i> Elimina account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sei sicuro/a di voler aliminare l'account?<br>
+                        Ma proprio sicuro?<br>
+                        Ma sicuro sicuro????<br>
+                        ...<br>
+                        Ma totalmente sicurissimissimo? :(
+                        <div class="input-group mt-2">
+                            <input type="password" name="passwordDelete" id="passwordDelete" class="form-control" placeholder="Inserisci la tua password per conferma">
+                            <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="submit" class="btn btn-danger">S&iacute;, sono sicuro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="error-msg">
+            {{msgpsw}}
+        </div>
+    </div>
+</div>
+
+<!--visual mode switch-->
+<div class="visual-mode">
+    <h2>Modifica il tema di visualizzazione</h2>
+    <div class="visual-out">
+        <label class="switch2">
+            <input type="checkbox" id="toggle" checked/>
+            <span class="slider2"></span>
+        </label>
+        <p><span id="modeStatus">Light</span> Mode</p>
+    </div>
+</div>
+
+<script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
+
+<script>
+    /*autocomplete list size*/
+    function setAutocompleteListWidth() {
+        var inputWidth = document.getElementById('bar').offsetWidth;
+        document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
+    }
+    
+    document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
+    window.addEventListener('resize', setAutocompleteListWidth);
+    
+    //show password (it has to stay here)
+    $(document).ready(function () {
+        $('#showPasswordToggle').on('click', function () {
+            var passwordInput = $('#passwordDelete');
+            var type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+            passwordInput.attr('type', type);
+            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+        });
+    });
+
+    //check if identical passwords
+    function check_password() {
+        psw1 = $("#psw1").val();
+        psw2 = $("#psw2").val();
+        $("#confirmPsw2").empty();
+        html_block = "";
+        if (psw1 === psw2 && psw1 != '') {
+            html_block = '<i class="fa-solid fa-check"></i>';
+            $("#psw-submit").prop("type", "submit");
+        } else {
+            html_block = '<i class="fa-solid fa-xmark"></i>';
+            $("#psw-submit").prop("type", "button");
+        }
+        $("#confirmPsw2").append(html_block)
+    }
+    
+    //dark / light mode
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
+        document.getElementById("toggle").checked = false;
+        changeMode();
+    }
+    else {
+        document.getElementById("toggle").checked = true;
+    }
+    
+    document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
+    
+    function changeMode() {
+        var status = document.getElementById("modeStatus");
+        var body = document.querySelector("body");
+        var cookiesLabel = document.getElementById("cookies");
+        var cookiesModal = document.getElementById("customizeCookies");
+        var deleteModal = document.getElementById("confirmDelete");
+        var confirms = document.querySelectorAll(".input-group");
+        var requirements = document.getElementById("requirements");
+        var triangle = document.getElementById("triangle");
+        var searchbar = document.getElementById("searchbar");
+        var autocomplete = document.getElementById("autocomplete-list");
+        
+        if(document.getElementById("toggle").checked) {
+            localStorage.setItem("mode", "light");
+            //light mode
+            status.innerHTML = "Light";
+            body.style.backgroundColor = "#EDFCFF";
+            body.style.color = "#212529";
+            cookiesLabel.style.backgroundColor = "#EDFCFF";
+            cookiesModal.setAttribute('data-bs-theme', "light");
+            deleteModal.setAttribute('data-bs-theme', "light");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "light");
+            });
+            requirements.setAttribute('data-bs-theme', "light");
+            triangle.style.borderBottomColor = "white";
+            searchbar.setAttribute('data-bs-theme', "white");
+            autocomplete.style.backgroundColor = "#white";
+        }
+        else {
+            localStorage.setItem("mode", "dark");
+            //dark mode
+            status.innerHTML = "Dark";
+            body.style.backgroundColor = "#222222";
+            body.style.color = "white";
+            cookiesLabel.style.backgroundColor = "#222222";
+            cookiesModal.setAttribute('data-bs-theme', "dark");
+            deleteModal.setAttribute('data-bs-theme', "dark");
+            confirms.forEach(function (e) {
+                e.setAttribute('data-bs-theme', "dark");
+            });
+            requirements.setAttribute('data-bs-theme', "dark");
+            triangle.style.borderBottomColor = "#212529";
+            searchbar.setAttribute('data-bs-theme', "dark");
+            autocomplete.style.backgroundColor = "#212529";
+        }
+    }
+    
+    //notifications
+    if(localStorage.getItem("notifications") == "on") {        //check the notifications state from the local storage variable
+        document.getElementById("toggleNotif").checked = true;
+        changeNotif();
+    }
+    else {
+        document.getElementById("toggleNotif").checked = false
+        changeNotif();;
+    }
+    
+    document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status
+    
+    function changeNotif() {
+        var notif = document.getElementById("notificationStatus");
+        
+        if(document.getElementById("toggleNotif").checked) {
+            localStorage.setItem("notifications", "on");
+            //notification yes
+            notif.innerHTML = "SI";
+        }
+        else {
+            localStorage.setItem("notifications", "off");
+            //notification no
+            notif.innerHTML = "NO";
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="{{ url_for('static', filename = 'js/profile_actions.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<div class="profile-out">
+    <span id="notAccessed">
+        <h1>Non hai ancora eseguito l'accesso!</h1>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+    </span>
+</div>
+
+<div class="visual-mode">
+    <h2>Modifica il tema di visualizzazione</h2>
+    <div class="visual-out">
+        <label class="switch2">
+            <input type="checkbox" id="toggle" checked />
+            <span class="slider2"></span>
+        </label>
+        <p><span id="modeStatus">Light</span> Mode</p>
+    </div>
+</div>
+
+<script>
+    //dark / light mode
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
+        document.getElementById("toggle").checked = false;
+        changeMode();
+    }
+    else {
+        document.getElementById("toggle").checked = true;
+    }
+
+    document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
+
+    function changeMode() {
+        var status = document.getElementById("modeStatus");
+        var body = document.querySelector("body");
+        var cookiesLabel = document.getElementById("cookies");
+        var cookiesModal = document.getElementById("customizeCookies");
+
+        if(document.getElementById("toggle").checked) {
+            localStorage.setItem("mode", "light");
+            //light mode
+            status.innerHTML = "Light";
+            body.style.backgroundColor = "#EDFCFF";
+            body.style.color = "#212529";
+            cookiesLabel.style.backgroundColor = "#EDFCFF";
+            cookiesModal.setAttribute('data-bs-theme', "light");
+        }
+        else {
+            localStorage.setItem("mode", "dark");
+            //dark mode
+            status.innerHTML = "Dark";
+            body.style.backgroundColor = "#222222";
+            body.style.color = "white";
+            cookiesLabel.style.backgroundColor = "#222222";
+            cookiesModal.setAttribute('data-bs-theme', "dark");
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,121 @@
+.pop-out {
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    left: 100%;
+    bottom: 10%;
+}
+
+.show-pop-out {
+    position: absolute;
+    right: calc(100% - 0.5rem);
+    bottom: 1rem;
+}
+
+.show-pop-out span {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 1.1rem 0.5rem 0.8rem;
+    font-size: 2rem;
+}
+
+.show-pop-out:hover {
+    cursor: pointer;
+}
+
+#calendar-out {
+    padding: 1rem;
+    width: 15rem;
+    position: relative;
+}
+
+.calendarSlideIn {
+    animation: calendarSlideIn 1s;
+}
+
+@keyframes calendarSlideIn {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+.calendarSlideOut {
+    animation: calendarSlideOut 1s;
+}
+
+@keyframes calendarSlideOut {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100%;
+    }
+}
+
+.arrowSlideIn {
+    animation: arrowSlideIn 1s;
+}
+
+@keyframes arrowSlideIn {
+    from {
+        right: -0.5rem;
+    }
+    to {
+        right: calc(100% - 0.5rem);
+    }
+}
+
+.arrowSlideOut {
+    animation: arrowSlideOut 1s;
+}
+
+@keyframes arrowSlideOut {
+    from {
+        right: calc(100% - 0.5rem);
+    }
+    to {
+        right: -0.5rem;
+    }
+}
+
+.rotateArrowIn {
+    animation: rotateArrowIn 1s;
+}
+
+@keyframes rotateArrowIn {
+    from {
+        rotate: -180deg;
+    }
+    to {
+        rotate: 0;
+    }
+}
+
+.rotateArrowOut {
+    animation: rotateArrowOut 1s;
+}
+
+@keyframes rotateArrowOut {
+    from {
+        rotate: 180deg;
+    }
+    to {
+        rotate: 0;
+    }
+}
+
+/*events*/
+
+.event {
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    background: #59A4BC;
+}
+
+.event:hover {
+    background: #4c8ca1;
+}

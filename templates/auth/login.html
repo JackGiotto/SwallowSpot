@@ -1,0 +1,35 @@
+{% extends "auth/login_layout.html" %}
+
+{% block content %}
+
+<h2>Accedi</h2>
+
+<form action="{{ url_for('auth.login') }}" method="post">
+    <div class="input-group mb-3">
+        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username">
+    </div>
+
+    <div class="input-group mb-1">
+        <input name="password" type="password" class="form-control" id="textPassword" placeholder="Password" aria-label="Password" aria-describedby="showPasswordToggle">
+        <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>      
+    </div>
+    <div class="error-msg">
+        {{msg}}
+    </div>
+    <br>
+    <a href="">Ho dimenticato la password</a>
+
+    <div class="mt-2 mb-3">
+        Voglio essere ricordato &ThickSpace;
+        <label class="switch">
+            <input type="checkbox" id="rememberMe" name="remember">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-success mb-2">Accedi</button>
+    <br>
+    <a href="{{ url_for('auth.signup') }}">Non ho ancora un account</a>
+</form>
+
+{% endblock %}

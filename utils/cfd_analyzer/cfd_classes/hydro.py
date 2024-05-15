@@ -2,14 +2,10 @@ import camelot
 import json
 from utils.get_data import convert_date
 from models import db
+import PyPDF2
 
 class Hydro:
 	
-	# Number of the pages where date and risks can be collected
-	PAGES_NUMBERS = {
-		"date": "2",
-		"risk": "2"
-	}
 
 	# the position in the table of the date
 	DATE_POSITION = {
@@ -17,13 +13,16 @@ class Hydro:
 		"row": 1
 	}
 
+	PAGES_NUMBERS = {}
+
 	data = {"type": "hydro"}
 
-	def __init__(self, pdf_path):
+	def __init__(self, pdf_path, pages):
 		self.path = pdf_path
+		self.PAGES_NUMBERS["date"] = pages
+		self.PAGES_NUMBERS["risk"] = pages
 		self._get_bulletin_data()
-
-
+		
 	def get_data(self) -> dict:
 		"""get date and risks of the bulletin
 		"""
@@ -76,6 +75,7 @@ class Hydro:
 
 	def _get_bulletin_data(self):		
 		print("Analyzing Hydro bulletin, path:", self.path)
+
 		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)
 		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[0].df) 
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
