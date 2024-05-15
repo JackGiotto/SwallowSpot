@@ -6,6 +6,7 @@ import os
 
 app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
+app.config["MAINTENANCE"] = False
 sslify = SSLify(app)
 
 app.permanent_session_lifetime = timedelta(minutes=50)
@@ -15,6 +16,12 @@ app.register_blueprint(home_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
+
+
+@app.before_request
+def check_under_maintenance():
+    if app.config["MAINTENANCE"]:
+        return render_template("maintenance.html")
 
 @app.route('/service_worker.js')
 def sw():
