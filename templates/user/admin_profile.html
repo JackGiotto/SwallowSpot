@@ -183,7 +183,11 @@
                 </div>
                 <button type="submit" class="btn btn-success btn-lg mt-2" id="backupBtn" disabled><i class="fa-solid fa-arrow-rotate-right"></i> Esegui Backup</button>
             </form>
-            <button class="btn btn-warning mt-5"><i class="fa-solid fa-screwdriver-wrench"></i> Attiva manutenzione del sito</button>
+            {% if not maintenance %}
+                <button class="btn btn-warning mt-5" onclick="startMaintenance()"><i class="fa-solid fa-screwdriver-wrench"></i> Attiva manutenzione del sito</button>
+            {% else %}
+                <button class="btn btn-warning mt-5" onclick="endMaintenance()"><i class="fa-solid fa-screwdriver-wrench"></i> Termina manutenzione del sito</button>
+            {% endif %}
         {% endif %}
     </div>
 </div>
@@ -278,6 +282,26 @@
         input3.addEventListener('input', controlInput);
         input4.addEventListener('input', controlInput);
     });
+
+    function startMaintenance() {
+        $.post("/start_maintenance")
+            .done(function(data, status) {
+                console.log("started maintenance");
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error in starting maintenance");
+            });
+    }
+
+    function endMaintenance() {
+        $.post("/end_maintenance")
+            .done(function(data, status) {
+                console.log("ended maintenance");
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error in starting maintenance");
+            });
+    }
 </script>
 
 {% endblock %}

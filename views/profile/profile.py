@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, redirect, session, request, url_for
+from flask import Blueprint, render_template, redirect, session, request, url_for, current_app
 import json
 from models import db
 from utils.password import hash_password, has_uppercase, has_number, has_special_character
 from utils.get_data import get_cities
 from utils.bulletins_utils import save_bulletin
 from utils.db_backup.client_backup import start_backup
-from threading import Thread
+
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
@@ -89,7 +89,8 @@ def logout():
 
 @profile_bp.route('/profile/admin/', methods=['GET'])
 def admin():
-
+    if ('username' not in session):
+        return redirect(url_for("profile.user"))
     # checks if user is admin
     id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
     id_role = id_role[0]["ID_role"]
@@ -99,7 +100,7 @@ def admin():
     elif id_role == 3:
         session["superadmin"] = 1
 
-    return render_template("user/admin_profile.html")
+    return render_template("user/admin_profile.html", maintenance = current_app.config["MAINTENANCE"])
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
 def insert_id():    
@@ -145,39 +146,39 @@ def change_to_admin():
 
 @profile_bp.route('/profile/new_admin', methods=['POST'])
 def new_admin():
-        # check if credential are correct
-        new_admin_username = request.form["username"]
-        password = request.form["new_password"]
-        id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
-        id_role = id_role[0]["ID_role"]
+    # check if credential are correct
+    new_admin_username = request.form["username"]
+    password = request.form["new_password"]
+    id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
+    id_role = id_role[0]["ID_role"]
 
-        if (new_admin_username == ''):
-            return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
-        if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
-            return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
-        
-        password = hash_password(password)
-        city = request.form["city"]
-        if city not in get_cities(want_list=True):
-            return render_template("user/admin_profile.html", new_msg_error="Errore: Il comune inserito non è valido")
-        # zone = request.form["zone"]
-        # confronto credenziali con DB
+    if (new_admin_username == ''):
+        return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
+    if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
+        return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
+    
+    password = hash_password(password)
+    city = request.form["city"]
+    if city not in get_cities(want_list=True):
+        return render_template("user/admin_profile.html", new_msg_error="Errore: Il comune inserito non è valido")
+    # zone = request.form["zone"]
+    # confronto credenziali con DB
 
-        sql = "SELECT username FROM User where username = '" + new_admin_username + "';"
-        result = db.executeQuery(sql)
+    sql = "SELECT username FROM User where username = '" + new_admin_username + "';"
+    result = db.executeQuery(sql)
 
-        # check if username is already taken
-        if bool(result):
-            return render_template("user/admin_profile.html", new_msg_error="Errore: L'username inserito è già utilizzato da un altro utente")
-        else:
-            ID_area_query = f''' SELECT Topology.ID_area 
-                                FROM Topology
-                                WHERE Topology.city_name = "{city}"
-                            '''
-            ID_area = db.executeQuery(ID_area_query)
-            # save credentials into database
-            db.executeQuery("INSERT INTO User (username, password, ID_area, ID_role) VALUES ('" + new_admin_username + "', '" + password + "', " + str(ID_area[0]["ID_area"]) +", 2);")
-            return render_template("user/admin_profile.html", new_msg_success="Account creato con successo")
+    # check if username is already taken
+    if bool(result):
+        return render_template("user/admin_profile.html", new_msg_error="Errore: L'username inserito è già utilizzato da un altro utente")
+    else:
+        ID_area_query = f''' SELECT Topology.ID_area 
+                            FROM Topology
+                            WHERE Topology.city_name = "{city}"
+                        '''
+        ID_area = db.executeQuery(ID_area_query)
+        # save credentials into database
+        db.executeQuery("INSERT INTO User (username, password, ID_area, ID_role) VALUES ('" + new_admin_username + "', '" + password + "', " + str(ID_area[0]["ID_area"]) +", 2);")
+        return render_template("user/admin_profile.html", new_msg_success="Account creato con successo")
 
 
 @profile_bp.route('/profile/new_bulletin', methods=['POST'])
