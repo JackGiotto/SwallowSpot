@@ -178,23 +178,52 @@
         } else {
             document.getElementById("menu").style.top = "-100px";
         }
-        prevScrollpos = currentScrollPos;
+        pr
+        evScrollpos = currentScrollPos;
     }*/
-    // Check if browser supports Notifications API
-    navigator.serviceWorker.addEventListener('message', event => {
-        if (event.data && event.data.action === 'showNotification') {
-          // Request permission to show notifications
-          Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-              // Show notification
-              new Notification('Notification Title', {
-                body: 'Notification Body'
-              });
-            }
-          });
-        }
-      });
 
+    // Check if browser supports Notifications API
+    navigator.serviceWorker.addEventListener('message', event => 
+    {
+        if (event.data && event.data.action === 'showNotification')
+        {
+            Notification.requestPermission()    // Request permission to show notifications
+            .then(permission =>     
+            {
+                if (permission === 'granted') 
+                {
+                    // Show notification
+                    new Notification('Notification Title', 
+                    {
+                        body: 'Notification Body'
+                    });
+                }
+            });
+        }
+    });
+
+    // Check if the browser supports notifications
+    if ('Notification' in window) 
+    {
+        // Request permission for notifications
+        Notification.requestPermission()
+        .then(function(permission) 
+        {
+            // If permission is granted
+            if (permission === 'granted') 
+            {
+                // Add event listener to the button
+                document.getElementById('telegram').addEventListener('click', function() 
+                {
+                    // Create a new notification
+                    var notification = new Notification('New Notification', 
+                    {
+                        body: 'This is a notification message.'
+                    });
+                });
+            }
+        });
+    }
       
     //cookies functions
     function reject(){
@@ -271,24 +300,6 @@
         bubble.style.opacity = "0";
     }
 
-    // Check if the browser supports notifications
-if ('Notification' in window) {
-    // Request permission for notifications
-    Notification.requestPermission()
-    .then(function(permission) 
-    {
-        // If permission is granted
-        if (permission === 'granted') {
-            // Add event listener to the button
-            document.getElementById('telegram').addEventListener('click', function() {
-                // Create a new notification
-                var notification = new Notification('New Notification', {
-                    body: 'This is a notification message.'
-                });
-            });
-        }
-    });
-}
 </script>
 <!-- in caso di necessità-->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

@@ -1,42 +1,41 @@
-
 -- Queries for SwallowSpot's Database creation
 
-CREATE TABLE Area       -- zona di allerta per ogni rischio
+CREATE TABLE Area       -- list of the areas
 (
-    ID_area INT AUTO_INCREMENT,                 -- ID univoco per ogni singola zona
-    area_name VARCHAR(35) NOT NULL UNIQUE,       -- nome della zona
-    CONSTRAINT pk_area PRIMARY KEY (ID_area)    -- vincolo di chiave primaria di Area
+    ID_area INT AUTO_INCREMENT,                     -- unique ID for every area
+    area_name VARCHAR(35) NOT NULL UNIQUE,          -- area's name
+    CONSTRAINT pk_area PRIMARY KEY (ID_area)        -- PK constraint
 );
 
-CREATE TABLE Risk       -- rischio specifico
+CREATE TABLE Risk       -- list of the risks
 (
-    ID_risk INT AUTO_INCREMENT,                 -- ID univoco per ogni rischio
-    risk_name VARCHAR(35) NOT NULL UNIQUE,      -- nome del tipo di rischio
-    CONSTRAINT pk_risk PRIMARY KEY (ID_risk)    -- vincolo di chiave primaria di Risk
+    ID_risk INT AUTO_INCREMENT,                     -- unique ID for every area
+    risk_name VARCHAR(35) NOT NULL UNIQUE,          -- risk's name
+    CONSTRAINT pk_risk PRIMARY KEY (ID_risk)        -- PK constraint
 );
 
-CREATE TABLE Role       -- ruolo di ogni utente
+CREATE TABLE Role       -- list of the roles
 (
-    ID_role INT AUTO_INCREMENT,                     -- ID univoco per ogni ruolo         
+    ID_role INT AUTO_INCREMENT,                     -- unique ID for every role        
     role_name VARCHAR(35) NOT NULL UNIQUE,          -- nome di ogni ruolo
     CONSTRAINT pk_role PRIMARY KEY (ID_role)        -- vincolo di chiave primaria di Role
 );
 
-CREATE TABLE Color      -- colori dei vari rischi
+CREATE TABLE Color      -- list of the colors
 (
     ID_color INT AUTO_INCREMENT,                -- ID univoco per ogni colore
     color_name VARCHAR(35) NOT NULL UNIQUE,     -- nome del colore di ogni tipo di rischio
     CONSTRAINT pk_color PRIMARY KEY (ID_color)      -- vincolo di chiave primaria di Color
 );
 
-CREATE TABLE Altitude
+CREATE TABLE Altitude       -- list of the altitudes
 (
     ID_altitude INT AUTO_INCREMENT,
     height VARCHAR(10) NOT NULL UNIQUE,
     CONSTRAINT pk_altitude PRIMARY KEY (ID_altitude)
 );
 
-CREATE TABLE Report     -- bollettino
+CREATE TABLE Report     -- list of the bulletins
 (
     ID_report INT AUTO_INCREMENT,                   -- ID univoco per ogni bollettino
     starting_date DATETIME NOT NULL UNIQUE,         -- data di inizio validità
@@ -46,7 +45,7 @@ CREATE TABLE Report     -- bollettino
 );
 
 
-CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettini
+CREATE TABLE Criticalness       -- list of the criticalnesses into reports
 (
     ID_issue INT AUTO_INCREMENT,        -- ID univoco per ogni criticità
     ID_area INT NOT NULL,               -- ID dell'area colpita dalla criticità
@@ -60,7 +59,7 @@ CREATE TABLE Criticalness       -- criticità presenti all'interno dei bollettin
     CONSTRAINT fk_criticalness_report FOREIGN KEY (ID_report) REFERENCES Report(ID_report) ON UPDATE CASCADE ON DELETE CASCADE              -- vincolo di chiave esterna relativa al bollettino
 );
 
-CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
+CREATE TABLE Snow_report        -- list of the bulletins for snow event   
 (
     ID_snow_report INT AUTO_INCREMENT,      -- ID univoco per ogni bollettino valanghe
     date DATETIME NOT NULL UNIQUE,          -- data di inizio validità
@@ -68,7 +67,7 @@ CREATE TABLE Snow_report        -- bollettino per gelate e valanghe
     CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- vincolo di chiave primaria di Snow_report
 );
 
-CREATE TABLE Snow_criticalness
+CREATE TABLE Snow_criticalness      -- list of the criticalnesses into snow reports
 (
     ID_snow_issue INT AUTO_INCREMENT,
     date DATETIME NOT NULL,
@@ -80,7 +79,7 @@ CREATE TABLE Snow_criticalness
     CONSTRAINT fk_snow_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- vincolo di chiave esterna relativa alla zona
 );
 
-CREATE TABLE Topology       -- topologia delle città e delle zone di rischio
+CREATE TABLE Topology       -- list of the cities associated with each area
 (
     ID_city INT AUTO_INCREMENT,                 -- ID univoco
     city_name VARCHAR(35) NOT NULL UNIQUE,      -- nome della città 

@@ -1,5 +1,5 @@
+# trasfer the information of every city from text to query
 import re
-
 
 # |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 # CHANGE ID ASSOCIATED WITH REGION NAME
@@ -14,37 +14,9 @@ name_id = {
 	"Vene-G": "Vene-G",
 }
 
-
 # CHANGE NAME FOR ENTITY'S ATTRIBUTES
 attributes_name = "city, ID_area"
 # ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 with open("./cities/cities.txt", "r") as f:
 	string = f.read()

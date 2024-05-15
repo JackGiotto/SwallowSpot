@@ -1,3 +1,5 @@
+-- city for each area (using ID)
+
 INSERT INTO Topology (city_name, ID_area) VALUES
 	('Agorca', 1),
 	('Alano di Piave', 2),
