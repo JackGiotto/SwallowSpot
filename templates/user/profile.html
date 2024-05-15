@@ -79,22 +79,9 @@
             </form>
         </div>
         
-        <div class="error-msg">
+        <div class="error-msg mb-4">
             {{msg2}}
         </div>
-        <!--notification switch-->
-        <div class="visual-out mt-5">
-            <label class="switch3">
-                <input type="checkbox" id="toggleNotif" />
-                <span class="slider3"></span>
-            </label>
-            <p>Notifiche: <span id="notificationStatus">NO</span></p>
-        </div>
-        <p class="mt-1">
-            Se attivi le notifiche avrai la possibilit&agrave; di ricevere un avviso ogni qualvolta il tuo paese rientri in una zona di pericolo.
-            <br>
-            (Funziona solo se sei connesso ad internet)
-        </p>
         <!--admin section-->
         {% if show_button %}
             <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
@@ -243,33 +230,6 @@
             triangle.style.borderBottomColor = "#212529";
             searchbar.setAttribute('data-bs-theme', "dark");
             autocomplete.style.backgroundColor = "#212529";
-        }
-    }
-    
-    //notifications
-    if(localStorage.getItem("notifications") == "on") {        //check the notifications state from the local storage variable
-        document.getElementById("toggleNotif").checked = true;
-        changeNotif();
-    }
-    else {
-        document.getElementById("toggleNotif").checked = false
-        changeNotif();;
-    }
-    
-    document.getElementById("toggleNotif").addEventListener('change', changeNotif); //function to set notification status
-    
-    function changeNotif() {
-        var notif = document.getElementById("notificationStatus");
-        
-        if(document.getElementById("toggleNotif").checked) {
-            localStorage.setItem("notifications", "on");
-            //notification yes
-            notif.innerHTML = "SI";
-        }
-        else {
-            localStorage.setItem("notifications", "off");
-            //notification no
-            notif.innerHTML = "NO";
         }
     }
 </script>
