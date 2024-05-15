@@ -2,3 +2,4 @@
 *pycache*
 Dockerfile
 .env
+*last_sended_backup.sql

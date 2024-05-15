@@ -57,6 +57,7 @@ async function createCalendar(type){
         dateFormat: "d-m-Y",
         altInput: true,
         altFormat: "j F Y",
+        disableMobile: "true",
         onDayCreate: function(dObj, dStr, fp, dayElem){
             let date = dayElem.dateObj,
             key = date.getFullYear() + get2DigitFmt(date.getMonth() + 1) + get2DigitFmt(date.getDate()),

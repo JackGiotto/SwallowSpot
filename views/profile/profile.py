@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, redirect, session, request, url_for
+import json
 from models import db
 from utils.password import hash_password, has_uppercase, has_number, has_special_character
 from utils.get_data import get_cities
-import json
 from utils.bulletins_utils import save_bulletin
-from models import db
+from utils.db_backup.client_backup import start_backup
+from threading import Thread
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
 
@@ -46,7 +47,14 @@ def user():
 
             elif "new_password" in request.form:
                 new_password = request.form["new_password"]
+                old_password = request.form["old_password"]
                 #checks password
+                if old_password==new_password:
+                    return render_template("user/profile.html", msg2="Errore: La password nuova non deve essere uguale alla password vecchia ", username=session["username"])
+                old_password=hash_password(old_password)
+                result=db.executeQuery("SELECT User.password FROM User WHERE password = '"+str(old_password)+"';")
+                if not result:
+                    return render_template("user/profile.html", msg2="Errore: La password vecchia non è corretta ", username=session["username"])
                 if (len(new_password) < 8 or not has_number(new_password) or not has_uppercase(new_password) or not has_special_character(new_password)):
                     return render_template("user/profile.html", msg2="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", username=session["username"])
                 #hasing password
@@ -178,3 +186,13 @@ def new_bulletin():
     if ("Errore" in result):
         return render_template("user/admin_profile.html", upload_error = result) 
     return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")
+
+@profile_bp.route('/profile/backup', methods=['POST'])
+def backup():
+    IP_address = request.form["bkpServerIP"]
+    port_number = request.form["bkpServerPort"]
+    print("backup " + IP_address + port_number)
+    result = start_backup(IP_address, port_number)
+    if 'Errore' in result:
+        return render_template("user/admin_profile.html", ip_error = result)
+    return render_template("user/admin_profile.html")

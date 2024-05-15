@@ -1,4 +1,4 @@
-strong {
+.highlighted {
     color: #00667C;
 }
 
@@ -7,4 +7,9 @@ strong {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin: 0 3rem;
+}
+
+li {
+    text-align: justify;
 }
