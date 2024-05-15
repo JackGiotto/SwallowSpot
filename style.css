@@ -49,15 +49,8 @@ body{
 }
 
 
-/*
-.play-board .food{
-  background-image: url('/RedAppleEmoji.png');
-  background-size: cover;
-  background-position: center bottom;
-}*/
-
 .play-board .food {
-  background-image: url('/RedAppleEmoji.png');
+  background-image: url('/RedAppleEmoji.png');      /* Take the image of a red apple emoji for displaying the food */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
@@ -66,6 +59,8 @@ body{
 
 .play-board .head{
   background: #248a38;      /* Set the color of the snake head */
+  border-radius: 50%;     /* This will make the snake head half-round */
+  transform: rotate(0deg);      /* Initial rotation */
 }
 
 
