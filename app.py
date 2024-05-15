@@ -6,7 +6,7 @@ import os
 
 app = Flask("Swallow Spot")
 app.config["DEBUG"] = True
-app.config["MAINTENANCE"] = False
+app.config["MAINTENANCE"] = True
 sslify = SSLify(app)
 
 app.permanent_session_lifetime = timedelta(minutes=50)
