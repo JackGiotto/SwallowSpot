@@ -1,87 +1,68 @@
-# import the required libraries 
-from googleapiclient.discovery import build 
-from google_auth_oauthlib.flow import InstalledAppFlow 
-from google.auth.transport.requests import Request 
-import pickle 
-import os.path 
-import base64 
-import email 
-from bs4 import BeautifulSoup 
+import imaplib
+import email
+import webbrowser
+import os
 
-# Define the SCOPES. If modifying it, delete the token.pickle file. 
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'] 
+#credentials
+MAIL = "swallowspottesting@gmail.com"
+__PASSWORD = "sgef pxbq ivqo dqpb"
+IMAP_SERVER = "imap.gmail.com"
 
-def getEmails(): 
-	# Variable creds will store the user access token. 
-	# If no valid token found, we will create one. 
-	creds = None
+mail = imaplib.IMAP4_SSL(IMAP_SERVER)
 
-	# The file token.pickle contains the user access token. 
-	if os.path.exists('token.pickle'): 
-		with open('token.pickle', 'rb') as token: 
-			creds = pickle.load(token) 
+def emials_fetch():
+    #select the mail's field where mails arrives
+    mail.select("inbox")
 
-	# If credentials are not available or are invalid, ask the user to log in. 
-	if not creds or not creds.valid: 
-		if creds and creds.expired and creds.refresh_token: 
-			creds.refresh(Request()) 
-		else: 
-			flow = InstalledAppFlow.from_client_secrets_file('secret.json', SCOPES) 
-			creds = flow.run_local_server(port=0) 
+    #indexes all the msgs in the inbox
+    status, data = mail.search(None, 'ALL')
+    mail_ids = data[0]
 
-		# Save the access token in token.pickle file for the next run 
-		with open('token.pickle', 'wb') as token: 
-			pickle.dump(creds, token) 
+    #list the msgs indexed
+    id_list= mail_ids.split()
 
-	# Connect to the Gmail API 
-	service = build('gmail', 'v1', credentials=creds) 
-
-	# request a list of all the messages 
-	result = service.users().messages().list(userId='me').execute() 
-
-	# We can also pass maxResults to get any number of emails. Like this: 
-	# result = service.users().messages().list(maxResults=200, userId='me').execute() 
-	messages = result.get('messages') 
-
-	# messages is a list of dictionaries where each dictionary contains a message id. 
-
-	# iterate through all the messages 
-	for msg in messages: 
-		# Get the message from its id 
-		txt = service.users().messages().get(userId='me', id=msg['id']).execute() 
-
-		# Use try-except to avoid any Errors 
-		try: 
-			# Get value of 'payload' from dictionary 'txt' 
-			payload = txt['payload'] 
-			headers = payload['headers'] 
-
-			# Look for Subject and Sender Email in the headers 
-			for d in headers: 
-				if d['name'] == 'Subject': 
-					subject = d['value'] 
-				if d['name'] == 'From': 
-					sender = d['value'] 
-
-			# The Body of the message is in Encrypted format. So, we have to decode it. 
-			# Get the data and decode it with base 64 decoder. 
-			parts = payload.get('parts')[0] 
-			data = parts['body']['data'] 
-			data = data.replace("-","+").replace("_","/") 
-			decoded_data = base64.b64decode(data) 
-
-			# Now, the data obtained is in lxml. So, we will parse 
-			# it with BeautifulSoup library 
-			soup = BeautifulSoup(decoded_data , "lxml") 
-			body = soup.body() 
-
-			# Printing the subject, sender's email and message 
-			print("Subject: ", subject) 
-			print("From: ", sender) 
-			print("Message: ", body) 
-			print('\n') 
-		except: 
-			pass
+    #for every id in mailbox fetch the relative data 
+    for num in id_list:
+        status, data = mail.fetch(num, '(RFC822)')#std who define the format of mails for fetching to IMAP server
+        raw_email = data[0][1]
+     
+    #conversion form byte inconsistent data to email obj
+    msg = email.message_from_bytes(raw_email)
+     
+    #extraction of trasmittion informations form obj (msg)
+    sender = msg['From']
+    subject = msg['Subject']
+    body = None
+    pdf = None
+     
+    if msg.is_multipart():
+        for part in msg.walk():
+            content_type = part.get_content_type()
+            if(content_type == "application/pdf" ): #when occures attached as pdf then
+                pdf = part.get_payload(decode=True)
+                content_disposition = str(part.get("Content-Disposition"))
+                print("content type",content_type)
+                print("TIPO", type(pdf))
+            try:
+                body = part.get_payload(decode=True).decode()
+            except:
+                pass
+    else:
+        body = msg.get_payload(decode=True).decode()
+     
+    print('From:', sender)
+    print('Subject:', subject)
+    print('Body:', body)
+    
+def main():
+     #connection to imap server
+     print("pronto per connetterti")
+     mail.login(MAIL, __PASSWORD)
+     print("ok connesso")
+     emials_fetch()
 
 
-getEmails()
+if __name__ == '__main__':
+    main()
+else:    # close connection
+    mail.close()
