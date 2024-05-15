@@ -2,6 +2,8 @@ from utils.cfd_analyzer.pdf_reader import Pdf_reader
 from werkzeug.utils import secure_filename
 import os
 import PyPDF2
+from telegram_bot.main import alert_control, snow_control
+import asyncio
 
 def save_bulletin(file, filename = None) -> str:
     if isinstance(file, bytes):
@@ -24,14 +26,17 @@ def save_bulletin(file, filename = None) -> str:
             try:
                 pass
                 pdf_class.add_to_db()
-                
+                if pdf_class.type == "hydro":
+                    asyncio.run(hydro_telegram(pdf_class.get_cfd_data()))
+                else:
+                    asyncio.run(snow_telegram(pdf_class.get_cfd_data()))
             except Exception as e:
                 print(e)
-                #os.remove(file_path)
+                os.remove(file_path)
                 return "Errore: errore durante l'inserimento nel database, il bollettino potrebbe essere già stato inserito"
             return 'Success'
         else:
-            #os.remove(file_path)
+            os.remove(file_path)
             return 'Errore: Il file caricato non non è nel formato giusto'
     else:
         return 'Errore: il file caricato non è un PDF'
@@ -61,3 +66,13 @@ def _unique_filename(directory, filename):
         new_filename = f"{base}_{counter}{ext}"
         counter += 1
     return new_filename
+
+
+async def hydro_telegram(data):
+    for tipo, colore in data["risks"]["Vene-B"]["risks_value"].items():
+        print(tipo, colore)
+        if colore != "VERDE":
+            await alert_control(tipo, colore)
+
+async def snow_telegram(data):
+    await snow_control(data["risks"]["Altopiano dei sette comuni"])

@@ -5,7 +5,7 @@ import PyPDF2
 class Pdf_reader:
 
 	analyzer = None
-
+	type = ""
 	def __init__(self, path):
 		pages = "2"
 		with open(path, 'rb') as file:
@@ -15,8 +15,10 @@ class Pdf_reader:
 		try:
 			if ("PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[2][0]):
 				self.analyzer = cfd_classes.Hydro(path, pages)
+				self.type = "hydro"
 			else:
 				self.analyzer = cfd_classes.Snow(path, pages)
+				self.type = "snow"
 		except Exception as e:
 			print(e)
 			self.analyzer = None

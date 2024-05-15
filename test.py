@@ -1,9 +1,8 @@
 from utils.cfd_analyzer.pdf_reader import Pdf_reader
-from telegram_bot.main import start_bot, alert_control,snow_control
+from telegram_bot.main import start_bot, snow_control, alert_control
 from threading import Thread
-from utils.db_backup.client_backup import start_backup
 import asyncio
-from mail.mail import get_emails
+from mail.mail import start_cycle
 
 async def saluta():
     p = Pdf_reader("./bulletins/prova.txt")
@@ -21,4 +20,8 @@ async def saluta():
 def run_saluta():
     asyncio.run(saluta())
 
-get_emails()
+
+
+t = Thread(target=start_cycle, name="emails")
+t.start()
+start_bot()
