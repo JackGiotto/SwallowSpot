@@ -4,8 +4,22 @@ from utils.bulletins_utils import save_bulletin
 from time import sleep
 import os
 
-#credentials
+#JSON list allowed sender
+global allowed_senders = {
+    "allowed_senders": [
+        "marco.stefani2005@gmail.com",
+        "maggiotto.05@gmail.com",
+    ]
+}
 
+#check sender function
+def check_sender(msg):    
+    sender = msg.get('From', '')
+    
+    if sender in allowed_sender['allowed_senders']:
+        return True
+    else:
+        return False
 
 def emails_fetch(mail):
     #select the mail's field where mails arrives
@@ -25,40 +39,41 @@ def emails_fetch(mail):
      
         # conversion form byte inconsistent data to email obj
         msg = email.message_from_bytes(raw_email)
-        
-        # extraction of trasmittion informations form obj (msg)
-        sender = msg['From']
-        subject = msg['Subject']
-        body = None
-        pdf = None
-        
-        if msg.is_multipart():
-            for part in msg.walk():
-                content_type = part.get_content_type()
-                if (content_type == "application/pdf"): # when occures attached as pdf then
-                    pdf = part.get_payload(decode=True)
-                    content_disposition = str(part.get("Content-Disposition"))
-                    if "filename" in content_disposition:
-                        filename = content_disposition.split("filename=")[1].strip().strip('"')
-                    else:
-                        filename = "attachment.pdf"  # Default filename if not specified
-                    print("Content type:", content_type)
-                    print("Type:", type(pdf))
-                    result = save_bulletin(pdf, filename=filename)
-                    print(result)
-                try:
-                    body = part.get_payload(decode=True).decode()
-                except:
-                    pass
-        else:
-            body = msg.get_payload(decode=True).decode()
-        
-        mail.store(num, '+FLAGS', '\Deleted')
-        print('From:', sender)
-        print('Subject:', subject)
-        print('Body:', body)
 
-    mail.expunge()
+        # check if sender is permissed to being fetched
+        if(check_sender(msg)):
+            # extraction of trasmittion informations form obj (msg)
+            sender = msg['From']
+            subject = msg['Subject']
+            body = None
+            pdf = None
+            
+            if msg.is_multipart():
+                for part in msg.walk():
+                    content_type = part.get_content_type()
+                    if (content_type == "application/pdf"): # when occures attached as pdf then
+                        pdf = part.get_payload(decode=True)
+                        content_disposition = str(part.get("Content-Disposition"))
+                        if "filename" in content_disposition:
+                            filename = content_disposition.split("filename=")[1].strip().strip('"')
+                        else:
+                            filename = "attachment.pdf"  # Default filename if not specified
+                        print("Content type:", content_type)
+                        print("Type:", type(pdf))
+                        result = save_bulletin(pdf, filename=filename)
+                        print(result)
+                    try:
+                        body = part.get_payload(decode=True).decode()
+                    except:
+                        pass
+            else:
+                body = msg.get_payload(decode=True).decode()
+            # sign the current mail as deletable
+            mail.store(num, '+FLAGS', '\Deleted')
+        else:
+            mail.store(num, '+FLAGS', '\Deleted')
+        # delete the mails has been signed
+        mail.expunge()
     
 def get_emails():
     MAIL = "swallowspottesting@gmail.com"
