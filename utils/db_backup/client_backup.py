@@ -19,9 +19,11 @@ def start_backup(IP_adress:str , port_number:str) -> str:
             print("Database backup created successfully.")
         else:
             print("Error occurred while creating database backup:", error)
+            return "Errore: non mi sono riuscito a connettere"
 
     except Exception as e:
         print("Error:", e)
+        return ("Errore generico")
 
     ipAddr = IP_adress        # address of the server to connect
     port = int(port_number)        # port of the socket to connect
@@ -43,7 +45,10 @@ def start_backup(IP_adress:str , port_number:str) -> str:
 
     print((ipAddr, port))
 
-    ssl_client_socket.connect((ipAddr, port))
+    try:
+        ssl_client_socket.connect((ipAddr, port))
+    except:
+        return "Errore di connessione"
     
     ssl_client_socket.send(backup_data)             # sends the backup data in bytes to the server socket
 
