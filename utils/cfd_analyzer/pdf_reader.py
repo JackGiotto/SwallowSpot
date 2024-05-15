@@ -13,8 +13,17 @@ class Pdf_reader:
 			if reader.numPages == 1:
 				pages="1"
 		try:
-			if ("PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[2][0]):
-				self.analyzer = cfd_classes.Hydro(path, pages)
+			try:
+				check = "PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[2][0]
+				table_number = 0
+			except:
+				print("strange pdf")
+				check = "PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[1].df[2][0]
+				table_number = 1
+
+			if (check):
+				print("hydro")
+				self.analyzer = cfd_classes.Hydro(path, pages, table_number)
 				self.type = "hydro"
 			else:
 				self.analyzer = cfd_classes.Snow(path, pages)
@@ -27,8 +36,8 @@ class Pdf_reader:
 		data = self.analyzer.get_data()
 		return data
 
-	def print_table(self, path):
-		print(camelot.read_pdf(path, flavor='stream', pages="2")[0].df[2])
+	def print_table(self, path, pages):
+		print("TABELLA\n", camelot.read_pdf(path, flavor='stream', pages=pages)[1].df)
 		pass
 
 	def add_to_db(self):
