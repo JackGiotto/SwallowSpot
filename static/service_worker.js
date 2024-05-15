@@ -132,4 +132,4 @@ function checkNotification() // Function to check if notification should be sent
    console.log('ciao');
 }
 
-setInterval(checkNotification, 5);
+setInterval(checkNotification, 10 * 1000);
