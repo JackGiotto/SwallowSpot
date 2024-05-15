@@ -10,8 +10,8 @@
     </div>
     <div class="dates mb-3">
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'first')" id="defaultOpen">{{ data["Cadore"][0]["date"][:10] }}</button>
-        <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">{{ data["Cadore"][1]["date"][:10] }} </button>
-        <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][2]["date"][:10] }}</button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">{{ data["Cadore"][3]["date"][:10] }} </button>
+        <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][6]["date"][:10] }}</button>
     </div>
     <div id="first" class="risk-out-out tabcontent">
         <!--<p>prima</p> <!--da levare-->
@@ -24,15 +24,15 @@
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][0]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][0]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][3]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][1]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][6]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][2]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -47,15 +47,15 @@
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][0]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][0]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][3]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][1]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][6]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][2]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -70,15 +70,15 @@
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][0]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][3]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][6]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][2]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -92,15 +92,15 @@
             </div>
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][0]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][3]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][6]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][2]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -114,15 +114,15 @@
             </div>
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][0]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][0]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][3]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][1]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][6]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][2]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -136,20 +136,20 @@
             <h2>Alto Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Alto Agordino"][1]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Alto Agordino"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][1]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][3]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][4]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][4]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][7]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][5]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -159,19 +159,19 @@
             <h2>Medio-basso Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Medio-basso Agordino"][1]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Medio-basso Agordino"][3]["percentage"] }}%</div>
             </div>
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][1]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][3]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][4]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][4]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][7]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][5]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -181,20 +181,20 @@
             <h2>Cadore</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Cadore"][1]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Cadore"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][1]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][4]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][7]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][5]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -204,20 +204,20 @@
             <h2>Feltrino - Val Belluna</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Feltrino-Val Belluna"][1]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Feltrino-Val Belluna"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][1]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][4]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][7]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][5]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -227,20 +227,20 @@
             <h2>Altopiano dei Sette Comuni</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Altopiano dei sette comuni"][1]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Altopiano dei sette comuni"][3]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][1]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][3]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][4]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][4]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][7]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][5]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -254,20 +254,20 @@
             <h2>Alto Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Alto Agordino"][2]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Alto Agordino"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][2]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][6]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][5]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][7]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Alto Agordino"][8]["value"] }} cm</div>
+                    <div class="meters">{{ data["Alto Agordino"][8]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -277,20 +277,20 @@
             <h2>Medio-basso Agordino</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Medio-basso Agordino"][2]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Medio-basso Agordino"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][2]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][6]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][5]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][7]["value"] }}</div>
                     <p>2000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Medio-basso Agordino"][8]["value"] }} cm</div>
+                    <div class="meters">{{ data["Medio-basso Agordino"][8]["value"] }}</div>
                     <p>>2000 m</p>
                 </div>
             </div>
@@ -300,20 +300,20 @@
             <h2>Cadore</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Cadore"][2]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Cadore"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][2]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][5]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Cadore"][8]["value"] }} cm</div>
+                    <div class="meters">{{ data["Cadore"][8]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -323,20 +323,20 @@
             <h2>Feltrino - Val Belluna</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Feltrino-Val Belluna"][2]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Feltrino-Val Belluna"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][2]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][5]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Feltrino-Val Belluna"][8]["value"] }} cm</div>
+                    <div class="meters">{{ data["Feltrino-Val Belluna"][8]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>
@@ -346,20 +346,20 @@
             <h2>Altopiano dei Sette Comuni</h2>
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
-                <div class="percentage">{{ data["Altopiano dei sette comuni"][2]["percentage"] }}%</div>
+                <div class="percentage">{{ data["Altopiano dei sette comuni"][6]["percentage"] }}%</div>
             </div>
 
             <div class="risk-in">
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][2]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][6]["value"] }}</div>
                     <p>1000 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][5]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][7]["value"] }}</div>
                     <p>1500 m</p>
                 </div>
                 <div class="risk">
-                    <div class="meters">{{ data["Altopiano dei sette comuni"][8]["value"] }} cm</div>
+                    <div class="meters">{{ data["Altopiano dei sette comuni"][8]["value"] }}</div>
                     <p>>1500 m</p>
                 </div>
             </div>

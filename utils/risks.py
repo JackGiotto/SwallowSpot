@@ -75,7 +75,8 @@ def get_query_snow(area_name: str, date: str) -> str:
                 JOIN Snow_criticalness_altitude ON Snow_criticalness.ID_snow_issue = Snow_criticalness_altitude.ID_snow_issue
                 JOIN Altitude ON Altitude.ID_altitude = Snow_criticalness_altitude.ID_altitude
 
-                WHERE Area.area_name = '{area_name}' AND Snow_report.date = '{date}';
+                WHERE Area.area_name = '{area_name}' AND Snow_report.date = '{date}'
+                ORDER BY Snow_criticalness.ID_snow_issue;
             """
     return query
 

@@ -56,11 +56,11 @@
                 <a href="{{ url_for('reports.hydro') }}"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
                 <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
+            <div id="account">
+                <h5>Account</h5>
+                <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
+            </div>
             {% if 'username' not in session %}
-                <div id="account">
-                    <h5>Account</h5>
-                    <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
-                </div>
                 <div id="access">
                     <h5>Accesso</h5>
                     <a href="{{ url_for('auth.login') }}"><i class="fa-solid fa-right-to-bracket"></i>&ThickSpace; Accedi</a>
