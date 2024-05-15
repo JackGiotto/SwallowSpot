@@ -1,7 +1,5 @@
 import imaplib
 import email
-import webbrowser
-import os
 from utils.bulletins_utils import save_bulletin
 
 #credentials
@@ -38,9 +36,13 @@ def emials_fetch(mail):
             if(content_type == "application/pdf" ): #when occures attached as pdf then
                 pdf = part.get_payload(decode=True)
                 content_disposition = str(part.get("Content-Disposition"))
-                print("content type",content_type)
-                print("TIPO", type(pdf))
-                result = save_bulletin(pdf)
+                if "filename" in content_disposition:
+                    filename = content_disposition.split("filename=")[1].strip().strip('"')
+                else:
+                    filename = "attachment.pdf"  # Default filename if not specified
+                print("Content type:", content_type)
+                print("Type:", type(pdf))
+                result = save_bulletin(pdf, filename=filename)
                 print(result)
             try:
                 body = part.get_payload(decode=True).decode()
@@ -64,6 +66,8 @@ def get_emails():
     mail.login(MAIL, __PASSWORD)
     print("ok connesso")
     emials_fetch(mail)
+
+
 
 
 """
