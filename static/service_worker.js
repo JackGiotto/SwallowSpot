@@ -78,30 +78,33 @@ self.addEventListener('activate', (event) =>
     );
 });
 
+async function checkNotification2() 
+{
+    console.log('Non funziona, ma se funziona...');
+    const response = await fetch(NOTIFICATION_URL);
+    // please work...
+    const movies = await response.json();
+    console.log(movies);
+}
+
+
 // Fetch event: fetch resources from the specific URL
 function checkNotification() 
 {
     console.log('Non funziona, ma se funziona...');
-    self.addEventListener('fetch', (event) => 
+
+    fetch(event.request)
+    .then((response) => 
     {
-        if (event.request.url === NOTIFICATION_URL) 
+        if (response && response.status === 200 && response.type === 'basic') 
         {
-            event.respondWith(
-                fetch(event.request)
-                .then((response) => 
-                {
-                    if (response && response.status === 200 && response.type === 'basic') 
-                    {
-                        console.log(response);
-                    }
-                    return response;
-                })
-            );
+            console.log(response);
         }
-    });
+        return response;
+    })
 }
 
-setInterval(checkNotification, 10 * 1000);      // call the function every 10 seconds
+setInterval(await checkNotification2, 10 * 1000);      // call the function every 10 seconds
 
 /*
 // Install event: loading cache into the application
