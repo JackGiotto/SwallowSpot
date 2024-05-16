@@ -34,6 +34,10 @@ def login():
             # correct
             session.permanent = True
             session["username"] = username
+            sql = "SELECT ID_role FROM User WHERE username = '" + username + "'"
+            result = db.executeQuery(sql)[0]["ID_role"]
+            if (result == 3):
+                session["superadmin"] = 1
             if ("remember" in request.form):
                 current_app.permanent_session_lifetime = timedelta(days = LONGER_SESSION_DURATION)
             else:
