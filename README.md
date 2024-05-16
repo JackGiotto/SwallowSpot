@@ -97,6 +97,79 @@ Abbiamo voluto personalizzare anche la pagina di errore in caso di pagine non tr
 ---
 # Backend
 
+## Flask views
+
+### App.py
+
+Per avere un migliore ordine del codice il routing flask è diviso tramite l'utilizzo delle Blueprint.
+Quindi in app.py sono presenti solo le chiamate alle Blueprint e le pagine per manutenzione e errore 404.
+
+### Home
+
+Home contiene il routing per:
+- La pagina home
+- La pagina snake
+- Le principali richieste ajax(es. richiesta delle città per registrazione)
+
+### Auth
+
+Contiene le pagine per il login e il signup.
+
+### Profile
+
+Contiene le pagine per il profilo, compresa quella per l'admin.
+
+### Reports
+
+Contiene le pagine per i report più le funzioni utilizzate solo in quelle pagine.
+
+### Info
+
+Contiene la pagina di informazioni.
+
+## Utils
+
+In utils sono contenute i moduli usati in più file, in questo modo possono essere importati in altre parti del progetto.
+
+### cfd_analyzer
+
+Cfd analazyer viene utilizzato per leggere i bollettini. Per fare ciò basta istanziare una oggetto Pdf_reader, nel quale verranno eseguiti i controlli per vedere se il bollettino riguarda una nevicata o un rischio idrico.
+
+In base al tipo di rischio verrà istanziata un'altro ogetto Snow o Hydro, in entrambe le classi sono scritte le funzioni che permettono di:
+
+- Leggere il pdf tramite libreria camelot
+- Inserire i dati ottenuti in un dizionario che segua la forma risk_templates_hydro.json o risk_template_snow.json
+- Aggiungere i dati nel database
+
+### DB backup
+
+Funzioni per il backup del database, spiegato nella parte di Database.
+
+### bulletins_utils
+
+Funzioni per la lettura dei bollettini, sia per mail che inseriti manualmente.
+
+Utilizza la classe **Pdf_reader** e salva i bollettini in static/bulletins in modo che possano essere scaricati.
+In questo modulo sono presenti anche le funzioni che controllano che i bollettini sono abbiano lo stesso nome e la gestione degli errori riguardante la lettura dei bollettini.
+
+### get_data
+
+Richieste al database che venivano utilizzate in più views come la conversione delle date.
+
+### password
+
+Funzioni riguardanti l'hash i controlli delle password.
+
+### risks
+
+Richieste al database e conversioni riguardanti i rischi, utilizzati sia nella view report che in cfd_analyzer.
+
+## Models
+
+Contiene il Database Model, utilizzato per connettersi ed eseguire query con il Database
+
+**Ogni singola funzione di utils è spiegata in maniera approfondita nella sua docstring**
+
 ## Database
 
 ### Richieste della consegna
