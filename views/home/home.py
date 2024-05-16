@@ -70,3 +70,28 @@ def bulletins_dates():
     type_of_bulletin = request.args.get('type')
     bulletins_dates = get_bulletins_dates(type_of_bulletin)
     return json.dumps({'success':True, 'dates': bulletins_dates}), 200, {'ContentType':'application/json'}
+        
+@home_bp.route('/notifications')
+def notifications():
+    if "username" in session:
+        query = f"""SELECT Area.area_name
+                    FROM User
+                    JOIN Area ON User.ID_area = Area.ID_area
+                    WHERE User.username = '{session["username"]}';"""
+        area_name = db.executeQuery(query)
+
+
+        if bool(area_name):
+            area_name = area_name[0]['area_name']
+            hydraulic = db.executeQuery(get_query_last_hydro(area_name, "idraulico"))[0]["color_name"]
+            hydro_geo = db.executeQuery(get_query_last_hydro(area_name, "idrogeologico"))[0]["color_name"]
+            storms = db.executeQuery(get_query_last_hydro(area_name, "idrogeologico con temporali"))[0]
+        
+        result = {
+            "hydro": hydraulic,
+            "hydro_geo": hydro_geo,
+            "storms": storms,
+        }
+        return json.dumps({'success':True, 'dates': result}), 200, {'ContentType':'application/json'}
+    else:
+        return "", 500
