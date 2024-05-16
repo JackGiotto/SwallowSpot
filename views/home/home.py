@@ -58,6 +58,9 @@ def cities():
     cities = get_cities()
     return json.dumps({'success':True, 'cities': cities}), 200, {'ContentType':'application/json'}
 
+@home_bp.route('/snake', methods=['GET'])
+def snake():
+    return render_template("snake.html")
 
 @home_bp.route('/bulletins_dates', methods=['GET'])
 def bulletins_dates():

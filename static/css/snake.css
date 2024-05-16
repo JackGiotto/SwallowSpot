@@ -50,7 +50,7 @@ body{
 
 
 .play-board .food {
-  background-image: url('/RedAppleEmoji.png');      /* Take the image of a red apple emoji for displaying the food */
+  background-image: url('../images/RedAppleEmoji.png');      /* Take the image of a red apple emoji for displaying the food */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
