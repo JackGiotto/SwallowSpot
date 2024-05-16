@@ -246,7 +246,7 @@ async def button(update: Update, context):
     elif data == 'sendt':
         await manual_send(update, context,"temp")               
     elif data == 'sendidro':
-        await send(update, context,"idro")  
+        await send(update, context,"idro", None)  
     elif data == 'sendidrogeo':
         await send(update, context,"idrogeo",None)
     elif data == 'sendtem':
