@@ -22,7 +22,6 @@ app.register_blueprint(info_bp)
 
 @app.before_request
 def check_under_maintenance():
-    print(('superadmin' not in session and (request.path != '/profile/admin/' or request.path != '/end_maintenace')))
     if app.config["MAINTENANCE"] and not ('superadmin' in session and (request.path == '/profile/admin/' or request.path != '/end_maintenace')):
         return render_template('maintenance.html')
 
@@ -52,6 +51,5 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    #ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem')
     app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem'))
 
