@@ -204,49 +204,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    // Check if browser supports Notifications API
-    navigator.serviceWorker.addEventListener('message', event => 
-    {
-        if (event.data && event.data.action === 'showNotification')
-        {
-            Notification.requestPermission()    // Request permission to show notifications
-            .then(permission =>     
-            {
-                if (permission === 'granted') 
-                {
-                    // Show notification
-                    new Notification('Notification Title', 
-                    {
-                        body: 'Notification Body'
-                    });
-                }
-            });
-        }
-    });
-
-    // Check if the browser supports notifications
-    if ('Notification' in window) 
-    {
-        // Request permission for notifications
-        Notification.requestPermission()
-        .then(function(permission) 
-        {
-            // If permission is granted
-            if (permission === 'granted') 
-            {
-                // Add event listener to the button
-                document.getElementById('telegram').addEventListener('click', function() 
-                {
-                    // Create a new notification
-                    var notification = new Notification('New Notification', 
-                    {
-                        body: 'This is a notification message.'
-                    });
-                });
-            }
-        });
-    }
-      
+     
     //cookies functions
     window.onload = function () { //if true (choiced) block appearison of cookie's label else do it appears
         if(localStorage.getItem("choice") == "true")
