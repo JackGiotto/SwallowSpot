@@ -8,6 +8,53 @@
 ---
 # Frontend
 
+## Stile del sito
+
+La scelta della palette di colori blu e azzurro è stata finemente studiata, perché colori che trasmettono affidabilità e sicurezza, inoltre ricordano il colore di un cielo.
+
+Inoltre la scelta della rondine come simbolo principale è data dal fatto che essa sia un animale dal facile adattamento e soprattutto dalla sua abilità di percepire i pericoli imminenti, cosa che caratterizza anche il nostro sito.
+
+## Pagine
+
+### Home page
+
+Contiene tutti i link principali utili alla navigazione all'interno del sito. Inoltre riporta l'ultimo bollettino riguardante la zona specifica dell'utente attualmente registrato, oltre che presentare una descrizione generale del servizio.
+
+### Ultimi bollettini
+
+Questa pagina è divisa in due sezioni:
+
+1. Bollettini idraulici
+2. Previsioni sulle nevicate
+
+La prima sezione contiene i bollettini **idraulici**, **idrogeologici** e **idrogeologici per temporali** relavivi a tutte le zone del Veneto (*VENE*) con tanto di colorazione specifica per ogni tipo di rischio:
+
+- **Verde** - Livello di criticità non presente (Normalità): nessuna criticità prevista
+- **Giallo** - Livello di criticità ordinaria (Fase di Vigilanza): assegnata a eventi minori, di difficile localizzazione e previsione temporale
+- **Arancione** - Livello di criticità moderata (Fase di Attenzione): associata a fenomeni con possibili effetti sulla stabilità di versanti montani e sui corsi d'acqua
+- **Rosso** - Livello di criticità elevata (Fase di Pre Allarme): associata a fenomeni di particolare intensità con conseguenti effetti al suolo rilevanti
+- **Viola** - Livello di criticità molto elevata (Allarme): solitamente non visibile, utilizzata solo in caso di estrema emergenza
+
+La seconda sezione invece, riporta le previsioni sulle nevicate relative al giorno stesso dell'uscita del bollettino, comprendendo i due giorni seguenti. Riporta in alto la percentuale di probabilità che si verifichi il fenomeno, mentre sotto sono presenti i centimetri previsti intorno a diversi livelli di altitudine, quali:
+
+- 1000m
+- 1500m
+- \>2000m
+
+Inoltre sul lato della pagina è presente un tasto per aprire un calendario che permette di visualizzare e consultare i bollettini rilasciati in tutte le date precedenti, con la possibilità di scaricare il file PDF corrispondente.
+
+### Info e legende sui rischi
+
+Pagina informativa contenente tutte le informazioni relative ai rischi riportati nel sito e come leggere correttamente i dati, oltre che alle legende sui vari colori e misure.
+
+### Profilo e impostazioni dell'utente
+
+In questa pagina è possibile modificare le proprie credenziali, comprendendo:
+
+- Nome utente
+- Password
+- Città di residenza
+
 ---
 # Backend
 
@@ -210,12 +257,11 @@ In conclusione, il Bot Telegram creato rappresenta un'efficace risorsa per mante
 [Grafico di Gantt](https://docs.google.com/spreadsheets/d/168YbsE5HJkgGRd5wHwkwUqBXXFXx9UqvABOlmpB-spY/edit?usp=sharing)   
 [Meeting formalizzati](https://docs.google.com/document/u/0/d/1sRinEKfY7cUU00rmCMdOnxzq7RYrK_BtL3HxiMQvskY/edit)   
 [Monte ore](https://docs.google.com/spreadsheets/u/0/d/1Xwgcuj6wsa1bmwlAo48x7urjbYj1wkDkMTtX7W9GGvQ/edit)   
-WBS   
-PRENT   
+[WBS](https://drive.google.com/file/d/1tl7dMJODTsOtKm8gPWkH-u98CW3RowVA/view?usp=sharing)   
 [Project charter](https://docs.google.com/document/d/1s2t6DxKhILbeoxKxMlY8qBP8z9xPnwOq/edit?usp=sharing&ouid=108176821754793768186&rtpof=true&sd=true)   
 [Informativa sulla privacy e sul trattamento dei dati personali](https://docs.google.com/document/d/1zuJWILUF4c712sJ3IW12un4LcLxyTNlbb49vMByV4iM/edit?usp=sharing)   
 [Skill management](https://docs.google.com/document/d/1PyCQIAEj1DmMwY9xT3W8IKJT0NQssDxHBKveqqW169w/edit?usp=sharing)
 
 # Crediti
 
-*A questo Progetto hanno preso parte: Degetto Tommaso, La Rosa Leonardo, Maggiotto Giacomo, Martini Davide,Stefani Marco, Tosin Filippo.*
+*A questo Progetto hanno preso parte: Degetto Tommaso, La Rosa Leonardo, Maggiotto Giacomo, Martini Davide, Stefani Marco, Tosin Filippo.*
