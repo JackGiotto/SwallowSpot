@@ -36,9 +36,9 @@ self.addEventListener('fetch', (event) =>
         fetch(event.request)
         .then((response) => 
         {
-            if (response && response.status === 200 && response.type === 'basic') 
+            if (response && response.status === 200 && response.type === 'basic')       // if the server is online
             {
-                const responseClone = response.clone();
+                const responseClone = response.clone();                                 // repli
                 caches.open(CACHE_NAME).then((cache) => 
                 {
                     cache.put(event.request, responseClone);
@@ -83,10 +83,9 @@ async function checkNotification2()
     console.log('Non funziona, ma se funziona...');
     const response = await fetch(NOTIFICATION_URL);
     // please work...
-    const movies = await response.json();
-    console.log(movies);
+    // const movies = await response.json();
+    console.log(response);
 }
-
 
 // Fetch event: fetch resources from the specific URL
 function checkNotification() 
@@ -104,7 +103,8 @@ function checkNotification()
     })
 }
 
-setInterval(await checkNotification2, 10 * 1000);      // call the function every 10 seconds
+checkNotification2()
+//setInterval(checkNotification2, 10 * 1000);      // call the function every 10 seconds
 
 /*
 // Install event: loading cache into the application
