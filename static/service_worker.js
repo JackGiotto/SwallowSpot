@@ -1,7 +1,8 @@
 // service worker of the website
 
+const NOTIFICATION_URL = '/notification';       // resource to fetch
 const CACHE_NAME = 'swallow_spot_cache';        // cache's name               
-const URLS_TO_CACHE = [                           // pages to put into the SW cache                         
+const URLS_TO_CACHE = [                         // pages to put into the SW cache                         
     '/',
     '/static/manifest.json',
     '/info/',
@@ -33,42 +34,74 @@ self.addEventListener('fetch', (event) =>
 { 
     event.respondWith(
         fetch(event.request)
-        .then((response) => {
-           
-if (response && response.status === 200 && response.type === 'basic') {
-const responseClone = response.clone();
-caches.open(CACHE_NAME).then((cache) => {
-cache.put(event.request, responseClone);
-});
-}
-return response;
-})
-.catch(() => {
-// If the network is unavailable, try to get it from the cache
-return caches.match(event.request).then((cachedResponse) => {
-return cachedResponse || caches.match('/');
-});
-})
-);
-});
-  
-  // Activate event: delete old caches
-  self.addEventListener('activate', (event) => {
-    const cacheWhitelist = [CACHE_NAME];
-  
-    event.waitUntil(
-      caches.keys()
-        .then((cacheNames) => {
-          return Promise.all(
-            cacheNames.map((cacheName) => {
-              if (cacheWhitelist.indexOf(cacheName) === -1) {
-                return caches.delete(cacheName);
-              }
-            })
-          );
+        .then((response) => 
+        {
+            if (response && response.status === 200 && response.type === 'basic') 
+            {
+                const responseClone = response.clone();
+                caches.open(CACHE_NAME).then((cache) => 
+                {
+                    cache.put(event.request, responseClone);
+                });
+            }
+            return response;
+        })
+        .catch(() => 
+        {
+            // If the network is unavailable, try to get it from the cache
+            return caches.match(event.request).then((cachedResponse) => 
+            {
+                return cachedResponse || caches.match('/');
+            });
         })
     );
-  });
+});
+  
+// Activate event: delete old caches
+self.addEventListener('activate', (event) => 
+{
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys()
+        .then((cacheNames) => 
+        {
+            return Promise.all(
+                cacheNames.map((cacheName) => 
+                {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) 
+                    {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Fetch event: fetch resources from the specific URL
+function checkNotification() 
+{
+    console.log('Non funziona, ma se funziona...');
+    self.addEventListener('fetch', (event) => 
+    {
+        if (event.request.url === NOTIFICATION_URL) 
+        {
+            event.respondWith(
+                fetch(event.request)
+                .then((response) => 
+                {
+                    if (response && response.status === 200 && response.type === 'basic') 
+                    {
+                        console.log(response);
+                    }
+                    return response;
+                })
+            );
+        }
+    });
+}
+
+setInterval(checkNotification, 10 * 1000);      // call the function every 10 seconds
 
 /*
 // Install event: loading cache into the application
@@ -203,13 +236,5 @@ self.addEventListener('notificationclick', event => {
       })
     );
   });
-
-
-function checkNotification() // Function to check if notification should be sent
-{
-   console.log('ciao');
-}
-
-setInterval(checkNotification, 10 * 1000);
 */
 
