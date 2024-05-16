@@ -69,7 +69,8 @@
         <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
         <div class="dismissDefault" id="changeArea">
             <form action="{{url_for('profile.user')}}" method="POST">
-                <div id="searchbar" class="mb-2 mt-2">        <!--search bar-->
+                <!--search bar-->
+                <div id="searchbar" class="mb-2 mt-2">
                     <input autocomplete="false" name="hidden" type="text" style="display: none;">
                     <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
                     <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
@@ -82,17 +83,17 @@
         <div class="error-msg mb-4">
             {{msg2}}
         </div>
-        <!--admin section-->
+        <!--admin section button-->
         {% if show_button %}
             <form action="{{ url_for('profile.admin') }}" id="adminUser"  name="admin_section">
                 <button type="submit" class="btn btn-success btn-lg mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> Sezione Utente Amministratore</a>
             </form>
         {% endif %}
-        <!--logout-->
+        <!--logout button-->
         <button type="button" class="btn btn-danger btn-lg mt-5" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
-        <!--delete account-->
+        <!--delete account button-->
         <button type="button" class="btn btn-danger btn-lg mt-4" id="deleteProfile" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa-solid fa-eraser"></i> Elimina profilo</button>
-        
+        <!--modal for delete account-->
         <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog">
                 <form action="{{ url_for('profile.user') }}" method="POST" class="modal-content">
@@ -106,6 +107,7 @@
                         Ma sicuro sicuro????<br>
                         ...<br>
                         Ma totalmente sicurissimissimo? :(
+                        <!--password for confirmation-->
                         <div class="input-group mt-2">
                             <input type="password" name="passwordDelete" id="passwordDelete" class="form-control" placeholder="Inserisci la tua password per conferma">
                             <button class="btn btn-outline-primary" type="button" id="showPasswordToggle"><i class="fa-solid fa-eye"></i></button>

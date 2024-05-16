@@ -13,9 +13,12 @@
         <link rel="stylesheet" href={{ url_for('static', filename = 'css/search.css') }}>
     </head>
     <body>
+        <!--external container-->
         <div class="external">
             <div class="card login-background">
+                <!--go to home-->
                 <a href="{{ url_for('home.home') }}"><h4><i class="fa-solid fa-arrow-left"></i> Torna alla Home</h4></a>
+                <!--content section-->
                 <div id="content">
                     {% block content %}{% endblock %}
                 </div>

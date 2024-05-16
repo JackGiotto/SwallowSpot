@@ -4,6 +4,7 @@ window.onload = function() {
     getAutoCompleteData()
 }
 
+// obtain citys
 function getAutoCompleteData() {
     $.get("/cities", function(data, status) {
         if (status === "success") {
@@ -24,6 +25,7 @@ function autocompleteBar() {
     updateAutocompleteList(filteredData);
 }
 
+// update items
 function updateAutocompleteList(data) {
     const autocompleteList = document.getElementById('autocomplete-list');
     autocompleteList.style.display = "block";

@@ -1,3 +1,4 @@
+//show calendar
 function showPopOut(pop_out_id, show_id, calendar_id) {
     var pop_out = document.getElementById(pop_out_id);
     var show = document.getElementById(show_id);
@@ -12,6 +13,7 @@ function showPopOut(pop_out_id, show_id, calendar_id) {
     show.innerHTML = "<span class=\"rotateArrowIn\" onclick=\"dismissPopOut('popOut', 'showPopOut', 'calendar-out')\"><i class=\"fa-solid fa-angle-right\"></i></span>";
 }
 
+//dismiss calendar
 function dismissPopOut(pop_out_id, show_id, calendar_id) {
     var pop_out = document.getElementById(pop_out_id);
     var show = document.getElementById(show_id);
@@ -28,6 +30,7 @@ function dismissPopOut(pop_out_id, show_id, calendar_id) {
     }, 990);
 }
 
+//obtain report dates
 function getBulletinsDates(type) {
     return new Promise((resolve, reject) => {
         $.get("/bulletins_dates", { "type": type })
@@ -41,14 +44,17 @@ function getBulletinsDates(type) {
     });
 }
 
+//create calendar with flatpickr
 async function createCalendar(type){
     data = await getBulletinsDates(type);
-    //highlight days
+    //dates
     let dates = data;
+    //classes
     classDict = {
         0: 'event'
     };
 
+    //split in 2 digits
     function get2DigitFmt(val) {
         return ('0' + val).slice(-2);
     }

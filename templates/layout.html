@@ -51,23 +51,27 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+            <!--main links-->
             <div id="otherLinks">
                 <h5>Link principali</h5>
                 <a href="{{ url_for('home.home') }}"><i class="fa-solid fa-house"></i>&ThickSpace; Home</a>
                 <a href="{{ url_for('reports.hydro') }}?date=last"><i class="fa-solid fa-triangle-exclamation"></i>&ThickSpace; Ultimi bollettini</a>
                 <a href="{{ url_for('info.info') }}"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
             </div>
+            <!--account links-->
             <div id="account">
                 <h5>Account</h5>
                 <a href="{{ url_for('profile.user') }}"><i class="fa-solid fa-user"></i>&ThickSpace; Profilo e impostazioni</a>
             </div>
             {% if 'username' not in session %}
+                <!--Access links-->
                 <div id="access">
                     <h5>Accesso</h5>
                     <a href="{{ url_for('auth.login') }}"><i class="fa-solid fa-right-to-bracket"></i>&ThickSpace; Accedi</a>
                     <a href="{{ url_for('auth.signup') }}"><i class="fa-solid fa-pen-nib"></i>&ThickSpace; Registrati</a>
                 </div>
             {% endif %}
+            <!--games links-->
             <div id="games">
                 <h5>Giochi</h5>
                 <a href="{{ url_for('home.snake') }}"><i class="fa-solid fa-gamepad"></i>&ThickSpace; Snake Game</a>
@@ -87,7 +91,7 @@
         </div>
     </div>
     
-    <!-- Scrollable modal -->
+    <!--scrollable modal for cookies-->
     <div class="modal fade" id="customizeCookies" tabindex="-1" aria-labelledby="customizeCookiesLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -98,6 +102,7 @@
                 <div class="modal-body">
                     <p>SwallowSpot memorizza informazioni riguardanti l'utente con finalità di servizio, per maggiori dettagli leggere l'informativa al seguente link: <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}" target="_blank">clicca qui</a>!</p>        
                     <br>
+                    <!--cookies choices-->
                     <label class="switch">
                         <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
                         <span class="slider"></span>
@@ -131,7 +136,9 @@
                 <div class="foot-title">
                     <h2>SwallowSpot</h2>
                 </div>
+                <!--credits-->
                 <div class="credits-in">
+                    <!--names-->
                     <div class="column">
                         <div class="row foot-subtitle">Realizzato da</div>
                         <div class="row">Degetto Tommaso</div>
@@ -141,12 +148,14 @@
                         <div class="row">Stefani Marco</div>
                         <div class="row">Tosin Filippo</div>
                     </div>
+                    <!--collabs-->
                     <div class="column">
                         <div class="row foot-subtitle">In collaborazione con</div>
                         <a href="https://www.regione.veneto.it" target="_blank" class="row">Regione Veneto</a>
                         <a href="https://www.comune.bassano.vi.it/home" target="_blank" class="row">Comune di Bassano del Grappa</a>
                         <a href="https://www.fermibassano.edu.it" target="_blank" class="row">Istituto ITIS E. Fermi</a>
                     </div>
+                    <!--infos-->
                     <div class="column">
                         <div class="row foot-subtitle">Info Utili</div>
                         <div class="row" id="ourEmailLink" onclick="copyToClipboard('ourEmail')">
@@ -157,6 +166,7 @@
                         <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}" target="_blank" class="row">Informativa sulla privacy</a>
                         <a href="https://app.pallades.it/appbrentalert/#/" target="_blank" class="row">Brentalert</a>
                     </div>
+                    <!--created with-->
                     <div class="column">
                         <div class="row foot-subtitle">Creato con</div>
                         <a href="https://flask.palletsprojects.com/en/3.0.x/" target="_blank" class="row">Flask</a>

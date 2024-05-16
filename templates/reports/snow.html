@@ -4,24 +4,27 @@
 
 <div class="reports">
     <h1>{{ title }}</h1>
+    <!--report navigation buttons-->
     <div class="categories mb-3">
         <a href="{{ url_for('reports.hydro') }}?date=last" class="btn btn-primary m-2 btn-lg">Rischi idraulici</a>
         <a href="{{ url_for('reports.snow') }}?date=last" class="btn btn-success m-2 btn-lg">Previsioni nevicate</a>
     </div>
+    <!--date buttons-->
     <div class="dates mb-3">
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'first')" id="defaultOpen">{{ data["Cadore"][0]["date"][:10] }}</button>
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'second')">{{ data["Cadore"][3]["date"][:10] }} </button>
         <button class="btn btn-primary tablinks" onclick="openTab(event, 'third')">{{ data["Cadore"][6]["date"][:10] }}</button>
     </div>
+    <!--first day (today)-->
     <div id="first" class="risk-out-out tabcontent">
-        <!--<p>prima</p> <!--da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Alto Agordino"][0]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Alto Agordino"][0]["value"] }}</div>
@@ -40,11 +43,12 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Medio-basso Agordino"][0]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Medio-basso Agordino"][0]["value"] }}</div>
@@ -63,11 +67,12 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Cadore"][0]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Cadore"][0]["value"] }}</div>
@@ -86,10 +91,12 @@
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Feltrino-Val Belluna"][0]["percentage"] }}%</div>
             </div>
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Feltrino-Val Belluna"][0]["value"] }}</div>
@@ -108,10 +115,12 @@
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Altopiano dei sette comuni"][0]["percentage"] }}%</div>
             </div>
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Altopiano dei sette comuni"][0]["value"] }}</div>
@@ -130,15 +139,16 @@
         </div>
     </div>
 
+    <!--second day (tomorrow)-->
     <div id="second" class="risk-out-out tabcontent">
-        <!--<p>seconda</p> <!--da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Alto Agordino"][3]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Alto Agordino"][3]["value"] }}</div>
@@ -157,10 +167,12 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Medio-basso Agordino"][3]["percentage"] }}%</div>
             </div>
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Medio-basso Agordino"][3]["value"] }}</div>
@@ -179,11 +191,12 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Cadore"][3]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Cadore"][3]["value"] }}</div>
@@ -202,11 +215,12 @@
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Feltrino-Val Belluna"][3]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Feltrino-Val Belluna"][3]["value"] }}</div>
@@ -225,11 +239,12 @@
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Altopiano dei sette comuni"][3]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Altopiano dei sette comuni"][3]["value"] }}</div>
@@ -248,15 +263,16 @@
         </div>
     </div>
 
+    <!--third day (aftertomorrow)-->
     <div id="third" class="risk-out-out tabcontent">
-        <!--<p>terza</p> da levare-->
         <div class="risk-out" id="snow-a">
             <h2>Alto Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Alto Agordino"][6]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Alto Agordino"][6]["value"] }}</div>
@@ -275,11 +291,12 @@
         </div>
         <div class="risk-out" id="snow-b">
             <h2>Medio-basso Agordino</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Medio-basso Agordino"][6]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Medio-basso Agordino"][6]["value"] }}</div>
@@ -298,11 +315,12 @@
         </div>
         <div class="risk-out" id="snow-c">
             <h2>Cadore</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Cadore"][6]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Cadore"][6]["value"] }}</div>
@@ -321,11 +339,12 @@
         </div>
         <div class="risk-out" id="snow-d">
             <h2>Feltrino - Val Belluna</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Feltrino-Val Belluna"][6]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Feltrino-Val Belluna"][6]["value"] }}</div>
@@ -344,11 +363,12 @@
         </div>
         <div class="risk-out" id="snow-e">
             <h2>Altopiano dei Sette Comuni</h2>
+            <!--percentage-->
             <div class="snowflake">
                 <i class="fa-regular fa-snowflake"></i>
                 <div class="percentage">{{ data["Altopiano dei sette comuni"][6]["percentage"] }}%</div>
             </div>
-
+            <!--heights-->
             <div class="risk-in">
                 <div class="risk">
                     <div class="meters">{{ data["Altopiano dei sette comuni"][6]["value"] }}</div>
@@ -366,10 +386,13 @@
             <p class="basin">Zone correlate: Enego, Gallio, Rotzo</p>
         </div>
     </div>
+
+    <!--download report-->
     <a href="{{ url_for('reports.downloadpdfSnow',date=data['Cadore'][0]['date'][:10])  }}" class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-download"></i> Scarica Bollettino</a>
 </div>
 
 <script>
+    // switch tabs
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -387,12 +410,15 @@
     document.getElementById("defaultOpen").click();
 </script>
 
+<!--calendar section-->
 <div class="pop-out" id="popOut">
+    <!--show calendar button-->
     <div class="show-pop-out card" id="showPopOut">
         <span onclick="showPopOut('popOut', 'showPopOut', 'calendar-out')">
             <i class="fa-solid fa-angle-left"></i>
         </span>
     </div>
+    <!--calendar-->
     <form action="" method="get" id="calendar-out" class="card">
         <p>Inserisci la data del bollettino che vuoi visualizzare:</p>
         <input type="date" class="form-control" id="dateInput" name="date" placeholder="Seleziona la data">
@@ -405,6 +431,7 @@
 <script src="{{url_for('static', filename = 'js/calendar.js')}}"></script>
 
 <script>
+    //create calendar for snow reports
     $(document).ready(createCalendar("snow"));
 </script>
 {% endblock %}
