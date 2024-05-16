@@ -48,6 +48,8 @@ def sw():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """when user insert in url bar an url that is not present
+    """
     return render_template('404.html'), 404
 
 if __name__ == "__main__":

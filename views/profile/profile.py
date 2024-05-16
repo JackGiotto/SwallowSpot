@@ -16,13 +16,14 @@ def user():
         id_user = id_user[0]["ID_user"]
         id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
         id_role = id_role[0]["ID_role"]
+
         if request.method == "GET":
             show_button = id_role>1
             return render_template("user/profile.html",  username=session["username"], user_perms=id_role, show_button=show_button)
 
 
         elif request.method == "POST":
-            if "new_username" in request.form:
+            if "new_username" in request.form: # username change
                 new_username = request.form["new_username"]
                 result = db.executeQuery("SELECT username FROM User where username = '" + new_username+ "';")
                 # check if username is already taken
@@ -32,10 +33,8 @@ def user():
                     db.executeQuery("UPDATE User SET username = '"+str(new_username)+"' WHERE ID_user = '"+str(id_user)+"';")
                     session["username"] = new_username
                     return render_template("user/profile.html", username=session["username"])
-                    
 
-
-            elif "city" in request.form:
+            elif "city" in request.form: # city change
                 new_zone = request.form["city"]
                 if new_zone not in get_cities(want_list=True):
                     return render_template("user/profile.html", username=session["username"], msg="Errore: Il comune inserito non è valido")
@@ -45,7 +44,7 @@ def user():
                 db.executeQuery("UPDATE User SET ID_area = "+str(new_zone)+" WHERE ID_user = "+str(id_user)+";")
                 return render_template("user/profile.html", username=session['username'])
 
-            elif "new_password" in request.form:
+            elif "new_password" in request.form: # password change
                 new_password = request.form["new_password"]
                 old_password = request.form["old_password"]
                 #checks password
@@ -57,18 +56,17 @@ def user():
                     return render_template("user/profile.html", msg2="Errore: La password vecchia non è corretta ", username=session["username"])
                 if (len(new_password) < 8 or not has_number(new_password) or not has_uppercase(new_password) or not has_special_character(new_password)):
                     return render_template("user/profile.html", msg2="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", username=session["username"])
-                #hasing password
+                # hasing password
                 new_password=hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
                 return render_template("user/profile.html", username=session['username'])
             
-            elif "passwordDelete" in request.form:
+            elif "passwordDelete" in request.form: # delete account
                 password = request.form['passwordDelete']
                 password = hash_password(password)
                 sql = "SELECT username, password FROM User where username = '" + session["username"] + "' and password = '" + password +"';"
                 result = db.executeQuery(sql)
-    
-                #confronto e reindirizzamento
+
                 if bool(result):
                     username = session["username"]
                     session.clear()
@@ -76,7 +74,6 @@ def user():
                     return redirect(url_for("home.home"))
                 else:
                     return render_template("user/profile.html", msgpsw="Errore: password non corretta", username = session["username"])
-                #db.executeQuery("DELETE FROM `User` WHERE ((`ID_user` = '"+str(id_user)+"'))")
 
         return render_template("user/profile.html")
     else:
@@ -104,21 +101,19 @@ def admin():
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
 def insert_id():    
-    # Recupera il valore inserito dall'utente nell'input con name="ChatID"
+    # user data
     chat_id = str(request.form["ChatID"])
     group_id = str(request.form["GroupID"])
-    # Recupera il nome utente dalla sessione
+
     username = session["username"]
     user_query = f"SELECT ID_user FROM User WHERE username = '{username}'"
     user_result = db.executeQuery(user_query)[0]
 
     if user_result:
         user_id = int(user_result["ID_user"])
-        # Esegue la query per aggiornare l'ID di chat nel database
+        # create a new admin row 
         query = f"INSERT INTO Admin (ID_user, ID_telegram,GroupID) VALUES ({user_id}, '{chat_id}','{group_id}')"
         db.executeQuery(query)
-
-    # Ritorna una risposta di successo o reindirizza a una nuova pagina
     return render_template("user/admin_profile.html")
 
 @profile_bp.route('/profile/change_to_admin', methods=['POST'])
@@ -146,13 +141,14 @@ def change_to_admin():
 
 @profile_bp.route('/profile/new_admin', methods=['POST'])
 def new_admin():
-    # check if credential are correct
+    # check if credentials are correct
     new_admin_username = request.form["username"]
     password = request.form["new_password"]
     id_role = db.executeQuery("SELECT ID_role FROM User WHERE username ='"+session["username"]+"';")
     id_role = id_role[0]["ID_role"]
 
     if (new_admin_username == ''):
+        # empty name
         return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
     if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
         return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
@@ -161,8 +157,6 @@ def new_admin():
     city = request.form["city"]
     if city not in get_cities(want_list=True):
         return render_template("user/admin_profile.html", new_msg_error="Errore: Il comune inserito non è valido")
-    # zone = request.form["zone"]
-    # confronto credenziali con DB
 
     sql = "SELECT username FROM User where username = '" + new_admin_username + "';"
     result = db.executeQuery(sql)
