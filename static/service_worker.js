@@ -32,20 +32,23 @@ const URLS_TO_CACHE = [                           // pages to put into the SW ca
     'static/risk.json'
 ];
 
-
-// Install event: cache the application shell and content
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-      caches.open(CACHE_NAME)
-        .then((cache) => {
-          return cache.addAll(URLS_TO_CACHE);
+// Install event: loading cache into the application
+self.addEventListener('install', (event) => 
+{
+    event.waitUntil(                                        // wait until the promise is kept
+        caches.open(CACHE_NAME)                             // opens cache
+        .then((cache) =>                                    
+        {
+            console.log('Insert paths into cache');
+            return cache.addAll(URLS_TO_CACHE);               // adds into cache
         })
-        .catch((error) => {
-          console.error('Failed to cache:', error);
+        .catch((error) =>                                   // in case of error
+        {
+            console.error('Failed to cache:', error);       
         })
     );
-  });
-  
+});
+
 // Fetch event: try the network first, then cache
 self.addEventListener('fetch', (event) => {
     event.respondWith(
@@ -69,8 +72,6 @@ self.addEventListener('fetch', (event) => {
     );
   });
   
-
-
   // Activate event: delete old caches
   self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
@@ -89,7 +90,7 @@ self.addEventListener('fetch', (event) => {
     );
   });
 
-  /*
+/*
 // Install event: loading cache into the application
 self.addEventListener('install', (event) => 
 {
@@ -231,3 +232,4 @@ function checkNotification() // Function to check if notification should be sent
 
 setInterval(checkNotification, 10 * 1000);
 */
+
