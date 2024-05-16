@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, session, request
 from models import db
 from utils.risks import convert_risk_color, get_query_last_hydro, parse_date_us_it
 from utils.get_data import get_cities, get_bulletins_dates
-from flask_cors import CORS
 import json
 
 home_bp = Blueprint('home', __name__, template_folder='templates')
