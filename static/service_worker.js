@@ -89,34 +89,20 @@ self.addEventListener('notificationclick', event => {
     notification.close();
   });
   
-  
-  self.addEventListener('push', event => { 
-    const body = event.data.text();
-  
-    event.waitUntil(
-      self.registration.showNotification("Notification", {
-        body: body,
-        vibrate: [100, 50, 100],
-        requireInteraction: true,
-      })
-    );
-  });
-  
-function sendNotification()
+
+self.addEventListener('push', function(event)       // quando si effettua richiesta di notifica da una pagina 
 {
-    self.addEventListener('push', function(event)       // quando si effettua richiesta di notifica da una pagina 
+    const options = 
     {
-        const options = 
-        {
-            body: event.data.text(),
-        };
-    
-        event.waitUntil     // mantiene attivo il sw finché tutte le promesse vengono mantenute
-        (
-            self.registration.showNotification('Swallowspot', options)        // mostra una notifica
-        );
-    });    
-}
+        body: event.data.text(),
+    };
+
+    event.waitUntil     // mantiene attivo il sw finché tutte le promesse vengono mantenute
+    (
+        self.registration.showNotification('Swallowspot', options)        // mostra una notifica
+    );
+});    
+
 
 
 async function checkNotification2() {
@@ -132,7 +118,12 @@ async function checkNotification2() {
             console.log('Notifications:', data);
             
             if (data['hydro'] != 'verde')
-                sendNotification();
+            {
+                    registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
+                    {
+                        body: 'Ciao Pietro'
+                    });
+            }
         } 
         else 
         {

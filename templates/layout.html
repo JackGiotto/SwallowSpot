@@ -179,23 +179,24 @@
 
 <script>
 
-    window.onload = function() 
+    window.onload = function()      // quando la pagina viene caricata
     {
         Notification.requestPermission()
-        .then(function(permission) 
+        .then( function(permission)         // richiede autorizzazione per inviare una notifica
         {
-            if(permission === 'granted') 
+            if(permission === 'granted')        // se l'autorizzazione è stata concessa
             {
-                navigator.serviceWorker.ready.then(function(registration) 
+                navigator.serviceWorker.ready.then(function(registration)       // ottiene il service worker
                 {
-                    registration.showNotification('Notifica push', 
+                    registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
                     {
-                        body: 'La tua zona è a rischio'
+                        body: 'La tua area è a rischio'
                     });
                 });
             }
         });
-    } 
+    }
+
     //social redirect
     function redirectTelegram() {
         window.open("https://t.me/SwallowSpotBot", "_blank");
