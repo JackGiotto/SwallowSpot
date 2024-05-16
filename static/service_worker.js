@@ -5,30 +5,9 @@ const URLS_TO_CACHE = [                           // pages to put into the SW ca
     '/',
     '/static/manifest.json',
     '/info/',
+    '/snake',
     '/reports/hydro/',
     '/reports/snow/',
-    '/static/js/search_bar.js',
-    '/static/js/profile_actions.js',
-    '/static/js/home.js',
-    '/static/images/swallowspot_title_mini.png',
-    '/static/images/swallowspot_title_mini_darkmode.png',
-    '/static/images/swallowspot_title_main.png',
-    '/static/images/swallowspot_title_main_darkmode.png',
-    '/static/images/swallowspot_footer_icon.png',
-    '/static/images/bell-solid.svg',
-    '/static/favicon/swallowspot_favicon.png',
-    '/static/css/search.css',
-    '/static/css/login_layout.css',
-    '/static/css/index.css',
-    '/static/css/animations.css',
-    '/static/css/slider/slider.css',
-    '/static/css/slider/slider_visual_mode.css',
-    '/static/css/slider/slider_notification.css',
-    '/static/css/reports/risk.css',
-    '/static/css/info/info.css',
-    '/static/css/home/home.css',
-    '/static/css/account/profile.css',
-    '/static/css/account/admin.css',
     'static/risk.json'
 ];
 
@@ -39,7 +18,7 @@ self.addEventListener('install', (event) =>
         caches.open(CACHE_NAME)                             // opens cache
         .then((cache) =>                                    
         {
-            console.log('Insert paths into cache');
+            console.log('Insert paths into cache', cache);
             return cache.addAll(URLS_TO_CACHE);               // adds into cache
         })
         .catch((error) =>                                   // in case of error
@@ -50,27 +29,28 @@ self.addEventListener('install', (event) =>
 });
 
 // Fetch event: try the network first, then cache
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => 
+{ 
     event.respondWith(
-      fetch(event.request)
+        fetch(event.request)
         .then((response) => {
-          // If we receive a valid response, update the cache
-          if (response && response.status === 200 && response.type === 'basic') {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseClone);
-            });
-          }
-          return response;
-        })
-        .catch(() => {
-          // If the network is unavailable, try to get it from the cache
-          return caches.match(event.request).then((cachedResponse) => {
-            return cachedResponse || caches.match('/');
-          });
-        })
-    );
-  });
+           
+if (response && response.status === 200 && response.type === 'basic') {
+const responseClone = response.clone();
+caches.open(CACHE_NAME).then((cache) => {
+cache.put(event.request, responseClone);
+});
+}
+return response;
+})
+.catch(() => {
+// If the network is unavailable, try to get it from the cache
+return caches.match(event.request).then((cachedResponse) => {
+return cachedResponse || caches.match('/');
+});
+})
+);
+});
   
   // Activate event: delete old caches
   self.addEventListener('activate', (event) => {
