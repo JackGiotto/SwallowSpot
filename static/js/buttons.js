@@ -6,16 +6,14 @@ var expireDate = new Date();
 expireDate.setDate(expireDate.getDate() + 30);
 
 //cookies functions's choices
-function reject(){
-    disappear();
-}
 function accept(){
-
+    localStorage.setItem("choice", "true")
     create_session_cookie();
     create_personal_cookie();
     disappear();
 }
 function customize(){
+    localStorage.setItem("choice", "true")
     if(cookies[0] == "yes"){
         create_session_cookie();
     }

@@ -174,12 +174,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>    
     //cookies functions
-    function reject(){
+    window.onload = function () { //if true (choiced) block appearison of cookie's label else do it appears
+        if(localStorage.getItem("choice") == "true")
+            block();    
+        else
+            document.getElementById("cookies").style.display = "block";    
+    }
+    function block(){ //block the label
         cookies1 = document.getElementById("cookies");
+        cookies1.classList.add("block");
         cookies2 = document.getElementById("customizeCookies");
-        cookies1.classList.add("disappear");
         setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
     }
+    function reject(){
+            localStorage.setItem("choice", "true")
+            cookies1 = document.getElementById("cookies");
+            cookies2 = document.getElementById("customizeCookies");
+            cookies1.classList.add("disappear");
+            setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
+            disappear();
+    }
+        
 
     //light/dark mode
     var body = document.querySelector("body");
