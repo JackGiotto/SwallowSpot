@@ -176,10 +176,6 @@
     
     //dark / light mode
     if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the cookie variable
-        document.getElementById("toggle").checked = true;
-        changeMode();
-    }
-    else if(localStorage.getItem("mode") == "dark") {
         document.getElementById("toggle").checked = false;
         changeMode();
     }
@@ -192,8 +188,6 @@
     function changeMode() {
         var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
-        var cookiesLabel = document.getElementById("cookies");
-        var cookiesModal = document.getElementById("customizeCookies");
         var deleteModal = document.getElementById("confirmDelete");
         var confirms = document.querySelectorAll(".input-group");
         var requirements = document.getElementById("requirements");
@@ -207,8 +201,6 @@
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
             body.style.color = "#212529";
-            cookiesLabel.style.backgroundColor = "#EDFCFF";
-            cookiesModal.setAttribute('data-bs-theme', "light");
             deleteModal.setAttribute('data-bs-theme', "light");
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "light");
@@ -224,8 +216,6 @@
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";
             body.style.color = "white";
-            cookiesLabel.style.backgroundColor = "#222222";
-            cookiesModal.setAttribute('data-bs-theme', "dark");
             deleteModal.setAttribute('data-bs-theme', "dark");
             confirms.forEach(function (e) {
                 e.setAttribute('data-bs-theme', "dark");

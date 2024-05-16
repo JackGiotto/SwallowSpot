@@ -138,12 +138,13 @@ header #links a:hover {
     bottom: 10px;
     right: 10px;
     border: 5px double #00667C;
-    background-color: #EDFCFF;
+    background-color: #EDFCFFdc;
     border-radius: 1em;
     padding: 1em;
     max-width: 30em;
-    z-index: 2;
+    z-index: 4;
     display: none;
+    color: #212529 !important;
 }
 
 #cookieButtons {
@@ -158,6 +159,10 @@ header #links a:hover {
         left: 10px;
         max-width: 100%;
     }
+}
+
+#customizeCookies {
+    color: #212529 !important;
 }
 
 /*container for different pages' layouts*/
@@ -191,7 +196,7 @@ footer {
     padding: 3vw;
     /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
-    gap: 4vw;
+    gap: 2vw;
     z-index: 3;
 }
 
@@ -229,6 +234,15 @@ footer img {
 
 .credits-in .column {
     width: 15em;
+}
+
+#ourEmailLink {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.credits-in a, #youtubePresentation {
+    color: white;
 }
 
 .foot-subtitle {

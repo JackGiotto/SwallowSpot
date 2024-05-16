@@ -38,8 +38,6 @@
     function changeMode() {
         var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
-        var cookiesLabel = document.getElementById("cookies");
-        var cookiesModal = document.getElementById("customizeCookies");
     
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
@@ -47,8 +45,6 @@
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
             body.style.color = "#212529";
-            cookiesLabel.style.backgroundColor = "#EDFCFF";
-            cookiesModal.setAttribute('data-bs-theme', "light");
         }
         else {
             localStorage.setItem("mode", "dark");
@@ -56,8 +52,6 @@
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";
             body.style.color = "white";
-            cookiesLabel.style.backgroundColor = "#222222";
-            cookiesModal.setAttribute('data-bs-theme', "dark");
         }
     }
 </script>
