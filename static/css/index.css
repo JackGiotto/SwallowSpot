@@ -143,7 +143,7 @@ header #links a:hover {
     padding: 1em;
     max-width: 30em;
     z-index: 2;
-    display: none; /*DA TOGLIERE*/
+    display: none;
 }
 
 #cookieButtons {

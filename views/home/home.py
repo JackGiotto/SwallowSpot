@@ -56,7 +56,6 @@ def home():
 
     return render_template("home.html", bulletin_data = bulletin_data)
 
-
 @home_bp.route('/cities', methods=['GET'])
 def cities():
     cities = get_cities()

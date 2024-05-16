@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="{{ url_for('static', filename='js/buttons.js') }}"></script> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/swallowspot_favicon_full.png') }}" type="image/x-icon">
@@ -77,11 +78,12 @@
     <!--cookies label-->
     <div id="cookies">
         <h5><i class="fa-solid fa-cookie"></i> Cookies</h5>
-        <p>here goes the description and the indications for the cookies!!!!!!!!!!!! mmmmmh yummmy</p>
+        <p>SwallowSpot memorizza informazioni riguardanti l'utente con finalità di servizio, per maggiori dettagli leggere l'informativa al seguente link <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}">clicca qui</a></p>        
+        
         <div id="cookieButtons">
-            <button type="button" class="btn btn-secondary" onclick="reject()"><i class="fa-solid fa-xmark"></i> Rifiuta tutti</button>
-            <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> Accetta tutti</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies"><i class="fa-solid fa-pencil"></i> Personalizza</button>
+            <button type="button" class="btn btn-secondary" id="btn-reject" onclick="reject()"><i class="fa-solid fa-xmark"></i> Rifiuta tutti</button>
+            <button type="button" class="btn btn-success" id="btn-accept" onclick="accept()"><i class="fa-solid fa-check"></i> Accetta tutti</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeCookies" id="btn-customize"><i class="fa-solid fa-pencil"></i> Personalizza</button>
         </div>
     </div>
     
@@ -94,17 +96,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    here go the cookies informations<br>
-                    <form action=""> <!--save the choices for cookies-->
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </form>
+                    <p>SwallowSpot memorizza informazioni riguardanti l'utente con finalità di servizio, per maggiori dettagli leggere l'informativa al seguente link <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}">clicca qui</a></p>        
+                    <br>
+                    <label class="switch">
+                        <input id="checkbox0" type="checkbox" onclick="activate_session_cookie()">
+                        <span class="slider"></span>
+                    </label>
+                    &ThickSpace; <strong>Cookies di sessione</strong>
+                    <br><br>
+                    <label class="switch">
+                        <input id="checkbox2" type="checkbox" onclick="activate_personal_cookie()">
+                        <span class="slider"></span>
+                    </label>
+                    &ThickSpace; <strong>Cookies personali</strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-primary">Salva le mie scelte</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="customize()">Salva le mie scelte</button>
                 </div>
             </div>
         </div>
@@ -235,12 +243,27 @@
     }
       
     //cookies functions
-    function reject(){
+    window.onload = function () { //if true (choiced) block appearison of cookie's label else do it appears
+        if(localStorage.getItem("choice") == "true")
+            block();    
+        else
+            document.getElementById("cookies").style.display = "block";    
+    }
+    function block(){ //block the label
         cookies1 = document.getElementById("cookies");
+        cookies1.classList.add("block");
         cookies2 = document.getElementById("customizeCookies");
-        cookies1.classList.add("disappear");
         setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
     }
+    function reject(){
+            localStorage.setItem("choice", "true")
+            cookies1 = document.getElementById("cookies");
+            cookies2 = document.getElementById("customizeCookies");
+            cookies1.classList.add("disappear");
+            setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
+            disappear();
+    }
+        
 
     //light/dark mode
     var body = document.querySelector("body");
@@ -254,8 +277,7 @@
         cookiesLabel.style.backgroundColor = "#222222";
         cookiesModal.setAttribute('data-bs-theme', "dark");
     }
-    else {
-        //light mode
+    else {//set the mode to light mode
         body.style.backgroundColor = "#EDFCFF";
         body.style.color = "#212529";
         cookiesLabel.style.backgroundColor = "#EDFCFF";
@@ -310,6 +332,4 @@
     }
 
 </script>
-<!-- in caso di necessità-->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </html>

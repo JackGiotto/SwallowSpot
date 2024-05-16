@@ -175,7 +175,11 @@
     }
     
     //dark / light mode
-    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the local storage variable
+    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the cookie variable
+        document.getElementById("toggle").checked = true;
+        changeMode();
+    }
+    else if(localStorage.getItem("mode") == "dark") {
         document.getElementById("toggle").checked = false;
         changeMode();
     }

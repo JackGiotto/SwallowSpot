@@ -5,6 +5,11 @@
     opacity: 0;
     display: none;
 }
+.block {
+    animation: disappearAnim 0s ease;
+    opacity: 0;
+    display: none;
+}
 
 @keyframes disappearAnim {
     0% {opacity: 1; display: block;}
