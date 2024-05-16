@@ -12,8 +12,12 @@ body{
   display: flex;        /* Display body as flex container */
   align-items: center;      /* Align items vertically in the center */
   justify-content: center;      /* Justify content horizontally in the center */
-  min-height: 100vh;        /* Set minimum height to 100% of viewport height */
-  background: #248a38;        /* Set the color of the snake's body */
+  min-height: 90vh;        /* Set minimum height to 100% of viewport height */
+  flex-direction: column;
+}
+
+#snakegame {
+  color: green;
 }
 
 
@@ -50,7 +54,7 @@ body{
 
 
 .play-board .food {
-  background-image: url('../images/RedAppleEmoji.png');      /* Take the image of a red apple emoji for displaying the food */
+  background-image: url('../images/RedAppleEmoji_snake.png');      /* Take the image of a red apple emoji for displaying the food */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;

@@ -22,7 +22,7 @@ app.register_blueprint(info_bp)
 
 @app.before_request
 def check_under_maintenance():
-    if app.config["MAINTENANCE"] and not ('superadmin' in session and (request.path == '/profile/admin/' or request.path != '/end_maintenace')):
+    if app.config["MAINTENANCE"] and not ('superadmin' in session) and ('snake' not in request.path) and ('login' not in request.path):
         return render_template('maintenance.html')
 
 @app.route('/start_maintenance', methods=['POST'])
@@ -30,13 +30,13 @@ def start_maintenance():
     print("starting maintenance")
     app.config["MAINTENANCE"] = True
     print(app.config["MAINTENANCE"])
-    return redirect(url_for("home.home")), 500
+    return "started", 200
 
 @app.route('/end_maintenance', methods=['POST'])
 def end_maintenance():
     print("starting maintenance")
     app.config["MAINTENANCE"] = False
-    return redirect(url_for("home.home")), 500
+    return "ended", 200
 
 @app.route('/service_worker.js')
 def sw():
@@ -48,6 +48,8 @@ def sw():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """when user insert in url bar an url that is not present
+    """
     return render_template('404.html'), 404
 
 if __name__ == "__main__":

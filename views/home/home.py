@@ -14,12 +14,16 @@ def home():
                     <a href="/auth/login/" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
                     <div id="divisorySpace"></div>'''
     else:
+        # if user is logged, get the last hydro buelettin for their area
+
         # query to get user area
         query = f"""SELECT Area.area_name
                     FROM User
                     JOIN Area ON User.ID_area = Area.ID_area
                     WHERE User.username = '{session["username"]}';"""
         area_name = db.executeQuery(query)
+
+
         if bool(area_name):
             area_name = area_name[0]['area_name']
             hydraulic = db.executeQuery(get_query_last_hydro(area_name, "idraulico"))[0]["color_name"]
