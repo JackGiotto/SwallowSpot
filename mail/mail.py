@@ -77,6 +77,8 @@ def get_emails():
     MAIL = os.getenv("MAIL")
     __PASSWORD = os.getenv("MAILPASSWORD")
     IMAP_SERVER = os.getenv("IMAPSERVER")
+    print("imap server", IMAP_SERVER)
+
 
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     #connection to imap server
