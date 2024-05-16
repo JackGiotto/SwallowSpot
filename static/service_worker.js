@@ -8,8 +8,7 @@ const URLS_TO_CACHE = [                         // pages to put into the SW cach
     '/info/',
     '/snake',
     '/reports/hydro/',
-    '/reports/snow/',
-    'static/risk.json'
+    '/reports/snow/'
 ];
 
 // Install event: loading cache into the application
@@ -103,38 +102,42 @@ self.addEventListener('push', function(event)       // quando si effettua richie
     );
 });    
 
-
-
 async function checkNotification2() {
     console.log('Checking for notifications...');
     try 
     {
         const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
-        console.log("ciao");
         if (response.ok) 
         {
-            console.log("ciao")
             const data = await response.json();
-            console.log('Notifications:', data);
-            
-            if (data['hydro'] != 'verde')
+            if (data['hydro'] != 'verde' || data['hydro_geo'] != 'verde' || data['storms']['color_name'] != 'verde')
             {
-                    registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
-                    {
-                        body: 'Ciao Pietro'
-                    });
+                registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
+                {
+                    body: 'Allerta nella tua zona!'
+                });
             }
         } 
         else 
         {
             console.error('Failed to fetch notifications:', response.status);
         }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error('Fetch error:', error);
     }
 }
 
-setInterval(checkNotification2, 10 * 1000);      // call the function every 10 seconds
+
+self.addEventListener('sync', function(event) {
+    if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
+      event.waitUntil(checkNotification2()); // Call your function to check for notifications
+    }
+  });
+
+  
+setInterval(checkNotification2, 72000 * 1000);      // call the function every 10 seconds
 
 /*
 // Install event: loading cache into the application
