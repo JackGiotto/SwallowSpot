@@ -1,4 +1,3 @@
-
 # process running in the backup server for Swallow Spot DB
 
 import socket, ssl          # libraries
