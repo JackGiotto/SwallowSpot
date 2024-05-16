@@ -27,7 +27,7 @@
                 text-align: center;
             }
 
-            i {
+            .fa-screwdriver-wrench {
                 font-size: 13rem;
                 margin: 1rem;
             }
@@ -47,5 +47,9 @@
             Stiamo lavorando per voi!
         </p>
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-outline-light">Maggiori informazioni</a>
+        <p class="mt-4">Cosa puoi fare nell'attesa?</p>
+        <a href="{{ url_for('home.snake') }}" class="btn btn-outline-light"><i class="fa-solid fa-gamepad"></i> Gioca a Snake</a>
+        <p class="mt-5">Sei un Amministratore?</p>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light"><i class="fa-solid fa-user"></i> Accedi</a>
     </body>
 </html>

@@ -10,6 +10,7 @@
     <script src="{{url_for('static', filename = 'js/snake_g.js')}}" defer></script>
   </head>
   <body>
+    <h1 class="mb-3" id="snakegame">Snake Game</h1>
     <div class="wrapper">
       <div class="game-details">
         <span class="score">Score: 0</span>
@@ -22,6 +23,7 @@
       <p id="scoreDisplay"></p>
       <button id="continueButton" class="btn btn-warning">Continua</button>
     </div>
+    <a href="{{ url_for('home.home') }}" class="btn btn-success mt-4"><i class="fa-solid fa-house"></i>Torna alla Home</a>
   </body>
 </html>
 
