@@ -12,13 +12,6 @@ const URLS_TO_CACHE = [                         // pages to put into the SW cach
     'static/risk.json'
 ];
 
-self.addEventListener('sync', function(event) {
-    if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
-      event.waitUntil(checkNotification2()); // Call your function to check for notifications
-    }
-  });
-  
-
 // Install event: loading cache into the application
 self.addEventListener('install', (event) => 
 {
@@ -128,7 +121,7 @@ async function checkNotification2() {
             {
                     registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
                     {
-                        body: 'Allerta nella tua zona!'
+                        body: 'Ciao Pietro'
                     });
             }
         } 
