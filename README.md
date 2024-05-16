@@ -1,4 +1,4 @@
-![SwallowSpot logo](./static/images/swallowspot_footer_icon.png)
+![SwallowSpot logo](./static/images/swallowspot_title_mini.png)
 
 # SwallowSpot - Documentazione
 ---
@@ -9,6 +9,9 @@
 # Frontend
 
 ## Stile del sito
+
+![color palette](./static/images/swallowspot_palette.png)
+![swallow](./static/images/swallowspot_swallow.png)
 
 La scelta della palette di colori blu e azzurro è stata finemente studiata, perché colori che trasmettono affidabilità e sicurezza, inoltre ricordano il colore di un cielo.
 
@@ -39,7 +42,7 @@ La seconda sezione invece, riporta le previsioni sulle nevicate relative al gior
 
 - 1000m
 - 1500m
-- \>2000m
+- 2000m e maggiori
 
 Inoltre sul lato della pagina è presente un tasto per aprire un calendario che permette di visualizzare e consultare i bollettini rilasciati in tutte le date precedenti, con la possibilità di scaricare il file PDF corrispondente.
 
@@ -47,13 +50,31 @@ Inoltre sul lato della pagina è presente un tasto per aprire un calendario che 
 
 Pagina informativa contenente tutte le informazioni relative ai rischi riportati nel sito e come leggere correttamente i dati, oltre che alle legende sui vari colori e misure.
 
-### Profilo e impostazioni dell'utente
+### Profilo e impostazioni
 
 In questa pagina è possibile modificare le proprie credenziali, comprendendo:
 
 - Nome utente
 - Password
 - Città di residenza
+
+È inoltre possibile effettuare l'eliminazione il proprio account.
+
+Più in basso è invece presente uno switch che permette di cambiare la modalità di visualizzazione del tema del sito da chiaro a scuro.
+
+### Sezione Admin
+
+Se si è in possesso dei permessi amministrativi è possibile vsualizzare un ulteriore pulsante che dà accesso ad una pagina riservata agli amministratori. Qui le azioni possibili sono le seguenti:
+
+- Caricamento manuale di PDF contenenti i bollettini
+- Collegamento al proprio account Telegram ed ad un relativo gruppo, tramite inserimento dei rispettivi *chat_id*, in modo da collegarli con il **Bot Telegram** che invierà le notifiche in caso di allerta
+- La possibilità di creare un nuovo utente amministratore da zero nel caso in cui ci fosse bisogno di assegnare un account ad un eventuale nuovo operatore. Oppure si può aggiungere tra gli amministratori un account già registrato in precedenza, nel caso un operatore si fosse creato autonomamente un nuovo profilo
+
+È presente poi, per gli utenti aventi i permessi da **Super Amministratore**, un'ulteriore sezione dove è possibile effettuare un backup del database inserendo l'indirizzo IP della macchina su cui si vuole effettuarlo. Sotto ciò, si trova un pulsante per attivare e disattivare la modalità di **manutenzione**, che rende il sito inaccessibile a tutti coloro che non posseggono il ruolo da Super Amministratore (da utilizzare nei casi in cui siano necessarie modifiche al database o a parti specifiche dell'interfaccia).
+
+### Snake Game
+
+Nel menu laterale (o nella pagina di manutenzione) è presente un pulsante che conduce ad una pagina dedicata in cui giocare a **Snake**.
 
 ---
 # Backend
