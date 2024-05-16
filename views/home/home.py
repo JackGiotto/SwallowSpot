@@ -2,9 +2,11 @@ from flask import Blueprint, render_template, session, request
 from models import db
 from utils.risks import convert_risk_color, get_query_last_hydro, parse_date_us_it
 from utils.get_data import get_cities, get_bulletins_dates
+from flask_cors import CORS
 import json
 
 home_bp = Blueprint('home', __name__, template_folder='templates')
+
 
 @home_bp.route('/')
 def home():
@@ -71,8 +73,10 @@ def bulletins_dates():
     bulletins_dates = get_bulletins_dates(type_of_bulletin)
     return json.dumps({'success':True, 'dates': bulletins_dates}), 200, {'ContentType':'application/json'}
         
-@home_bp.route('/notifications')
-def notifications():
+@home_bp.route('/notification')
+def notification():
+    print ("ciao")
+    print("sessione", session["username"])
     if "username" in session:
         query = f"""SELECT Area.area_name
                     FROM User
@@ -92,6 +96,11 @@ def notifications():
             "hydro_geo": hydro_geo,
             "storms": storms,
         }
-        return json.dumps({'success':True, 'dates': result}), 200, {'ContentType':'application/json'}
+        if 'storms' in result:
+            result['storms'].pop('starting_date', None)
+            result['storms'].pop('ending_date', None)
+        print("risultato", result)
+
+        return json.dumps({'success':True, 'result': result}), 200, {'ContentType':'application/json'}
     else:
         return "", 500
