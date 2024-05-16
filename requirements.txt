@@ -1,3 +1,4 @@
+anyio==4.3.0
 blinker==1.7.0
 cachetools==5.3.3
 camelot-py==0.9.0
@@ -10,6 +11,7 @@ colorama==0.4.6
 cryptography==42.0.5
 et-xmlfile==1.1.0
 Flask==3.0.3
+Flask-Cors==4.0.1
 Flask-SSLify==0.1.5
 h11==0.14.0
 httpcore==1.0.5
