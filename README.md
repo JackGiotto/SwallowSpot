@@ -94,6 +94,61 @@ Abbiamo voluto personalizzare anche la pagina di errore in caso di pagine non tr
 
 ## Cookies
 
+La creazione dei **Cookies** avviene attraverso funzioni JavaScript richiamate attraverso dei bottoni nel file *button.js*.
+
+### Scelte dell'utente
+
+La gestione delle scelte dell’utente avviene in un label che viene visualizzato se l’utente non ha mai effettuato l’accesso al sito. Questa verifica avviene tramite una funzione JavaScript situata in *layout.html*, in modo da essere accessibile in tutte le pagine del sito, con il confronto di una variabile nel localstorage.
+
+### Informativa sulla privacy
+
+Come sancito dal GDPR (Regolamento generale sulla protezione dei dati) ogni sito che utilizza gestisce dati sensibili deve stilare un'informativa visibile nel sito. Perciò è stato stilato un testo “*ad hoc*” per il sito, spiegando le finalità e le tecniche di archiviazione dei dati degli utenti. Seppur, esplicitamente, il sito non riferisca alcuna necessità di dato sensibile per l’archiviazione.
+
+## Snake
+
+### Descrizione
+
+Il gioco **Snake** è stato sviluppato utilizzando HTML, CSS e JavaScript. Il gioco è progettato per essere giocato sia su dispositivi desktop che mobili, tramite la rilevazione automatica che adatta i controlli di conseguenza. Esso include una funzione di salvataggio del punteggio più alto effettuato dall’utente utilizzando il local storage del browser.
+
+### Caratteristiche e funzionalità
+
+#### Compatibilità multi-device e responsività
+
+Tramite 3 controlli in JavaScript viene rilevato se il dispositivo è un dispositivo mobile oppure desktop. 
+Il primo controllo rileva se il dispositivo supporta il *multi touch*.   
+Il secondo controllo verifica se il dispositivo supporta il touch utilizzando una combinazione di "*ontouchstart*" in finestra e l'interfaccia *DocumentTouch*.   
+Il terzo controllo invece si basa sulla larghezza del dispositivo. Se almeno in 2 dei 3 controlli risulta che il dispositivo supporta la tecnologia touchscreen, allora viene predisposto l’ascolto per i movimenti tramite lo swipe del dito.
+Nel caso in cui i controlli rilevano che il dispositivo è di tipo desktop, i movimenti dello snake avverranno tramite la rilevazione degli input della tastiera.
+
+#### Snake & food
+
+Lo snake viene sempre generato al centro del campo di gioco, mentre il cibo viene generato casualmente, tranne nelle posizioni in cui vi è presente lo snake.
+
+#### Salvataggio del punteggio personale
+
+Il punteggio che l'utente ottiene viene confrontato con il punteggio più alto salvato nel local storage del browser. Nel caso in cui il nuovo punteggio superi quello salvato in memoria, allora viene sostituito altrimenti rimane inalterato.
+
+#### Fine della partita
+
+La partita può terminare in 2 occasioni:
+
+- la prima se lo snake effettua una collisione contro se stesso;
+- la seconda se lo snake va a collidere nei bordi del campo di gioco;
+
+In questi casi la partita termina e viene mostrato un messaggio di fine partita e il punteggio che l’utente ha ottenuto.
+
+#### HTML
+
+Utilizzato per l'interfaccia utente che include una sezione per mostrare il punteggio corrente e il punteggio più alto, l'area di gioco principale e una schermata di Game Over.
+
+#### JavaScript
+
+Utilizzato per tutti i controlli sullo snake, sulle sue collisioni, sul cibo che viene generato casualmente (ma non dove vi è lo snake), aggiunta del corpo dello snake man mano che la partita prosegue, gestione movimenti dello snake, sia con gli input da tastiera, che con gli input touch.
+
+#### CSS
+
+Gli stili CSS sono stati utilizzati per creare un layout gradevole, le griglie CSS sono state impiegate per organizzare l'area di gioco, e le *media query* assicurano che il gioco sia ben visualizzato su dispositivi di diverse dimensioni.
+
 ---
 # Backend
 
@@ -327,6 +382,24 @@ Durante il processo di costruzione concettuale del DataBase si è tenuto conto d
 Le relazioni rispettano già la prima forma normale perché esiste una chiave primaria per ogni tabella e non ci sono attributi composti.
 Le relazioni rispettano anche la seconda forma normale perché non sono presenti dipendenze funzionali dal momento che le possibili dipendenze sono state separate a priori, durante la modellazione concettuale, in tabelle separate.
 Le relazioni rispettano anche la terza forma normale perché non esistono dipendenze funzionali transitive, tutti gli attributi dipendono interamente dalla chiave primaria.
+
+## Creazione applicativo per scaricare le email e estrapolare gli allegati PDF
+
+Con la libreria ***Imaplib*** è stato creato un applicativo *Python* che, attraverso un autenticazione specifica, tramite la creazione di un’*APP password* (funzionalità di Google), accede alla casella di posta "*swallowspottesting@gmail.com*" adibita alla ricezione delle e-mail contenenti gli allegati dei bollettini e ne scarica il contenuto affinché possa essere elaborato per le letture dei dati nei PDF. Inoltre è stata aggiunta una lista di indirizzi e-mail consentiti, i quali vengono confrontati con i sender delle mail per validarne la provenienza, scartando ed eliminando qualsiasi mail sia già stata letta o che non sia non valida.
+
+## Sistema di backup
+
+### Ideazione
+
+Il sistema di **Backup** è stato creato per garantire l'affidabilità del DataBase le cui informazioni sono soggette a molteplici minacce come la cancellazione involontaria o la rottura dei supporti di memorizzazione. Per ovviare a questo problema abbiamo voluto ideare un programma che sfrutta la tecnologia client-server per inviare e ricevere il file con la copia del DataBase, un file SQL dove sono contenuti strutture delle tabelle e dati contenuti in esse.
+Per garantire la sicurezza e l’integrità del trasferimento dei dati è stata utilizzata la libreria ***OpenSSL*** per la generazione dei **certificati crittografati** e un controllo aggiuntivo sulla dimensione del file alla sua ricezione.
+
+### Implementazione
+
+I due programmi, *client_backup.py* e *server_backup.py*, effettuano un collegamento tramite **Socket TCP SSL** all'interno del quale avviene l'invio del file *.SQL* contenente il backup dell’intero database.
+Il backup viene ottenuto mediante un comando dalla shell di Linux eseguita direttamente dal programma client nel server di Swallow Spot e genera un file con le ultime modifiche del DB.
+Nel programma *server_backup.py*, eseguito sulla macchina remota dove eseguire il backup, sarà necessario importare il file con i certificati necessari per la connessione.
+Una volta eseguito il programma sarà possibile effettuare il backup dal pannello di amministrazione del sito inserendo il corretto indirizzo IP e Porta logica del socket a cui connettersi.
 
 ---
 # Bot Telegram
