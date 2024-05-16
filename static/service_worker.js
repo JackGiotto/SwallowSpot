@@ -78,23 +78,64 @@ self.addEventListener('activate', (event) =>
     );
 });
 
-
 self.addEventListener('message', (event) => {
     if (event.data.type === 'CHECK_NOTIFICATION') {
         checkNotification2();
     }
 });
 
+self.addEventListener('notificationclick', event => {
+    const notification = event.notification;  
+    notification.close();
+  });
+  
+  
+  self.addEventListener('push', event => { 
+    const body = event.data.text();
+  
+    event.waitUntil(
+      self.registration.showNotification("Notification", {
+        body: body,
+        vibrate: [100, 50, 100],
+        requireInteraction: true,
+      })
+    );
+  });
+  
+function sendNotification()
+{
+    self.addEventListener('push', function(event)       // quando si effettua richiesta di notifica da una pagina 
+    {
+        const options = 
+        {
+            body: event.data.text(),
+        };
+    
+        event.waitUntil     // mantiene attivo il sw finché tutte le promesse vengono mantenute
+        (
+            self.registration.showNotification('Swallowspot', options)        // mostra una notifica
+        );
+    });    
+}
+
+
 async function checkNotification2() {
     console.log('Checking for notifications...');
-    try {
+    try 
+    {
         const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
         console.log("ciao");
-        if (response.ok) {
+        if (response.ok) 
+        {
             console.log("ciao")
             const data = await response.json();
             console.log('Notifications:', data);
-        } else {
+            
+            if (data['hydro'] != 'verde')
+                sendNotification();
+        } 
+        else 
+        {
             console.error('Failed to fetch notifications:', response.status);
         }
     } catch (error) {
@@ -102,9 +143,7 @@ async function checkNotification2() {
     }
 }
 
-
-
-setInterval(await checkNotification2, 10 * 1000);      // call the function every 10 seconds
+setInterval(checkNotification2, 10 * 1000);      // call the function every 10 seconds
 
 /*
 // Install event: loading cache into the application

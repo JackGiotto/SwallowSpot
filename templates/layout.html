@@ -178,6 +178,24 @@
 </body>
 
 <script>
+
+    window.onload = function() 
+    {
+        Notification.requestPermission()
+        .then(function(permission) 
+        {
+            if(permission === 'granted') 
+            {
+                navigator.serviceWorker.ready.then(function(registration) 
+                {
+                    registration.showNotification('Notifica push', 
+                    {
+                        body: 'La tua zona è a rischio'
+                    });
+                });
+            }
+        });
+    } 
     //social redirect
     function redirectTelegram() {
         window.open("https://t.me/SwallowSpotBot", "_blank");
