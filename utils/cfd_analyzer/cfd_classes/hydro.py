@@ -17,10 +17,11 @@ class Hydro:
 
 	data = {"type": "hydro"}
 
-	def __init__(self, pdf_path, pages):
+	def __init__(self, pdf_path, pages, table_number = 0):
 		self.path = pdf_path
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
+		self.table_number = table_number
 		self._get_bulletin_data()
 		
 	def get_data(self) -> dict:
@@ -76,8 +77,8 @@ class Hydro:
 	def _get_bulletin_data(self):		
 		print("Analyzing Hydro bulletin, path:", self.path)
 
-		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)
-		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[0].df) 
+		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[self.table_number].df)
+		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[self.table_number].df) 
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_date(self, table) -> dict[str, str]:
