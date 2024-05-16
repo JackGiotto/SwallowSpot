@@ -37,7 +37,7 @@ INSERT INTO Role (role_name) VALUES     -- roles for the Users
 INSERT INTO Color (color_name) VALUES       -- Color of every risk
     ('verde'),
     ('gialla'),
-    ('arancio'),
+    ('arancione'),
     ('rossa');
 
 INSERT INTO Altitude (height) VALUES        -- height for snow criticalness
