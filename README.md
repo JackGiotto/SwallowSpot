@@ -5,6 +5,16 @@
 ---
 # Introduzione
 
+Benvenuti su **SwallowSpot**!
+
+Il luogo ideale per ottenere informazioni aggiornate sulle condizioni meteorologiche della Regione Veneto.
+
+Questo sito sarà il vostro punto di riferimento per accedere ai bollettini meteo ufficiali pubblicati dalla regione, garantendo così una visione chiara e completa delle previsioni e delle eventuali allerte presenti.
+
+Il sito si occupa di monitorare diverse tipologie di situazioni meteorologiche che possono influenzare il territorio veneto, tra cui **nevicate**, situazioni **idrauliche** e **idrogeologiche**, nonché allerte specifiche legate ai **temporali**.
+
+Grazie alla classificazione in quattro colori distinti - **Verde**, **Giallo**, **Arancione** e **Rosso** - potrà essere immediatamente valutato il livello di rischio associato a ciascuna situazione.
+
 ---
 # Frontend
 
@@ -16,6 +26,8 @@
 La scelta della palette di colori blu e azzurro è stata finemente studiata, perché colori che trasmettono affidabilità e sicurezza, inoltre ricordano il colore di un cielo.
 
 Inoltre la scelta della rondine come simbolo principale è data dal fatto che essa sia un animale dal facile adattamento e soprattutto dalla sua abilità di percepire i pericoli imminenti, cosa che caratterizza anche il nostro sito.
+
+Per far si che l'intero progetto sia utilizzabile anche da dispositivi mobili è stato fatto utilizzo della libreria di stile Boostrap, che ha facilitato le operazioni per la realizzazione della responsività.
 
 ## Pagine
 
@@ -44,7 +56,7 @@ La seconda sezione invece, riporta le previsioni sulle nevicate relative al gior
 - 1500m
 - 2000m e maggiori
 
-Inoltre sul lato della pagina è presente un tasto per aprire un calendario che permette di visualizzare e consultare i bollettini rilasciati in tutte le date precedenti, con la possibilità di scaricare il file PDF corrispondente.
+Inoltre sul lato della pagina è presente un tasto per aprire un calendario (realizzato con l'aiuto della libreria Flatpickr) che permette di visualizzare e consultare i bollettini rilasciati in tutte le date precedenti, con la possibilità di scaricare il file PDF corrispondente.
 
 ### Info e legende sui rischi
 
@@ -76,11 +88,16 @@ Se si è in possesso dei permessi amministrativi è possibile vsualizzare un ult
 
 Nel menu laterale (o nella pagina di manutenzione) è presente un pulsante che conduce ad una pagina dedicata in cui giocare a **Snake**.
 
+### Error 404
+
+Abbiamo voluto personalizzare anche la pagina di errore in caso di pagine non trovate.
+
+## Cookies
+
 ---
 # Backend
 
 ## Database
-
 
 ### Richieste della consegna
 
@@ -270,6 +287,14 @@ Il Bot Telegram è stato sviluppato utilizzando le API di Telegram con il lingua
 ### Conclusioni
 
 In conclusione, il Bot Telegram creato rappresenta un'efficace risorsa per mantenere gli utenti informati in modo tempestivo su nevicate e rischi idrogeologici. Grazie alla sua capacità di inviare automaticamente messaggi nei gruppi Telegram designati e di gestire i comandi degli utenti, offre un sistema efficiente per la diffusione delle informazioni critiche. L'implementazione tecnica utilizzando le API di Telegram e Python garantisce un funzionamento affidabile e stabile. Inoltre, la possibilità per gli amministratori di inoltrare o eliminare gli avvisi ricevuti aggiunge un livello di personalizzazione e controllo alla gestione dei messaggi. Nel complesso, il Bot si presenta come uno strumento indispensabile per migliorare la comunicazione e la condivisione di contenuti all'interno delle comunità online.
+
+---
+# Possibili migliorie
+
+- Aggiunta della verifica a due fattori per il recupero della password tramite e-mail.
+- Migliore interfaccia di cambio credenziali all'interno del profilo e aggiunta di azioni e/o personalizzazioni.
+- Aggiungere i bollettini sulle valanghe o di altri tipi.
+- Implementare una classifica globale dei giocatori di Snake ed eventuale gestione di essa quando l'utente è offline.
 
 ---
 # Link utili
