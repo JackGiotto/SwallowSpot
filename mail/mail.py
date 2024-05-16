@@ -16,10 +16,7 @@ allowed_senders = {
 def check_sender(msg):    
     sender = msg.get('From', '')
     
-    if sender in allowed_senders['allowed_senders']:
-        return True
-    else:
-        return False
+    return sender in allowed_senders['allowed_senders']
 
 def emails_fetch(mail):
     #select the mail's field where mails arrives
@@ -67,15 +64,19 @@ def emails_fetch(mail):
                 body = msg.get_payload(decode=True).decode()
             # sign the current mail as deletable
             mail.store(num, '+FLAGS', '\Deleted')
+        
+
+        # deletes mails from not truster users (comment those lines to keep the mails of not trusted users)
         else:
             mail.store(num, '+FLAGS', '\Deleted')
-        # delete the mails has been signed
+
+        # delete the mails that has been signed
         mail.expunge()
     
 def get_emails():
-    MAIL = "swallowspottesting@gmail.com"
-    __PASSWORD = "sgef pxbq ivqo dqpb"
-    IMAP_SERVER = "imap.gmail.com"
+    MAIL = os.getenv("MAIL")
+    __PASSWORD = os.getenv("MAILPASSWORD")
+    IMAP_SERVER = os.getenv("IMAPSERVER")
 
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     #connection to imap server
