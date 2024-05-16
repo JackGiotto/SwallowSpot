@@ -14,6 +14,21 @@ let touchSupport = 0;
 var initialX = null, initialY = null;
 
 
+function restartGame(){
+    gameOver = false;
+    foodX = 0, foodY = 0;
+    snakeX = 15, snakeY = 15;
+    speedX = 0, speedY = 0;
+    snakeBody = [];
+    score = 0;
+    clearInterval(setIntervalId);
+    document.getElementById("gameOverScreen").style.display = "none";
+    scoreElement.innerText = "Punteggio: 0";
+    foodPosition();
+
+    setIntervalId = setInterval(initGame, 100);         // Start the game
+}
+
 
 // Section of controls to see if the device is touchscreen or not, this is useful to know if the movements should be taken by touch or keyboard arrows
 
@@ -24,7 +39,7 @@ function hasTouchSupport(){
 
 
 // Check if the device supports touch events using a combination of 'ontouchstart' in window and the DocumentTouch interface
-function isTouchDevice() {
+function isTouchDevice(){
     return 'ontouchstart' in window || (window.DocumentTouch && document instanceof window.DocumentTouch);
 }
 
@@ -53,16 +68,16 @@ function touchSupportCheck(){
 
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
-highScoreElement.innerText = `Punteggio massimo: ${highScore}`;
+highScoreElement.innerText = `Record personale: ${highScore}`;
 
 // Assign a random value from 1 to 30 to X and Y to determine a position
-const foodPosition = () => {
+function foodPosition(){
     foodX = Math.floor(Math.random()*30)+1;
     foodY = Math.floor(Math.random()*30)+1;
 }
 
 
-const handleGameOver = () =>{
+function handleGameOver(){
     // Resetting the timer and reloading the page on game over
     clearInterval(setIntervalId);
     document.getElementById("gameOverScreen").style.display = "block";
@@ -71,21 +86,25 @@ const handleGameOver = () =>{
     if(score > highScore){
         highScore = score;
         localStorage.setItem("high-score", highScore);
-        highScoreElement.innerText = `Punteggio massimo: ${highScore}`;
+        highScoreElement.innerText = `Record personale: ${highScore}`;
     }
 
     // Event listener for the button "Continua"
-    document.getElementById("continueButton").addEventListener("click", () => {
+    function handleContinueButtonClick() {
         document.getElementById("gameOverScreen").style.display = "none";
         foodPosition();
-        location.reload();
-    });
+        restartGame();
+    }
+
+    document.getElementById("continueButton").addEventListener("click", handleContinueButtonClick);
 }
 
 
-const changeDirectionK = e =>{
-    // Changing velocity value based on key press
-    if(e.key === "ArrowUp" && speedY != -1){
+function changeDirectionK(e){       // Function to change the direction of the snake based on the keyboard input
+    // Check if the key pressed is the "ArrowUp" key, the snake is not currently moving downward,
+    // and either the snake's body length is 1 or less, or if it is greater than 1,
+    // ensure that the current vertical speed is not moving upward.
+    if(e.key === "ArrowUp" && speedY !== 1 && (snakeBody.length <= 1 || speedY !== -1)){
         speedX = 0;
         speedY = -1;
     }
@@ -102,15 +121,16 @@ const changeDirectionK = e =>{
         speedY = 0;
     }
 }
- 
+
+
 function startTouch(e){
     initialX = e.touches[0].clientX;
     initialY = e.touches[0].clientY;
 };
 
 
- 
 function moveTouch(e){
+
     if(initialX === null){
         return;
     }
@@ -119,38 +139,36 @@ function moveTouch(e){
         return;
     }
  
-    var currentX = e.touches[0].clientX;
+    var currentX = e.touches[0].clientX;            // Obtain the current X coordinate of the touch relative to the top-left corner of the touched element
     var currentY = e.touches[0].clientY;
     
-    var diffX = initialX - currentX;
+    var diffX = initialX - currentX;            // Calculate the difference between the initial X and Y coordinate and the current X and Y coordinate of the touch for understanding the direction of the swipe
     var diffY = initialY - currentY;
-    
+
     if(Math.abs(diffX) > Math.abs(diffY)){
 
         // Horizontal swipe
-        if(diffX > 0){
+        // Ensure that the current horizontal speed is not moving right (speedX !== 1)
+        // Allow changing direction if the snake's body length is exactly 1 or if it is greater than 1, ensure that the current horizontal speed is not moving left (speedX !== -1)
+        if(diffX > 0 && speedX !== 1 && (snakeBody.length == 1 || speedX !== -1)){
             // Swiped left
-            console.log("left");
             speedX = -1;
             speedY = 0;
         }
-        else{
+        else if(diffX < 0 && speedX !== -1 && (snakeBody.length == 1 || speedX !== 1)){
             // Swiped right
-            console.log("right");
             speedX = 1;
             speedY = 0;
         }
     }
     else{   // Vertical swipe
-        if(diffY > 0){
+        if(diffY > 0 && speedY !== 1 && (snakeBody.length == 1 || speedY !== -1)){
             // Swiped up
-            console.log("up");
             speedX = 0;
             speedY = -1;
         }
-        else{
+        else if(diffY < 0 && speedY !== -1 && (snakeBody.length == 1 || speedY !== 1)){
             // Swiped down
-            console.log("down");
             speedX = 0;
             speedY = 1;
         }
@@ -162,7 +180,8 @@ function moveTouch(e){
     e.preventDefault();
 };
 
-function changeDirectionT(e) {
+
+function changeDirectionT(e){
     if (e.type === "touchstart" || e.type === "touchmove") {
         moveTouch(e);
     }
@@ -170,21 +189,47 @@ function changeDirectionT(e) {
 
 
 // Call to "changeDirectionK" on each key click and passing key dataset value as an object
-controls.forEach(button => button.addEventListener("click", () => changeDirectionK({ key: button.dataset.key })));
-const initGame = () =>{
+controls.forEach(function(button) {
+    button.addEventListener("click", function() {
+        changeDirectionK({ key: button.dataset.key });
+    });
+});
+
+
+function launchConfetti(){
+
+    confetti({
+        particleCount: 100,         // Set the number of confetti
+        angle: -25,         // Set the angle that confetti will be thrown
+        spread: 70,         // Set the spread of the thrown
+        origin: {x:0.1, y:0.1}          // Set the point from which the confetti will be thrown
+    });
+
+    confetti({
+        particleCount: 100,
+        angle: 205,
+        spread: 70,
+        origin: {x:0.9, y:0.1}
+    });
+}
+
+
+function initGame(){
     if(gameOver)
         return handleGameOver();
     let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
-    
+
     // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
         foodPosition();
         snakeBody.push([foodY, foodX]);         // Pushing food position to snake body array
         score++;
-        highScore = score >= highScore ? score : highScore;
+        highScore = Math.max(score, highScore);
         localStorage.setItem("high-score", highScore);
-        scoreElement.innerText = `Score: ${score}`;
-        highScoreElement.innerText = `High Score: ${highScore}`;
+        scoreElement.innerText = `Punteggio: ${score}`;
+        if(score === 50){
+            launchConfetti();
+        }
     }
 
     // Updating the snake's head position based on the current speed
@@ -194,13 +239,13 @@ const initGame = () =>{
     for(let i=snakeBody.length-1; i>0; i--){            // Shifting forward the values of the elements in the snake body by one
         snakeBody[i] = snakeBody[i-1];
     }
-    
+
     snakeBody[0] = [snakeX, snakeY];            // Setting first element of snake body to current snake position
-    
+
     if(snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30){           // Checking if the snake's head is out of wall, if so setting gameOver to true
         return gameOver = true;
     }
-    
+
     for(let i=0; i<snakeBody.length; i++){
         html += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;          // Adding a div for each part of the snake's body
         
@@ -209,6 +254,7 @@ const initGame = () =>{
         }
     }
     playBoard.innerHTML = html;
+
 }
 
 document.getElementById("gameOverScreen").style.display = "none";           // Hide the "Game Over" screen
