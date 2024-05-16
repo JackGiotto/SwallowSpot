@@ -1,7 +1,7 @@
-// service worker
+// service worker of the website
 
-const CACHE_NAME = 'swallow_spot_cache';
-const urlsToCache = [
+const CACHE_NAME = 'swallow_spot_cache';        // cache's name               
+const URLS_TO_CACHE = [                           // pages to put into the SW cache                         
     '/',
     '/static/manifest.json',
     '/info/',
@@ -32,17 +32,143 @@ const urlsToCache = [
     'static/risk.json'
 ];
 
-self.addEventListener('install', event => {
-    console.log("Installed service worker");
-    self.skipWaiting();
+
+// Install event: cache the application shell and content
+self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(cache => {
-            return cache.addAll(urlsToCache);
+      caches.open(CACHE_NAME)
+        .then((cache) => {
+          return cache.addAll(URLS_TO_CACHE);
+        })
+        .catch((error) => {
+          console.error('Failed to cache:', error);
+        })
+    );
+  });
+  
+// Fetch event: try the network first, then cache
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // If we receive a valid response, update the cache
+          if (response && response.status === 200 && response.type === 'basic') {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // If the network is unavailable, try to get it from the cache
+          return caches.match(event.request).then((cachedResponse) => {
+            return cachedResponse || caches.match('/');
+          });
+        })
+    );
+  });
+  
+
+
+  // Activate event: delete old caches
+  self.addEventListener('activate', (event) => {
+    const cacheWhitelist = [CACHE_NAME];
+  
+    event.waitUntil(
+      caches.keys()
+        .then((cacheNames) => {
+          return Promise.all(
+            cacheNames.map((cacheName) => {
+              if (cacheWhitelist.indexOf(cacheName) === -1) {
+                return caches.delete(cacheName);
+              }
+            })
+          );
+        })
+    );
+  });
+
+  /*
+// Install event: loading cache into the application
+self.addEventListener('install', (event) => 
+{
+    event.waitUntil(                                        // wait until the promise is kept
+        caches.open(CACHE_NAME)                             // opens cache
+        .then((cache) =>                                    
+        {
+            console.log('Insert paths into cache');
+            return cache.addAll(URLS_TO_CACHE);               // adds into cache
+        })
+        .catch((error) =>                                   // in case of error
+        {
+            console.error('Failed to cache:', error);       
         })
     );
 });
 
+// Activate event: updating the cache 
+self.addEventListener('activate', (event) => 
+{
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys()
+        .then((cacheNames) => 
+        {
+            return Promise.all(
+                cacheNames.map((cacheName) => 
+                {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) 
+                    {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Fetch event: respond with cache first, then network
+self.addEventListener('fetch', (event) =>       
+{
+event.respondWith(
+caches.match(event.request)
+.then((response) => {
+// Cache hit - return the cached response
+if (response) {
+return response;
+}
+
+// Cache miss - fetch from the network
+return fetch(event.request)
+.then((networkResponse) => {
+// Check if the response is valid
+if (!networkResponse || networkResponse.status !== 200 || networkResponse.status !== 304 || networkResponse.type !== 'basic')     // finds out if there are network response from the server
+{
+    return networkResponse;
+}
+
+// Clone the response
+const responseToCache = networkResponse.clone();
+
+// Cache the fetched response
+caches.open(CACHE_NAME)
+.then((cache) => {
+cache.put(event.request, responseToCache);
+});
+
+return networkResponse;
+});
+})
+.catch(() => {
+// If both the cache and network fail, show a fallback message or page
+return caches.match('/');
+})
+);
+});
+  
+
+/*
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
@@ -96,36 +222,7 @@ self.addEventListener('notificationclick', event => {
       })
     );
   });
-  /*
-async function checkNotification() // Function to check if notification should be sent
-{
-    try 
-    {
-        const cache = await caches.open(CACHE_NAME);            // Open the cache
 
-        const response = await cache.match('/static/risk.json');        // Retrieve the JSON file from the cache
-        if (response) 
-        {
-            // Parse JSON data
-            const data = await response.json();         // Check if the value of the key 'value' is true
-            if (data.value === true) 
-            {
-                self.registration.showNotification('Notification Title',     // Show notification
-                {
-                    body: 'Notification Body'
-                });
-            }
-        }
-    } 
-    catch (error) 
-    {
-        console.error('Error checking notification:', error);
-    }
-}
-  
-// Check for notification every 30 seconds
-setInterval(checkNotification, 30 * 1000);
-*/
 
 function checkNotification() // Function to check if notification should be sent
 {
@@ -133,3 +230,4 @@ function checkNotification() // Function to check if notification should be sent
 }
 
 setInterval(checkNotification, 10 * 1000);
+*/
