@@ -127,9 +127,9 @@
                     <div class="column">
                         <div class="row foot-subtitle">Realizzato da</div>
                         <div class="row">Degetto Tommaso</div>
+                        <div class="row">La Rosa Leonardo</div>
                         <div class="row">Maggiotto Giacomo</div>
                         <div class="row">Martini Davide</div>
-                        <div class="row">La Rosa Leonardo</div>
                         <div class="row">Stefani Marco</div>
                         <div class="row">Tosin Filippo</div>
                     </div>
@@ -141,7 +141,7 @@
                     </div>
                     <div class="column">
                         <div class="row foot-subtitle">Info Utili</div>
-                        <div class="row">mail</div>
+                        <div class="row">swallowspottesting@gmail.com</div>
                         <div class="row">number</div>
                         <div class="row">boh altro</div>
                     </div>
@@ -150,8 +150,7 @@
                         <div class="row">Flask</div>
                         <div class="row">Bootstrap</div>
                         <div class="row">Font Awesome</div>
-                        <div class="row">W3schools</div>
-                        <div class="row">Chat GPT</div>
+                        <div class="row">GitLab</div>
                     </div>
                 </div>
             </div>
@@ -160,32 +159,38 @@
         <div class="social">
             <h2>Contattaci</h2>
             <div class="social-links">
-                <button id="telegram"><i class="fa-brands fa-telegram"></i></button>
-                <button id="facebook"><i class="fa-brands fa-facebook"></i></button>
-                <button id="mail"><i class="fa-solid fa-envelope"></i></button>
-                <button id="regioneveneto"><i class="fa-solid fa-earth-americas"></i></button>
+                <button id="telegram" onclick="redirectTelegram()"><i class="fa-brands fa-telegram"></i></button>
+                <button id="facebook" onclick="redirectFacebook()"><i class="fa-brands fa-facebook"></i></button>
+                <button id="mail" onclick="redirectMail()"><i class="fa-solid fa-envelope"></i></button>
+                <button id="regioneveneto" onclick="redirectRegion()"><i class="fa-solid fa-earth-americas"></i></button>
             </div>
         </div>
         <div class="copyright"><i class="fa-regular fa-copyright"></i> Copyright 2024</div>
     </footer>
 </body>
 
+<script>
+    //social redirect
+    function redirectTelegram() {
+        window.open("https://t.me/SwallowSpotBot", "_blank");
+    }
+
+    function redirectFacebook() {
+        window.open("https://www.facebook.com/fermibassano", "_blank");
+    }
+
+    function redirectMail() {
+        window.open("", "_blank");
+    }
+
+    function redirectRegion() {
+        window.open("https://www.regione.veneto.it", "_blank");
+    }
+</script>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    //disappearing navbar function
-    /*var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("menu").style.top = "0";
-        } else {
-            document.getElementById("menu").style.top = "-100px";
-        }
-        pr
-        evScrollpos = currentScrollPos;
-    }*/
-
     // Check if browser supports Notifications API
     navigator.serviceWorker.addEventListener('message', event => 
     {
