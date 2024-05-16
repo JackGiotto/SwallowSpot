@@ -74,8 +74,6 @@ def bulletins_dates():
         
 @home_bp.route('/notification')
 def notification():
-    print ("ciao")
-    print("sessione", session["username"])
     if "username" in session:
         query = f"""SELECT Area.area_name
                     FROM User
@@ -98,7 +96,6 @@ def notification():
         if 'storms' in result:
             result['storms'].pop('starting_date', None)
             result['storms'].pop('ending_date', None)
-        print("risultato", result)
 
         return json.dumps({'success':True, 'result': result}), 200, {'ContentType':'application/json'}
     else:
