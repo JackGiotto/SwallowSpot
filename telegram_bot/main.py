@@ -164,7 +164,7 @@ async def snow_control(val):
                 #find_id(messaggio)
                 global INFO
                 messaggio=" 🌨️ALLERTA NEVE🌨️ \n Livello: "+giorno['1000 m']+" \n Data:"+giorno['date']
-                  # Aggiungi il messaggio allerta neve alla lista
+                # Aggiungi il messaggio allerta neve alla lista
                 if(INDEX<=3):
                     INDEX += 1
                 else:
@@ -190,44 +190,6 @@ async def snow_control(val):
             
         
     return "Dati non disponibili per il primo giorno"
-
-async def ins(chat_id):
-    dati = [
-        {
-            "date": "18-01-2024 00:00:00",
-            "%": "0",
-            "1000 m": "2",
-            "1500 m": "0",
-            ">1500 m": "0"
-        },
-        {
-            "date": "19-01-2024 00:00:00",
-            "%": "0",
-            "1000 m": "0",
-            "1500 m": "0",
-            ">1500 m": "0"
-        },
-        {
-            "date": "20-01-2024 00:00:00",
-            "%": "0",
-            "1000 m": "0",
-            "1500 m": "0",
-            ">1500 m": "0"
-        }
-    ]
-
-    
-    await snow_control(dati,chat_id)
-
-    data={
-        "hydraulic": "ROSSO",
-        "hydrogeological": "GIALLO",
-        "storm": "GIALLO"
-    }
-    for tipo, colore in data.items():
-        if(colore!="VERDE"):
-            await alert_control(tipo,colore,chat_id)
-
 
 #function to associate the buttons and functions of the bot  
 async def button(update: Update, context):
@@ -298,7 +260,7 @@ async def send(update:Update, context,arg,index):
         await query.edit_message_text(text=f"Si è verificato un errore nell'invio della notifica: {e}")
     
 
-# function to not forward the alert of the message sent to the admin to the Telegram group
+#function to not forward the alert of the message sent to the admin to the Telegram group
 async def drop(update: Update, context):
     query = update.callback_query
     await query.answer()
