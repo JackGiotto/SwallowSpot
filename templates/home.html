@@ -60,7 +60,7 @@
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
             setInterval(() => {
                 registration.active.postMessage({ type: 'CHECK_NOTIFICATION' });
-            }, 10000); // 10000 milliseconds = 10 seconds
+            }, 1000 * 60 * 60 * 6); // ms * s * m * h
           }, function(err) {
             // registration failed :(
             console.log('ServiceWorker registration failed: ', err);
