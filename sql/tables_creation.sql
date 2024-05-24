@@ -111,12 +111,23 @@ CREATE TABLE Admin      -- list of the administration account
 
 CREATE TABLE Snow_criticalness_altitude     -- list every snow criticalness connected with each altitude
 (
-    ID_snow_issue INT NOT NULL,                                                 -- snow criticalness ID
-    ID_altitude INT NOT NULL,                                                   -- altitude ID
+    ID_snow_issue INT,                                                          -- snow criticalness ID
+    ID_altitude INT,                                                            -- altitude ID
     value VARCHAR(15) NOT NULL,                                                 -- value of the snow level
-    CONSTRAINT pk__criticalness PRIMARY KEY (ID_snow_issue, ID_altitude),       -- PK constraint
+    CONSTRAINT pk_criticalness PRIMARY KEY (ID_snow_issue, ID_altitude),        -- PK constraint
     CONSTRAINT fk_snow_issue FOREIGN KEY (ID_snow_issue) REFERENCES Snow_criticalness(ID_snow_issue) ON UPDATE CASCADE ON DELETE CASCADE,       -- FK constraint from Snow Criticalness identifier
     CONSTRAINT fk_altitude FOREIGN KEY (ID_altitude) REFERENCES Altitude(ID_altitude) ON UPDATE CASCADE ON DELETE CASCADE                       -- FK constraint from Altitude identifier
+);
+
+CREATE TABLE Feedback
+(
+    ID_feedback INT AUTO_INCREMENT,
+    object VARCHAR(50) NOT NULL,
+    description VARCHAR(500) NOT NULL,
+    date DATE NOT NULL, 
+    valid BOOLEAN NOT NULL,
+    ID_user INT NOT NULL,
+    CONSTRAINT pk_feedback PRIMARY KEY (ID_feedback)
 );
 
 /*
