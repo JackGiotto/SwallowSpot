@@ -6,6 +6,28 @@
     margin: 0 3rem;
 }
 
+.feed-in {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.feed-in i {
+    font-size: 17rem;
+}
+
 #feedObject {
     font-size: x-large;
+}
+
+#titleCounter, #textCounter {
+    text-align: right;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    .feed-in i {
+        display: none;
+    }
 }
