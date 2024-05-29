@@ -2,7 +2,7 @@ from flask import Flask, make_response, send_from_directory, url_for, render_tem
 from flask_cors import CORS
 from flask_sslify import SSLify
 from datetime import timedelta
-from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
+from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp
 import os
 
 app = Flask("Swallow Spot")
@@ -17,6 +17,7 @@ app.register_blueprint(home_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
+app.register_blueprint(feedbacks_bp)
 
 
 CORS(app, supports_credentials=True)  # Enable CORS with credentials support
