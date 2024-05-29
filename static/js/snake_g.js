@@ -60,6 +60,27 @@ function foodPosition(){
     let validPosition = false;
     let foodtype = 1
 
+    foodtype = Math.floor(Math.random() * 6) + 1;           // Generate a random number to choose the type of food that will be displayed
+
+    if(foodtype == 1 ){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/AppleEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 2){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PearEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 3){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/BananaEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 4){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/StrawberryEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 5){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/CherryEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 6){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PeachEmoji_snake.png"></div>`
+    }
+
     while(!validPosition){          // Assign a random value from 1 to 30 to X and Y to determine a position except the cells where there is the snake
         foodX = Math.floor(Math.random() * 30) + 1;
         foodY = Math.floor(Math.random() * 30) + 1;
@@ -71,27 +92,6 @@ function foodPosition(){
                 break;
             }
         }
-    }
-
-    foodtype = Math.floor(Math.random() * 6) + 1;           // Generate a random number to choose the type of food that will be displayed
-
-    if(foodtype == 1 ){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/AppleEmoji_snake.png" alt="Pera"></div>`
-    }
-    else if(foodtype == 2){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PearEmoji_snake.png" alt="Pera"></div>`
-    }
-    else if(foodtype == 3){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/BananaEmoji_snake.png" alt="Pera"></div>`
-    }
-    else if(foodtype == 4){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/StrawberryEmoji_snake.png" alt="Pera"></div>`
-    }
-    else if(foodtype == 5){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/CherryEmoji_snake.png" alt="Pera"></div>`
-    }
-    else if(foodtype == 6){
-        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PeachEmoji_snake.png" alt="Pera"></div>`
     }
     
 }
