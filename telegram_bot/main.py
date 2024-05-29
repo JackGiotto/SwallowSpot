@@ -151,21 +151,18 @@ async def snow_control(val):
                 if index==1:
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow1')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                 elif  index==2: 
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow2')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ] 
                 elif  index==3: 
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow3')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
-                    ]      
+                    ]
+                keyboard.append([InlineKeyboardButton("Rifiuta", callback_data='Drop')])
+                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])      
+                       
                 #find_id(messaggio)
                 global INFO
                 messaggio=" 🌨️ALLERTA NEVE🌨️ \n Livello: "+giorno['1000 m']+" \n Data:"+giorno['date']
@@ -316,28 +313,24 @@ async def report():
                 if(x[1]==1):
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendi')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                     messaggio=f"Allerta grado: {x[2]} tipo: idraulico 🌧️"
                     DATA["idro"]=messaggio
                 elif(x[1]==2):
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendig')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                     messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico 🌧️"
                     DATA["idrogeo"]=messaggio
                 elif(x[1]==3):
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendt')],
-                        [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
-                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
-                    messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"
-                    DATA["temp"]=messaggio        
-                    print(x[1])
+                keyboard.append([InlineKeyboardButton("Rifiuta", callback_data='Drop')])
+                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])      
+                messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"
+                DATA["temp"]=messaggio        
+                print(x[1])
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
             print("Notifica inviata a "+str(CHAT_ID)+" con successo!")
