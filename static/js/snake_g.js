@@ -54,12 +54,13 @@ function touchSupportCheck(){
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `Record personale: ${highScore}`;
 
-// Assign a random value from 1 to 30 to X and Y to determine a position
+
 function foodPosition(){
 
     let validPosition = false;
+    let foodtype = 1
 
-    while(!validPosition){
+    while(!validPosition){          // Assign a random value from 1 to 30 to X and Y to determine a position except the cells where there is the snake
         foodX = Math.floor(Math.random() * 30) + 1;
         foodY = Math.floor(Math.random() * 30) + 1;
         
@@ -71,6 +72,28 @@ function foodPosition(){
             }
         }
     }
+
+    foodtype = Math.floor(Math.random() * 6) + 1;           // Generate a random number to choose the type of food that will be displayed
+
+    if(foodtype == 1 ){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/AppleEmoji_snake.png" alt="Pera"></div>`
+    }
+    else if(foodtype == 2){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PearEmoji_snake.png" alt="Pera"></div>`
+    }
+    else if(foodtype == 3){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/BananaEmoji_snake.png" alt="Pera"></div>`
+    }
+    else if(foodtype == 4){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/StrawberryEmoji_snake.png" alt="Pera"></div>`
+    }
+    else if(foodtype == 5){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/CherryEmoji_snake.png" alt="Pera"></div>`
+    }
+    else if(foodtype == 6){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PeachEmoji_snake.png" alt="Pera"></div>`
+    }
+    
 }
 
 
@@ -93,7 +116,7 @@ function handleGameOver(){          // Resetting the timer and reloading the pag
 
 
     document.getElementById("continueButton").addEventListener("click", continueGame);          // Event listener for the button "Continua"   
-    document.addEventListener("keyup", function(e){         // Event listener for the "Enter" key press
+    document.addEventListener("keyup", function(e){         // Event listener for the "Enter" key of the keyboard
         if(e.key === "Enter"){
             continueGame();
         }
@@ -218,7 +241,7 @@ function launchConfetti(){
 function initGame(){
     if(gameOver)
         return handleGameOver();
-    let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
+    //let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
 
     // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
