@@ -12,29 +12,43 @@ body {
 
 /*navbar*/
 
+#navbar-top {
+    background-color: #00283Bdd;
+    width: 100%;
+    height: 10rem;
+}
+
 header {
     width: 100%;
-    position: fixed;
-    left: 0;
+    position: sticky;
     top: 0;
-    padding: 1vw 10%;
+    padding: 0.5vw 10% 0;
     transition: top 0.3s;
     display: flex;
     gap: 2%;
     z-index: 2;
 }
 
-header div{
+/*header div{
     display: flex;
     /*margin: 0 10% 0 10%;
     background-color: rgba(0, 40, 59, 0.97);
     clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
     /*background-color: rgba(167, 199, 224, 0.8);*/
     /*border: 2px solid #EDFCFF;*/
-    background-color: #59a4bccc;
+/*    background-color: #59a4bccc;
     border-radius: 20px;
     padding: 5px 5px 0 5px;
     filter: drop-shadow(0 5px 0px #00283B);
+}*/
+
+#menu {
+    background-color: #00283Bdd;
+}
+
+header div{
+    display: flex;
+    padding: 5px 5px 0 5px;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
@@ -54,7 +68,7 @@ header div{
 }
 
 .nav-sides a {
-    color: #00283B;
+    color: white;
 }
 
 /*central links*/
@@ -70,7 +84,7 @@ header #links a {
     padding: 1vw;
     display: block;
     float: left;
-    color: #00283B;
+    color: white;
     text-decoration: none;
     border-radius: 1vw;
     /*background-color: rgba(0, 102, 124, 0.3);*/
@@ -129,40 +143,6 @@ header #links a:hover {
 .offcanvas-body div a:hover {
     background-color: #00667c99;
     transition-duration: 150ms;
-}
-
-/*cookies label*/
-
-#cookies {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    border: 5px double #00667C;
-    background-color: #EDFCFFdc;
-    border-radius: 1em;
-    padding: 1em;
-    max-width: 30em;
-    z-index: 4;
-    display: none;
-    color: #212529 !important;
-}
-
-#cookieButtons {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 5px;
-}
-
-@media screen and (max-width: 767px) { /*phone*/
-    #cookies {
-        left: 10px;
-        max-width: 100%;
-    }
-}
-
-#customizeCookies {
-    color: #212529 !important;
 }
 
 /*container for different pages' layouts*/
@@ -241,7 +221,7 @@ footer img {
     cursor: pointer;
 }
 
-.credits-in a, #youtubePresentation {
+.credits-in a {
     color: white;
 }
 

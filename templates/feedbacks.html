@@ -4,12 +4,18 @@
 
 <div class="feed-container">
     <h1>Lascia un <strong class="highlighted">feedback</strong></h1>
+    <h4>per aiutarci a migliorare la tua esperienza!</h4>
     <div class="feed-in">
-        <i class="fa-solid fa-comments"></i>
+        <div class="feedimage">
+            <i class="fa-solid fa-comments"></i>
+            <i class="fa-regular fa-face-smile"></i>
+            <i class="fa-regular fa-face-frown"></i>
+        </div>
+        
         <form action="" method="post" class="mt-5" id="feedback">
             <input type="text" class="form-control" placeholder="Oggetto" name="feedObject" id="feedObject" maxlength="50">
             <div id="titleCounter"></div>
-            <textarea name="feedDesc" id="message" cols="30" rows="10" class="form-control mt-2" placeholder="Descrivi il problema" maxlength="500"></textarea>
+            <textarea name="feedDesc" id="message" cols="30" rows="10" class="form-control mt-2" placeholder="Descrivi il problema" maxlength="500" ></textarea>
             <div id="textCounter"></div>
             <button type="submit" class="btn btn-success mt-2">Invia feedback</button>
         </form>
@@ -20,14 +26,21 @@
 <script>
     //light/dark mode
     var all = document.getElementById("feedback");
+    var faces = document.querySelectorAll(".fa-regular");
 
     if(localStorage.getItem("mode") == "dark") {
         //dark mode
         all.setAttribute('data-bs-theme', "dark");
+        faces.forEach(function (e) {
+            e.style.color = "#222222";
+        });
     }
     else {
         //light mode
         all.setAttribute('data-bs-theme', "light");
+        faces.forEach(function (e) {
+            e.style.color = "#EDFCFF";
+        });
     }
 
     //title char counter
