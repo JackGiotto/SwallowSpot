@@ -124,11 +124,11 @@ CREATE TABLE Feedback       -- list of feedbacks
     ID_feedback INT AUTO_INCREMENT,                         -- feedback ID
     object VARCHAR(50) NOT NULL,                            -- title of the feedback
     description VARCHAR(500) NOT NULL,                      -- text of the feedback
-    date DATE NOT NULL,                                     -- date of insertion                                                                                
+    date DATETIME NOT NULL,                                 -- date of insertion                                                                                
     validate BOOLEAN NOT NULL,                              -- if we have seen the feedback
-    ID_user INT NOT NULL,                                   -- user ID of the user who make the feedback
+    ID_role INT NOT NULL,                                   -- role ID of the user who make the feedback
     CONSTRAINT pk_feedback PRIMARY KEY (ID_feedback),       -- PK constraint
-    CONSTRAINT fk_feedback_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- FK constraint from User identifier
+    CONSTRAINT fk_feedback_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
 );
 
 /*
