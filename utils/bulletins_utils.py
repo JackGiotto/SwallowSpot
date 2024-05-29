@@ -34,10 +34,11 @@ def save_bulletin(file, filename = None) -> str:
         if pdf_class != None:
             try:
                 pdf_class.add_to_db()
-                if pdf_class.type == "hydro":
-                    asyncio.run(_hydro_telegram(pdf_class.get_cfd_data()))
-                else:
-                    asyncio.run(_snow_telegram(pdf_class.get_cfd_data()))
+                if email:
+                    if pdf_class.type == "hydro":
+                        asyncio.run(_hydro_telegram(pdf_class.get_cfd_data()))
+                    else:
+                        asyncio.run(_snow_telegram(pdf_class.get_cfd_data()))
             except Exception as e:
                 # database error (the report is already added)
                 print(e)
