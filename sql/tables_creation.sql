@@ -100,7 +100,7 @@ CREATE TABLE User       -- list of the Users' accounts and their data
     CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from Role identifier
 );
 
-CREATE TABLE Admin      -- list of the administration account
+CREATE TABLE Admin      -- list of the administration accounts with telegram associations
 (
     ID_telegram VARCHAR(15),                            -- unique ID for every admin assigned from telegram
     groupID VARCHAR(15) NOT NULL UNIQUE,                -- group ID from telegram Bot chat
@@ -109,7 +109,7 @@ CREATE TABLE Admin      -- list of the administration account
     CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- FK constraint from User identifier
 );
 
-CREATE TABLE Snow_criticalness_altitude     -- list every snow criticalness connected with each altitude
+CREATE TABLE Snow_criticalness_altitude     -- list of snow criticalnesses connected with each altitudes
 (
     ID_snow_issue INT,                                                          -- snow criticalness ID
     ID_altitude INT,                                                            -- altitude ID
@@ -119,19 +119,21 @@ CREATE TABLE Snow_criticalness_altitude     -- list every snow criticalness conn
     CONSTRAINT fk_altitude FOREIGN KEY (ID_altitude) REFERENCES Altitude(ID_altitude) ON UPDATE CASCADE ON DELETE CASCADE                       -- FK constraint from Altitude identifier
 );
 
-CREATE TABLE Feedback
+CREATE TABLE Feedback       -- list of feedbacks
 (
-    ID_feedback INT AUTO_INCREMENT,
-    object VARCHAR(50) NOT NULL,
-    description VARCHAR(500) NOT NULL,
-    date DATE NOT NULL, 
-    valid BOOLEAN NOT NULL,
-    ID_user INT NOT NULL,
-    CONSTRAINT pk_feedback PRIMARY KEY (ID_feedback)
+    ID_feedback INT AUTO_INCREMENT,                         -- feedback ID
+    object VARCHAR(50) NOT NULL,                            -- title of the feedback
+    description VARCHAR(500) NOT NULL,                      -- text of the feedback
+    date DATE NOT NULL,                                     -- date of insertion                                                                                
+    validate BOOLEAN NOT NULL,                              -- if we have seen the feedback
+    ID_user INT NOT NULL,                                   -- user ID of the user who make the feedback
+    CONSTRAINT pk_feedback PRIMARY KEY (ID_feedback),       -- PK constraint
+    CONSTRAINT fk_feedback_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- FK constraint from User identifier
 );
 
 /*
 -- debug
+DROP TABLE Feedback;
 DROP TABLE Snow_criticalness_altitude;
 DROP TABLE Admin;
 DROP TABLE User;
