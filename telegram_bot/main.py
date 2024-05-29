@@ -1,6 +1,6 @@
 from typing import Final
 from telegram import Update ,Bot
-from telegram.ext import Application, CommandHandler, MessageHandler,filters , ContextTypes ,CallbackQueryHandler
+from telegram.ext import Application, CommandHandler, MessageHandler,filters , ContextTypes ,CallbackQueryHandler,CallbackContext
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import TelegramError
 import json
@@ -19,6 +19,7 @@ DATA: Final = {
     "idrogeo":"",
     "temp":""
 }
+waiting_for_message = {}
 DATASNOW: Final = None
 INFO: Final= {
     "snow":["","",""],
@@ -46,7 +47,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
         #button to do a manual control of last bulletin uploaded in database 
         keyboard = [
             [InlineKeyboardButton("⛄ Bol. PREVISIONE LOCALE NEVICATE ⛄ ", callback_data='Neve')],
-            [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')]
+            [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')],
             ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(f"☀️ ciao sono il tuo bot per vedere le allerte meteo della Zona di Bassano Del Grappa ☀️",reply_markup=reply_markup)
@@ -109,6 +110,7 @@ async def alert_control(tipo, colore):
             keyboard = [
                 [InlineKeyboardButton("Inoltra", callback_data=tmp)],
                 [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
@@ -121,7 +123,7 @@ async def alert_control(tipo, colore):
                 }
 
                 # Effettua la richiesta POST per inviare il messaggio
-                response = requests.post(url, json=params)
+                response = requests.post(url, json=pardispatcherams)
 
                 #await bot.send_message(chat_id=int(t_id), text=messaggio, reply_markup=reply_markup)
                 print("Notifica inviata a " + messaggio + " con successo!")
@@ -150,16 +152,19 @@ async def snow_control(val):
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow1')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                 elif  index==2: 
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow2')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ] 
                 elif  index==3: 
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow3')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]      
                 #find_id(messaggio)
                 global INFO
@@ -195,9 +200,17 @@ async def snow_control(val):
 async def button(update: Update, context):
     query = update.callback_query
     chat_id = query.message.chat_id
+    user_id = query.from_user.id
+    bot = Bot(token=TOKEN)
     await query.answer()
     data = query.data
-    if data == 'Neve':
+    if data == 'wait':
+            
+        # Aggiorna il messaggio per rimuovere i bottoni
+        await bot.send_message(chat_id=chat_id, text="Ok, sto aspettando il tuo messaggio.")
+        waiting_for_message[user_id] = True
+
+    elif data == 'Neve':
         await snow_report()
     elif data == 'Idro':
         await report() 
@@ -304,6 +317,7 @@ async def report():
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendi')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                     messaggio=f"Allerta grado: {x[2]} tipo: idraulico 🌧️"
                     DATA["idro"]=messaggio
@@ -311,6 +325,7 @@ async def report():
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendig')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                     messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico 🌧️"
                     DATA["idrogeo"]=messaggio
@@ -318,6 +333,7 @@ async def report():
                     keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendt')],
                         [InlineKeyboardButton("Rifiuta", callback_data='Drop')],
+                        [InlineKeyboardButton("Modifica messaggio", callback_data='wait')]
                     ]
                     messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"
                     DATA["temp"]=messaggio        
@@ -358,7 +374,7 @@ async def snow_report():
                 await bot.send_message(chat_id=CHAT_ID, text="nessun pericolo 🟢")
             else:
                 if(x[1]==4):
-                    messaggio=f"Allerta neve 🌨️, livello{x[0]}"
+                    messaggio=f"Allerta neve 🌨️, altezza: {x[0]} cm"
                     DATASNOW = messaggio
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)    
@@ -422,6 +438,23 @@ async def get_group_id(update: Update, context):
     # Invia l'ID del gruppo come risposta al comando
     await update.message.reply_text(f"L'ID di questo gruppo è: {group_id}")
             
+async def handle_message(update: Update, context: CallbackContext):
+    bot = Bot(token=TOKEN)
+    query = update.callback_query
+    user_id = update.message.from_user.id
+    if waiting_for_message.get(user_id):
+        user_message = update.message.text
+        await update.message.reply_text(f'messaggio inviato: {user_message}')
+        with open("./data.json", "r") as doc:
+            data = json.load(doc)
+            id = data["GROUP_ID"]
+                
+            await bot.send_message(chat_id=id, text=user_message)                
+        # Resetta lo stato di attesa per l'utente
+        waiting_for_message[user_id] = False
+    else:
+        await update.message.send_message('Non sto aspettando un messaggio da te.')
+
 def start_bot():
     app = Application.builder().token(TOKEN).build()
         
@@ -431,8 +464,8 @@ def start_bot():
     #app.add_handler(CommandHandler('custom', custom_command))
     app.add_handler(CommandHandler("get_group_id", get_group_id))
     app.add_handler(CallbackQueryHandler(button))
-    
-    
+    app.add_handler(MessageHandler(filters.TEXT, handle_message))    
+
     app.add_error_handler(error)
     print("Polling....")
     app.run_polling(poll_interval=3)
