@@ -90,3 +90,7 @@ INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
 -- For issue #4 V2
 INSERT INTO Feedback (object, description, date, validate, ID_role) VALUES
 ('title of the feedback (object)', 'description of the feedback', NOW(), false, 'user ID');
+
+-- For issue #13 V2
+INSERT INTO Snake (high_score, ID_user) VALUES
+('high score of the user', 'user ID');

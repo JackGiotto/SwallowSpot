@@ -131,8 +131,18 @@ CREATE TABLE Feedback       -- list of feedbacks
     CONSTRAINT fk_feedback_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
 );
 
+CREATE TABLE Snake_ranking
+(
+    ID_rank INT AUTO_INCREMENT,
+    high_score INT NOT NULL,
+    ID_user INT NOT NULL UNIQUE,
+    CONSTRAINT pk_snake_ranking PRIMARY KEY (ID_rank),
+    CONSTRAINT fk_snake_ranking_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
+);
+
 /*
 -- debug
+DROP TABLE Snake_ranking;
 DROP TABLE Feedback;
 DROP TABLE Snow_criticalness_altitude;
 DROP TABLE Admin;
