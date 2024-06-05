@@ -53,17 +53,44 @@ body{
 }
 
 
-.play-board .food {
-  background-image: url('../images/RedAppleEmoji_snake.png');      /* Take the image of a red apple emoji for displaying the food */
+.play-board .food{
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
 }
 
+.play-board.apple{
+    background-image: url('../images/AppleEmoji_snake.png');      /* Take the image of a red apple emoji for displaying the food */
+}
 
-.play-board .head{
-  background: #349347;      /* Snake head colour*/
-  border-radius: 5px;      /* Set the head with the round corners */
+.play-board.banana
+{
+    background-image: url('../images/BananaEmoji_snake.png');     
+}
+
+.play-board.cherry
+{
+    background-image: url('../images/CherryEmoji_snake.png');     
+}
+
+.play-board.peach
+{
+    background-image: url('../images/PeachEmoji_snake.png');     
+}
+
+.play-board.pear{
+    background-image: url('../images/PearEmoji_snake.png');     
+}
+
+.play-board.strawberry{
+    background-image: url('../images/StrawberryEmoji_snake.png');     
+}
+
+.play-board .head
+{
+    background: #349347;      /* Snake head colour*/
+    background-image: url('../images/RedAppleEmoji_snake.png');      /* Take the image of a red apple emoji for displaying the food */
+    border-radius: 5px;      /* Set the head with the round corners */
 }
 
 
