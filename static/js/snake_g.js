@@ -211,7 +211,6 @@ function changeDirectionT(e){
     }
 }
 
-
 // Call to "changeDirectionK" on each key click and passing key dataset value as an object
 controls.forEach(function(button) {
     button.addEventListener("click", function() {
@@ -220,8 +219,8 @@ controls.forEach(function(button) {
 });
 
 
-function launchConfetti(){
-
+function launchConfetti()
+{
     confetti({
         particleCount: 100,         // Set the number of confetti
         angle: -25,         // Set the angle that confetti will be thrown
@@ -238,10 +237,14 @@ function launchConfetti(){
 }
 
 
-function initGame(){
+function initGame()
+{
     if(gameOver)
+    {
         return handleGameOver();
-    //let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
+    }
+
+    snakeBody[0] = [snakeX, snakeY];
 
     // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
@@ -270,7 +273,8 @@ function initGame(){
         return gameOver = true;
     }
 
-    for(let i=0; i<snakeBody.length; i++){
+    for(let i=0; i<snakeBody.length; i++)
+    {
         html += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;          // Adding a div for each part of the snake's body
         
         if(i !== 0 && snakeBody[0][1] == snakeBody[i][1] && snakeBody[0][0] == snakeBody[i][0]){            // Check if the snake head hit the body, in this case it set gameOver to true
