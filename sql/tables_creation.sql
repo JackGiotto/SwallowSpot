@@ -131,7 +131,7 @@ CREATE TABLE Feedback       -- list of feedbacks
     CONSTRAINT fk_feedback_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
 );
 
-CREATE TABLE Snake_ranking
+CREATE TABLE Snake_ranking      -- ranking for the snake game
 (
     ID_rank INT AUTO_INCREMENT,
     high_score INT NOT NULL,

@@ -271,6 +271,8 @@ Dalle seguenti richieste possono derivare le seguenti entità (relazioni):
 10. **Topology** (topologia)
 11. **User** (utente)
 12. **Admin** (utente amministratore)
+13. **Feedback** (recensione)
+14. **Snake_ranking** (classifica di snake)
 
 I nomi delle tabelle saranno indicati al singolare per rendere più immediata la lettura.
 
@@ -331,9 +333,13 @@ Nella relazione **User** verranno raccolti tutti i dati relativi agli utenti tra
 - *ID_area*: zona in cui l’utente vive (presa da **Area**)
 - *ID_role*: codice del ruolo dell’utente all’interno del sito (preso da **Role**)
 
-
 Nella relazione **Admin** verranno raccolti i dati relativi agli admin tra cui:
 - ***ID_telegram***: identificativo univoco raccolto per inviare messaggi su Telegram
+- *groupID*: identificativo univoco del gruppo su Telegram
+- *ID_user*: identificativo univoco dell’utente assegnato dal DB (preso da **User**)
+
+Nella relazione **Feedback** verranno raccolti i dati relativi agli admin tra cui:
+- ***ID_feedback***: identificativo univoco 
 - *groupID*: identificativo univoco del gruppo su Telegram
 - *ID_user*: identificativo univoco dell’utente assegnato dal DB (preso da **User**)
 
