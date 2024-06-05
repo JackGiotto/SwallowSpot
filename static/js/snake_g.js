@@ -14,22 +14,6 @@ let touchSupport = 0;
 var initialX = null, initialY = null;
 
 
-function restartGame(){
-    gameOver = false;
-    foodX = 0, foodY = 0;
-    snakeX = 15, snakeY = 15;
-    speedX = 0, speedY = 0;
-    snakeBody = [];
-    score = 0;
-    clearInterval(setIntervalId);
-    document.getElementById("gameOverScreen").style.display = "none";
-    scoreElement.innerText = "Punteggio: 0";
-    foodPosition();
-
-    setIntervalId = setInterval(initGame, 100);         // Start the game
-}
-
-
 // Section of controls to see if the device is touchscreen or not, this is useful to know if the movements should be taken by touch or keyboard arrows
 
 // Check if the device support multiple touch, if it support it, it could be a touchscreen device
@@ -70,15 +54,50 @@ function touchSupportCheck(){
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `Record personale: ${highScore}`;
 
-// Assign a random value from 1 to 30 to X and Y to determine a position
+
 function foodPosition(){
-    foodX = Math.floor(Math.random()*30)+1;
-    foodY = Math.floor(Math.random()*30)+1;
+
+    let validPosition = false;
+    let foodtype = 1
+
+    foodtype = Math.floor(Math.random() * 6) + 1;           // Generate a random number to choose the type of food that will be displayed
+
+    if(foodtype == 1 ){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/AppleEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 2){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PearEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 3){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/BananaEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 4){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/StrawberryEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 5){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/CherryEmoji_snake.png"></div>`
+    }
+    else if(foodtype == 6){
+        html = `<div class="food" style="grid-area: ${foodY}/${foodX}"><img src="/PeachEmoji_snake.png"></div>`
+    }
+
+    while(!validPosition){          // Assign a random value from 1 to 30 to X and Y to determine a position except the cells where there is the snake
+        foodX = Math.floor(Math.random() * 30) + 1;
+        foodY = Math.floor(Math.random() * 30) + 1;
+        
+        validPosition = true;
+        for(let i = 0; i < snakeBody.length; i++){
+            if(snakeBody[i][0] === foodX && snakeBody[i][1] === foodY){
+                validPosition = false;
+                break;
+            }
+        }
+    }
+    
 }
 
 
-function handleGameOver(){
-    // Resetting the timer and reloading the page on game over
+function handleGameOver(){          // Resetting the timer and reloading the page on game over
     clearInterval(setIntervalId);
     document.getElementById("gameOverScreen").style.display = "block";
     document.getElementById("scoreDisplay").innerText = "Punteggio ottenuto: " + score;
@@ -89,14 +108,19 @@ function handleGameOver(){
         highScoreElement.innerText = `Record personale: ${highScore}`;
     }
 
-    // Event listener for the button "Continua"
-    function handleContinueButtonClick() {
+    function continueGame(){
         document.getElementById("gameOverScreen").style.display = "none";
         foodPosition();
-        restartGame();
+        location.reload();
     }
 
-    document.getElementById("continueButton").addEventListener("click", handleContinueButtonClick);
+
+    document.getElementById("continueButton").addEventListener("click", continueGame);          // Event listener for the button "Continua"   
+    document.addEventListener("keyup", function(e){         // Event listener for the "Enter" key of the keyboard
+        if(e.key === "Enter"){
+            continueGame();
+        }
+    });
 }
 
 
@@ -217,7 +241,7 @@ function launchConfetti(){
 function initGame(){
     if(gameOver)
         return handleGameOver();
-    let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
+    //let html = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
 
     // Check if the snake hit the food
     if(snakeX == foodX && snakeY == foodY){
@@ -227,7 +251,7 @@ function initGame(){
         highScore = Math.max(score, highScore);
         localStorage.setItem("high-score", highScore);
         scoreElement.innerText = `Punteggio: ${score}`;
-        if(score === 50){
+        if(score % 50 === 0){
             launchConfetti();
         }
     }

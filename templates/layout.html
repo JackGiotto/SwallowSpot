@@ -21,6 +21,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/admin.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/search.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/calendar.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/feedbacks.css') }}>
     <link rel="manifest" href={{ url_for('static', filename = 'manifest.json') }}>
 </head>
 <body>
@@ -165,6 +166,7 @@
                         <a href="https://www.regione.veneto.it/web/protezione-civile/cfd" target="_blank" class="row">Bollettini Protezione Civile</a>
                         <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}" target="_blank" class="row">Informativa sulla privacy</a>
                         <a href="https://app.pallades.it/appbrentalert/#/" target="_blank" class="row">Brentalert</a>
+                        <a href="{{ url_for('feedbacks.feedbacks') }}" class="row">Lascia un feedback</a>
                     </div>
                     <!--created with-->
                     <div class="column">

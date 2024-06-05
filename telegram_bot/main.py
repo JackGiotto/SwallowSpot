@@ -125,7 +125,6 @@ async def alert_control(tipo, colore):
                 # Effettua la richiesta POST per inviare il messaggio
                 response = requests.post(url, json=pardispatcherams)
 
-                #await bot.send_message(chat_id=int(t_id), text=messaggio, reply_markup=reply_markup)
                 print("Notifica inviata a " + messaggio + " con successo!")
         else:
             print("Il messaggio è vuoto, non inviato.")
