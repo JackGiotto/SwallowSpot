@@ -133,10 +133,10 @@ CREATE TABLE Feedback       -- list of feedbacks
 
 CREATE TABLE Snake_ranking      -- ranking for the snake game
 (
-    ID_rank INT AUTO_INCREMENT,
-    high_score INT NOT NULL,
-    ID_user INT NOT NULL UNIQUE,
-    CONSTRAINT pk_snake_ranking PRIMARY KEY (ID_rank),
+    ID_rank INT AUTO_INCREMENT,                             -- rank ID
+    high_score INT NOT NULL,                                -- the user's best score
+    ID_user INT NOT NULL UNIQUE,                            -- user's ID
+    CONSTRAINT pk_snake_ranking PRIMARY KEY (ID_rank),      -- PK constraint 
     CONSTRAINT fk_snake_ranking_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
 );
 
