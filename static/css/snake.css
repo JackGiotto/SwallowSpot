@@ -54,7 +54,7 @@ body{
 
 
 .play-board .food{
-  background-size: contain;
+  background-size: 20px 20px;
   background-repeat: no-repeat;
   background-position: center bottom;
 }
@@ -89,7 +89,6 @@ body{
 .play-board .head
 {
     background: #349347;      /* Snake head colour*/
-    background-image: url('../images/RedAppleEmoji_snake.png');      /* Take the image of a red apple emoji for displaying the food */
     border-radius: 5px;      /* Set the head with the round corners */
 }
 
