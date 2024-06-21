@@ -443,16 +443,16 @@ In conclusione, il Bot Telegram creato rappresenta un'efficace risorsa per mante
 - Implementare una classifica globale dei giocatori di Snake ed eventuale gestione di essa quando l'utente è offline.
 
 ---
-# Link utili
 
-[GitLab](https://git.e-fermi.it/s02599/swallowspot)   
-[Grafico di Gantt](https://docs.google.com/spreadsheets/d/168YbsE5HJkgGRd5wHwkwUqBXXFXx9UqvABOlmpB-spY/edit?usp=sharing)   
-[Meeting formalizzati](https://docs.google.com/document/u/0/d/1sRinEKfY7cUU00rmCMdOnxzq7RYrK_BtL3HxiMQvskY/edit)   
-[Monte ore](https://docs.google.com/spreadsheets/u/0/d/1Xwgcuj6wsa1bmwlAo48x7urjbYj1wkDkMTtX7W9GGvQ/edit)   
-[WBS](https://drive.google.com/file/d/1tl7dMJODTsOtKm8gPWkH-u98CW3RowVA/view?usp=sharing)   
-[Project charter](https://docs.google.com/document/d/1s2t6DxKhILbeoxKxMlY8qBP8z9xPnwOq/edit?usp=sharing&ouid=108176821754793768186&rtpof=true&sd=true)   
-[Informativa sulla privacy e sul trattamento dei dati personali](https://docs.google.com/document/d/1zuJWILUF4c712sJ3IW12un4LcLxyTNlbb49vMByV4iM/edit?usp=sharing)   
-[Skill management](https://docs.google.com/document/d/1PyCQIAEj1DmMwY9xT3W8IKJT0NQssDxHBKveqqW169w/edit?usp=sharing)
+# Licensing
+
+## Code
+
+The code in this project is licensed under the GNU General Public License v3.0. See the [LICENSE](./LICENSE) file for details.
+
+## Assets
+
+The assets in this project (including images, graphics, audio, etc.) are licensed under Attribution-NonCommercial-NoDerivatives 4.0 license. See the [LICENSE-ASSETS](./LICENSE-ASSETS) file for details.
 
 # Crediti
 
