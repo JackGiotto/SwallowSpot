@@ -14,7 +14,9 @@ def hydro():
     date = request.args['date']
     data = None
 
-    if date == "last":
+    if date == None:
+        return render_template("reports/hydro_error.html")
+    elif date == "last":
         title = "Ultimo bollettino"
         result = "0"
     else:
@@ -80,10 +82,11 @@ def snow():
         return redirect(url_for("reports.snow") + "?date=last")
 
     date = request.args['date']
-    if date != 'last':
+    if date == None:
+        return render_template("reports/snow_error.html")
+    elif date != 'last':
         title = "Bollettino del: " + date.replace("-", "/")
         date = parse_date_it_us(date + " 00:00:00")
-        
     else:
         title = "Ultimo bollettino"
     data = _get_all_bulletin_snow(date)
