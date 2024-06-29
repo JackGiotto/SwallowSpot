@@ -13,22 +13,23 @@ def hydro():
 
     date = request.args['date']
     data = None
-
-    if date == None:
-        return render_template("reports/hydro_error.html")
-    elif date == "last":
+    print("data", date)
+    if date == "last":
         title = "Ultimo bollettino"
         result = "0"
     else:
         title = "Bollettino del: " + date.replace("-", "/")
         # checks if there are any bulletins with the selected date in the database
-        query = f"""
+        try:
+            date = parse_date_it_us(date)
+            query = f"""
                     SELECT ID_report
                     FROM Report
                     WHERE starting_date LIKE '{parse_date_it_us(date + " 00:00:00")[:10]}%';
                 """
-        result = db.executeQuery(query)
-
+            result = db.executeQuery(query)
+        except:
+            result = False
     if bool(result):
         data = _get_all_bulletin_hydro(date)
     if data == None:
@@ -36,6 +37,28 @@ def hydro():
 
     return render_template("reports/hydro.html", data = data, title = title)
 
+
+@reports_bp.route('/snow/', methods=['GET'])
+def snow():
+    if not 'date' in request.args:
+        return redirect(url_for("reports.snow") + "?date=last")
+
+    date = request.args['date']
+    if date != 'last':
+        title = "Bollettino del: " + date.replace("-", "/")
+        try:
+            date = parse_date_it_us(date + " 00:00:00")
+        except:
+            date = None
+    else:
+        title = "Ultimo bollettino"    
+    if (bool):
+        data = _get_all_bulletin_snow(date)
+
+    if data == None:
+        return render_template("reports/snow_error.html")
+
+    return render_template("reports/snow.html", data = data, title=title)
 
 @reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
 def downloadpdfSnow():
@@ -75,26 +98,6 @@ def downloadpdfIdro():
         pdf_path=pdf_path[0]['path']
 
         return send_file(pdf_path, as_attachment=True)
-
-@reports_bp.route('/snow/', methods=['GET'])
-def snow():
-    if not 'date' in request.args:
-        return redirect(url_for("reports.snow") + "?date=last")
-
-    date = request.args['date']
-    if date == None:
-        return render_template("reports/snow_error.html")
-    elif date != 'last':
-        title = "Bollettino del: " + date.replace("-", "/")
-        date = parse_date_it_us(date + " 00:00:00")
-    else:
-        title = "Ultimo bollettino"
-    data = _get_all_bulletin_snow(date)
-
-    if data == None:
-        return render_template("reports/snow_error.html")
-
-    return render_template("reports/snow.html", data = data, title=title)
 
 @reports_bp.route('/')
 def reports():
