@@ -79,4 +79,4 @@ now you can run the server with
 
 ### !Attention!
 
-make sure that in main file ssl is not activater or the page will not be accessible
+make sure that in main file ssl is not activated or the page will not be accessible (this is only for localhost)
