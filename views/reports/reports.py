@@ -14,7 +14,7 @@ def hydro():
 
     date = request.args['date']
     data = None
-
+    print("data", date)
     if date == "last":
         title = "Ultimo bollettino"
         result = "0"
@@ -111,25 +111,6 @@ def downloadpdfIdro():
             pdf_path = pdf_path.replace("./", os.getenv("start_path"))
 
         return send_file(pdf_path, as_attachment=True)
-
-@reports_bp.route('/snow/', methods=['GET'])
-def snow():
-    if not 'date' in request.args:
-        return redirect(url_for("reports.snow") + "?date=last")
-
-    date = request.args['date']
-    if date != 'last':
-        title = "Bollettino del: " + date.replace("-", "/")
-        date = parse_date_it_us(date + " 00:00:00")
-        
-    else:
-        title = "Ultimo bollettino"
-    data = _get_all_bulletin_snow(date)
-
-    if data == None:
-        return render_template("reports/snow_error.html")
-
-    return render_template("reports/snow.html", data = data, title=title)
 
 @reports_bp.route('/')
 def reports():
