@@ -3,12 +3,28 @@ from flask_cors import CORS
 from flask_sslify import SSLify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
+from dotenv import load_dotenv
+from utils.wsgi_utils import read_env_file
 import os
 
-app = Flask("Swallow Spot")
-app.config["DEBUG"] = True
+
+if __name__ == "__main__":
+    load_dotenv()
+    start_path = "./"
+else:
+    start_path = "/home/maggiottobackend/SwallowSpot/"
+    read_env_file(start_path + ".env")
+
+os.environ["start_path"] = start_path
+
+app = Flask("Swallow Spot", template_folder=start_path + "templates")
+app.config["DEBUG"] = False
 app.config["MAINTENANCE"] = False
-sslify = SSLify(app)
+
+if __name__ == "__main__":
+    sslify = SSLify(app)
+
+
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = "klosterpatia"

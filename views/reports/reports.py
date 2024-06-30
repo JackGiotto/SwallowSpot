@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request ,send_f
 from models import db
 import json
 from utils.risks import convert_risk_color, get_query_last_hydro, get_query_hydro, get_query_snow, get_date_last_snow, parse_date_us_it, parse_date_it_us
+import os
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
@@ -51,7 +52,9 @@ def downloadpdfSnow():
     
         pdf_path=db.executeQuery(query)
         pdf_path=pdf_path[0]['path']
-
+        
+        if (os.getenv("start_path") != "./"):
+            pdf_path = pdf_path.replace("./", os.getenv("start_path"))
         return send_file(pdf_path, as_attachment=True)  
 
 
@@ -71,6 +74,8 @@ def downloadpdfIdro():
         
         pdf_path=db.executeQuery(query)
         pdf_path=pdf_path[0]['path']
+        if (os.getenv("start_path") != "./"):
+            pdf_path = pdf_path.replace("./", os.getenv("start_path"))
 
         return send_file(pdf_path, as_attachment=True)
 

@@ -2,6 +2,7 @@ import camelot
 import json
 from utils.get_data import convert_date
 from models import db
+import os
 import PyPDF2
 
 class Snow:
@@ -107,7 +108,7 @@ class Snow:
 	def _get_risks(self, table) -> dict[str, any]:
 		"""get the value associated with every risk
 		"""
-		with open("utils/cfd_analyzer/templates/risks_template_snow.json", "r") as f:
+		with open(os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_snow.json", "r") as f:
 			RISKS = json.load(f)
 		
 

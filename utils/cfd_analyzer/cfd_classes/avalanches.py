@@ -1,5 +1,6 @@
 import camelot
 import json
+import os
 
 class Avalanches:
 
@@ -46,7 +47,7 @@ class Avalanches:
 		"""
 
 		# risks template for avalanches
-		with open("utils/cfd_analyzer/templates/risks_template_avalanches.json", "r") as f:
+		with open(os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_avalanches.json", "r") as f:
 			RISKS = json.load(f)
 		
 		template = RISKS["risks_template"]

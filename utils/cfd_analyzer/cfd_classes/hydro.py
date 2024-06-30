@@ -3,6 +3,7 @@ import json
 from utils.get_data import convert_date
 from models import db
 import PyPDF2
+import os
 
 class Hydro:
 	
@@ -19,6 +20,7 @@ class Hydro:
 
 	def __init__(self, pdf_path, pages, table_number = 0):
 		self.path = pdf_path
+		print("path" + self.path)
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
 		self.table_number = table_number
@@ -56,9 +58,15 @@ class Hydro:
 	def _get_queries(self) -> dict:
 		#print(self.data["risks"])
 		queries = {"bulletin_query": "", "risks_queries": []}
+		path = self.path
+
+		if (os.getenv("start_path") != "./"):
+			print("different")
+			path = path.replace(os.getenv("start_path"), "./")
+
 		queries["bulletin_query"] = f'''
 					INSERT INTO Report(starting_date, ending_date, path) VALUES
-					("{self.data["date"]["starting_date"]}", "{self.data["date"]["ending_date"]}", "{self.path}");
+					("{self.data["date"]["starting_date"]}", "{self.data["date"]["ending_date"]}", "{path}");
 				'''
 		for key, values in self.data["risks"].items():
 			area_name = key
@@ -84,7 +92,7 @@ class Hydro:
 	def _get_date(self, table) -> dict[str, str]:
 		"""get the date of the bullettin
 		"""
-		
+		print(table)
 		string = table[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]
 		splitted = string.split(' ')
 
@@ -101,7 +109,7 @@ class Hydro:
 		"""
 		
 		# risks template for hydro
-		with open("utils/cfd_analyzer/templates/risks_template_hydro.json", "r") as f:
+		with open(os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_hydro.json", "r") as f:
 			RISKS = json.load(f)
 
 		template = RISKS["risks_template"]

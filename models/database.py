@@ -1,11 +1,9 @@
 from flask import Flask
-from dotenv import load_dotenv
 import pymysql
 import os
 
 import pymysql.cursors
 
-load_dotenv()
 class Database:
     def connect(self):
         connection = pymysql.connect (

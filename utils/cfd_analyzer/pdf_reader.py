@@ -28,6 +28,7 @@ class Pdf_reader:
 				self.analyzer = cfd_classes.Hydro(path, pages, table_number)
 				self.type = "hydro"
 			else:
+				print("snow")
 				self.analyzer = cfd_classes.Snow(path, pages)
 				self.type = "snow"
 		except Exception as e:
