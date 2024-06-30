@@ -21,17 +21,22 @@ def hydro():
         title = "Bollettino del: " + date.replace("-", "/")
         # checks if there are any bulletins with the selected date in the database
         try:
-            date = parse_date_it_us(date)
+            date_it = parse_date_it_us(date + " 00:00:00")
+            print("passed")
             query = f"""
                     SELECT ID_report
                     FROM Report
-                    WHERE starting_date LIKE '{parse_date_it_us(date + " 00:00:00")[:10]}%';
+                    WHERE starting_date LIKE '{(date_it)[:10]}%';
                 """
             result = db.executeQuery(query)
-        except:
-            result = False
+            print(result)
+        except Exception as e:
+            result = ()
+    
     if bool(result):
+        print("funziona")
         data = _get_all_bulletin_hydro(date)
+
     if data == None:
         return render_template("reports/hydro_error.html")
 
@@ -44,15 +49,18 @@ def snow():
         return redirect(url_for("reports.snow") + "?date=last")
 
     date = request.args['date']
+    data = None
     if date != 'last':
         title = "Bollettino del: " + date.replace("-", "/")
         try:
             date = parse_date_it_us(date + " 00:00:00")
         except:
+            print("error")
             date = None
     else:
         title = "Ultimo bollettino"    
-    if (bool):
+    
+    if date != None:
         data = _get_all_bulletin_snow(date)
 
     if data == None:
