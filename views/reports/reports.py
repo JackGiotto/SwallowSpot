@@ -21,20 +21,53 @@ def hydro():
     else:
         title = "Bollettino del: " + date.replace("-", "/")
         # checks if there are any bulletins with the selected date in the database
-        query = f"""
+        try:
+            date_it = parse_date_it_us(date + " 00:00:00")
+            print("passed")
+            query = f"""
                     SELECT ID_report
                     FROM Report
-                    WHERE starting_date LIKE '{parse_date_it_us(date + " 00:00:00")[:10]}%';
+                    WHERE starting_date LIKE '{(date_it)[:10]}%';
                 """
-        result = db.executeQuery(query)
-
+            result = db.executeQuery(query)
+            print(result)
+        except Exception as e:
+            result = ()
+    
     if bool(result):
+        print("funziona")
         data = _get_all_bulletin_hydro(date)
+
     if data == None:
         return render_template("reports/hydro_error.html")
 
     return render_template("reports/hydro.html", data = data, title = title)
 
+
+@reports_bp.route('/snow/', methods=['GET'])
+def snow():
+    if not 'date' in request.args:
+        return redirect(url_for("reports.snow") + "?date=last")
+
+    date = request.args['date']
+    data = None
+    if date != 'last':
+        title = "Bollettino del: " + date.replace("-", "/")
+        try:
+            date = parse_date_it_us(date + " 00:00:00")
+        except:
+            print("error")
+            date = None
+    else:
+        title = "Ultimo bollettino"    
+    
+    if date != None:
+        data = _get_all_bulletin_snow(date)
+
+    if data == None:
+        return render_template("reports/snow_error.html")
+
+    return render_template("reports/snow.html", data = data, title=title)
 
 @reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
 def downloadpdfSnow():
