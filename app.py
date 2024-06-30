@@ -44,16 +44,18 @@ def check_under_maintenance():
 
 @app.route('/start_maintenance', methods=['POST'])
 def start_maintenance():
-    print("starting maintenance")
-    app.config["MAINTENANCE"] = True
-    print(app.config["MAINTENANCE"])
-    return "started", 200
+    if 'superadmin' in session:
+        print("starting maintenance")
+        app.config["MAINTENANCE"] = True
+        print(app.config["MAINTENANCE"])
+        return "started", 200
 
 @app.route('/end_maintenance', methods=['POST'])
 def end_maintenance():
-    print("starting maintenance")
-    app.config["MAINTENANCE"] = False
-    return "ended", 200
+    if 'superadmin' in session:
+        print("starting maintenance")
+        app.config["MAINTENANCE"] = False
+        return "ended", 200
 
 @app.route('/service_worker.js')
 def sw():
