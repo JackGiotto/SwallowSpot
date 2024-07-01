@@ -1,6 +1,6 @@
 # GUIDE TO LOCAL CONFIGURATION OF A SWALLOWSPOT SERVER
 
-## Code repository
+## Code | Virtual environment
 
 ### Cloning repository
 
@@ -37,6 +37,8 @@ Make sure to start the virtual enviornment and run:
 
 `pip install -r requirements.txt`
 
+#### (Do this passage only for the initial setup)
+
 ### Updating requirements file
 If you download any other python library you can update the requirements file by running:
 
@@ -68,7 +70,7 @@ Now compile .env
     MAILPASSWORD=""
     IMAPSERVER=""
 
-##### (In next meeting will be decided what to do for mail testing)
+##### (In next meetings will be decided what to do for mail testing)
 
 You can create new users and change current users password in [users page](http://localhost/phpmyadmin/index.php?route=/server/privileges&viewing_mode=server)
 
