@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "wholroyd.jinja",
+        "shardulm94.trailing-spaces",
+        "ecmel.vscode-html-css",
+        "mhutchie.git-graph",
+        "cstrap.flask-snippets",
+        "shaharkazaz.git-merger",
+        "GitHub.vscode-pull-request-github"
+    ],
+    "unwantedRecommendations": [
+        "eamodio.gitlens"
+    ]
+}
