@@ -63,12 +63,12 @@ def emails_fetch(mail):
             else:
                 body = msg.get_payload(decode=True).decode()
             # sign the current mail as deletable
-            mail.store(num, '+FLAGS', '\Deleted')
+            #mail.store(num, '+FLAGS', '\Deleted')
         
 
         # deletes mails from not truster users (comment those lines to keep the mails of not trusted users)
-        else:
-            mail.store(num, '+FLAGS', '\Deleted')
+        #else:
+            #mail.store(num, '+FLAGS', '\Deleted')
 
         # delete the mails that has been signed
         mail.expunge()

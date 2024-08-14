@@ -1,0 +1,16 @@
+[Unit]
+Description=Service for mail and telegram for SwallowSpot web app
+After=network.target
+
+[Service]
+User=spotter
+Group=swallowspot
+WorkingDirectory=/home/spotter/SwallowSpot/
+ExecStart=/home/spotter/SwallowSpot/venv/bin/python /home/spotter/SwallowSpot/mail_telegram.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+
