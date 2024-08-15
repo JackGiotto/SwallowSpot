@@ -37,7 +37,7 @@
       "type": "image/png"
     }
   ],
-  "description": "An awesome Progressive Web App",
+  "description": "Questa web app sarà il vostro punto di riferimento per accedere ai bollettini meteo ufficiali pubblicati dalla regione, garantendo così una visione chiara e completa delle previsioni e delle eventuali allerte presenti.",
   "orientation": "portrait",
   "scope": "/",
   "lang": "it-IT"
