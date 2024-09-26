@@ -63,7 +63,7 @@ Now compile .env
     SERVERNAME="localhost"
     DBUSER=[name of your database user]
     DBNAME="swallow spot"
-    PASSWORD=[password of yout database user]
+    PASSWORD=[password of your database user]
     PORT=5000
     BULLETINS_FOLDER="./static/bulletins"
     MAIL=""
