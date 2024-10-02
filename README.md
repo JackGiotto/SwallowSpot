@@ -1,6 +1,6 @@
 ![SwallowSpot logo](./static/images/swallowspot_title_mini.png)
 
-# SwallowSpot - Documentation
+# SwallowSpot
 ---
 # Introduction
 
