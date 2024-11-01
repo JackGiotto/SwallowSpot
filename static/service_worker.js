@@ -1,7 +1,7 @@
 
 const NOTIFICATION_URL = '/notification';       // resource to fetch
-const CACHE_NAME = 'swallow_spot_cache';        // cache's name               
-const URLS_TO_CACHE = [                         // pages to put into the SW cache                         
+const CACHE_NAME = 'swallow_spot_cache';        // cache's name
+const URLS_TO_CACHE = [                         // pages to put into the SW cache
     '/',
     '/static/manifest.json',
     '/info/',
@@ -11,29 +11,26 @@ const URLS_TO_CACHE = [                         // pages to put into the SW cach
 ];
 
 // Install event: loading cache into the application
-self.addEventListener('install', (event) => 
-{
+self.addEventListener('install', (event) => {
     event.waitUntil(                                        // wait until the promise is kept
         caches.open(CACHE_NAME)                             // opens cache
-        .then((cache) =>                                    
+        .then((cache) =>
         {
             console.log('Insert paths into cache', cache);
             return cache.addAll(URLS_TO_CACHE);               // adds into cache
         })
         .catch((error) =>                                   // in case of error
         {
-            console.error('Failed to cache:', error);       
+            console.error('Failed to cache:', error);
         })
     );
 });
 
 // Fetch event: try the network first, then cache
-self.addEventListener('fetch', (event) => 
-{ 
+self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(event.request)
-        .then((response) => 
-        {
+        .then((response) => {
             if (response && response.status === 200 && response.type === 'basic')       // if the server is online
             {
                 const responseClone = response.clone();                                 // repli
@@ -113,7 +110,7 @@ async function checkNotification2() {
         if (response.ok) 
         {
             const data = await response.json();
-            if (data['hydro'] != 'verde' || data['hydro_geo'] != 'verde' || data['storms']['color_name'] != 'verde')
+            if (data['hydro'] !== 'verde' || data['hydro_geo'] !== 'verde' || data['storms']['color_name'] !== 'verde')
             {
                 registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
                 {
@@ -131,7 +128,6 @@ async function checkNotification2() {
         console.error('Fetch error:', error);
     }
 }
-
 
 self.addEventListener('sync', function(event) {
     if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
