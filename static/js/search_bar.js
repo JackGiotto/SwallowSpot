@@ -1,8 +1,5 @@
 let AUTOCOMPLETEDATA = [];
 
-window.onload = function() {
-    getAutoCompleteData()
-}
 
 // obtain citys
 function getAutoCompleteData() {
