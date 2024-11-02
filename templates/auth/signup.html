@@ -54,11 +54,15 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    window.onload = function() {
+        getAutoCompleteData()
+    }
     //contenitive password div size
     function setDivHeight() {
         var inputHeight = document.getElementById('textPassword').offsetHeight;
         document.getElementById('pswRequirements').style.height = inputHeight + 'px';
     }
+
 
     window.addEventListener('load', setDivHeight);
     window.addEventListener('resize', setDivHeight);
@@ -87,6 +91,7 @@
     var autocomplete = document.getElementById("autocomplete-list");
     var requirements = document.getElementById("requirements");
     var triangle = document.getElementById("triangle");
+    //getAutoCompleteData();
 
     if(localStorage.getItem("mode") == "dark") {
         //dark mode

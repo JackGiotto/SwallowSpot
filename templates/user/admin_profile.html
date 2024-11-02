@@ -87,7 +87,7 @@
                 </span>
             </div>
             <div id="error" class="error-msg mb-4"></div>
-            
+
             <!--group ID-->
             <p>Come ricavare il tuo <strong> GROUP ID</strong>:</p>
             <ol>
@@ -120,7 +120,7 @@
             <div id="pswRequirements" class="mb-3">
                 <div class="input-group mb-2 mt-2">
                     <input name="new_password" type="password" class="form-control" onkeyup="check_password()" id="psw1" placeholder="Nuova password" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">
-                    <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>                
+                    <button class="btn btn-outline-primary" type="button" id="showPasswordToggle1"><i class="fa-solid fa-eye"></i></button>
                 </div>
                 <!--password requirements-->
                 <div id="requirements" class="card">
@@ -145,7 +145,7 @@
             <!--city select-->
             <div id="searchbar" class="mb-3">        <!--search bar-->
                 <input autocomplete="false" name="hidden" type="text" style="display: none;">
-                <input type="text" placeholder="Inserisci il tuo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
+                <input type="text" placeholder="Inserisci il suo comune" name="city" id="bar" onkeyup="autocompleteBar()" class="form-control">
                 <div class="autocomplete-items rounded-bottom" id="autocomplete-list"></div>
             </div>
             <div class="error-msg">
@@ -208,6 +208,8 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
+    getAutoCompleteData()
+
     /*autocomplete list size*/
     function setAutocompleteListWidth() {
         var inputWidth = document.getElementById('bar').offsetWidth;
@@ -281,7 +283,7 @@
         var input3 = document.getElementById('psw2');
         var input4 = document.getElementById('bar');
         var button = document.getElementById('create-submit');
-    
+
         function controlInput() {
             if (input1.value.trim() !== '' && input2.value.trim() !== '' && input3.value.trim() !== '' && input4.value.trim() !== '' && input2.value == input3.value) {
                 button.type = "submit";
@@ -289,7 +291,7 @@
                 button.type = "button";
             }
         }
-    
+
         input1.addEventListener('input', controlInput);
         input2.addEventListener('input', controlInput);
         input3.addEventListener('input', controlInput);
