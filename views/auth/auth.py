@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
 from models import db
 from utils.get_data import get_cities
-from utils.password import hash_password, has_number, has_special_character, has_uppercase
+from utils.password import hash_password, check_password
 from datetime import timedelta
 
 
@@ -28,7 +28,7 @@ def login():
         # checks credentials with DB
         sql = "SELECT username, password FROM User where username = '" + username + "' and password = '" + password +"';"
         result = db.executeQuery(sql)
-        
+
         #confronto e reindirizzamento
         if bool(result):
             # correct
@@ -65,9 +65,9 @@ def signup():
 
         if (username == ''):
             return render_template("auth/signup.html", msg="Errore: Il nome utente non può essere vuoto")
-        if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
+        if (not check_password(password)):
             return render_template("auth/signup.html", msg="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale")
-        
+
         password = hash_password(password)
         city = request.form["city"]
         if city not in get_cities(want_list=True):
@@ -82,7 +82,7 @@ def signup():
         if bool(result):
             return render_template("auth/signup.html", msg="Errore: Username non disponibile")
         else:
-            ID_area_query = f''' SELECT Topology.ID_area 
+            ID_area_query = f''' SELECT Topology.ID_area
                                 FROM Topology
                                 WHERE Topology.city_name = "{city}"
                             '''

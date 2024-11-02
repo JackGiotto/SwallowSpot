@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, session, request, url_for, current_app
 import json
 from models import db
-from utils.password import hash_password, has_uppercase, has_number, has_special_character
+from utils.password import hash_password, check_password
 from utils.get_data import get_cities
 from utils.bulletins_utils import save_bulletin
 from utils.db_backup.client_backup import start_backup
@@ -26,7 +26,7 @@ def user():
                 new_username = request.form["new_username"]
                 result = db.executeQuery("SELECT username FROM User where username = '" + new_username+ "';")
                 # check if username is already taken
-                
+
                 if bool(result):
                     return render_template("user/profile.html", msg="username non disponibile", username=session["username"], show_button=show_button)
                 else:
@@ -38,7 +38,7 @@ def user():
                 new_zone = request.form["city"]
                 if new_zone not in get_cities(want_list=True):
                     return render_template("user/profile.html", username=session["username"], msg_area="Errore: Il comune inserito non è valido", show_button=show_button)
-                
+
                 new_zone = db.executeQuery("SELECT Topology.ID_area FROM Topology WHERE Topology.city_name = '"+str(new_zone)+"';")
                 new_zone= new_zone[0]["ID_area"]
                 db.executeQuery("UPDATE User SET ID_area = "+str(new_zone)+" WHERE ID_user = "+str(id_user)+";")
@@ -54,13 +54,13 @@ def user():
                 result=db.executeQuery("SELECT User.password FROM User WHERE password = '"+str(old_password)+"';")
                 if not result:
                     return render_template("user/profile.html", msg2="Errore: La password vecchia non è corretta ", username=session["username"], show_button=show_button)
-                if (len(new_password) < 8 or not has_number(new_password) or not has_uppercase(new_password) or not has_special_character(new_password)):
+                if (not check_password(new_password)):
                     return render_template("user/profile.html", msg2="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", username=session["username"], show_button=show_button)
                 # hasing password
                 new_password=hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
                 return render_template("user/profile.html", username=session['username'], show_button=show_button)
-            
+
             elif "passwordDelete" in request.form: # delete account
                 password = request.form['passwordDelete']
                 password = hash_password(password)
@@ -100,7 +100,7 @@ def admin():
     return render_template("user/admin_profile.html", maintenance = current_app.config["MAINTENANCE"])
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
-def insert_id():    
+def insert_id():
     # user data
     chat_id = str(request.form["ChatID"])
     group_id = str(request.form["GroupID"])
@@ -111,7 +111,7 @@ def insert_id():
 
     if user_result:
         user_id = int(user_result["ID_user"])
-        # create a new admin row 
+        # create a new admin row
         query = f"INSERT INTO Admin (ID_user, ID_telegram,GroupID) VALUES ({user_id}, '{chat_id}','{group_id}')"
         db.executeQuery(query)
     return render_template("user/admin_profile.html")
@@ -130,7 +130,7 @@ def change_to_admin():
             query = f"""
                         UPDATE User
                         SET ID_role = 2
-                        WHERE username = '{new_admin_username}'; 
+                        WHERE username = '{new_admin_username}';
                     """
             db.executeQuery(query)
             return render_template("user/admin_profile.html", msg_success_user = f"Aggiunto {new_admin_username} agli admin")
@@ -150,9 +150,9 @@ def new_admin():
     if (new_admin_username == ''):
         # empty name
         return render_template("user/admin_profile.html", new_msg_error="Errore: Il nome utente non può essere vuoto")
-    if (len(password) < 8 or not has_number(password) or not has_uppercase(password) or not has_special_character(password)):
+    if (not check_password(password)):
         return render_template("user/admin_profile.html", new_msg_error="Errore: La password deve contenere almeno 8 caratteri, un numero, una maiuscola e un carattere speciale", role=id_role)
-    
+
     password = hash_password(password)
     city = request.form["city"]
     if city not in get_cities(want_list=True):
@@ -165,7 +165,7 @@ def new_admin():
     if bool(result):
         return render_template("user/admin_profile.html", new_msg_error="Errore: L'username inserito è già utilizzato da un altro utente")
     else:
-        ID_area_query = f''' SELECT Topology.ID_area 
+        ID_area_query = f''' SELECT Topology.ID_area
                             FROM Topology
                             WHERE Topology.city_name = "{city}"
                         '''
@@ -179,7 +179,7 @@ def new_admin():
 def new_bulletin():
     result = save_bulletin(request.files['uploadReport'])
     if ("Errore" in result):
-        return render_template("user/admin_profile.html", upload_error = result) 
+        return render_template("user/admin_profile.html", upload_error = result)
     return render_template("user/admin_profile.html", upload_success = "Bollettino aggiunto con successo")
 
 @profile_bp.route('/profile/backup', methods=['POST'])
