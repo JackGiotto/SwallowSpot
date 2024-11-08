@@ -19,7 +19,7 @@ os.environ["start_path"] = start_path
 
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
-app.config["MAINTENANCE"] = False
+app.config["MAINTENANCE"] = (os.getenv("MAINTENANCE") == "True")
 
 if __name__ == "__main__":
     sslify = SSLify(app)
@@ -72,5 +72,5 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem'))
+    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"))
 
