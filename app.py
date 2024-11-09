@@ -12,7 +12,7 @@ if __name__ == "__main__":
     load_dotenv()
     start_path = "./"
 else:
-    start_path = "/home/maggiottobackend/SwallowSpot/"
+    start_path = "/var/www/SwallowSpot/"
     read_env_file(start_path + ".env")
 
 os.environ["start_path"] = start_path
