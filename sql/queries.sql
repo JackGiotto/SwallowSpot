@@ -86,3 +86,7 @@ SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = 'value of t
 
 INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
 (@ID_snow_issue, @ID_altitude, 'value (5-10)');
+
+-- Insertion of pdf file into database BLOB
+INSERT INTO pdf_files (starting_date, ending_date, pdf_data)
+VALUES ("starting-data format datetime", "ending date format datetime", "pdf in bites")
