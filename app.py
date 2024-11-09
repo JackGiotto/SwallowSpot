@@ -5,10 +5,24 @@ from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 import os
 
-app = Flask("Swallow Spot")
-app.config["DEBUG"] = True
-app.config["MAINTENANCE"] = False
-sslify = SSLify(app)
+
+if __name__ == "__main__":
+    load_dotenv()
+    start_path = "./"
+else:
+    start_path = "/var/www/SwallowSpot/"
+    read_env_file(start_path + ".env")
+
+os.environ["start_path"] = start_path
+
+app = Flask("Swallow Spot", template_folder=start_path + "templates")
+app.config["DEBUG"] = False
+app.config["MAINTENANCE"] = (os.getenv("MAINTENANCE") == "True")
+
+if __name__ == "__main__":
+    sslify = SSLify(app)
+
+
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = "klosterpatia"
