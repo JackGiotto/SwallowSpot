@@ -76,68 +76,68 @@ self.addEventListener('activate', (event) =>                            // when 
 });
 
 
-// 
-self.addEventListener('message', (event) => 
-{
-    if (event.data.type === 'CHECK_NOTIFICATION') 
-    {
-        checkNotification2();
-    }
-});
+// // 
+// self.addEventListener('message', (event) => 
+// {
+//     if (event.data.type === 'CHECK_NOTIFICATION') 
+//     {
+//         checkNotification2();
+//     }
+// });
 
-self.addEventListener('notificationclick', event => 
-{
-    const notification = event.notification;  
-    notification.close();
-});
+// self.addEventListener('notificationclick', event => 
+// {
+//     const notification = event.notification;  
+//     notification.close();
+// });
   
 
-self.addEventListener('push', function(event)                           // quando si effettua richiesta di notifica da una pagina 
-{
-    const options = 
-    {
-        body: event.data.text(),
-    };
+// self.addEventListener('push', function(event)                           // quando si effettua richiesta di notifica da una pagina 
+// {
+//     const options = 
+//     {
+//         body: event.data.text(),
+//     };
 
-    event.waitUntil                                                     // mantiene attivo il sw finché tutte le promesse vengono mantenute
-    (
-        self.registration.showNotification('Swallowspot', options)      // mostra una notifica
-    );
-});    
+//     event.waitUntil                                                     // mantiene attivo il sw finché tutte le promesse vengono mantenute
+//     (
+//         self.registration.showNotification('Swallowspot', options)      // mostra una notifica
+//     );
+// });    
 
-async function checkNotification2() {
-    console.log('Checking for notifications...');
-    try 
-    {
-        const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
-        if (response.ok) 
-        {
-            const data = await response.json();
-            if (data['hydro'] != 'verde' || data['hydro_geo'] != 'verde' || data['storms']['color_name'] != 'verde')
-            {
-                registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
-                {
-                    body: 'Allerta nella tua zona!'
-                });
-            }
-        } 
-        else 
-        {
-            console.error('Failed to fetch notifications:', response.status);
-        }
-    } 
-    catch (error) 
-    {
-        console.error('Fetch error:', error);
-    }
-}
+// async function checkNotification2() {
+//     console.log('Checking for notifications...');
+//     try 
+//     {
+//         const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
+//         if (response.ok) 
+//         {
+//             const data = await response.json();
+//             if (data['hydro'] != 'verde' || data['hydro_geo'] != 'verde' || data['storms']['color_name'] != 'verde')
+//             {
+//                 registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
+//                 {
+//                     body: 'Allerta nella tua zona!'
+//                 });
+//             }
+//         } 
+//         else 
+//         {
+//             console.error('Failed to fetch notifications:', response.status);
+//         }
+//     } 
+//     catch (error) 
+//     {
+//         console.error('Fetch error:', error);
+//     }
+// }
 
 
-self.addEventListener('sync', function(event) {
-    if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
-      event.waitUntil(checkNotification2()); // Call your function to check for notifications
-    }
-  });
+// self.addEventListener('sync', function(event) {
+//     if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
+//       event.waitUntil(checkNotification2()); // Call your function to check for notifications
+//     }
+//   });
 
   
-setInterval(checkNotification2, 72000 * 1000);      // call the function every 10 seconds
+// setInterval(checkNotification2, 72000 * 1000);      // call the function every 10 seconds
