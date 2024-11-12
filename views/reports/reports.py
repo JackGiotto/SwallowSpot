@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, redirect, url_for, request ,send_f
 from models import db
 import json
 from utils.risks import convert_risk_color, get_query_last_hydro, get_query_hydro, get_query_snow, get_date_last_snow, parse_date_us_it, parse_date_it_us
+import os
+import base64
+from io import BytesIO
 
 reports_bp = Blueprint('reports', __name__, template_folder='templates')
 
@@ -32,7 +35,7 @@ def hydro():
             print(result)
         except Exception as e:
             result = ()
-    
+
     if bool(result):
         print("funziona")
         data = _get_all_bulletin_hydro(date)
@@ -58,8 +61,8 @@ def snow():
             print("error")
             date = None
     else:
-        title = "Ultimo bollettino"    
-    
+        title = "Ultimo bollettino"
+
     if date != None:
         data = _get_all_bulletin_snow(date)
 
@@ -70,7 +73,7 @@ def snow():
 
 @reports_bp.route('/reports.downloadpdfSnow/', methods=['GET','POST'])
 def downloadpdfSnow():
-    
+
     if request.method == 'GET':
         date = request.args.get('date')
         date=date+" 00:00:00"
@@ -81,11 +84,20 @@ def downloadpdfSnow():
                     ORDER BY date DESC
                     LIMIT 1;
                 """
-    
-        pdf_path=db.executeQuery(query)
-        pdf_path=pdf_path[0]['path']
+        date = parse_date_us_it(date)
+        pdf_data=db.executeQuery(query)
+        pdf_data=pdf_data[0]['pdf_data']
+        pdf_data = base64.b64decode(pdf_data)
 
-        return send_file(pdf_path, as_attachment=True)  
+        name = "Bollettino_Neve_" + date + ".pdf"
+        pdf_stream = BytesIO(pdf_data)
+        pdf_stream.seek(0)
+
+        """
+        if (os.getenv("start_path") != "./"):
+            pdf_data = pdf_data.replace("./", os.getenv("start_path"))
+        """
+        return send_file(pdf_data, as_attachment=True, download_name=name)
 
 
 @reports_bp.route('/reports/downloadpdfIdro/', methods=['GET'])
@@ -94,18 +106,22 @@ def downloadpdfIdro():
         date = request.args.get('date')
         date = date +":00"
         date=parse_date_it_us(date)
-    
-        query = f"""SELECT Report.path
+        query = f"""SELECT Report.pdf_data
                     FROM Report
                     WHERE Report.starting_date LIKE '{date}%'
                     ORDER BY starting_date DESC
                     LIMIT 1;
                 """
-        
-        pdf_path=db.executeQuery(query)
-        pdf_path=pdf_path[0]['path']
+        date = parse_date_us_it(date)
+        pdf_data=db.executeQuery(query)
+        pdf_data=pdf_data[0]['pdf_data']
+        pdf_data = base64.b64decode(pdf_data)
 
-        return send_file(pdf_path, as_attachment=True)
+        name = "Bollettino_Idro_" + date + ".pdf"
+        pdf_stream = BytesIO(pdf_data)
+        pdf_stream.seek(0)
+
+        return send_file(pdf_stream, as_attachment=True, download_name=name)
 
 @reports_bp.route('/')
 def reports():
@@ -119,7 +135,7 @@ def _get_all_bulletin_hydro(date = "last"):
     risks = ["idraulico", "idrogeologico", "idrogeologico con temporali"]
     result = {
                 "Vene-A": {
-                    "date": {}, 
+                    "date": {},
                     "risks": {}
                 },
                 "Vene-H": {
@@ -169,7 +185,7 @@ def _get_all_bulletin_hydro(date = "last"):
 def _get_hydro_bulletin(area: str, risk: str, date: str):
     """get the risks of an area from a hydro bulletin
     """
-    
+
     if (date == 'last'):
         query = get_query_last_hydro(area, risk)
     else:
@@ -178,7 +194,7 @@ def _get_hydro_bulletin(area: str, risk: str, date: str):
 
 def _get_all_bulletin_snow(date = "last") -> dict[str, dict[str, str]]:
     """get the risks of every area for a snow bulletin
-    """ 
+    """
 
     areas = ["Alto Agordino", "Medio-basso Agordino", 'Cadore', 'Feltrino-Val Belluna', "Altopiano dei sette comuni"]
     if (date == "last"):
@@ -198,7 +214,7 @@ def _get_all_bulletin_snow(date = "last") -> dict[str, dict[str, str]]:
             return None
         result[area] = bulletin
     return result
-    
+
 
 def _get_snow_bulletin(area: str, date: str) -> list[dict[str,str]]:
     """get the risks of an area from a snow bulletin
