@@ -78,7 +78,7 @@ def downloadpdfSnow():
         date = request.args.get('date')
         date=date+" 00:00:00"
         date=parse_date_it_us(date)
-        query = f"""SELECT Snow_report.path
+        query = f"""SELECT Snow_report.pdf_data
                     FROM Snow_report
                     WHERE Snow_report.date LIKE '{date}%'
                     ORDER BY date DESC
@@ -97,7 +97,7 @@ def downloadpdfSnow():
         if (os.getenv("start_path") != "./"):
             pdf_data = pdf_data.replace("./", os.getenv("start_path"))
         """
-        return send_file(pdf_data, as_attachment=True, download_name=name)
+        return send_file(pdf_stream, as_attachment=True, download_name=name)
 
 
 @reports_bp.route('/reports/downloadpdfIdro/', methods=['GET'])
@@ -227,9 +227,9 @@ def _get_snow_bulletin(area: str, date: str) -> list[dict[str,str]]:
     risks = [{}, {}, {}, {}, {}, {}, {}, {}, {}]
     i=0
     for row in data:
-
         risks[i] = _parse_row_snow(row)
         i += 1
+
     return risks
 
 def _parse_row_snow(row: str) -> dict[str, str]:
