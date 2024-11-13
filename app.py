@@ -3,6 +3,8 @@ from flask_cors import CORS
 from flask_sslify import SSLify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
+from dotenv import load_dotenv
+from utils.wsgi_utils import read_env_file
 import os
 
 
