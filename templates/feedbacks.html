@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="feed-container">
+    <h1>Lascia un <strong class="highlighted">feedback</strong></h1>
+    <h4>per aiutarci a migliorare la tua esperienza!</h4>
+    <div class="feed-in">
+        <div class="feedimage">
+            <i class="fa-solid fa-comments"></i>
+            <i class="fa-regular fa-face-smile"></i>
+            <i class="fa-regular fa-face-frown"></i>
+        </div>
+        
+        <form action="" method="post" class="mt-5" id="feedback">
+            <input type="text" class="form-control" placeholder="Oggetto" name="feedObject" id="feedObject" maxlength="50">
+            <div id="titleCounter"></div>
+            <textarea name="feedDesc" id="message" cols="30" rows="10" class="form-control mt-2" placeholder="Descrivi il problema" maxlength="500" ></textarea>
+            <div id="textCounter"></div>
+            <button type="submit" class="btn btn-success mt-2">Invia feedback</button>
+        </form>
+
+    </div>
+    <div class="success-msg">
+        {{feedback_success}}
+    </div>
+
+</div>
+
+<script>
+    //light/dark mode
+    var all = document.getElementById("feedback");
+    var faces = document.querySelectorAll(".fa-regular");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        all.setAttribute('data-bs-theme', "dark");
+        faces.forEach(function (e) {
+            e.style.color = "#222222";
+        });
+    }
+    else {
+        //light mode
+        all.setAttribute('data-bs-theme', "light");
+        faces.forEach(function (e) {
+            e.style.color = "#EDFCFF";
+        });
+    }
+
+    //title char counter
+    const object = document.getElementById('feedObject');
+    const titleCounter = document.getElementById('titleCounter');
+
+    const maxLength1 = object.getAttribute('maxlength');
+    const currentLength1 = object.value.length;
+    titleCounter.innerHTML = `${currentLength1}/${maxLength1}`;
+
+    object.addEventListener('input', function (e) {
+        const target = e.target;
+
+        // Get the `maxlength` attribute
+        const maxLength = target.getAttribute('maxlength');
+
+        // Count the current number of characters
+        const currentLength = target.value.length;
+
+        titleCounter.innerHTML = `${currentLength}/${maxLength}`;
+    });
+
+    //textarea char counter
+    const message = document.getElementById('message');
+    const textCounter = document.getElementById('textCounter');
+
+    const maxLength2 = message.getAttribute('maxlength');
+    const currentLength2 = message.value.length;
+    textCounter.innerHTML = `${currentLength2}/${maxLength2}`;
+
+    message.addEventListener('input', function (e) {
+        const target = e.target;
+
+        // Get the `maxlength` attribute
+        const maxLength = target.getAttribute('maxlength');
+
+        // Count the current number of characters
+        const currentLength = target.value.length;
+
+        textCounter.innerHTML = `${currentLength}/${maxLength}`;
+    });
+</script>
+
+{% endblock %}

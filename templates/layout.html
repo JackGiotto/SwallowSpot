@@ -10,6 +10,7 @@
     <script src="https://kit.fontawesome.com/64fd56171c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/index.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/cookies.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/animations.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/slider/slider_visual_mode.css') }}>
@@ -21,9 +22,11 @@
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/account/admin.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/search.css') }}>
     <link rel="stylesheet" href={{ url_for('static', filename = 'css/calendar.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename = 'css/feedbacks.css') }}>
     <link rel="manifest" href={{ url_for('static', filename = 'manifest.json') }}>
 </head>
 <body>
+    <div id="navbar-top"></div>
     <!--navbar-->
     <header id="menu">
         <!--trigger menu-->
@@ -165,6 +168,7 @@
                         <a href="https://www.regione.veneto.it/web/protezione-civile/cfd" target="_blank" class="row">Bollettini Protezione Civile</a>
                         <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}" target="_blank" class="row">Informativa sulla privacy</a>
                         <a href="https://app.pallades.it/appbrentalert/#/" target="_blank" class="row">Brentalert</a>
+                        <a href="{{ url_for('feedbacks.feedbacks') }}" class="row">Lascia un feedback</a>
                     </div>
                     <!--created with-->
                     <div class="column">
@@ -179,7 +183,7 @@
         </div>
         <!--social links-->
         <div class="social">
-            <a href="https://www.youtube.com/@itisbassano" target="_blank" id="youtubePresentation" class="mb-3"><i class="fa-brands fa-youtube"></i> La nostra presentazione</a>
+            <a href="{{ url_for('feedbacks.feedbacks') }}" id="feedbacklink" class="btn btn-info btn-lg mb-3"><i class="fa-solid fa-comment"></i> Lascia un feedback</a>
             <h2>Contattaci</h2>
             <div class="social-links">
                 <button id="telegram" onclick="redirectTelegram()"><i class="fa-brands fa-telegram"></i></button>
@@ -239,13 +243,13 @@
         if(localStorage.getItem("choice") == "true")
             block();    
         else
-            document.getElementById("cookies").style.display = "block";    
+            document.getElementById("cookies").style.display = "flex";    
     }
     function block(){ //block the label
         cookies1 = document.getElementById("cookies");
-        cookies1.classList.add("block");
         cookies2 = document.getElementById("customizeCookies");
-        setTimeout(() => { cookies1.remove(); cookies2.remove(); }, 1000);
+        ookies1.remove();
+        cookies2.remove();
     }
     function reject(){
         localStorage.setItem("choice", "true")

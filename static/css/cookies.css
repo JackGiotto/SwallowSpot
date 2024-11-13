@@ -1,0 +1,37 @@
+/*cookies label*/
+
+#cookies {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    /*background-color: #EDFCFFdc;*/
+    background-color: rgba(255, 227, 193, 0.9);
+    padding: 2em;
+    width: 100%;
+    z-index: 4;
+    display: none;
+    color: #212529 !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#cookieButtons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    #cookies {
+        left: 10px;
+        max-width: 100%;
+    }
+}
+
+/*cookies modal*/
+
+#customizeCookies {
+    color: #212529 !important;
+}

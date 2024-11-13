@@ -1,0 +1,60 @@
+.feed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 3rem;
+}
+
+.feed-in {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+#feedObject {
+    font-size: x-large;
+}
+
+#titleCounter, #textCounter {
+    text-align: right;
+}
+
+textarea {
+    resize: none;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    .feed-in i {
+        display: none;
+    }
+}
+
+/*images*/
+
+.feedimage {
+    position: relative;
+}
+
+.feedimage .fa-solid {
+    font-size: 17rem;
+}
+
+.feedimage .fa-regular {
+    color: #EDFCFF;
+    position: absolute;
+}
+
+.fa-face-smile {
+    top: 2.2rem;
+    left: 3.4rem;
+    font-size: 7rem;
+}
+
+.fa-face-frown {
+    bottom: 2.7rem;
+    right: 3.4rem;
+    font-size: 6rem;
+}
