@@ -20,6 +20,10 @@ class Snow:
 		self.path = pdf_path
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
+		if (os.getenv("start_path") != "./"):
+			self.template_path = os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_snow.json"
+		else:
+			self.template_path = "utils/cfd_analyzer/templates/risks_template_snow.json"
 		self._get_bulletin_data()
 
 	def get_data(self) -> dict:
@@ -113,7 +117,7 @@ class Snow:
 	def _get_risks(self, table) -> dict[str, any]:
 		"""get the value associated with every risk
 		"""
-		with open("utils/cfd_analyzer/templates/risks_template_snow.json", "r") as f:
+		with open(self.template_path, "r") as f:
 			RISKS = json.load(f)
 
 
