@@ -41,14 +41,8 @@ INSERT INTO Color (color_name) VALUES       -- Color of every risk
     ('rossa');
 
 INSERT INTO Altitude (height) VALUES        -- height for snow criticalness
-    ('1000'),
-    ('1500'),
-    ('>1500'),
-    ('2000'),
-    ('>2000');
-
-
-
-
-
-
+    ('1000 m'),
+    ('1500 m'),
+    ('>1500 m'),
+    ('2000 m'),
+    ('>2000 m');
