@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
 import os
 
-
 if __name__ == "__main__":
     load_dotenv()
     start_path = "./"
@@ -23,6 +22,8 @@ app.config["MAINTENANCE"] = False
 
 if __name__ == "__main__":
     sslify = SSLify(app)
+
+
 
 
 
@@ -72,5 +73,5 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port=os.getenv("PORT"), ssl_context=('certificate/cert.pem', 'certificate/cert-key.pem'))
+    app.run(debug = True, host="127.0.0.1", port=os.getenv("PORT"))
 

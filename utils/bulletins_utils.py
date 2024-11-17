@@ -39,6 +39,7 @@ def save_bulletin(file, filename = None) -> str:
                         asyncio.run(_hydro_telegram(pdf_class.get_cfd_data()))
                     else:
                         asyncio.run(_snow_telegram(pdf_class.get_cfd_data()))
+                os.remove(file_path)
             except Exception as e:
                 # database error (the report is already added)
                 print(e)

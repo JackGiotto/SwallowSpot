@@ -11,7 +11,8 @@ const URLS_TO_CACHE = [                         // pages to put into the SW cach
 ];
 
 // Install event: loading cache into the application
-self.addEventListener('install', (event) => {
+self.addEventListener('install', (event) =>
+{
     event.waitUntil(                                        // wait until the promise is kept
         caches.open(CACHE_NAME)                             // opens cache
         .then((cache) =>
@@ -27,21 +28,23 @@ self.addEventListener('install', (event) => {
 });
 
 // Fetch event: try the network first, then cache
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) =>
+{
     event.respondWith(
         fetch(event.request)
-        .then((response) => {
+        .then((response) =>
+        {
             if (response && response.status === 200 && response.type === 'basic')       // if the server is online
             {
                 const responseClone = response.clone();                                 // repli
-                caches.open(CACHE_NAME).then((cache) => 
+                caches.open(CACHE_NAME).then((cache) =>
                 {
                     cache.put(event.request, responseClone);
                 });
             }
             return response;
         })
-        .catch(() => 
+        .catch(() =>
         {
             return caches.match(event.request).then((cachedResponse) =>                 // If the network is unavailable, try to get it from the cache
             {
@@ -50,21 +53,21 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
-  
+
 // Activate event: delete old caches
 self.addEventListener('activate', (event) =>                            // when the service worker is activated
 {
-    const cacheWhitelist = [CACHE_NAME];                                // 
-    event.waitUntil(                                                    // 
+    const cacheWhitelist = [CACHE_NAME];                                //
+    event.waitUntil(                                                    //
         caches.keys()
-        .then((cacheNames) => 
+        .then((cacheNames) =>
         {
-            return Promise.all(                                         // 
-                cacheNames.map((cacheName) =>                           
+            return Promise.all(                                         //
+                cacheNames.map((cacheName) =>
                 {
-                    if (cacheWhitelist.indexOf(cacheName) === -1)       // 
+                    if (cacheWhitelist.indexOf(cacheName) === -1)       //
                     {
-                        return caches.delete(cacheName);                // deletes the  
+                        return caches.delete(cacheName);                // deletes the
                     }
                 })
             );
@@ -73,67 +76,68 @@ self.addEventListener('activate', (event) =>                            // when 
 });
 
 
-// 
-self.addEventListener('message', (event) => 
-{
-    if (event.data.type === 'CHECK_NOTIFICATION') 
-    {
-        checkNotification2();
-    }
-});
+// //
+// self.addEventListener('message', (event) =>
+// {
+//     if (event.data.type === 'CHECK_NOTIFICATION')
+//     {
+//         checkNotification2();
+//     }
+// });
 
-self.addEventListener('notificationclick', event => 
-{
-    const notification = event.notification;  
-    notification.close();
-});
-  
+// self.addEventListener('notificationclick', event =>
+// {
+//     const notification = event.notification;
+//     notification.close();
+// });
 
-self.addEventListener('push', function(event)                           // quando si effettua richiesta di notifica da una pagina 
-{
-    const options = 
-    {
-        body: event.data.text(),
-    };
 
-    event.waitUntil                                                     // mantiene attivo il sw finché tutte le promesse vengono mantenute
-    (
-        self.registration.showNotification('Swallowspot', options)      // mostra una notifica
-    );
-});    
+// self.addEventListener('push', function(event)                           // quando si effettua richiesta di notifica da una pagina
+// {
+//     const options =
+//     {
+//         body: event.data.text(),
+//     };
 
-async function checkNotification2() {
-    console.log('Checking for notifications...');
-    try 
-    {
-        const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
-        if (response.ok) 
-        {
-            const data = await response.json();
-            if (data['hydro'] !== 'verde' || data['hydro_geo'] !== 'verde' || data['storms']['color_name'] !== 'verde')
-            {
-                registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
-                {
-                    body: 'Allerta nella tua zona!'
-                });
-            }
-        } 
-        else 
-        {
-            console.error('Failed to fetch notifications:', response.status);
-        }
-    } 
-    catch (error) 
-    {
-        console.error('Fetch error:', error);
-    }
-}
+//     event.waitUntil                                                     // mantiene attivo il sw finché tutte le promesse vengono mantenute
+//     (
+//         self.registration.showNotification('Swallowspot', options)      // mostra una notifica
+//     );
+// });
 
-self.addEventListener('sync', function(event) {
-    if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
-      event.waitUntil(checkNotification2()); // Call your function to check for notifications
-    }
-  });
+// async function checkNotification2() {
+//     console.log('Checking for notifications...');
+//     try
+//     {
+//         const response = await fetch(NOTIFICATION_URL, { credentials: 'include' });
+//         if (response.ok)
+//         {
+//             const data = await response.json();
+//             if (data['hydro'] != 'verde' || data['hydro_geo'] != 'verde' || data['storms']['color_name'] != 'verde')
+//             {
+//                 registration.showNotification('Notifica push',          // mostra la notifica push e il suo contenuto
+//                 {
+//                     body: 'Allerta nella tua zona!'
+//                 });
+//             }
+//         }
+//         else
+//         {
+//             console.error('Failed to fetch notifications:', response.status);
+//         }
+//     }
+//     catch (error)
+//     {
+//         console.error('Fetch error:', error);
+//     }
+// }
 
-  
-setInterval(checkNotification2, 72000 * 1000);      // call the function every 10 seconds
+
+// self.addEventListener('sync', function(event) {
+//     if (event.tag === 'syncNotification') { // Check if this is the sync you're interested in
+//       event.waitUntil(checkNotification2()); // Call your function to check for notifications
+//     }
+//   });
+
+
+// setInterval(checkNotification2, 72000 * 1000);      // call the function every 10 seconds

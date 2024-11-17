@@ -3,7 +3,7 @@ import json
 from utils.get_data import convert_date
 from models import db
 import os
-import PyPDF2
+import base64
 
 class Snow:
 
@@ -20,6 +20,10 @@ class Snow:
 		self.path = pdf_path
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
+		if (os.getenv("start_path") != "./"):
+			self.template_path = os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_snow.json"
+		else:
+			self.template_path = "utils/cfd_analyzer/templates/risks_template_snow.json"
 		self._get_bulletin_data()
 
 	def get_data(self) -> dict:
@@ -43,7 +47,7 @@ class Snow:
 		for risk_query in queries["risks_queries"]:
 			# Execute the risk query
 			risk_query[1] = risk_query[1].replace("@ID_snow_report", str(report_id))
-			
+
 			id_crit = db.executeTransaction(risk_query[0:3], select=True)["new_id"]
 
 			for i in range(4, 9, 2):
@@ -53,10 +57,16 @@ class Snow:
 
 	def _get_queries(self) -> dict:
 		queries = {"bulletin_query": "", "risks_queries": []}
+		with open(self.path, "rb") as f:
+			pdf_data = base64.b64encode(f.read()).decode('utf-8')
+			# pdf_data = f.read()
+
+
 
 		queries["bulletin_query"] = f'''
-			INSERT INTO Snow_report(date, path) VALUES
-			("{self.data["date"]}", "{self.path}");
+
+			INSERT INTO Snow_report(date, pdf_data) VALUES
+			("{self.data["date"]}", "{pdf_data}");
 		'''
 		for key, values_list in self.data["risks"].items():
 			area_name = key
@@ -71,10 +81,9 @@ class Snow:
 							f"""INSERT INTO Snow_criticalness(date, percentage, ID_area, ID_snow_report) VALUES
 							('{date_criticalness}', '{percentage}', @ID_area,  @ID_snow_report);""",
 							f"""SELECT LAST_INSERT_ID() AS new_id FROM Snow_criticalness ;""",
-							
 							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{first[0]}');",
 							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
-							(@ID_snow_issue, @ID_altitude, '{first[1]}');""",	
+							(@ID_snow_issue, @ID_altitude, '{first[1]}');""",
 							f"SET @ID_altitude := (SELECT ID_altitude FROM Altitude WHERE height = '{second[0]}');",
 							f"""INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
 							(@ID_snow_issue, @ID_altitude, '{second[1]}');""",
@@ -89,7 +98,7 @@ class Snow:
 		print("Analyzing Snow bulletin, path:", self.path)
 
 		self.data["date"] = self._get_date(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
-		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df)) 
+		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_date(self, table) -> dict[str, str]:
@@ -101,16 +110,16 @@ class Snow:
 			if row != "" and row != "Data":
 				date = row
 				break
-		
+
 		date = self._parse_date(date)
 		return date
 
 	def _get_risks(self, table) -> dict[str, any]:
 		"""get the value associated with every risk
 		"""
-		with open(os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_snow.json", "r") as f:
+		with open(self.template_path, "r") as f:
 			RISKS = json.load(f)
-		
+
 
 		column_date = table[RISKS["rows"]["date"]]
 		column_percent = table[RISKS["rows"]["%"]]
@@ -126,16 +135,16 @@ class Snow:
 		template = self._get_column_data_value(column_third_value, template, 2)
 
 		return template
-	
+
 		# debug
 		with open("test_snow.json", "w") as f:
 			json.dump(template, f, indent="\t")
-				
+
 	def _get_column_data(self, column, template, searching, position) -> dict[str, any]:
 		"""get the data of a single bulletin's column (date or %)
 		"""
 		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore", "Feltrino-Val Belluna", "Altopiano dei sette comuni"]
-		
+
 		i = 0
 		j = 0
 		for row in column:
@@ -174,18 +183,18 @@ class Snow:
 					i = 0
 					j = j+1
 		return template
-	
+
 	def _parse_date(self, date:str) -> str:
 		date = date.replace("/", "-")
 		date = convert_date(date) + " 00:00:00"
 		return date
-	
+
 	def _get_sub_table(self, table):
 		i = 0
 		for row in table[1]:
 			if row == "Data":
 				submatrix = table[i:]
-				return submatrix			
+				return submatrix
 			i += 1
 # debug
 #snow = Snow("./test/data/test_snow.pdf")

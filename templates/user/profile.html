@@ -141,16 +141,19 @@
 <script src="{{url_for('static', filename = 'js/search_bar.js')}}"></script>
 
 <script>
-    /*autocomplete list size*/
+    getAutoCompleteData();
+
+    // Set autocomplete list size
     function setAutocompleteListWidth() {
         var inputWidth = document.getElementById('bar').offsetWidth;
         document.getElementById('autocomplete-list').style.width = inputWidth + 'px';
     }
-    
+
+
     document.getElementById('bar').addEventListener('input', setAutocompleteListWidth);
     window.addEventListener('resize', setAutocompleteListWidth);
-    
-    //show password (it has to stay here)
+
+    // Show password toggle
     $(document).ready(function () {
         $('#showPasswordToggle').on('click', function () {
             var passwordInput = $('#passwordDelete');
@@ -160,33 +163,72 @@
         });
     });
 
-    //check if identical passwords
+    // Light/Dark mode
+    var searchbar = document.getElementById("searchbar");
+    var autocomplete = document.getElementById("autocomplete-list");
+    var requirements = document.getElementById("requirements");
+    var triangle = document.getElementById("triangle");
+
+    if(localStorage.getItem("mode") == "dark") {
+        // Dark mode
+        searchbar.setAttribute('data-bs-theme', "dark");
+        requirements.setAttribute('data-bs-theme', "dark");
+        autocomplete.style.backgroundColor = "#212529";
+        triangle.style.borderBottomColor = "#212529";
+    } else {
+        // Light mode
+        searchbar.setAttribute('data-bs-theme', "light");
+        requirements.setAttribute('data-bs-theme', "light");
+        autocomplete.style.backgroundColor = "white";
+        triangle.style.borderBottomColor = "white";
+    }
+
+    // Check if identical passwords
     function check_password() {
-        psw1 = $("#psw1").val();
-        psw2 = $("#psw2").val();
+        var psw1 = $("#textPassword").val();
+        var psw2 = $("#textPassword2").val();
         $("#confirmPsw2").empty();
-        html_block = "";
+        var html_block = "";
         if (psw1 === psw2 && psw1 != '') {
             html_block = '<i class="fa-solid fa-check"></i>';
-            $("#psw-submit").prop("type", "submit");
         } else {
             html_block = '<i class="fa-solid fa-xmark"></i>';
-            $("#psw-submit").prop("type", "button");
         }
-        $("#confirmPsw2").append(html_block)
+        $("#confirmPsw2").append(html_block);
     }
+
+    // Enable create account button
+    document.addEventListener('DOMContentLoaded', function() {
+        var input1 = document.getElementById('username');
+        var input2 = document.getElementById('textPassword');
+        var input3 = document.getElementById('textPassword2');
+        var input4 = document.getElementById('bar');
+        var button = document.getElementById('signup-submit');
     
-    //dark / light mode
-    if(localStorage.getItem("mode") == "dark") {        //check the visual mode state from the cookie variable
+        function controlInput() {
+            if (input1.value.trim() !== '' && input2.value.trim() !== '' && input3.value.trim() !== '' && input4.value.trim() !== '' && input2.value == input3.value) {
+                button.type = "submit";
+            } else {
+                button.type = "button";
+            }
+        }
+    
+        input1.addEventListener('input', controlInput);
+        input2.addEventListener('input', controlInput);
+        input3.addEventListener('input', controlInput);
+        input4.addEventListener('input', controlInput);
+    });
+
+    // Dark / Light mode toggle
+    if(localStorage.getItem("mode") == "dark") {
         document.getElementById("toggle").checked = false;
         changeMode();
-    }
-    else {
+    } else {
         document.getElementById("toggle").checked = true;
     }
     
-    document.getElementById("toggle").addEventListener('change', changeMode); //function to change styles
-    
+    document.getElementById("toggle").addEventListener('change', changeMode);
+
     function changeMode() {
         var status = document.getElementById("modeStatus");
         var body = document.querySelector("body");
@@ -199,7 +241,7 @@
         
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
-            //light mode
+            // Light mode
             status.innerHTML = "Light";
             body.style.backgroundColor = "#EDFCFF";
             body.style.color = "#212529";
@@ -209,12 +251,11 @@
             });
             requirements.setAttribute('data-bs-theme', "light");
             triangle.style.borderBottomColor = "white";
-            searchbar.setAttribute('data-bs-theme', "white");
-            autocomplete.style.backgroundColor = "#white";
-        }
-        else {
+            searchbar.setAttribute('data-bs-theme', "light");
+            autocomplete.style.backgroundColor = "white";
+        } else {
             localStorage.setItem("mode", "dark");
-            //dark mode
+            // Dark mode
             status.innerHTML = "Dark";
             body.style.backgroundColor = "#222222";
             body.style.color = "white";

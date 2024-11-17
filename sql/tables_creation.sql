@@ -40,7 +40,8 @@ CREATE TABLE Report     -- list of the bulletins
     ID_report INT AUTO_INCREMENT,                       -- unique ID for every bulletin
     starting_date DATETIME NOT NULL UNIQUE,             -- date of start of validity
     ending_date DATETIME NOT NULL,                      -- date of finish of validity
-    path VARCHAR(70) NOT NULL UNIQUE,                   -- file path into the server
+    -- path VARCHAR(70) NOT NULL UNIQUE,                   -- file path into the server
+    pdf_data LONGBLOB,
     CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- PK constraint
 );
 
@@ -63,7 +64,8 @@ CREATE TABLE Snow_report        -- list of the bulletins for snow event
 (
     ID_snow_report INT AUTO_INCREMENT,                          -- unique ID for every snow bulletinused from user to sign up in site
     date DATETIME NOT NULL UNIQUE,                              -- data from which the report is valid
-    path VARCHAR(70) NOT NULL UNIQUE,                           -- path of the file into the server
+    -- path VARCHAR(70) NOT NULL UNIQUE,                           -- path of the file into the server
+    pdf_data LONGBLOB,
     CONSTRAINT pk_snow_report PRIMARY KEY (ID_snow_report)      -- PK constraint
 );
 
