@@ -40,7 +40,7 @@ CREATE TABLE Report     -- list of the bulletins
     ID_report INT AUTO_INCREMENT,                       -- unique ID for every bulletin
     starting_date DATETIME NOT NULL UNIQUE,             -- date of start of validity
     ending_date DATETIME NOT NULL,                      -- date of finish of validity
-    --path VARCHAR(70) NOT NULL UNIQUE,                   -- file path into the server
+    -- path VARCHAR(70) NOT NULL UNIQUE,                   -- file path into the server
     pdf_data LONGBLOB,
     CONSTRAINT pk_report PRIMARY KEY (ID_report)        -- PK constraint
 );

@@ -7,7 +7,7 @@ if project_home not in sys.path:
     sys.path.insert(0, project_home)
 
 # Virtual enviornement
-sys.path.insert(0,"/var/www/swallowspot.it/SwallowSpot/venv/lib/python3.11/site-packages")
+sys.path.insert(0,"/var/www/swallowspot.it/SwallowSpot/venv/lib/python3.12/site-packages")
 
 # Import your Flask app
 from app import app as application
