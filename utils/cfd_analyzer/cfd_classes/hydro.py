@@ -4,6 +4,8 @@ from utils.get_data import convert_date
 from models import db
 import os
 import base64
+import os
+import base64
 
 class Hydro:
 
@@ -24,6 +26,10 @@ class Hydro:
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
 		self.table_number = table_number
+		if (os.getenv("start_path") != "./"):
+			self.template_path = os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_hydro.json"
+		else:
+			self.template_path = "utils/cfd_analyzer/templates/risks_template_hydro.json"
 		self._get_bulletin_data()
 
 	def get_data(self) -> dict:
@@ -73,7 +79,7 @@ class Hydro:
 					INSERT INTO Report(starting_date, ending_date, pdf_data) VALUES
 					("{self.data["date"]["starting_date"]}", "{self.data["date"]["ending_date"]}", "{pdf_data}");
 				'''
-		print(queries["bulletin_query"])
+		#print(queries["bulletin_query"])
 		for key, values in self.data["risks"].items():
 			area_name = key
 			risk_name = ""
@@ -116,7 +122,7 @@ class Hydro:
 		"""
 
 		# risks template for hydro
-		with open(os.getenv("start_path") + "utils/cfd_analyzer/templates/risks_template_hydro.json", "r") as f:
+		with open(self.template_path, "r") as f:
 			RISKS = json.load(f)
 
 		template = RISKS["risks_template"]
