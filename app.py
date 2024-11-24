@@ -1,6 +1,6 @@
 from flask import Flask, make_response, send_from_directory, url_for, render_template, abort, session, request, redirect
 from flask_cors import CORS
-from flask_sslify import SSLify
+from flask_minify import minify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 from dotenv import load_dotenv
@@ -22,11 +22,6 @@ app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
 app.config["MAINTENANCE"] = (os.getenv("MAINTENANCE") == "True")
 
-if __name__ == "__main__":
-    sslify = SSLify(app)
-
-
-
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = os.getenv("SECRET")
 app.register_blueprint(auth_bp, url_prefix='/{}'.format(auth_bp.name))
@@ -36,6 +31,7 @@ app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
 
 
+minify(app=app, html=True, js=True, cssless=True)
 CORS(app, supports_credentials=True)  # Enable CORS with credentials support
 
 @app.before_request

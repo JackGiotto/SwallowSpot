@@ -20,7 +20,6 @@ def user():
         if request.method == "GET":
             return render_template("user/profile.html",  username=session["username"], user_perms=id_role, show_button=show_button)
 
-
         elif request.method == "POST":
             if "new_username" in request.form: # username change
                 new_username = request.form["new_username"]
@@ -71,7 +70,9 @@ def user():
                     username = session["username"]
                     session.clear()
                     db.executeQuery("DELETE FROM `User` WHERE `username` = '"+str(username)+"'")
-                    return redirect(url_for("home.home"))
+                    resp = make_response(redirect(url_for("home.home")))
+                    resp.delete_cookie("swsp_remember")
+                    return resp
                 else:
                     return render_template("user/profile.html", msgpsw="Errore: password non corretta", username = session["username"], show_button=show_button)
 
