@@ -5,6 +5,7 @@ from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp
 from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
+from utils.cookies_utils import check_permanent_session, add_permanent_cookie
 import os
 
 
@@ -38,22 +39,39 @@ app.register_blueprint(info_bp)
 CORS(app, supports_credentials=True)  # Enable CORS with credentials support
 
 @app.before_request
+def permanent_session_control():
+    if "username" not in session:
+        if "swsp_remember" in request.cookies:
+            if check_permanent_session() == -1:
+                resp = make_response(redirect(url_for("home.home")))
+                resp.delete_cookie("swsp_remember")
+                return resp
+
+@app.before_request
 def check_under_maintenance():
     if app.config["MAINTENANCE"] and not ('superadmin' in session) and ('snake' not in request.path) and ('login' not in request.path):
         return render_template('maintenance.html')
+
+@app.after_request
+def add_cookie(response):
+    if "swsp_remember" in request.cookies:
+        return add_permanent_cookie(response)
+    else:
+        return response
+
 
 @app.route('/start_maintenance', methods=['POST'])
 def start_maintenance():
     if 'superadmin' in session:
         print("starting maintenance")
         app.config["MAINTENANCE"] = True
-        print(app.config["MAINTENANCE"])
+        #print(app.config["MAINTENANCE"])
         return "started", 200
 
 @app.route('/end_maintenance', methods=['POST'])
 def end_maintenance():
     if 'superadmin' in session:
-        print("starting maintenance")
+        print("ending maintenance")
         app.config["MAINTENANCE"] = False
         return "ended", 200
 

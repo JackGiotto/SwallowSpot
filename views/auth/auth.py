@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, session, redirect, url_for, current_app, make_response
 from models import db
 from utils.get_data import get_cities
 from utils.password import hash_password, check_password
+from utils.cookies_utils import add_permanent_cookie
 from datetime import timedelta
 
 
@@ -16,7 +17,6 @@ auth_bp = Blueprint('auth', __name__, template_folder='templates')
 def login():
     if request.method == "GET":
         if "username" not in session:
-            # the user is not logged
             return render_template("auth/login.html")
         else:
             # the user is logged
@@ -36,13 +36,16 @@ def login():
             session["username"] = username
             sql = "SELECT ID_role FROM User WHERE username = '" + username + "'"
             result = db.executeQuery(sql)[0]["ID_role"]
+            resp = make_response(redirect(url_for("home.home")))
             if (result == 3):
                 session["superadmin"] = 1
             if ("remember" in request.form):
-                current_app.permanent_session_lifetime = timedelta(days = LONGER_SESSION_DURATION)
+                current_app.permanent_session_lifetime = timedelta(hours = BASE_SESSION_DURATION)
+                resp = add_permanent_cookie(resp)
             else:
                 current_app.permanent_session_lifetime = timedelta(hours = BASE_SESSION_DURATION)
-            return redirect(url_for("home.home"))
+
+            return resp
         else:
             # username does not exist or password is not correct =
             return render_template("auth/login.html", msg="Errore: Credenziali non corrette")
@@ -53,7 +56,6 @@ def login():
 def signup():
     if request.method == "GET":
         if "username" not in session:
-            # the user is not logged
             return render_template("auth/signup.html")
         else:
             # the user is logged

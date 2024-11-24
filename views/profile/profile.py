@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, session, request, url_for, current_app
+from flask import Blueprint, render_template, redirect, session, request, url_for, current_app, make_response
 import json
 from models import db
 from utils.password import hash_password, check_password
@@ -82,7 +82,10 @@ def user():
 @profile_bp.route('/profile/logout/', methods=['POST'])
 def logout():
     session.clear()
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    resp = make_response(json.dumps({'success': True}))
+    resp.content_type = 'application/json'
+    resp.delete_cookie('swsp_remember')
+    return resp, 200
 
 @profile_bp.route('/profile/admin/', methods=['GET'])
 def admin():
