@@ -7,7 +7,13 @@ User=swallowspot
 Group=swallowspot
 WorkingDirectory=/var/www/swallowspot.it/SwallowSpot/
 ExecStart=/var/www/swallowspot.it/SwallowSpot/venv/bin/python /var/www/swallowspot.it/SwallowSpot/mail_telegram.py
-Restart=always
+Restart=on-failure
+RestartSec=5
+
+# maybe to change into a custom log
+StandardOutput=journal
+# maybe to change into a custom log
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
