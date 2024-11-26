@@ -13,9 +13,9 @@ allowed_senders = {
 }
 
 #check sender function
-def check_sender(msg):    
+def check_sender(msg):
     sender = msg.get('From', '')
-    
+
     return sender in allowed_senders['allowed_senders']
 
 def emails_fetch(mail):
@@ -29,11 +29,11 @@ def emails_fetch(mail):
     #list the msgs indexed
     id_list= mail_ids.split()
 
-    #for every id in mailbox fetch the relative data 
+    #for every id in mailbox fetch the relative data
     for num in id_list:
         status, data = mail.fetch(num, '(RFC822)')#std who define the format of mails for fetching to IMAP server
         raw_email = data[0][1]
-     
+
         # conversion form byte inconsistent data to email obj
         msg = email.message_from_bytes(raw_email)
 
@@ -44,7 +44,7 @@ def emails_fetch(mail):
             subject = msg['Subject']
             body = None
             pdf = None
-            
+
             if msg.is_multipart():
                 for part in msg.walk():
                     content_type = part.get_content_type()
@@ -63,16 +63,16 @@ def emails_fetch(mail):
             else:
                 body = msg.get_payload(decode=True).decode()
             # sign the current mail as deletable
-            mail.store(num, '+FLAGS', '\Deleted')
-        
+            # mail.store(num, '+FLAGS', '\Deleted')
+
 
         # deletes mails from not truster users (comment those lines to keep the mails of not trusted users)
-        else:
-            mail.store(num, '+FLAGS', '\Deleted')
+        #else:
+            #mail.store(num, '+FLAGS', '\Deleted')
 
         # delete the mails that has been signed
-        mail.expunge()
-    
+        #mail.expunge()
+
 def get_emails():
     MAIL = os.getenv("MAIL")
     __PASSWORD = os.getenv("MAILPASSWORD")
