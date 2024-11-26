@@ -16,7 +16,7 @@ def hydro():
 
     date = request.args['date']
     data = None
-    print("data", date)
+    #print("data", date)
     if date == "last":
         title = "Ultimo bollettino"
         result = "0"
@@ -37,7 +37,7 @@ def hydro():
             result = ()
 
     if bool(result):
-        print("funziona")
+        #print("funziona")
         data = _get_all_bulletin_hydro(date)
 
     if data == None:
