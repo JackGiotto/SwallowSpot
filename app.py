@@ -8,19 +8,20 @@ from utils.wsgi_utils import read_env_file
 from utils.cookies_utils import check_permanent_session, add_permanent_cookie
 import os
 
-
 if __name__ == "__main__":
     load_dotenv()
     start_path = "./"
 else:
-    start_path = "/var/www/swallowspot.it/SwallowSpot/"
+    start_path = "/home/maggiottobackend/SwallowSpot/"
     read_env_file(start_path + ".env")
 
 os.environ["start_path"] = start_path
 
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
-app.config["MAINTENANCE"] = (os.getenv("MAINTENANCE") == "True")
+app.config["MAINTENANCE"] = False
+
+
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = os.getenv("SECRET")
@@ -74,7 +75,7 @@ def end_maintenance():
 @app.route('/service_worker.js')
 def sw():
     response=make_response(
-                     send_from_directory("./static", "service_worker.js"))
+                     send_from_directory(start_path + "static", "service_worker.js"))
     #change the content header file. Can also omit; flask will handle correctly.
     response.headers['Content-Type'] = 'application/javascript'
     return response
