@@ -58,7 +58,7 @@ def end_maintenance():
 @app.route('/service_worker.js')
 def sw():
     response=make_response(
-                     send_from_directory("./static", "service_worker.js"))
+                     send_from_directory(start_path + "static", "service_worker.js"))
     #change the content header file. Can also omit; flask will handle correctly.
     response.headers['Content-Type'] = 'application/javascript'
     return response
