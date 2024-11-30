@@ -18,7 +18,7 @@ os.environ["start_path"] = start_path
 
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
-app.config["MAINTENANCE"] = False
+app.config["MAINTENANCE"] = os.getenv("MAINTENANCE") == "True"
 
 if __name__ == "__main__":
     sslify = SSLify(app)
