@@ -106,25 +106,27 @@
         Scorrendo in basso nelle medesime pagine &egrave; presente un pulsante che offre la possibilit&agrave; di <strong>scaricare</strong> il PDF del bollettino visualizzato.
     </p>
     <!--admin description-->
-    <div id="admin-description">
-        <h2 class="mt-4">Informazioni per gli <strong class="highlighted">Amministratori</strong></h2>
-        <p>All'interno dell'apposita pagina del profilo per gli <strong>Admin</strong> sono presenti funzionalit&agrave; aggiuntive, quali:</p>
-        <ul>
-            <li>
-                Caricare <u>manualmente</u> un PDF di un bollettino per inserirlo nel database.
-            </li>
-            <br>
-            <li>
-                Collegare il proprio <strong>account Telegram + un gruppo</strong> della stessa piattaforma per ricevere pi&ugrave; prontamente le <u>notifiche</u> sulle varie allerte meteo.
-                <br><br>
-                <strong>Nota</strong>: il collegamento al gruppo &egrave; <u>necessario</u> per ricevere notifiche, dato che Telegram <strong>non permette</strong> ai Bot l'invio di messaggi diretti all'utente per prevenire lo <strong>spam</strong>.
-            </li>
-            <br>
-            <li>
-                Creare un <u>nuovo account amministratore</u> (che pu&ograve; essere assegnato ad un eventuale nuovo operatore che provveder&agrave; poi a modificare le proprie credenziali a piacimento) o <u>aggiungere agli amministratori</u> un account <u>gi&agrave; esistente</u> (nel caso in cui qualche operatore abbia gi&agrave; provveduto alla creazione di un account personale).
-            </li>
-        </ul>
-    </div>
+    {% if show_admin %}
+        <div id="admin-description">
+            <h2 class="mt-4">Informazioni per gli <strong class="highlighted">Amministratori</strong></h2>
+            <p>All'interno dell'apposita pagina del profilo per gli <strong>Admin</strong> sono presenti funzionalit&agrave; aggiuntive, quali:</p>
+            <ul>
+                <li>
+                    Caricare <u>manualmente</u> un PDF di un bollettino per inserirlo nel database.
+                </li>
+                <br>
+                <li>
+                    Collegare il proprio <strong>account Telegram + un gruppo</strong> della stessa piattaforma per ricevere pi&ugrave; prontamente le <u>notifiche</u> sulle varie allerte meteo.
+                    <br><br>
+                    <strong>Nota</strong>: il collegamento al gruppo &egrave; <u>necessario</u> per ricevere notifiche, dato che Telegram <strong>non permette</strong> ai Bot l'invio di messaggi diretti all'utente per prevenire lo <strong>spam</strong>.
+                </li>
+                <br>
+                <li>
+                    Creare un <u>nuovo account amministratore</u> (che pu&ograve; essere assegnato ad un eventuale nuovo operatore che provveder&agrave; poi a modificare le proprie credenziali a piacimento) o <u>aggiungere agli amministratori</u> un account <u>gi&agrave; esistente</u> (nel caso in cui qualche operatore abbia gi&agrave; provveduto alla creazione di un account personale).
+                </li>
+            </ul>
+        </div>
+    {% endif %}
 </div>
 
 {% endblock %}
