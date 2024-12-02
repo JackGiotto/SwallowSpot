@@ -9,27 +9,29 @@ allowed_senders = {
     "allowed_senders": [
         "marco.stefani2005@gmail.com",
         "maggiotto.05@gmail.com",
+        "cmt.meteoveneto@arpa.veneto.it",
+        "info@aribassano.it"
     ]
 }
 
-#check sender function
+# check sender function
 def check_sender(msg):
     sender = msg.get('From', '')
 
     return sender in allowed_senders['allowed_senders']
 
 def emails_fetch(mail):
-    #select the mail's field where mails arrives
+    # select the mail's field where mails arrives
     mail.select("inbox")
 
-    #indexes all the msgs in the inbox
+    # indexes all the msgs in the inbox
     status, data = mail.search(None, 'ALL')
     mail_ids = data[0]
 
-    #list the msgs indexed
+    # list the msgs indexed
     id_list= mail_ids.split()
 
-    #for every id in mailbox fetch the relative data
+    # for every id in mailbox fetch the relative data
     for num in id_list:
         status, data = mail.fetch(num, '(RFC822)')#std who define the format of mails for fetching to IMAP server
         raw_email = data[0][1]
@@ -81,7 +83,7 @@ def get_emails():
 
 
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-    #connection to imap server
+    # connection to imap server
     mail.login(MAIL, __PASSWORD)
     emails_fetch(mail)
 
