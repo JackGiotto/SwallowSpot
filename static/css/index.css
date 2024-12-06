@@ -15,7 +15,17 @@ body {
 #navbar-top {
     background-color: #00283Bdd;
     width: 100%;
-    height: 10rem;
+    height: 15rem;
+    /*box-shadow: 0 0 8px 8px #00283b22 inset;*/
+}
+
+#navbar-top img {
+    opacity: 0.5;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    width: 24rem;
+    margin-left: 0;
+    object-position: 0 0;
 }
 
 header {
@@ -27,20 +37,8 @@ header {
     display: flex;
     gap: 2%;
     z-index: 2;
+    box-shadow: 0 -8px 8px 4px #00283b22;
 }
-
-/*header div{
-    display: flex;
-    /*margin: 0 10% 0 10%;
-    background-color: rgba(0, 40, 59, 0.97);
-    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
-    /*background-color: rgba(167, 199, 224, 0.8);*/
-    /*border: 2px solid #EDFCFF;*/
-/*    background-color: #59a4bccc;
-    border-radius: 20px;
-    padding: 5px 5px 0 5px;
-    filter: drop-shadow(0 5px 0px #00283B);
-}*/
 
 #menu {
     background-color: #00283Bdd;
@@ -52,6 +50,10 @@ header div{
 }
 
 @media screen and (max-width: 767px) { /*phone*/
+    #navbar-top img {
+        margin-left: 0;
+    }
+
     header {
         padding: 1vw;
     }
@@ -71,11 +73,27 @@ header div{
     color: white;
 }
 
+.nav-sides a:hover {
+    animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 /*central links*/
 
 #links {
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    /*justify-content: space-evenly;*/
     align-items: center;
     width: 100%;
 }
@@ -86,8 +104,10 @@ header #links a {
     float: left;
     color: white;
     text-decoration: none;
-    border-radius: 1vw;
+    border-radius: 1vw 1vw 0 0;
     /*background-color: rgba(0, 102, 124, 0.3);*/
+    width: 100%;
+    text-align: center;
 }
 
 header #links a:hover {
@@ -148,12 +168,12 @@ header #links a:hover {
 /*container for different pages' layouts*/
 
 .content {
-    margin: 10rem 0 7rem;
+    margin: 2rem 0 7rem;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
     .content {
-        margin-top: 6rem;
+        margin-top: 2rem;
     }
 }
 
@@ -177,7 +197,7 @@ footer {
     /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
     gap: 2vw;
-    z-index: 3;
+    /*z-index: 2;*/
 }
 
 .footer-in {
@@ -285,12 +305,12 @@ footer img {
     background-color: #1E94D2;
 }
 
-#facebook {
-    border-bottom-color: #325BFE;
+#github {
+    border-bottom-color: #000000;
 }
 
-#facebook::after {
-    background-color: #325BFE;
+#github::after {
+    background-color: #000000;
 }
 
 #mail {

@@ -49,6 +49,56 @@
     <br>
     <span class="circle purple"></span>
     <p class="mt-2"><strong style="color: purple;">Viola (Allarme)</strong>: se lo vedete siete autorizzati ad andare in panico.</p>
+    <!--list of provinces-->
+    <h2 class="mt-4">Province appartenenti alle zone regionali (VENE)</h2>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <ul>
+                    <li>
+                        <strong>VENE-A</strong>: Belluno (BL)
+                    </li>
+                    <li>
+                        <strong>VENE-H</strong>: Belluno (BL), Treviso (TV)
+                    </li>
+                    <li>
+                        <strong>VENE-B</strong>: Vicenza (VI), Belluno (BL), Treviso (TV), Verona (VR)
+                    </li>
+                    <li>
+                        <strong>VENE-C</strong>: Verona (VR)
+                    </li>
+                    <li>
+                        <strong>VENE-F</strong>: Rovigo (RO), Verona (VR)
+                    </li>
+                    <li>
+                        <strong>VENE-E</strong>: Padova (PD), Vicenza (VI), Verona (VR), Venezia (VE), Treviso (TV)
+                    </li>
+                    <li>
+                        <strong>VENE-F</strong>: Venezia (VE), Treviso (TV), Padova (PD)
+                    </li>
+                    <li>
+                        <strong>VENE-G</strong>: Venezia (VE), Treviso (TV)
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <!--<iframe src="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" frameborder="0" width="500" height="500"></iframe>-->
+                <a href="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" target="_blank">
+                    <img src="{{ url_for('static', filename='informatives/alert_zone.png') }}" alt="zone veneto">
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    <!--notes-->
+    <p>
+        <strong>Nota</strong>: Le varie zone non seguono i confini precisi di ogni provincia, perci&ograve; alcune di queste compaiono pi&ugrave; volte nella legenda.
+        <br>
+        I <u>bacini idrografici di riferimento</u> sono scritti direttamente sotto ogni bollettino nella pagina apposita.
+        <br><br>
+        Per quanto riguarda i comuni interessati per i <u>bollettini sulle nevicate</u>, sono tutti gi&agrave; presenti nella pagina apposita.
+    </p>
     <!--snow forecast-->
     <h2 class="mt-4">Lettura delle previsioni nevicate</h2>
     <div class="snowflake mb-3">
@@ -62,43 +112,7 @@
     <p>
         I bollettini sulle <strong>nevicate</strong> sono strutturati in maniera da avere la <u>percentuale di probabilit&agrave;</u> dell'evento in alto, mentre sotto sono riportati i <u>centimetri</u> di neve previsti e intorno a che <u>altitudine</u>.
     </p>
-    <!--list of provinces-->
-    <h2 class="mt-4">Province appartenenti alle zone regionali (VENE)</h2>
-    <ul>
-        <li>
-            <strong>VENE-A</strong>: Belluno (BL)
-        </li>
-        <li>
-            <strong>VENE-H</strong>: Belluno (BL), Treviso (TV)
-        </li>
-        <li>
-            <strong>VENE-B</strong>: Vicenza (VI), Belluno (BL), Treviso (TV), Verona (VR)
-        </li>
-        <li>
-            <strong>VENE-C</strong>: Verona (VR)
-        </li>
-        <li>
-            <strong>VENE-F</strong>: Rovigo (RO), Verona (VR)
-        </li>
-        <li>
-            <strong>VENE-E</strong>: Padova (PD), Vicenza (VI), Verona (VR), Venezia (VE), Treviso (TV)
-        </li>
-        <li>
-            <strong>VENE-F</strong>: Venezia (VE), Treviso (TV), Padova (PD)
-        </li>
-        <li>
-            <strong>VENE-G</strong>: Venezia (VE), Treviso (TV)
-        </li>
-    </ul>
-    <br>
-    <!--notes-->
-    <p>
-        <strong>Nota</strong>: Le varie zone non seguono i confini precisi di ogni provincia, perci&ograve; alcune di queste compaiono pi&ugrave; volte nella legenda.
-        <br>
-        I <u>bacini idrografici di riferimento</u> sono scritti direttamente sotto ogni bollettino nella pagina apposita.
-        <br><br>
-        Per quanto riguarda i comuni interessati per i <u>bollettini sulle nevicate</u>, sono tutti gi&agrave; presenti nella pagina apposita.
-    </p>
+    <!--notes 2-->
     <h2 class="mt-4">Visualizzazione dei vecchi bollettini</h2>
     <p>
         Sul lato delle pagine contenenti i vari bollettini &egrave; presente una <u>linguetta</u> che, se premuta, d&agrave; accesso ad un <strong>calendario</strong> dove &egrave; possibile selezionare le date corrispondenti ai <strong>vecchi bollettini meteo</strong> per consultarli.

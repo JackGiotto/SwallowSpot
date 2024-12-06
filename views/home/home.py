@@ -13,7 +13,7 @@ def home():
         bulletin_data = '''
                     Per rimanere aggiornato sulla tua zona esegui l'accesso
                     <a href="/auth/login/" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
-                    <div id="divisorySpace"></div>'''
+                    '''
     else:
         # if user is logged, get the last hydro buelettin for their area
 

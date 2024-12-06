@@ -54,19 +54,19 @@
     //serviceworker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register("/service_worker.js", { scope: '/' })
-          .then(function(registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            setInterval(() => {
-                registration.active.postMessage({ type: 'CHECK_NOTIFICATION' });
-            }, 1000 * 60 * 60 * 6); // ms * s * m * h
-          }, function(err) {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
-          });
-        });
-      } 
+            navigator.serviceWorker.register("/service_worker.js", { scope: '/' })
+            .then(function(registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                setInterval(() => {
+                    registration.active.postMessage({ type: 'CHECK_NOTIFICATION' });
+                }, 1000 * 60 * 60 * 6); // ms * s * m * h
+            }, function(err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+            });
+        } 
 
     //light/dark mode
     var logoMini = document.getElementById("logoMini");
