@@ -4,6 +4,7 @@ from utils.get_data import convert_date
 from models import db
 import os
 import base64
+import PyPDF2
 
 class Snow:
 
@@ -56,11 +57,18 @@ class Snow:
 
 
 	def _get_queries(self) -> dict:
+		path = self.path
 		queries = {"bulletin_query": "", "risks_queries": []}
-		with open(self.path, "rb") as f:
-			pdf_data = base64.b64encode(f.read()).decode('utf-8')
-			# pdf_data = f.read()
-
+		with open(path, "rb") as f:
+			pdf_reader = PyPDF2.PdfFileReader(f)
+			pdf_writer = PyPDF2.PdfFileWriter()
+			pdf_writer.addPage(pdf_reader.getPage(int(self.PAGES_NUMBERS["risk"]) - 1))
+			output_pdf_path = os.environ["start_path"] + "static/bulletins/" + "temp_output.pdf"
+			with open(output_pdf_path, "wb") as output_pdf:
+				pdf_writer.write(output_pdf)
+			with open(output_pdf_path, "rb") as output_pdf:
+				pdf_data = base64.b64encode(output_pdf.read()).decode('utf-8')
+			os.remove(output_pdf_path)
 
 
 		queries["bulletin_query"] = f'''
