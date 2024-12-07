@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /profile/
+Disallow: /auth/
+Disallow: /snake/
+
+# Allow bots to access the rest of the site
+Allow: /
+
+# Sitemap
+
+Sitemap: https://www.swallowspot.it/sitemap.xml

@@ -14,6 +14,15 @@ The site monitors various types of weather situations that can impact the Veneto
 
 Thanks to the classification into four distinct colors - **Green**, **Yellow**, **Orange**, and **Red** - the level of risk associated with each situation can be immediately assessed.
 
+# Screenshots
+
+<div style="display: flex; overflow-x: auto; white-space: nowrap;">
+  <img src="./static/pwa_images/swallowspot_home.png" alt="Home page" style="width: 300px; margin-right: 10px;">
+  <img src="./static/pwa_images/swallowspot_hydro.png" alt="Hydro" style="width: 300px; margin-right: 10px;">
+  <img src="./static/pwa_images/swallowspot_snow.png" alt="Snow" style="width: 300px; margin-right: 10px;">
+  <img src="./static/pwa_images/swallowspot_info.png" alt="Info" style="width: 300px; margin-right: 10px;">
+</div>
+
 # Licensing
 
 ## Code
