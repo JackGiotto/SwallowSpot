@@ -13,3 +13,25 @@
 li {
     text-align: justify;
 }
+
+#provinceLayout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 10%;
+}
+
+@media screen and (max-width: 767px) { /*phone*/
+    #provinceLayout {
+        flex-wrap: wrap;
+    }
+}
+
+#zonepdfContainer {
+    width: 40rem;
+}
+
+#zonepdf {
+    width: 100%;
+}

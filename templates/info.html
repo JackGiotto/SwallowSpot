@@ -52,8 +52,8 @@
     <!--list of provinces-->
     <h2 class="mt-4">Province appartenenti alle zone regionali (VENE)</h2>
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col">
+        <div id="provinceLayout">
+            <div>
                 <ul>
                     <li>
                         <strong>VENE-A</strong>: Belluno (BL)
@@ -80,13 +80,12 @@
                         <strong>VENE-G</strong>: Venezia (VE), Treviso (TV)
                     </li>
                 </ul>
+                <p class="mt-5">(Clicca l'immagine di seguito per visualizzare il pdf completo)</p>
             </div>
-            <div class="col">
-                <!--<iframe src="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" frameborder="0" width="500" height="500"></iframe>-->
-                <a href="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" target="_blank">
-                    <img src="{{ url_for('static', filename='informatives/alert_zone.png') }}" alt="zone veneto">
-                </a>
-            </div>
+            <!--<iframe src="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" frameborder="0" width="500" height="500"></iframe>-->
+            <a href="{{ url_for('static', filename='informatives/alert_zone.pdf') }}" target="_blank" id="zonepdfContainer">
+                <img src="{{ url_for('static', filename='informatives/alert_zone.png') }}" alt="zone veneto" id="zonepdf">
+            </a>
         </div>
     </div>
     

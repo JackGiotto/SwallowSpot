@@ -21,7 +21,7 @@
             <input type="checkbox" id="toggle" checked />
             <span class="slider2"></span>
         </label>
-        <p><span id="modeStatus">Light</span> Mode</p>
+        <p>Tema <span id="modeStatus">chiaro</span></p>
     </div>
 </div>
 
@@ -44,14 +44,14 @@
         if(document.getElementById("toggle").checked) {
             localStorage.setItem("mode", "light");
             //light mode
-            status.innerHTML = "Light";
+            status.innerHTML = "chiaro";
             body.style.backgroundColor = "#EDFCFF";
             body.style.color = "#212529";
         }
         else {
             localStorage.setItem("mode", "dark");
             //dark mode
-            status.innerHTML = "Dark";
+            status.innerHTML = "scuro";
             body.style.backgroundColor = "#222222";
             body.style.color = "white";
         }
