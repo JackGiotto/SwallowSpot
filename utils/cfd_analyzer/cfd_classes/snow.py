@@ -37,6 +37,17 @@ class Snow:
 		last_index = "SELECT LAST_INSERT_ID() AS new_id;"
 		queries = self._get_queries()
 
+		check_duplicate_query = f'''
+			SELECT ID_report FROM sow_report WHERE starting_date = "{self.data["date"]["starting_date"]}";
+		'''
+		duplicate_report = db.executeTransaction([check_duplicate_query], select=True)
+		if duplicate_report:
+			delete_duplicate_query = f'''
+				DELETE FROM snow_report WHERE ID_snow_report = {duplicate_report["ID_report"]};
+			'''
+			db.executeTransaction([delete_duplicate_query], select=False)
+
+
 		# Execute the first query to insert the report
 		report_query = queries["bulletin_query"]
 		first_query = [report_query, last_index]
