@@ -10,7 +10,8 @@ allowed_senders = {
         "marco.stefani2005@gmail.com",
         "maggiotto.05@gmail.com",
         "cmt.meteoveneto@arpa.veneto.it",
-        "info@aribassano.it"
+        "info@aribassano.it",
+        "centro.funzionale.server@regione.veneto.it"
     ]
 }
 
