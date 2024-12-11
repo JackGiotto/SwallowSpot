@@ -26,9 +26,9 @@
     <link rel="manifest" href={{ url_for('static', filename = 'manifest.json') }}>
 </head>
 <body>
-    <div id="navbar-top">
+    <!--<div id="navbar-top">
         <img src="{{ url_for('static', filename='images/swallowspot_footer_icon.png') }}" alt="SwallowSpot">
-    </div>
+    </div>-->
     <!--navbar-->
     <header id="menu">
         <!--trigger menu-->
@@ -156,18 +156,15 @@
                     <!--collabs-->
                     <div class="column">
                         <div class="row foot-subtitle">In collaborazione con</div>
-                        <a href="https://www.regione.veneto.it" target="_blank" class="row">Regione Veneto</a>
+                        <a href="https://www.regione.veneto.it/web/protezione-civile" target="_blank" class="row">Protezione Civile</a>
                         <a href="https://www.comune.bassano.vi.it/home" target="_blank" class="row">Comune di Bassano del Grappa</a>
                         <a href="https://www.fermibassano.edu.it" target="_blank" class="row">Istituto ITIS E. Fermi</a>
                     </div>
                     <!--infos-->
                     <div class="column">
                         <div class="row foot-subtitle">Info Utili</div>
-                        <div class="row" id="ourEmailLink" onclick="copyToClipboard('ourEmail')">
-                            swallowspottesting@gmail.com
-                            <input type="text" id="ourEmail" style="display: none; width: 0; height: 0;" value="swallowspottesting@gmail.com">
-                        </div>
                         <a href="https://www.regione.veneto.it/web/protezione-civile/cfd" target="_blank" class="row">Bollettini Protezione Civile</a>
+                        <a href="https://app.pallades.it/appbrentalert/#/" target="_blank" class="row">Brentalert</a>
                         <a href="{{ url_for('static', filename='informatives/privacy_policy.pdf') }}" target="_blank" class="row">Informativa sulla privacy</a>
                     </div>
                     <!--created with-->
@@ -176,7 +173,8 @@
                         <a href="https://flask.palletsprojects.com/en/3.0.x/" target="_blank" class="row">Flask</a>
                         <a href="https://getbootstrap.com" target="_blank" class="row">Bootstrap</a>
                         <a href="https://fontawesome.com" target="_blank" class="row">Font Awesome</a>
-                        <a href="https://about.gitlab.com" target="_blank" class="row">GitLab</a>
+                        <a href="https://github.com" target="_blank" class="row">GitHub</a>
+                        <a href="https://httpd.apache.org" target="_blank" class="row">Apache</a>
                     </div>
                 </div>
             </div>
@@ -188,7 +186,7 @@
             <div class="social-links">
                 <button id="telegram" onclick="redirectTelegram()"><i class="fa-brands fa-telegram"></i></button>
                 <button id="github" onclick="redirectGithub()"><i class="fa-brands fa-github"></i></button>
-                <!--<button id="mail" onclick="redirectMail()"><i class="fa-solid fa-envelope"></i></button>-->
+                <button id="mail" onclick="redirectMail()"><i class="fa-solid fa-envelope"></i></button>
                 <button id="regioneveneto" onclick="redirectRegion()"><i class="fa-solid fa-earth-americas"></i></button>
             </div>
         </div>
@@ -230,7 +228,7 @@
     }
 
     function redirectRegion() {
-        window.open("https://www.regione.veneto.it", "_blank");
+        window.open("https://www.regione.veneto.it/web/protezione-civile", "_blank");
     }
 </script>
 
@@ -320,22 +318,5 @@
         bubble.style.display = "none";
         bubble.style.opacity = "0";
     }
-
-    // copy content to clipboard
-    function copyToClipboard(contentID) {
-        // Get the text field
-        var copyText = document.getElementById(contentID);
-      
-        // Select the text field
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
-      
-         // Copy the text inside the text field
-        navigator.clipboard.writeText(copyText.value);
-      
-        // Alert the copied text
-        alert("Il testo è stato copiato negli appunti: " + copyText.value);
-      }
-
 </script>
 </html>

@@ -12,12 +12,12 @@ body {
 
 /*navbar*/
 
-#navbar-top {
+/*#navbar-top {
     background-color: #00283Bdd;
     width: 100%;
     height: 15rem;
     /*box-shadow: 0 0 8px 8px #00283b22 inset;*/
-}
+/*}
 
 #navbar-top img {
     opacity: 0.5;
@@ -26,7 +26,7 @@ body {
     width: 24rem;
     margin-left: 0;
     object-position: 0 0;
-}
+}*/
 
 header {
     width: 100%;
@@ -50,9 +50,9 @@ header div{
 }
 
 @media screen and (max-width: 767px) { /*phone*/
-    #navbar-top img {
+    /*#navbar-top img {
         margin-left: 0;
-    }
+    }*/
 
     header {
         padding: 1vw;
