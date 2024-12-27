@@ -10,13 +10,9 @@ ExecStart=/var/www/swallowspot.it/SwallowSpot/venv/bin/python /var/www/swallowsp
 Restart=on-failure
 RestartSec=5
 
-# maybe to change into a custom log
-StandardOutput=journal
-# maybe to change into a custom log
-StandardError=journal
+# Redirect logs to custom log files
+StandardOutput=append:/var/log/swallowspot/swallowspot.log
+StandardError=append:/var/log/swallowspot/swallowspot_error.log
 
 [Install]
 WantedBy=multi-user.target
-
-
-
