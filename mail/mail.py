@@ -7,24 +7,25 @@ import os
 #JSON list allowed sender
 allowed_senders = {
     "allowed_senders": [
-        "marco.stefani2005@gmail.com",
-        "maggiotto.05@gmail.com",
-        "cmt.meteoveneto@arpa.veneto.it",
-        "info@aribassano.it",
-        "centro.funzionale.server@regione.veneto.it"
+        #"cmt.meteoveneto@arpa.veneto.it",
+        #"info@aribassano.it",
+        "centro.funzionale.server@regione.veneto.it",
+        '"A.R.I. Bassano del Grappa" <info@aribassano.it>',
+        '"centro.funzionale.server" <centro.funzionale.server@regione.veneto.it>',
     ]
 }
 
 # check sender function
 def check_sender(msg):
     sender = msg.get('From', '')
+    # print(sender)
 
     return sender in allowed_senders['allowed_senders']
 
 def emails_fetch(mail):
     # select the mail's field where mails arrives
     mail.select("inbox")
-
+    print("connected")
     # indexes all the msgs in the inbox
     status, data = mail.search(None, 'ALL')
     mail_ids = data[0]
@@ -39,25 +40,26 @@ def emails_fetch(mail):
 
         # conversion form byte inconsistent data to email obj
         msg = email.message_from_bytes(raw_email)
-
         # check if sender is permissed to being fetched
         if(check_sender(msg)):
+            #print("it is")
             # extraction of trasmittion informations form obj (msg)
             sender = msg['From']
             subject = msg['Subject']
             body = None
             pdf = None
-
             if msg.is_multipart():
                 for part in msg.walk():
                     content_type = part.get_content_type()
                     if (content_type == "application/pdf"): # when occures attached as pdf then
+                        #print ("found pdf")
                         pdf = part.get_payload(decode=True)
                         content_disposition = str(part.get("Content-Disposition"))
                         if "filename" in content_disposition:
                             filename = content_disposition.split("filename=")[1].strip().strip('"')
                         else:
                             filename = "attachment.pdf"  # Default filename if not specified
+                        # print (filename)
                         result = save_bulletin(pdf, filename=filename)
                     try:
                         body = part.get_payload(decode=True).decode()
@@ -80,13 +82,14 @@ def get_emails():
     MAIL = os.getenv("MAIL")
     __PASSWORD = os.getenv("MAILPASSWORD")
     IMAP_SERVER = os.getenv("IMAPSERVER")
-    print("imap server", IMAP_SERVER)
+    #print("imap server", IMAP_SERVER)
 
 
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     # connection to imap server
     mail.login(MAIL, __PASSWORD)
     emails_fetch(mail)
+    mail.logout()
 
 
 def start_cycle():
