@@ -11,11 +11,13 @@ class Pdf_reader:
 		with open(path, 'rb') as file:
 			reader = PyPDF2.PdfFileReader(file)
 			if reader.numPages == 1:
-				pages="1"
+				pages = "1"
 			if reader.numPages == 4:
-				pages="3"
+				pages = "3"
+			if reader.numPages == 5:
+				pages = "2"
 			if reader.numPages == 6:
-				pages="3"
+				pages = "3"
 		try:
 			try:
 				check = "PREVISTA" in camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[2][0]
