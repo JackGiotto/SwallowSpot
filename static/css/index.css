@@ -32,7 +32,7 @@ header {
     width: 100%;
     position: sticky;
     top: 0;
-    padding: 0.5vw 10% 0;
+    padding: 0 10%;
     transition: top 0.3s;
     display: flex;
     gap: 2%;
@@ -46,16 +46,12 @@ header {
 
 header div{
     display: flex;
-    padding: 5px 5px 0 5px;
+    padding: 0 5px;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
-    /*#navbar-top img {
-        margin-left: 0;
-    }*/
-
     header {
-        padding: 1vw;
+        padding: 0 1vw;
     }
 }
 
@@ -99,12 +95,11 @@ header div{
 }
 
 header #links a {
-    padding: 1vw;
+    padding:  1.1em;
     display: block;
     float: left;
     color: white;
     text-decoration: none;
-    border-radius: 1vw 1vw 0 0;
     /*background-color: rgba(0, 102, 124, 0.3);*/
     width: 100%;
     text-align: center;
@@ -112,6 +107,7 @@ header #links a {
 
 header #links a:hover {
     background-color: #59a4bccc;
+    /*background: linear-gradient(to left, rgba(255, 255, 255, 0), #59a4bccc, #59a4bccc, #59a4bccc, rgba(255, 255, 255, 0));*/
     color: white;
     transition-duration: 250ms;
 }
@@ -193,7 +189,7 @@ footer {
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 3vw;
+    padding: 2vw 3vw 3vw;
     /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
     gap: 2vw;
