@@ -8,10 +8,12 @@ import requests
 import xml.etree.ElementTree as ET
 from telegram_bot.request_data import *
 from models import db
+import os
 
 #Credenziali per associare il Bot Telegram e il programma in python
-TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
-BOT_USERNAME: Final="@SwallowSpotBot" 
+print(os.environ["TOKEN"])
+TOKEN: Final = os.environ["TOKEN"]
+BOT_USERNAME: Final="@SwallowSpotBot"
 CHAT_ID: Final = None
 INDEX: Final=0
 DATA: Final = {

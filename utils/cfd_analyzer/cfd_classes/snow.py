@@ -110,7 +110,7 @@ class Snow:
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_date(self, table) -> dict[str, str]:
-		"""get the date of the bullettin
+		"""get the date of the bulletin
 		"""
 		column = table[self.DATE_POSITION["column"]]
 		date = ""

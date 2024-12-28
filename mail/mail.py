@@ -18,7 +18,6 @@ allowed_senders = {
 # check sender function
 def check_sender(msg):
     sender = msg.get('From', '')
-    print(sender)
     # print(sender)
 
     return sender in allowed_senders['allowed_senders']
