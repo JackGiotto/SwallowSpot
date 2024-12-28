@@ -61,7 +61,7 @@ def get_query_snow(area_name: str, date: str) -> str:
 
     Args:
         area_name (str): name of the area
-        date (str): date of the bullettin code
+        date (str): date of the bulletin code
 
     Returns:
         str: query

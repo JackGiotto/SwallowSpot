@@ -1,6 +1,5 @@
 from flask import Flask, render_template, session, request
 from flask_cors import CORS
-from flask_sslify import SSLify
 from datetime import timedelta
 from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, special_bp
 from dotenv import load_dotenv
@@ -19,9 +18,6 @@ os.environ["start_path"] = start_path
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
 app.config["MAINTENANCE"] = os.getenv("MAINTENANCE") == "True"
-
-if __name__ == "__main__":
-    sslify = SSLify(app)
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = os.getenv("SECRET")

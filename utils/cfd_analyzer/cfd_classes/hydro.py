@@ -110,7 +110,7 @@ class Hydro:
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_date(self, table) -> dict[str, str]:
-		"""get the date of the bullettin
+		"""get the date of the bulletin
 		"""
 		print(table)
 		string = table[self.DATE_POSITION["column"]][self.DATE_POSITION["row"]]

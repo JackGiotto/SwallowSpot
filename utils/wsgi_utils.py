@@ -14,4 +14,4 @@ def read_env_file(filepath):
             value = value.replace('"', '')
             os.environ[key.strip()] = value.strip()
     
-    print(os.environ)
+    #print(os.environ)
