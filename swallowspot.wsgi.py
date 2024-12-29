@@ -1,5 +1,4 @@
 import sys
-import os
 
 # project directory
 project_home = '/var/www/swallowspot.it/SwallowSpot'
