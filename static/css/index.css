@@ -12,34 +12,46 @@ body {
 
 /*navbar*/
 
+/*#navbar-top {
+    background-color: #00283Bdd;
+    width: 100%;
+    height: 15rem;
+    /*box-shadow: 0 0 8px 8px #00283b22 inset;*/
+/*}
+
+#navbar-top img {
+    opacity: 0.5;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    width: 24rem;
+    margin-left: 0;
+    object-position: 0 0;
+}*/
+
 header {
     width: 100%;
-    position: fixed;
-    left: 0;
+    position: sticky;
     top: 0;
-    padding: 1vw 10%;
+    padding: 0 10%;
     transition: top 0.3s;
     display: flex;
     gap: 2%;
     z-index: 2;
+    box-shadow: 0 -8px 8px 4px #00283b22;
+}
+
+#menu {
+    background-color: #00283Bdd;
 }
 
 header div{
     display: flex;
-    /*margin: 0 10% 0 10%;
-    background-color: rgba(0, 40, 59, 0.97);
-    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);*/
-    /*background-color: rgba(167, 199, 224, 0.8);*/
-    /*border: 2px solid #EDFCFF;*/
-    background-color: #59a4bccc;
-    border-radius: 20px;
-    padding: 5px 5px 0 5px;
-    filter: drop-shadow(0 5px 0px #00283B);
+    padding: 0 5px;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
     header {
-        padding: 1vw;
+        padding: 0 1vw;
     }
 }
 
@@ -54,30 +66,48 @@ header div{
 }
 
 .nav-sides a {
-    color: #00283B;
+    color: white;
+}
+
+.nav-sides a:hover {
+    animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /*central links*/
 
 #links {
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    /*justify-content: space-evenly;*/
     align-items: center;
     width: 100%;
 }
 
 header #links a {
-    padding: 1vw;
+    padding:  1.1em;
     display: block;
     float: left;
-    color: #00283B;
+    color: white;
     text-decoration: none;
-    border-radius: 1vw;
     /*background-color: rgba(0, 102, 124, 0.3);*/
+    width: 100%;
+    text-align: center;
 }
 
 header #links a:hover {
     background-color: #59a4bccc;
+    /*background: linear-gradient(to left, rgba(255, 255, 255, 0), #59a4bccc, #59a4bccc, #59a4bccc, rgba(255, 255, 255, 0));*/
     color: white;
     transition-duration: 250ms;
 }
@@ -131,49 +161,15 @@ header #links a:hover {
     transition-duration: 150ms;
 }
 
-/*cookies label*/
-
-#cookies {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    border: 5px double #00667C;
-    background-color: #EDFCFFdc;
-    border-radius: 1em;
-    padding: 1em;
-    max-width: 30em;
-    z-index: 4;
-    display: none;
-    color: #212529 !important;
-}
-
-#cookieButtons {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 5px;
-}
-
-@media screen and (max-width: 767px) { /*phone*/
-    #cookies {
-        left: 10px;
-        max-width: 100%;
-    }
-}
-
-#customizeCookies {
-    color: #212529 !important;
-}
-
 /*container for different pages' layouts*/
 
 .content {
-    margin: 10rem 0 7rem;
+    margin: 2rem 0 7rem;
 }
 
 @media screen and (max-width: 767px) { /*phone*/
     .content {
-        margin-top: 6rem;
+        margin-top: 2rem;
     }
 }
 
@@ -193,11 +189,11 @@ footer {
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 3vw;
+    padding: 2vw 3vw 3vw;
     /*padding: 3vw 9vw 3vw 3vw;*/
     align-items: center;
     gap: 2vw;
-    z-index: 3;
+    /*z-index: 2;*/
 }
 
 .footer-in {
@@ -241,7 +237,7 @@ footer img {
     cursor: pointer;
 }
 
-.credits-in a, #youtubePresentation {
+.credits-in a {
     color: white;
 }
 
@@ -305,12 +301,12 @@ footer img {
     background-color: #1E94D2;
 }
 
-#facebook {
-    border-bottom-color: #325BFE;
+#github {
+    border-bottom-color: #000000;
 }
 
-#facebook::after {
-    background-color: #325BFE;
+#github::after {
+    background-color: #000000;
 }
 
 #mail {

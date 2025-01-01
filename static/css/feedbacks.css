@@ -14,10 +14,6 @@
     gap: 3rem;
 }
 
-.feed-in i {
-    font-size: 17rem;
-}
-
 #feedObject {
     font-size: x-large;
 }
@@ -26,8 +22,39 @@
     text-align: right;
 }
 
+textarea {
+    resize: none;
+}
+
 @media screen and (max-width: 767px) { /*phone*/
     .feed-in i {
         display: none;
     }
+}
+
+/*images*/
+
+.feedimage {
+    position: relative;
+}
+
+.feedimage .fa-solid {
+    font-size: 17rem;
+}
+
+.feedimage .fa-regular {
+    color: #EDFCFF;
+    position: absolute;
+}
+
+.fa-face-smile {
+    top: 2.2rem;
+    left: 3.4rem;
+    font-size: 7rem;
+}
+
+.fa-face-frown {
+    bottom: 2.7rem;
+    right: 3.4rem;
+    font-size: 6rem;
 }
