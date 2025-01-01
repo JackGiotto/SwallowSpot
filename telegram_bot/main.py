@@ -477,7 +477,10 @@ async def handle_message(update: Update, context: CallbackContext):
     else:
         await update.message.send_message('Non sto aspettando un messaggio da te.')
 
-def start_bot():
+def start_bot(token: str):
+    global TOKEN
+    TOKEN = token
+
     app = Application.builder().token(TOKEN).build()
 
     #association of bot commands with functions
