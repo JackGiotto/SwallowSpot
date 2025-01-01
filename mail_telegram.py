@@ -19,4 +19,4 @@ os.environ["start_path"] = start_path
 t = Thread(target=start_cycle, name="emails")
 t.start()
 
-start_bot(os.environ["TOKEN"])
+start_bot()

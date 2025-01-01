@@ -90,3 +90,11 @@ INSERT INTO Snow_criticalness_altitude(ID_snow_issue, ID_altitude, value) VALUES
 -- Insertion of pdf file into database BLOB
 INSERT INTO pdf_files (starting_date, ending_date, pdf_data)
 VALUES ("starting-data format datetime", "ending date format datetime", "pdf in bites")
+
+-- For issue #4 V2
+INSERT INTO Feedback (object, description, date, validate, ID_role) VALUES
+('title of the feedback (object)', 'description of the feedback', NOW(), false, 'user ID');
+
+-- For issue #13 V2
+INSERT INTO Snake (high_score, ID_user) VALUES
+('high score of the user', 'user ID');

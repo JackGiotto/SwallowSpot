@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, request, make_response
 from flask_cors import CORS
 from flask_minify import minify
 from datetime import timedelta
-from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, special_bp
+from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp, special_bp
 from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
 from utils.cookies_utils import check_permanent_session, add_permanent_cookie
@@ -29,6 +29,7 @@ app.register_blueprint(auth_bp, url_prefix='/{}'.format(auth_bp.name))
 app.register_blueprint(profile_bp)
 app.register_blueprint(reports_bp, url_prefix='/{}'.format(reports_bp.name))
 app.register_blueprint(info_bp)
+app.register_blueprint(feedbacks_bp)
 
 
 minify(app=app, html=True, js=True, cssless=True)

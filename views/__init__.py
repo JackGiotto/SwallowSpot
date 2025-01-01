@@ -4,3 +4,4 @@ from .special.special import special_bp
 from .profile.profile import profile_bp
 from .reports.reports import reports_bp
 from .info.info import info_bp
+from .feedbacks.feedbacks import feedbacks_bp

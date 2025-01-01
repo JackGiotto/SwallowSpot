@@ -102,7 +102,7 @@ CREATE TABLE User       -- list of the Users' accounts and their data
     CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from Role identifier
 );
 
-CREATE TABLE Admin      -- list of the administration account
+CREATE TABLE Admin      -- list of the administration accounts with telegram associations
 (
     ID_telegram VARCHAR(15),                            -- unique ID for every admin assigned from telegram
     groupID VARCHAR(15) NOT NULL UNIQUE,                -- group ID from telegram Bot chat
@@ -111,18 +111,41 @@ CREATE TABLE Admin      -- list of the administration account
     CONSTRAINT fk_admin_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE     -- FK constraint from User identifier
 );
 
-CREATE TABLE Snow_criticalness_altitude     -- list every snow criticalness connected with each altitude
+CREATE TABLE Snow_criticalness_altitude     -- list of snow criticalnesses connected with each altitudes
 (
-    ID_snow_issue INT NOT NULL,                                                 -- snow criticalness ID
-    ID_altitude INT NOT NULL,                                                   -- altitude ID
+    ID_snow_issue INT,                                                          -- snow criticalness ID
+    ID_altitude INT,                                                            -- altitude ID
     value VARCHAR(15) NOT NULL,                                                 -- value of the snow level
-    CONSTRAINT pk__criticalness PRIMARY KEY (ID_snow_issue, ID_altitude),       -- PK constraint
+    CONSTRAINT pk_criticalness PRIMARY KEY (ID_snow_issue, ID_altitude),        -- PK constraint
     CONSTRAINT fk_snow_issue FOREIGN KEY (ID_snow_issue) REFERENCES Snow_criticalness(ID_snow_issue) ON UPDATE CASCADE ON DELETE CASCADE,       -- FK constraint from Snow Criticalness identifier
     CONSTRAINT fk_altitude FOREIGN KEY (ID_altitude) REFERENCES Altitude(ID_altitude) ON UPDATE CASCADE ON DELETE CASCADE                       -- FK constraint from Altitude identifier
 );
 
+CREATE TABLE Feedback       -- list of feedbacks
+(
+    ID_feedback INT AUTO_INCREMENT,                         -- feedback ID
+    object VARCHAR(50) NOT NULL,                            -- title of the feedback
+    description VARCHAR(500) NOT NULL,                      -- text of the feedback
+    date DATETIME NOT NULL,                                 -- date of insertion                                                                                
+    validate BOOLEAN NOT NULL,                              -- if we have seen the feedback
+    ID_role INT NOT NULL,                                   -- role ID of the user who make the feedback
+    CONSTRAINT pk_feedback PRIMARY KEY (ID_feedback),       -- PK constraint
+    CONSTRAINT fk_feedback_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
+);
+
+CREATE TABLE Snake_ranking      -- ranking for the snake game
+(
+    ID_rank INT AUTO_INCREMENT,
+    high_score INT NOT NULL,
+    ID_user INT NOT NULL UNIQUE,
+    CONSTRAINT pk_snake_ranking PRIMARY KEY (ID_rank),
+    CONSTRAINT fk_snake_ranking_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
+);
+
 /*
 -- debug
+DROP TABLE Snake_ranking;
+DROP TABLE Feedback;
 DROP TABLE Snow_criticalness_altitude;
 DROP TABLE Admin;
 DROP TABLE User;
