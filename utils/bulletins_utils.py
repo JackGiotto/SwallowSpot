@@ -102,7 +102,7 @@ def _unique_filename(directory, filename) -> str:
 async def _hydro_telegram(data):
     # send message to admins
     for tipo, colore in data["risks"]["Vene-B"]["risks_value"].items():
-        print(tipo, colore)
+        #print(tipo, colore)
         if colore != "VERDE":
             await alert_control(tipo, colore)
 

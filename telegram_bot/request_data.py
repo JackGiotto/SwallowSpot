@@ -7,8 +7,8 @@ import pymysql
 import os
 from models import db
 
-TOKEN: Final = "6557124632:AAEDrrKgTkiVbmmQFQdKZAiyVG3woS5j-oE"
-BOT_USERNAME: Final="@SwallowSpotBot" 
+TOKEN: Final = os.environ["TOKEN"]
+BOT_USERNAME: Final="@SwallowSpotBot"
 INFO: Final= None
 
 async def create_connection():
@@ -19,22 +19,23 @@ async def create_connection():
     password= os.getenv("PASSWORD"),
     database= os.getenv("DBNAME"),
     )
-    return mydb    
+    return mydb
 
-async def verify_user(chat_id):
-    
+async def verify_user(chat_id, token_2:str):
+    global TOKEN
+    TOKEN = token_2
     myresult = db.executeQueryOtherCursor(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
-       
+
     if myresult:
         return True
     else:
         return False
 
-# Request database to find chat-id admin 
-async def find_id(INFO,chat_id):
-    
+# Request database to find chat-id admin
+async def find_id(INFO, chat_id):
+
     bot = Bot(token=TOKEN)
-    
+
     try:
         keyboard = [
             [InlineKeyboardButton("Inoltra", callback_data='Send')],

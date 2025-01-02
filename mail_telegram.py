@@ -1,6 +1,4 @@
-from telegram_bot.main import start_bot
 from threading import Thread
-from mail.mail import start_cycle
 import os
 from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
@@ -16,7 +14,10 @@ else:
 
 os.environ["start_path"] = start_path
 
+from telegram_bot.main import start_bot
+from mail.mail import start_cycle
+
 t = Thread(target=start_cycle, name="emails")
 t.start()
 
-start_bot(token = os.environ["TOKEN"])
+start_bot()

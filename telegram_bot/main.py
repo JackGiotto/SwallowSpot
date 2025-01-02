@@ -8,8 +8,9 @@ import requests
 from telegram_bot.request_data import *
 from models import db
 
-#Credenziali per associare il Bot Telegram e il programma in python
-TOKEN = ""
+# Associate python app to the bot
+TOKEN: Final = os.environ["TOKEN"]
+print("TOKEN: ", TOKEN)
 BOT_USERNAME: Final="@SwallowSpotBot"
 CHAT_ID: Final = None
 INDEX: Final=0
@@ -27,12 +28,12 @@ INFO: Final= {
     "temp":""
 }
 
-#function start when admin use the command "/start"
+# function start when admin use the command "/start"
 async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
     global CHAT_ID
     chat_id = update.message.chat_id
     CHAT_ID = chat_id
-    #function to check if the user who is using the bot is admin
+    # function to check if the user who is using the bot is admin
     control=await verify_user(chat_id)
     if(control==False):
         #button to send chat_id to admin to link the account telegram with site account
@@ -43,7 +44,7 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
         await update.message.reply_text(f"⛔ Il tuo account Telegram non ha i privilegi per usare questo Bot ⛔",reply_markup=reply_markup)
 
     else:
-        #button to do a manual control of last bulletin uploaded in database
+        # button to do a manual control of last bulletin uploaded in database
         keyboard = [
             [InlineKeyboardButton("⛄ Bol. PREVISIONE LOCALE NEVICATE ⛄ ", callback_data='Neve')],
             [InlineKeyboardButton("🌧️ Bol. IDROGEOLOGICA ED IDRAULICA 🌧️", callback_data='Idro')],
@@ -54,12 +55,13 @@ async def start_command(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 
 #send message a single user
 async def alert_control(tipo, colore):
+    print("TOKEN IN HYDRO", TOKEN)
     bot = Bot(token=TOKEN)
     global INFO
     import requests
 
-  
-    keyboard = [] 
+
+    keyboard = []
 
     query = """
                 SELECT GroupID as chat_id
@@ -67,7 +69,7 @@ async def alert_control(tipo, colore):
             """
     result = db.executeQueryOtherCursor(query)
     try:
-        messaggio = "" 
+        messaggio = ""
         if tipo == "idraulico":
             print("CHAT ID", result)
             print("colore",str(colore))
@@ -80,7 +82,7 @@ async def alert_control(tipo, colore):
             elif colore == "VIOLA":
                 messaggio = "\nPericolo Viola di idraulico 🟣"
             else:
-                return;
+                return
             INFO["idro"] = messaggio
             tmp = 'sendidro'
         elif tipo == "idrogeologico":
@@ -101,10 +103,10 @@ async def alert_control(tipo, colore):
                 messaggio = "\nPericolo Rosso di Idrogeologica per Temporali 🔴"
             INFO["temp"] = messaggio
             tmp = 'sendtem'
-        else: 
-            return    
+        else:
+            return
         # Assicurati che il messaggio non sia vuoto prima di inviarlo
-        
+
         if messaggio:
             keyboard = [
                 [InlineKeyboardButton("Inoltra", callback_data=tmp)],
@@ -122,7 +124,7 @@ async def alert_control(tipo, colore):
                 }
 
                 # do POST request to send message
-                response = requests.post(url, json=pardispatcherams)
+                response = requests.post(url, json=params)
 
                 print("Notifica inviata a " + messaggio + " con successo!")
         else:
@@ -153,14 +155,14 @@ async def snow_control(val):
                 elif  index==2:
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow2')],
-                    ] 
-                elif  index==3: 
+                    ]
+                elif  index==3:
                      keyboard = [
                         [InlineKeyboardButton("Inoltra", callback_data='sendsnow3')],
                     ]
                 keyboard.append([InlineKeyboardButton("Rifiuta", callback_data='Drop')])
-                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])      
-                       
+                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])
+
                 global INFO
                 messaggio=" 🌨️ALLERTA NEVE🌨️ \n Livello: "+giorno['1000 m']+" \n Data:"+giorno['date']
                 # add message snow allert in list
@@ -177,7 +179,7 @@ async def snow_control(val):
                     params = {
                         'chat_id': t_id,
                         'text': INFO["snow"][INDEX],
-                        'reply_markup': reply_markup.to_json()  
+                        'reply_markup': reply_markup.to_json()
                     }
 
                     # Post request to send message
@@ -215,7 +217,7 @@ async def ins(chat_id):
         }
     ]
 
-    
+
     await snow_control(dati,chat_id)
 
     data={
@@ -228,7 +230,7 @@ async def ins(chat_id):
             await alert_control(tipo,colore,chat_id)
 
 
-#function to associate the buttons and functions of the bot  
+#function to associate the buttons and functions of the bot
 async def button(update: Update, context):
     query = update.callback_query
     chat_id = query.message.chat_id
@@ -237,7 +239,7 @@ async def button(update: Update, context):
     await query.answer()
     data = query.data
     if data == 'wait':
-            
+
         # update message to remove buttons
         await bot.send_message(chat_id=chat_id, text="Ok, sto aspettando il tuo messaggio.")
         waiting_for_message[user_id] = True
@@ -319,7 +321,7 @@ async def error(update:Update , context:ContextTypes.DEFAULT_TYPE ):
 async def report():
     global DATA
     bot = Bot(token=TOKEN)
-    try:        
+    try:
         #query to select last info of VENE-B
         query = (
             "SELECT Criticalness.ID_color, Criticalness.ID_risk, Color.color_name "
@@ -358,9 +360,9 @@ async def report():
                         [InlineKeyboardButton("Inoltra", callback_data='sendt')],
                     ]
                 keyboard.append([InlineKeyboardButton("Rifiuta", callback_data='Drop')])
-                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])      
+                keyboard.append([InlineKeyboardButton("Modifica messaggio", callback_data='wait')])
                 messaggio=f"Allerta grado: {x[2]} tipo: idrogeologico con temporali ⛈️"
-                DATA["temp"]=messaggio        
+                DATA["temp"]=messaggio
                 print(x[1])
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 await bot.send_message(chat_id=CHAT_ID, text=messaggio, reply_markup=reply_markup)
@@ -456,10 +458,10 @@ async def manual_send_snow(update:Update, context):
 async def get_group_id(update: Update, context):
     # Get Group ID
     group_id = update.message.chat_id
-    
+
     # Send GroupID
     await update.message.reply_text(f"L'ID di questo gruppo è: {group_id}")
-            
+
 async def handle_message(update: Update, context: CallbackContext):
     bot = Bot(token=TOKEN)
     query = update.callback_query
@@ -470,26 +472,23 @@ async def handle_message(update: Update, context: CallbackContext):
         with open("./data.json", "r") as doc:
             data = json.load(doc)
             id = data["GROUP_ID"]
-                
-            await bot.send_message(chat_id=id, text=user_message)                
+
+            await bot.send_message(chat_id=id, text=user_message)
         # Stop Waiting status of user
         waiting_for_message[user_id] = False
     else:
         await update.message.send_message('Non sto aspettando un messaggio da te.')
 
-def start_bot(token: str):
-    global TOKEN
-    TOKEN = token
-
+def start_bot():
     app = Application.builder().token(TOKEN).build()
 
     #association of bot commands with functions
     app.add_handler(CommandHandler('start', start_command))
-   
+
     app.add_handler(CommandHandler("get_group_id", get_group_id))
     app.add_handler(CallbackQueryHandler(button))
-    
-    
+
+
     app.add_error_handler(error)
     print("Polling....")
     app.run_polling(poll_interval=3)
