@@ -21,9 +21,7 @@ async def create_connection():
     )
     return mydb
 
-async def verify_user(chat_id, token_2:str):
-    global TOKEN
-    TOKEN = token_2
+async def verify_user(chat_id):
     myresult = db.executeQueryOtherCursor(f"SELECT ID_telegram FROM Admin WHERE ID_telegram = {chat_id}")
 
     if myresult:
