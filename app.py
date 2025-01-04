@@ -1,12 +1,9 @@
-from flask import Flask, render_template, session, request, make_response, redirect, url_for
-from flask_cors import CORS
-from flask_minify import minify
-from datetime import timedelta
-from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp, special_bp
+
+# Read env file as first thing
+import os
 from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
-from utils.cookies_utils import check_permanent_session, add_permanent_cookie
-import os
+
 
 if __name__ == "__main__":
     load_dotenv()
@@ -14,6 +11,15 @@ if __name__ == "__main__":
 else:
     start_path = "/var/www/swallowspot.it/SwallowSpot/"
     read_env_file(start_path + ".env")
+
+from flask import Flask, render_template, session, request, make_response, redirect, url_for
+from flask_cors import CORS
+from flask_minify import minify
+from datetime import timedelta
+from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp, special_bp
+from utils.cookies_utils import check_permanent_session, add_permanent_cookie
+
+
 
 os.environ["start_path"] = start_path
 
