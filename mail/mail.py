@@ -1,11 +1,14 @@
+from typing import Final
 import imaplib
 import email
 from utils.bulletins_utils import save_bulletin
 from time import sleep
 import os
 
+FOLDER_NAME: Final = os.environ["FOLDER"]
+
 #JSON list allowed sender
-allowed_senders = {
+ALLOWED_SENDERS: Final = {
     "allowed_senders": [
         #"cmt.meteoveneto@arpa.veneto.it",
         #"info@aribassano.it",
@@ -20,7 +23,7 @@ def check_sender(msg):
     sender = msg.get('From', '')
     # print(sender)
 
-    return sender in allowed_senders['allowed_senders']
+    return sender in ALLOWED_SENDERS['allowed_senders']
 
 def emails_fetch(mail):
     # Select the mail's field where mails arrive
@@ -65,16 +68,15 @@ def emails_fetch(mail):
             else:
                 body = msg.get_payload(decode=True).decode()
             # Move the current mail to Trash
-            result = mail.copy(num, '[Gmail]/Trash')
+            result = mail.copy(num, f"""[Gmail]/{FOLDER_NAME}""")
             if result[0] == 'OK':
                 mail.store(num, '+FLAGS', '\\Deleted')
-        """
-        else:
-            # Move mails from not trusted users to Trash
-            result = mail.copy(num, '[Gmail]/Trash')
-            if result[0] == 'OK':
-                mail.store(num, '+FLAGS', '\\Deleted')
-        """
+
+        # else:
+        #     # Move mails from not trusted users to Trash
+        #     result = mail.copy(num, f"""[Gmail]/{FOLDER_NAME}""")
+        #     if result[0] == 'OK':
+        #         mail.store(num, '+FLAGS', '\\Deleted')
 
     # Expunge the mails that have been marked as deleted
     mail.expunge()
