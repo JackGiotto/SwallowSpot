@@ -112,6 +112,7 @@ class Snow:
 	def _get_date(self, table) -> dict[str, str]:
 		"""get the date of the bulletin
 		"""
+		#print(table[4])
 		column = table[self.DATE_POSITION["column"]]
 		date = ""
 		for row in column:
@@ -151,12 +152,12 @@ class Snow:
 	def _get_column_data(self, column, template, searching, position) -> dict[str, any]:
 		"""get the data of a single bulletin's column (date or %)
 		"""
-		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore", "Feltrino-Val Belluna", "Altopiano dei sette comuni"]
+		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore-Comelico", "Dolomiti Ampezzane", "Prealpi Bellunesi", "Prealpi Vicentine", "Prealpi Veronesi"]
 
 		i = 0
 		j = 0
 		for row in column:
-			if j > 4:
+			if j > 6:
 				break
 			if row != "" and row != searching:  # checks that the cell contains value
 				if position == "date":
@@ -171,20 +172,20 @@ class Snow:
 	def _get_column_data_value(self, column, template, value_number) -> dict[str, any]:
 		"""get the data of a single bulletin's column (values)
 		"""
-		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore", "Feltrino-Val Belluna", "Altopiano dei sette comuni"]
-		values1 = ["1500 m", "2000 m", ">2000 m"]
-		values2 = ["1000 m", "1500 m", ">1500 m"]
+		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore-Comelico", "Dolomiti Ampezzane", "Prealpi Bellunesi", "Prealpi Vicentine", "Prealpi Veronesi"]
+		values1 = ["1500 m", "2000 m", ">2500 m"]
+		values2 = ["1000 m", "1500 m", "2000 m"]
 
 		using = values1
 
 		i = 0
 		j = 0
 		for row in column:
-			if j > 4:
+			if j > 6:
 				break
-			if j == 2:
+			if j == 4:
 				using = values2
-			if row != "" and row != using[value_number]:  # checks that the cell contains value
+			if row != "" and row != using[value_number] + " slm":  # checks that the cell contains value
 				template[areas[j]][i][using[value_number]] = row
 				i += 1
 				if i == 3:
