@@ -55,8 +55,26 @@ class Snow:
 				risk_query[i] = risk_query[i].replace("@ID_snow_issue", str(id_crit))
 			db.executeTransaction(risk_query[3:], select=False)
 
+	def _get_bulletin_data(self) -> None:
+		print("Analyzing Snow bulletin, path:", self.path)
+
+		self.data["date"] = self._get_date(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
+		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
+		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 	def _get_queries(self) -> dict:
+		"""
+		Generates SQL queries for inserting snow report data and associated risks into the database.
+		This method reads a PDF file specified by the `path` attribute, extracts a specific page, and encodes it in base64.
+		It then constructs an SQL query to insert the encoded PDF data into the `Snow_report` table.
+		Additionally, it generates a series of SQL queries to insert risk data into the `Snow_criticalness` and 
+		`Snow_criticalness_altitude` tables.
+		Returns:
+			dict: A dictionary containing the following keys:
+				- "bulletin_query": A string with the SQL query to insert the snow report data.
+				- "risks_queries": A list of lists, where each inner list contains SQL queries to insert risk data.
+		"""
+
 		path = self.path
 		queries = {"bulletin_query": "", "risks_queries": []}
 		with open(path, "rb") as f:
@@ -102,16 +120,14 @@ class Snow:
 				queries["risks_queries"].append(query)
 		return queries
 
-	def _get_bulletin_data(self) -> None:
-		print("Analyzing Snow bulletin, path:", self.path)
-
-		self.data["date"] = self._get_date(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
-		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
-		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
-
 	def _get_date(self, table) -> dict[str, str]:
-		"""get the date of the bulletin
+		"""Extracts the date from the given table.
+		Args:
+			table (list of list of str): The table from which to extract the date.
+		Returns:
+			dict[str, str]: A dictionary containing the parsed date.
 		"""
+
 		column = table[self.DATE_POSITION["column"]]
 		date = ""
 		for row in column:
@@ -123,8 +139,14 @@ class Snow:
 		return date
 
 	def _get_risks(self, table) -> dict[str, any]:
-		"""get the value associated with every risk
 		"""
+		Extracts risk data from a given table and formats it according to a predefined template.
+		Args:
+			table (dict): A dictionary representing the table with risk data. The keys are column names and the values are lists of column data.
+		Returns:
+			dict[str, any]: A dictionary containing the formatted risk data according to the template.
+		"""
+
 		with open(self.template_path, "r") as f:
 			RISKS = json.load(f)
 
@@ -149,8 +171,23 @@ class Snow:
 			json.dump(template, f, indent="\t")
 
 	def _get_column_data(self, column, template, searching, position) -> dict[str, any]:
-		"""get the data of a single bulletin's column (date or %)
 		"""
+		Extracts and organizes data from a given column into a specified template.
+		Args:
+			column (list): The list of data from which to extract values.
+			template (dict): The dictionary template to populate with extracted data.
+			searching (str): The value that in the pdf shows what the data means (could be "Data" or "%")
+			position (str): The key under which to store the extracted data in the template.
+		Returns:
+			dict[str, any]: The populated template with extracted data.
+		Notes:
+			- The function processes up to 5 areas defined in the `areas` list.
+			- If `position` is "date", the function will parse the date using `_parse_date`.
+			- The function skips empty cells and cells that match the `searching` value.
+			- Data is organized into the template based on the `areas` list and the `position` key.
+		"""
+
+
 		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore", "Feltrino-Val Belluna", "Altopiano dei sette comuni"]
 
 		i = 0
@@ -169,8 +206,16 @@ class Snow:
 		return template
 
 	def _get_column_data_value(self, column, template, value_number) -> dict[str, any]:
-		"""get the data of a single bulletin's column (values)
 		"""
+		Populates a template dictionary with data from a given column.
+		Args:
+			column (list): A list of strings representing the column data.
+			template (dict): A dictionary template to be populated with the column data.
+			value_number (int): An index to select which set of values to use for comparison.
+		Returns:
+			dict[str, any]: The populated template dictionary.
+		"""
+
 		areas = ["Alto Agordino", "Medio-Basso Agordino", "Cadore", "Feltrino-Val Belluna", "Altopiano dei sette comuni"]
 		values1 = ["1500 m", "2000 m", ">2000 m"]
 		values2 = ["1000 m", "1500 m", ">1500 m"]
