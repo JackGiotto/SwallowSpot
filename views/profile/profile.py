@@ -60,7 +60,17 @@ def user():
                 new_password=hash_password(new_password)
                 db.executeQuery("UPDATE User SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(id_user)+"';")
                 return render_template("user/profile.html", username=session['username'], show_button=show_button)
-
+            elif "new_email" in request.form: # email change
+                new_email = request.form["new_email"]
+                old_email = request.form["old_email"]
+                #checks email
+                if old_email==new_email:
+                    return render_template("user/profile.html", msg2="Errore: L'email nuova non deve essere uguale alla email vecchia ", username=session["username"])
+                result=db.executeQuery("SELECT User.email FROM User WHERE email = '"+str(old_email)+"';")
+                if not result:
+                    return render_template("user/profile.html", msg2="Errore: L'email vecchia non è corretta ", username=session["username"], show_button=show_button)
+                db.executeQuery("UPDATE User SET email = '"+str(new_email)+"' WHERE ID_user = '"+str(id_user)+"';")
+                return render_template("user/profile.html", username=session['username'], show_button=show_button)
             elif "passwordDelete" in request.form: # delete account
                 password = request.form['passwordDelete']
                 password = hash_password(password)

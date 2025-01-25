@@ -95,6 +95,7 @@ CREATE TABLE User       -- list of the Users' accounts and their data
     ID_user INT AUTO_INCREMENT,                     -- unique ID for every user
     username VARCHAR(35) NOT NULL UNIQUE,           -- username used from user to sign up in site
     password VARCHAR(64) NOT NULL,                  -- password's hash to access the site
+    email VARCHAR(254) NOT NULL,                    -- email's used from user
     ID_area INT NOT NULL,                           -- area ID where the user lives
     ID_role INT NOT NULL,                           -- role ID of the user int othe site
     CONSTRAINT pk_user PRIMARY KEY (ID_user),       -- PK constraint                             

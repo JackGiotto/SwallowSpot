@@ -17,10 +17,10 @@
     <div class="error-msg">
         {{msg}}
     </div>
+    <div class="success-msg">
+        {{success}}
+    </div>
     <br>
-    <!--forget password-->
-    <!--<a href="">Ho dimenticato la password</a>-->
-
     <!--remembre me-->
     <div class="mt-2 mb-3">
         Voglio essere ricordato &ThickSpace;
@@ -31,6 +31,9 @@
     </div>
 
     <button type="submit" class="btn btn-success mb-2">Accedi</button>
+    <br>
+    <!--forget password-->
+    <a href="{{ url_for('auth.recover_password') }}"><i class="fa-solid fa-question"></i> Recupera password</a>  
     <br>
     <!--go to signup-->
     <a href="{{ url_for('auth.signup') }}">Non ho ancora un account</a>

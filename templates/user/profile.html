@@ -64,6 +64,27 @@
                 {{msg}}
             </form>
         </div>
+        <!--change email-->
+        <h2 class="mt-4">Modifica la tua <span style="color: #00667C">email</span></h2>
+        <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeEml')"><i class="fa-solid fa-pencil"></i> Modifica email</button>
+        <div class="dismissDefault" id="changeEml">
+            <form action="{{url_for('profile.user')}}" method="POST">
+                <!--old email-->
+                <div class="input-group mb-3 mt-2">
+                    <input name="old_email" type="email" class="form-control" id="pswOld" placeholder="Vecchia email">
+                </div>
+                <!--new email-->
+                <div id="emlRequirements" class="mb-2">
+                    <div class="input-group">
+                        <input name="new_email" type="email" class="form-control"  id="eml1" placeholder="Nuova email" aria-describedby="confirmPsw1" onfocus="showRequirements()" onblur="dismissRequirements()">   
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="dismissSection('changeEml')">Annulla</button>
+                <button type="submit" class="btn btn-success" id="eml-submit">Conferma</button>
+                <br>
+                {{msg}}
+            </form>
+        </div>  
         <!--change area-->
         <h2 class="mt-4">Modifica la tua <span style="color: #00667C">zona di residenza</span></h2>
         <button type="button" class="btn btn-primary btn-lg" onclick="showSection('changeArea')"><i class="fa-solid fa-pencil"></i> Modifica zona di residenza</button>
