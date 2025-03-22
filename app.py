@@ -25,7 +25,7 @@ from utils.cookies_utils import check_permanent_session, add_permanent_cookie
 os.environ["start_path"] = start_path
 
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = os.getenv("SECRET")
