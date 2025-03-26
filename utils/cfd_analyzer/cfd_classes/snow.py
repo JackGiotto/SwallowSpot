@@ -18,6 +18,7 @@ class Snow:
 	data = {"type": "snow"}
 
 	def __init__(self, pdf_path, pages) -> None:
+		print("snow")
 		self.path = pdf_path
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
@@ -57,7 +58,6 @@ class Snow:
 
 	def _get_bulletin_data(self) -> None:
 		print("Analyzing Snow bulletin, path:", self.path)
-
 		self.data["date"] = self._get_date(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
 		self.data["risks"] = self._get_risks(self._get_sub_table(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df))
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
