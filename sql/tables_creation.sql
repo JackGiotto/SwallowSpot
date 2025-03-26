@@ -97,7 +97,9 @@ CREATE TABLE User       -- list of the Users' accounts and their data
     password VARCHAR(64) NOT NULL,                  -- password's hash to access the site
     email VARCHAR(254) NOT NULL,                    -- email's used from user
     ID_area INT NOT NULL,                           -- area ID where the user lives
-    ID_role INT NOT NULL,                           -- role ID of the user int othe site
+    ID_role INT NOT NULL,   
+    TOKEN varchar(45),        
+    expirationDateToken datetime,                -- role ID of the user int othe site
     CONSTRAINT pk_user PRIMARY KEY (ID_user),       -- PK constraint                             
     CONSTRAINT fk_user_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- FK constraint from Area identifier
     CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from Role identifier
