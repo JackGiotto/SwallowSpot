@@ -10,7 +10,7 @@ function showPopOut(pop_out_id, show_id, calendar_id) {
     calendar.classList.add("calendarSlideIn");
     show.classList.remove("arrowSlideOut");
     show.classList.add("arrowSlideIn");
-    show.innerHTML = "<span class=\"rotateArrowIn\" onclick=\"dismissPopOut('popOut', 'showPopOut', 'calendar-out')\"><i class=\"fa-solid fa-angle-right\"></i></span>";
+    show.innerHTML = "<span class=\"rotateArrowIn\" onclick=\"dismissPopOut('popOut', 'showPopOut', 'calendar-out')\"><i class=\"fa-solid fa-xmark\"></i></span>";
 }
 
 //dismiss calendar
@@ -23,7 +23,7 @@ function dismissPopOut(pop_out_id, show_id, calendar_id) {
     calendar.classList.add("calendarSlideOut");
     show.classList.remove("arrowSlideIn");
     show.classList.add("arrowSlideOut");
-    show.innerHTML = "<span class=\"rotateArrowOut\" onclick=\"showPopOut('popOut', 'showPopOut', 'calendar-out')\"><i class=\"fa-solid fa-angle-left\"></i></span>";
+    show.innerHTML = "<span class=\"rotateArrowOut\" onclick=\"showPopOut('popOut', 'showPopOut', 'calendar-out')\"><i class=\"fa-solid fa-calendar-days\"></i></span>";
     setTimeout(() => {
         pop_out.style.left = "100%";
         pop_out.style.right = "auto";
