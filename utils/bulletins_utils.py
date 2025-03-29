@@ -37,7 +37,7 @@ def save_bulletin(file, filename = None) -> str:
                 if email:
                     if pdf_class.type == "hydro":
                         asyncio.run(_hydro_telegram(pdf_class.get_cfd_data()))
-                    else:
+                    elif pdf_class.type == "snow":
                         asyncio.run(_snow_telegram(pdf_class.get_cfd_data()))
                 os.remove(file_path)
             except Exception as e:

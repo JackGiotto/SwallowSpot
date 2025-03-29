@@ -42,10 +42,10 @@ def get_bulletins_dates(type: str) -> dict["str", "str"]:
    
     return result
 
-def convert_date(date: str) -> str:
+def convert_date(date: str, item:str = "-") -> str:
     """converts date from italian to american (used in bulletin analysis)
     """
-    splitted= date.split("-")
+    splitted= date.split(item)
     day = splitted[0]
     month = splitted[1]
     year = splitted[2]

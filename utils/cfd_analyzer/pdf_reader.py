@@ -1,15 +1,16 @@
 from utils.cfd_analyzer import cfd_classes
 import camelot
 import PyPDF2
-
 class Pdf_reader:
 
 	analyzer = None
 	type = ""
 	def __init__(self, path):
 		pages = "2"
-
-		if (self._check_wind()):
+		if (self._check_wind(pages, path)):
+			print("wind")
+			self.analyzer = cfd_classes.Wind(path, pages)
+			self.type = "wind"
 			return
 		else:
 			with open(path, 'rb') as file:
@@ -54,15 +55,22 @@ class Pdf_reader:
 	def add_to_db(self):
 		self.analyzer.add_to_db()
 
-	def _check_wind(self):
+	def _check_wind(self, pages, path):
+		print ("Checking wind")
 		try:
-			table = camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[0].df
-			for i in range(0, len(table)):
-				if "Vento forte" in table[i][0]:
+			table = camelot.read_pdf(path, flavor='stream', pages=pages)[0].df[0]
+			for row in table:
+				print (row, "\n")
+				if ("Vento FORTE" in row):
+					print("vento trovato")
 					return True
 		except:
+			print("ripperoni")
 			return False
 		return False
+
+	def _add_wind_to_db(path: str, ) -> None:
+		pass
 
 # debug
 
