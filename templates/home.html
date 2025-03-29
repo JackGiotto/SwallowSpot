@@ -18,6 +18,12 @@
     <a href="{{ url_for('info.info') }}" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
 </div>
 
+<!--wind bulletin-->
+<div class="wind-bulletin mt-5" id="windBulletin">
+    <h1>Situazione regionale sul vento in questo momento</h1>
+    {{ wind_data | safe}}
+</div>
+
 <!--situation in your area-->
 <div class="your-situation mt-5" id="yourSituation">
     <h1>Ultima situazione nella tua zona</h1>
