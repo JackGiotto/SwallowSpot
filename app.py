@@ -1,12 +1,9 @@
-from flask import Flask, render_template, session, request, make_response, redirect, url_for
-from flask_cors import CORS
-from flask_minify import minify
-from datetime import timedelta
-from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp, special_bp
+
+# Read env file as first thing
+import os
 from dotenv import load_dotenv
 from utils.wsgi_utils import read_env_file
-from utils.cookies_utils import check_permanent_session, add_permanent_cookie
-import os
+
 
 if __name__ == "__main__":
     load_dotenv()
@@ -15,11 +12,19 @@ else:
     start_path = "/var/www/swallowspot.it/SwallowSpot/"
     read_env_file(start_path + ".env")
 
+from flask import Flask, render_template, session, request, make_response, redirect, url_for
+from flask_cors import CORS
+from flask_minify import minify
+from datetime import timedelta
+from views import auth_bp, home_bp, profile_bp, reports_bp, info_bp, feedbacks_bp, special_bp
+from utils.cookies_utils import check_permanent_session, add_permanent_cookie
+
+
+
 os.environ["start_path"] = start_path
 
 app = Flask("Swallow Spot", template_folder=start_path + "templates")
 app.config["DEBUG"] = False
-app.config["MAINTENANCE"] = os.getenv("MAINTENANCE") == "True"
 
 app.permanent_session_lifetime = timedelta(minutes=50)
 app.secret_key = os.getenv("SECRET")
@@ -46,7 +51,7 @@ def permanent_session_control():
 
 @app.before_request
 def check_under_maintenance():
-    if app.config["MAINTENANCE"] and not ('superadmin' in session) and ('snake' not in request.path) and ('login' not in request.path):
+    if os.environ["MAINTENANCE"] == "True" and not ('superadmin' in session) and ('snake' not in request.path) and ('login' not in request.path):
         return render_template('maintenance.html')
 
 @app.after_request
@@ -61,7 +66,7 @@ def add_cookie(response):
 def start_maintenance():
     if 'superadmin' in session:
         print("starting maintenance")
-        app.config["MAINTENANCE"] = True
+        os.environ["MAINTENANCE"] = "True"
         #print(app.config["MAINTENANCE"])
         return "started", 200
 
@@ -69,7 +74,7 @@ def start_maintenance():
 def end_maintenance():
     if 'superadmin' in session:
         print("ending maintenance")
-        app.config["MAINTENANCE"] = False
+        os.environ["MAINTENANCE"] = "False"
         return "ended", 200
 
 @app.errorhandler(404)

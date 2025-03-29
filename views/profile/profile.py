@@ -5,6 +5,7 @@ from utils.password import hash_password, check_password
 from utils.get_data import get_cities
 from utils.bulletins_utils import save_bulletin
 from utils.db_backup.client_backup import start_backup
+import os
 
 
 profile_bp = Blueprint('profile', __name__, template_folder='templates')
@@ -101,7 +102,7 @@ def admin():
     elif id_role == 3:
         session["superadmin"] = 1
 
-    return render_template("user/admin_profile.html", maintenance = current_app.config["MAINTENANCE"])
+    return render_template("user/admin_profile.html", maintenance = os.environ["MAINTENANCE"] == "True")
 
 @profile_bp.route('/profile/insert_id', methods=['POST'])
 def insert_id():

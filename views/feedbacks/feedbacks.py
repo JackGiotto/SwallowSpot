@@ -22,7 +22,7 @@ def feedbacks():#charge the page
             feedDesc = request.form["feedDesc"].replace("'", "")
             # execution of the query on database
             query = f'''
-                        INSERT INTO feedback (object, description, date, validate, ID_role)
+                        INSERT INTO Feedback (object, description, date, validate, ID_role)
                         VALUES(
                         '{feedObject}', '{feedDesc}', NOW(), 0, {role}
                         );

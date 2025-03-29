@@ -61,8 +61,25 @@ class Hydro:
 			# debug
 			#print("RISK QUERY:", risk_query)
 
+	def _get_bulletin_data(self):
+		print("Analyzing Hydro bulletin, path:", self.path)
+
+		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[self.table_number].df)
+		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[self.table_number].df)
+		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
+
 
 	def _get_queries(self) -> dict:
+		"""Generates SQL queries for inserting bulletin and risk data into the database.
+		This method reads a PDF file, extracts specific pages, encodes the content in base64,
+		and constructs SQL queries for inserting the bulletin data and associated risk data
+		into the database.
+		Returns:
+			dict: A dictionary containing the SQL queries. The dictionary has two keys:
+				- "bulletin_query": A string containing the SQL query to insert the bulletin data.
+				- "risks_queries": A list of strings, each containing an SQL query to insert risk data.
+		"""
+
 		#print(self.data["risks"])
 		queries = {"bulletin_query": "", "risks_queries": []}
 		path = self.path
@@ -104,13 +121,6 @@ class Hydro:
 		#print(queries)
 		return queries
 
-	def _get_bulletin_data(self):
-		print("Analyzing Hydro bulletin, path:", self.path)
-
-		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["date"])[self.table_number].df)
-		self.data["risks"] = self._get_risks(camelot.read_pdf(self.path, flavor='stream', pages=self.PAGES_NUMBERS["risk"])[self.table_number].df)
-		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
-
 	def _get_date(self, table) -> dict[str, str]:
 		"""get the date of the bulletin
 		"""
@@ -127,7 +137,18 @@ class Hydro:
 
 
 	def _get_risks(self, table) -> dict[str, any]:
-		"""get the value associated with every risk
+		"""Extracts and processes risk data from a given table based on a predefined template.
+		Args:
+			table (dict): A dictionary containing risk data for various regions.
+		Returns:
+			dict[str, any]: A dictionary with processed risk values for each region.
+		The function performs the following steps:
+		1. Loads a risk template from a JSON file specified by `self.template_path`.
+		2. Iterates over each region and its associated risk data in the template.
+		3. Updates the risk values in the template based on the provided table.
+		4. Removes unnecessary information from the template.
+		5. Returns the updated template containing the processed risk values.
+		6 (optional). Create a file with the data collected.
 		"""
 
 		# risks template for hydro
