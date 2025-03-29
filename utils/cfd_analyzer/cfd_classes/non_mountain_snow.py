@@ -6,8 +6,8 @@ import base64
 import PyPDF2
 import json
 
-class Wind:
-	data = {"type": "wind"}
+class NonMountainSnow:
+	data = {"type": "non-mountain snow"}
 
 	def __init__(self, pdf_path, pages):
 		self.pages = pages
@@ -20,12 +20,13 @@ class Wind:
 
 	def _get_bulletin_data(self) -> None:
 		print("Analyzing Wind bulletin, path:", self.path)
-		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.pages)[0].df[0])
+		self.data["date"] = self._get_date(camelot.read_pdf(self.path, flavor='stream', pages=self.pages)[1].df[0])
 		print("Finished analysis\n", json.dumps(self.data, indent="\t"))
 
 
 	def _get_date(self, table) -> dict[str, str]:
 		for row in table:
+			print ("-------------------------------------------------\n", row)
 			words = row.split(" ")
 			if (words[0] == "dalle" and words[1] == "ore"):
 				hours_start = words[2] + ":00"

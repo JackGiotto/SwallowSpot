@@ -23,7 +23,6 @@ class Hydro:
 
 	def __init__(self, pdf_path, pages, table_number = 0):
 		self.path = pdf_path
-		print("path" + self.path)
 		self.PAGES_NUMBERS["date"] = pages
 		self.PAGES_NUMBERS["risk"] = pages
 		self.table_number = table_number
