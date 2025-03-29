@@ -18,17 +18,62 @@
     <a href="{{ url_for('info.info') }}" class="btn btn-success m-2 btn-lg"><i class="fa-solid fa-bookmark"></i>&ThickSpace; Info e legende sui rischi</a>
 </div>
 
-<!--wind bulletin-->
-<div class="wind-bulletin mt-5" id="windBulletin">
-    <h1>Situazione regionale sul vento in questo momento</h1>
-    {{ wind_data | safe}}
-    
-</div>
-
 <!--situation in your area-->
 <div class="your-situation mt-5" id="yourSituation">
     <h1>Ultima situazione nella tua zona</h1>
     {{ bulletin_data | safe}}
+</div>
+
+<!--wind bulletin-->
+<div class="your-situation mt-5" id="windBulletin">
+    <h1>Situazione regionale attuale sul vento forte</h1>
+    {{ wind_data | safe}}
+    <!--wind alert-->
+    <div class="actual-container wind-pulse p-3 text-danger-emphasis bg-danger-subtle border-danger-subtle rounded-3 border mb-2">
+        <i class="fa-solid fa-wind"></i>
+        <span>
+            <h4>Bollettino di <strong>vento forte</strong> disponibile!</h4>
+            Scaricalo per consultare tutte le informazioni
+        </span>
+    </div>
+    <!--download report-->
+    <a href="#" class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-download"></i> Scarica Bollettino</a>
+
+
+    <!--wind good-->
+    <div class="actual-container p-3 text-success-emphasis bg-success-subtle border-success-subtle rounded-3 border">
+        <i class="fa-solid fa-wind"></i>
+        <span>
+            <h4>Bollettino di <strong>vento forte</strong> assente!</h4>
+            Nessuna allerta in vista
+        </span>
+    </div>
+</div>
+
+<!--snow in plain bulletin-->
+<div class="your-situation mt-5" id="snowBulletinPlane">
+    <h1>Situazione regionale attuale sulle nevicate in pianura</h1>
+    {{ snow_plain_data | safe}}
+    <!--snow alert-->
+    <div class="actual-container snow-pulse p-3 text-info-emphasis bg-info-subtle border-info-subtle rounded-3 border mb-2">
+        <i class="fa-solid fa-snowflake"></i>
+        <span>
+            <h4>Bollettino sulle <strong>nevicate</strong> disponibile!</h4>
+            Scaricalo per consultare tutte le informazioni
+        </span>
+    </div>
+    <!--download report-->
+    <a href="#" class="btn btn-primary m-2 btn-lg"><i class="fa-solid fa-download"></i> Scarica Bollettino</a>
+
+
+    <!--snow good-->
+    <div class="actual-container p-3 text-success-emphasis bg-success-subtle border-success-subtle rounded-3 border">
+        <i class="fa-solid fa-snowflake"></i>
+        <span>
+            <h4>Bollettino sulle <strong>nevicate</strong> assente!</h4>
+            Nessuna allerta in vista
+        </span>
+    </div>
 </div>
 
 <!--swallowspot introduction-->

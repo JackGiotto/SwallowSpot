@@ -34,18 +34,6 @@
     flex-wrap: wrap;
 }
 
-/*wind bulletin section*/
-
-.wind-bulletin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    /*gap: 1rem;
-    padding: 3rem;*/
-    margin: 0 1rem;
-}
-
 /*your situation section*/
 
 .your-situation {
@@ -72,6 +60,40 @@
 
 .risk-out-home .basin {
     text-align: center;
+}
+
+/*actual bulletin section - wind / snow*/
+
+.actual-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wind-pulse {
+    animation: pulse-wind 1s infinite;
+}
+
+.snow-pulse {
+    animation: pulse-snow 1s infinite;
+}
+
+.fa-wind, .fa-snowflake {
+    font-size: 2rem;
+}
+
+@keyframes pulse-wind {
+    50% {
+        box-shadow: 0 0 15px red;
+    }
+}
+
+@keyframes pulse-snow {
+    50% {
+        box-shadow: 0 0 15px aqua;
+    }
 }
 
 /*service description section*/
