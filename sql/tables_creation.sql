@@ -89,6 +89,14 @@ CREATE TABLE Wind_report        -- list of the bulletins for wind event
     CONSTRAINT pk_wind_report PRIMARY KEY (ID_wind_report)      -- PK constraint
 );
 
+CREATE TABLE Non_mount_snow_report        -- list of the bulletins for snow in non mountain regions
+(
+    ID_non_mount_snow_report INT AUTO_INCREMENT,                          -- unique ID for every non mountain snow bulletin
+    date DATETIME NOT NULL UNIQUE,                                        -- data from which the report is valid
+    pdf_data LONGBLOB,                                                    -- pdf file
+    CONSTRAINT pk_non_mount_snow_report PRIMARY KEY (ID_non_mount_snow_report)      -- PK constraint
+);
+
 CREATE TABLE Topology       -- list of the cities associated with each area
 (
     ID_city INT AUTO_INCREMENT,                         -- unique ID for every city
