@@ -81,6 +81,14 @@ CREATE TABLE Snow_criticalness      -- list of the criticalnesses into snow repo
     CONSTRAINT fk_snow_criticalness_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE                             -- FK constraint from Area identifier
 );
 
+CREATE TABLE Wind_report        -- list of the bulletins for wind event
+(
+    ID_wind_report INT AUTO_INCREMENT,                          -- unique ID for every wind bulletin
+    date DATETIME NOT NULL UNIQUE,                              -- data from which the report is valid
+    pdf_data LONGBLOB,                                          -- pdf file
+    CONSTRAINT pk_wind_report PRIMARY KEY (ID_wind_report)      -- PK constraint
+);
+
 CREATE TABLE Topology       -- list of the cities associated with each area
 (
     ID_city INT AUTO_INCREMENT,                         -- unique ID for every city
