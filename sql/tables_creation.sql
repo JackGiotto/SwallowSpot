@@ -95,11 +95,9 @@ CREATE TABLE User       -- list of the Users' accounts and their data
     ID_user INT AUTO_INCREMENT,                     -- unique ID for every user
     username VARCHAR(35) NOT NULL UNIQUE,           -- username used from user to sign up in site
     password VARCHAR(64) NOT NULL,                  -- password's hash to access the site
-    -- email VARCHAR(254) NOT NULL,                    -- email's used from user
+    email VARCHAR(254) NOT NULL,                    -- email's used from user
     ID_area INT NOT NULL,                           -- area ID where the user lives
     ID_role INT NOT NULL,                           -- role ID of the user int othe site
-    -- TOKEN VARCHAR NOT NULL(45),
-    -- expirationDateToken datetime,
     CONSTRAINT pk_user PRIMARY KEY (ID_user),       -- PK constraint
     CONSTRAINT fk_user_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE,     -- FK constraint from Area identifier
     CONSTRAINT fk_user_role FOREIGN KEY (ID_role) REFERENCES Role(ID_role) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from Role identifier
@@ -147,10 +145,9 @@ CREATE TABLE Snake_ranking      -- ranking for the snake game
 
 CREATE TABLE Tokens (       -- tokens for password recovery
     ID_token INT AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL,
     TOKEN VARCHAR(100) NOT NULL,
     expirationDateToken DATETIME NOT NULL,
-    ID_user NOT NULL UNIQUE,
+    ID_user INT NOT NULL UNIQUE,
     CONSTRAINT pk_tokens PRIMARY KEY (ID_token),
     CONSTRAINT fk_tokens_user FOREIGN KEY (ID_user) REFERENCES User(ID_user) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from User identifier
 )
