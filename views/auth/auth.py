@@ -105,21 +105,10 @@ def signup():
                                 WHERE Topology.city_name = "{city}"
                             '''
             ID_area = db.executeQuery(ID_area_query)
+            insert_user_query = f'''INSERT INTO User (username, password, email, ID_area, ID_role)
+                                  VALUES ('{username}', '{password}', '{email}', '{ID_area[0]["ID_area"]}', '{1}');'''
+            db.executeQuery(insert_user_query)
 
-            # Inserisci l'utente senza email
-            insert_user_query = ("INSERT INTO User (username, password, ID_area, ID_role) "
-                                "VALUES (%s, %s, %s, %s);")
-            db.executeQuery(insert_user_query, (username, password, ID_area[0]["ID_area"], 1))
-
-            # Recupera l'ID dell'utente appena inserito
-            ID_user = db.executeQuery("SELECT LAST_INSERT_ID() AS ID_user;")[0]["ID_user"]
-
-            # Inserisci l'email nella tabella Tokens
-            insert_email_query = ("INSERT INTO Tokens (email, ID_user) "
-                                "VALUES (%s, %s);")
-            db.executeQuery(insert_email_query, (email, ID_user))
-
-            # Avvia la sessione
             session.permanent = True
             session["username"] = username
             return redirect(url_for("home.home"))
@@ -135,9 +124,9 @@ def recover_password():
         if (current_username == ''):
             return render_template("auth/recover_password.html", msg="Errore: Il nome utente non può essere vuoto")
         sql = "SELECT email FROM User where username = '" + current_username + "';"
-        print(sql)
-        result = db.executeQuery(sql)
 
+        result = db.executeQuery(sql)
+        
         # check if username is already taken
         if bool(result):
             emailDB = result[0]['email']
@@ -152,7 +141,6 @@ def recover_password():
             # Usa una query parametrizzata per aggiornare il database
             ID_user = result[0]['ID_user']
             email = result[0]['email']
-            print(nuova_ora.strftime("%Y-%m-%d %H:%M:%S") + " token " + token + "username " + current_username)
             select_token_query = f"""
                 SELECT TOKEN FROM Tokens WHERE ID_user = {ID_user};
             """
@@ -169,18 +157,15 @@ def recover_password():
                 INSERT INTO Tokens (TOKEN, expirationDateToken, ID_user)
                 VALUES ('{token}', '{nuova_ora.strftime('%Y-%m-%d %H:%M:%S')}', '{ID_user}');
             """
-            print(insert_token_query)
             result = db.executeQuery(insert_token_query)
-            
+
             if result is not None:
-                print("query fatta")
                 done = send_recovery_email(email, token)
                 if(done):
                     return render_template("auth/auth_password.html", success = "Email inviata con successo")
                 else:
                     return render_template("auth/recover_password.html", msg="Errore: email non inviata")
             else:
-                print("query non fatta")
                 return render_template("auth/recover_password.html", msg="Errore: nome utente inesistente")
 
 def send_recovery_email(user_email, token):
@@ -232,7 +217,6 @@ def reset_password():
     # Usa una query parametrizzata per aggiornare il database
     ID_user = result[0]['ID_user']
     new_password=hash_password(password)
-    print(f"id_user: {ID_user} password: {password}")
     db.executeQuery("UPDATE user SET password = '"+str(new_password)+"' WHERE ID_user = '"+str(ID_user)+"';")
     result = db.executeQuery("SELECT ID_user FROM user WHERE password = '"+str(new_password)+"' and ID_user = '"+str(ID_user)+"';")
     if result:
@@ -246,19 +230,16 @@ def auth_password():
     token = request.form["code_auth"]
     current_username = session["username"]
     ID_user_query = f"SELECT ID_user,email FROM User WHERE username = '{current_username}';"
-    print(ID_user_query)
     result = db.executeQuery(ID_user_query)
     if not result:
         return render_template("auth/recover_password.html", msg="Errore: nome utente inesistente")
     # Usa una query parametrizzata per aggiornare il database
     ID_user = result[0]['ID_user']
     ora_corrente = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Formatta la data e ora
-    query = f"SELECT TOKEN FROM tokens WHERE TOKEN = '{token}' AND ID_user = '{ID_user}' AND expirationDateToken > '{ora_corrente}'"
-    print(query)
-    exists = db.executeQuery(query)
+    token_query = f"SELECT TOKEN FROM tokens WHERE TOKEN = '{token}' AND ID_user = '{ID_user}' AND expirationDateToken > '{ora_corrente}'"
+    exists = db.executeQuery(token_query)
     if exists:
         query = f"DELETE FROM tokens WHERE TOKEN = '{token}' AND ID_user = '{ID_user}'"
-        print(query)
         exists = db.executeQuery(query)
         return render_template("auth/reset_password.html", success="Codice corretto")
     else:
