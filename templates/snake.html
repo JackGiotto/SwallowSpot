@@ -27,5 +27,17 @@
     </div>
     <a href="{{ url_for('home.home') }}" class="btn btn-success mt-4"><i class="fa-solid fa-house"></i>Torna alla Home</a>
   </body>
+  <script>
+    //light/dark mode
+    var body = document.querySelector("body");
+
+    if(localStorage.getItem("mode") == "dark") {
+        //dark mode
+        body.style.backgroundColor = "#222222";
+    }
+    else {//set the mode to light mode
+        body.style.backgroundColor = "#EDFCFF";
+    }
+  </script>
 </html>
 
