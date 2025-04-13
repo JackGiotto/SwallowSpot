@@ -9,8 +9,7 @@ if __name__ == "__main__":
     load_dotenv()
     start_path = "./"
 else:
-    start_path = "./"
-#    start_path = "/var/www/swallowspot.it/SwallowSpot/"
+    start_path = "/var/www/swallowspot.it/SwallowSpot/"
     read_env_file(start_path + ".env")
 
 from flask import Flask, render_template, session, request, make_response, redirect, url_for
