@@ -4,3 +4,4 @@ Dockerfile
 .env
 *last_sended_backup.sql
 utils/db_backup/backup/*
+configurazione.md
