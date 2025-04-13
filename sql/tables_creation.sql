@@ -90,7 +90,7 @@ CREATE TABLE Topology       -- list of the cities associated with each area
     CONSTRAINT fk_topology_area FOREIGN KEY (ID_area) REFERENCES Area(ID_area) ON UPDATE CASCADE ON DELETE CASCADE      -- FK constraint from Area identifier
 );
 
-CREATE TABLE User       -- list of the Users' accounts and their data
+CREATE TABLE `User`       -- list of the Users' accounts and their data
 (
     ID_user INT AUTO_INCREMENT,                     -- unique ID for every user
     username VARCHAR(35) NOT NULL UNIQUE,           -- username used from user to sign up in site
