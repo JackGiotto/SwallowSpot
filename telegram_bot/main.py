@@ -10,7 +10,6 @@ from models import db
 
 # Associate python app to the bot
 TOKEN: Final = os.environ["TOKEN"]
-print("TOKEN: ", TOKEN)
 BOT_USERNAME: Final="@SwallowSpotBot"
 CHAT_ID: Final = None
 INDEX: Final=0
